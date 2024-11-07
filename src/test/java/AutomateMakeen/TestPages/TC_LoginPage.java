@@ -3,10 +3,7 @@ package AutomateMakeen.TestPages;
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.HomePage;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class TC_LoginPage extends TestInit {
     @BeforeClass
@@ -80,6 +77,10 @@ public class TC_LoginPage extends TestInit {
         loginPage = homePage.signOut();
         Assert.assertEquals(loginPage.getUserIdContent(),userID);
         Assert.assertEquals(loginPage.getUserPasswdContent(),userPasswd);
+    }
+    @AfterMethod
+    public void refresh(){
+        driver.navigate().refresh();
     }
     @AfterClass
     public void afterClass(){
