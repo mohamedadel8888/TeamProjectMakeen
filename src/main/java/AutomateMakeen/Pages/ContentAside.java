@@ -32,9 +32,23 @@ public class ContentAside extends BaseComp {
     @FindBy ( id = "s_m_62")
     WebElement userControl ; /*ادارة المستخدمين */
 
+    @FindBy (xpath = "(//i[@class='fa fa-angle-double-down'])[3]")
+    WebElement mailArrowWebElement; /*زر قائمةالبريد في القائمة الجانية*/
 
+    @FindBy (id = "s_m_141")/*اختيار انشاء بريد خارجي من قائمة البريد*/
+    WebElement createExternalMailWebELement;
 
+    public UsersControl goToUsersControl (){
+        exWait.until(ExpectedConditions.elementToBeClickable(ControlPanel));
+        ControlPanel.click();
+        userControl.click();
+        return new UsersControl(driver);
+    }
 
-
-
+    public CreateExternalMailPage goToCreateExternalMail(){
+        exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
+        mailArrowWebElement.click();
+        createExternalMailWebELement.click();
+        return new CreateExternalMailPage(driver);
+    }
 }

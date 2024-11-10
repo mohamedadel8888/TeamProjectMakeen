@@ -16,6 +16,7 @@ public class UsersControl extends BaseComp {
         this.driver = driver;
         //specific wait for every page
         exWait = new WebDriverWait(driver , Duration.ofSeconds(10));
+        contentAside = new ContentAside(driver);
     }
 
     @FindBy (id = "cph_main_btn_add_user")    /* اضافه حساب */
@@ -54,9 +55,6 @@ public class UsersControl extends BaseComp {
     WebElement showAll;
 
 
-    public void goToUsersControl (){
-        contentAside.ControlPanel.click();
-        contentAside.userControl.click();
-    }
+
 
 }
