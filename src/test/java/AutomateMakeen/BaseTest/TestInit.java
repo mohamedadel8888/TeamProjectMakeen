@@ -4,6 +4,8 @@ import AutomateMakeen.Pages.ContentAside;
 import AutomateMakeen.Pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 
 public class TestInit {
     protected String userID = "0342169";
@@ -33,5 +35,15 @@ public class TestInit {
 
     public void quitDriver(){
         driver.quit();
+    }
+
+    @AfterMethod
+    public void refresh(){
+        driver.navigate().refresh();
+    }
+
+    @AfterClass
+    public void afterClass(){
+        quitDriver();
     }
 }

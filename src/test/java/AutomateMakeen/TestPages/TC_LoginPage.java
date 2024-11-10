@@ -27,8 +27,6 @@ public class TC_LoginPage extends TestInit {
     @Test(dataProvider = "invalidIdData")
     public void tc_loginWithInvalidUser(String invalidUserId) {
         loginPage.clearAllFeild();
-        System.out.println("التأكد من وظيفة تسجيل الدخول بحساب جديد بإستخدام رقم تعريفي صحيح["
-                + invalidUserId +"] و رقم سري صحيح ["+userPasswd+"]");
         loginPage.loginUserWithoutRemMe(invalidUserId ,userPasswd);
         switch (invalidUserId) {
             case "000000" : {
@@ -71,19 +69,12 @@ public class TC_LoginPage extends TestInit {
         return new Object[]{"","000000","      ","1234567"};
     }
     @Test
-    public void tc_loginWithRememberMe(){
+    public void atc_loginWithRememberMe(){
         loginPage.clearAllFeild();
         HomePage homePage = loginPage.loginUserWithRemMe(userID,userPasswd);
         loginPage = homePage.signOut();
         Assert.assertEquals(loginPage.getUserIdContent(),userID);
         Assert.assertEquals(loginPage.getUserPasswdContent(),userPasswd);
     }
-    @AfterMethod
-    public void refresh(){
-        driver.navigate().refresh();
-    }
-    @AfterClass
-    public void afterClass(){
-        quitDriver();
-    }
+
 }
