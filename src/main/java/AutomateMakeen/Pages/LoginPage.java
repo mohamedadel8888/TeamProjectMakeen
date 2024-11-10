@@ -13,7 +13,7 @@ import java.time.Duration;
 public class LoginPage extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
-    private static int flag = 0;
+
     @FindBy(id = "txtUserName")
     WebElement idWebElement;
 
