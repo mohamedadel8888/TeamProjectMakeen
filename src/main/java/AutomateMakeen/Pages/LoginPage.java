@@ -46,7 +46,7 @@ public class LoginPage extends BaseComp {
     }
 
     public void goToLoginPage(){
-        driver.get("https://em.alqemam.com/qCMS_Test_v13.4.11/login.aspx");
+        driver.get("https://em.alqemam.com/qCMS_Test_v13.4.14");
     }
     public HomePage loginUserWithoutRemMe(String id , String password)
     {

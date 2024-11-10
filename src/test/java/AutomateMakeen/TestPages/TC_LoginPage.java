@@ -21,7 +21,7 @@ public class TC_LoginPage extends TestInit {
         loginPage.clearAllFeild();
         System.out.println("التأكد من وظيفة تسجيل الدخول بحساب جديد بإستخدام رقم تعريفي صحيح و رقم سري صحيح");
         HomePage homePage = loginPage.loginUserWithoutRemMe(userID ,userPasswd);
-        Assert.assertTrue(homePage.getHomeUrl().contains("https://em.alqemam.com/qCMS_Test_v13.4.11/MainPage.aspx"));
+        Assert.assertTrue(homePage.getHomeUrl().contains("https://em.alqemam.com/qCMS_Test_v13.4.14/MainPage.aspx"));
     }
     //Test login user with invalid user id and validate error message
     @Test(dataProvider = "invalidIdData")
