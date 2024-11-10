@@ -4,7 +4,6 @@ import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,9 +17,7 @@ public class EditAccountPage extends BaseComp {
     public EditAccountPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
-        exWait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        PageFactory.initElements(driver, this);
-    }
+        exWait = new WebDriverWait(driver, Duration.ofSeconds(10));}
 
     @FindBy(id = "spn_title")
     private WebElement editAccountTitleWebElement;

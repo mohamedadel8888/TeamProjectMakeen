@@ -3,11 +3,10 @@ package AutomateMakeen.TestPages;
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.CreateExternalMailPage;
 import AutomateMakeen.Pages.HomePage;
-import AutomateMakeen.Pages.UsersControl;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 public class TC_CreateMailBox extends TestInit {
+
     CreateExternalMailPage createExternalMailPage;
     @BeforeClass(description = "Preconditions for each test in the class :" +
             "1- Login with authorized User." +
