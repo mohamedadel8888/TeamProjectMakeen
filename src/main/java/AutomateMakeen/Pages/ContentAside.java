@@ -27,4 +27,14 @@ public class ContentAside extends BaseComp {
     @FindBy(id = "cph_main_btn_AddElement")
     WebElement addNewDeptWebElement;
 
+    @FindBy (id = "prog_cp")
+    WebElement ControlPanel;  /*لوحه التحكم */
+    @FindBy ( id = "s_m_62")
+    WebElement userControl ; /*ادارة المستخدمين */
+
+
+
+
+
+
 }
