@@ -4,6 +4,7 @@ import AutomateMakeen.Pages.ContentAside;
 import AutomateMakeen.Pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 
@@ -22,7 +23,7 @@ public class TestInit {
     public static LoginPage loginPage;
 
     public WebDriver initDriver(){
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = new EdgeDriver();
         return driver;
     }
 
@@ -35,11 +36,6 @@ public class TestInit {
 
     public void quitDriver(){
         driver.quit();
-    }
-
-    @AfterMethod
-    public void refresh(){
-        driver.navigate().refresh();
     }
 
     @AfterClass

@@ -18,17 +18,10 @@ public class CreateExternalMailPage extends BaseComp {
         super(driver);
         this.driver = driver;
         exWait = new WebDriverWait(driver , Duration.ofSeconds(10));
+        contentAside = new ContentAside(driver);
     }
-    @FindBy (xpath = "(//i[@class='fa fa-angle-double-down'])[3]")
-    WebElement mailArrowWebElement;
-
-    @FindBy (id = "s_m_141")
-    WebElement createExternalMailWebELement;
 
 
-    public void goToCreateExternalMail(){
-        exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
-        mailArrowWebElement.click();
-        createExternalMailWebELement.click();
-    }
+
+
 }

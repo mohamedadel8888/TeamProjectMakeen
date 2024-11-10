@@ -23,6 +23,8 @@ public class HomePage extends BaseComp {
         super(driver);
         this.driver = driver;
         exWait = new WebDriverWait(driver , Duration.ofSeconds(10));
+        contentAside = new ContentAside(driver);
+
     }
     public String getHomeUrl(){
         exWait.until(ExpectedConditions.urlContains("MainPage.aspx"));

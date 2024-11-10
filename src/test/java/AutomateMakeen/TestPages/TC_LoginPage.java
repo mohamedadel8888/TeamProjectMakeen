@@ -77,4 +77,8 @@ public class TC_LoginPage extends TestInit {
         Assert.assertEquals(loginPage.getUserPasswdContent(),userPasswd);
     }
 
+    @AfterMethod
+    public void refresh(){
+        driver.navigate().refresh();
+    }
 }
