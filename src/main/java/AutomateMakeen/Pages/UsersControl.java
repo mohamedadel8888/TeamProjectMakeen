@@ -196,8 +196,9 @@ public class UsersControl extends BaseComp {
     public void editPassword(){
         editPassword.click();
     }
-    public void delegationControl (){
+    public DelegatePage delegationControl (){
         delegationControl.click();
+        return new DelegatePage(driver);
     }
     public WebElement getUserName (){
         WebElement firstElement = driver.findElement(By.xpath("(//td)[3]"));
