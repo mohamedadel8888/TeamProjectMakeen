@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 public class EditDelegatePage extends BaseComp {
 
-    private WebDriver driver;
+    protected WebDriver driver;
 
     private By editDelegatePageTitle = By.id("spn_AddEdittitle");
 
@@ -21,10 +21,13 @@ public class EditDelegatePage extends BaseComp {
     private By delegateEditFromDateField = By.id("txt_deleg_from");
     private By delegateEditToDateField = By.id("txt_deleg_to");
 
+    /*
     //Calender Icons
     private WebElement delegatedFromCalenderIcon = driver.findElements(By.cssSelector(".fa.fa-calendar")).get(0);
     private WebElement delegatedToCalenderIcon = driver.findElements(By.cssSelector(".fa.fa-calendar")).get(1);
 
+
+     */
     //Calender Inputs
     private By delegateCalenderMonthDropDown = By.id("drp_Month");
     private By delegateCalenderYear = By.id("tb_Year");

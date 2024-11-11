@@ -2,6 +2,7 @@ package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.AddDelegatePage;
+import AutomateMakeen.Pages.DelegatePage;
 import AutomateMakeen.Pages.HomePage;
 import AutomateMakeen.Pages.UsersControl;
 import org.openqa.selenium.JavascriptExecutor;
@@ -13,8 +14,11 @@ import org.testng.annotations.Test;
 
 public class TC_AddDelegatePage extends TestInit{
 
-    AddDelegatePage addDelegatePage;
+
+
     UsersControl usersControl;
+    DelegatePage delegatePage;
+    AddDelegatePage addDelegatePage;
 
     @BeforeClass
    public void setupClass()  {
@@ -23,13 +27,17 @@ public class TC_AddDelegatePage extends TestInit{
        HomePage homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
        homePage.goToHomePage();
        usersControl = contentAside.goToUsersControl();
-       usersControl.selectEmployeeByID("3569897");
-        = usersControl.delegationControl();
+   }
 
-        }
-
-
-
+    @Test
+    public void scrollinDepartmentName(){
+        usersControl.selectEmployeeByID("3569897");
+        delegatePage = usersControl.delegationControl();
+        addDelegatePage = delegatePage.clickAddButton();
+        //addDelegatePage.selectDepartmentNameFromDropDown("إدارة عسير");
+        addDelegatePage.scrollInDepartmentNameDDL("إدارة عسير");
+        //addDelegatePage.selectDelegatedEmployeeFromDropDown("إدارة عسير");
+        //addDelegatePage.chooseNewPeriodRadioButton();
     }
 
 

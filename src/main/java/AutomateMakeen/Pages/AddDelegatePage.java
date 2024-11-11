@@ -14,12 +14,13 @@ import java.time.Duration;
 import java.util.List;
 
 public class AddDelegatePage extends BaseComp {
-    private WebDriver driver;
+    protected WebDriver driver;
     private WebDriverWait wait;
     JavascriptExecutor js;
 
     //Department Name
-    private By departmentNameDropDownList = By.id("ddl_deps_ddlSelectButton");
+    //private By departmentNameDropDownList = By.id("ddl_deps_ddlSelectButton");
+    private By departmentNameDropDownList = By.cssSelector("#ddl_deps_ddlSelectButton > p");
     private By departmentNameSearch = By.id("ddl_deps_txtSearch");
     private By departmentNameText = By.id("ddl_deps_ddlSelectButtonTarget");
     private By departmentNameListItems = By.id("ddl_deps_collapsibleDiv");
@@ -37,9 +38,6 @@ public class AddDelegatePage extends BaseComp {
     private By delegatedFromDateField = By.id("txt_deleg_from");
     private By delegatedToDateField = By.id("txt_deleg_to");
 
-    //Calender Icons
-    private WebElement delegatedFromCalenderIcon = driver.findElements(By.cssSelector(".fa.fa-calendar")).get(0);
-    private WebElement delegatedToCalenderIcon = driver.findElements(By.cssSelector(".fa.fa-calendar")).get(1);
 
     //Calender Inputs
     private By delegateCalenderMonthDropDown = By.id("drp_Month");
@@ -109,6 +107,7 @@ public class AddDelegatePage extends BaseComp {
     //Department Name Methods
 
     public void selectDepartmentNameFromDropDown(String option) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(departmentNameDropDownList));
         driver.findElement(departmentNameDropDownList).click();
         driver.findElement(departmentNameSearch).sendKeys(option);
         driver.findElement(By.xpath("//label[contains(text(), '" + option + "')]")).click();
@@ -119,11 +118,16 @@ public class AddDelegatePage extends BaseComp {
         return driver.findElement(departmentNameText).getAttribute("value");
     }
 
+
     public void scrollInDepartmentNameDDL(String targetText){
         // Locate the dropdown element and open it if necessary
+        wait.until(ExpectedConditions.visibilityOfElementLocated(departmentNameDropDownList));
+        //driver.findElement(departmentNameDropDownList).click();
         WebElement dropdown = driver.findElement(departmentNameDropDownList);
+        wait.until(ExpectedConditions.visibilityOf(dropdown));
         dropdown.click();
         boolean found = false;
+        js = (JavascriptExecutor) driver;
 
         // Loop through the dropdown items to find the specific text
         while (!found) {
@@ -144,6 +148,7 @@ public class AddDelegatePage extends BaseComp {
             }
         }
     }
+
 
     //Delegate Employee Name Methods
 
@@ -177,6 +182,7 @@ public class AddDelegatePage extends BaseComp {
     //Choose Dates From Calender Methods
 
     public void chooseDelegateFromDateCalender(String month, String year, String day){
+        WebElement delegatedFromCalenderIcon = driver.findElements(By.cssSelector(".fa.fa-calendar")).get(0);
         delegatedFromCalenderIcon.click();
         selectMonthFromCalender(month);
         driver.findElement(delegateCalenderYear).sendKeys(year);
@@ -184,6 +190,7 @@ public class AddDelegatePage extends BaseComp {
     }
 
     public void chooseDelegateToDateCalender(String month, String year, String day){
+        WebElement delegatedToCalenderIcon = driver.findElements(By.cssSelector(".fa.fa-calendar")).get(1);
         delegatedToCalenderIcon.click();
         selectMonthFromCalender(month);
         driver.findElement(delegateCalenderYear).sendKeys(year);
