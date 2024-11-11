@@ -43,6 +43,7 @@ public class UsersControl extends BaseComp {
 
     /****************************       Search      *******************************/
     @FindBy (id = "txt_user_fname")  /* اسم المستخدم الاول */
+    static
     WebElement firstName;
     @FindBy (id = "txt_user_sname")  /* اسم المستخدم الثاني */
     WebElement secondName;
@@ -110,7 +111,7 @@ public class UsersControl extends BaseComp {
         return firstName;
     }
 
-    public void setFirstName(String firstName1) {
+    public static void setFirstName(String firstName1) {
         firstName.sendKeys(firstName1);
     }
 
@@ -145,6 +146,7 @@ public class UsersControl extends BaseComp {
     public void setUserID(String userID1) {
         userID.sendKeys(userID1);
     }
+
     public void clearAllFeild(){
         firstName.clear();
         secondName.clear();

@@ -48,7 +48,6 @@ public class BaseComp {
             case "fa fa-asterisk redText": return "Asterisk";
             default: return "Error !!";
         }
-
     }
     @FindBy(id = "txt_pickPopUp_srchParam")
     WebElement docTypeControlTxtSearchWebElement;

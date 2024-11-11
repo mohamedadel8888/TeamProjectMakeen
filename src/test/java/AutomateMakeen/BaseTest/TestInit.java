@@ -5,11 +5,9 @@ import AutomateMakeen.Pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-
-import java.time.Duration;
+import AutomateMakeen.Pages.EditAccountPage;
 
 public class TestInit {
     protected String userID = "0342169";
@@ -22,12 +20,12 @@ public class TestInit {
     protected String month = "ديسمبر";
     protected String year = "2023";
     protected ContentAside contentAside;
+    public EditAccountPage editAccountPage;
     public WebDriver driver;
     public static LoginPage loginPage;
 
-
     public WebDriver initDriver(){
-        driver =new ChromeDriver();
+        WebDriver driver = new EdgeDriver();
         return driver;
     }
 
@@ -36,11 +34,12 @@ public class TestInit {
         driver = initDriver();
         loginPage = new LoginPage(driver);
         contentAside = new ContentAside(driver);
+        editAccountPage = new EditAccountPage(driver);
+
     }
 
-
     public void quitDriver(){
-        //driver.quit();
+        driver.quit();
     }
 
     @AfterClass
