@@ -2,6 +2,7 @@ package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,17 +11,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Driver;
 import java.time.Duration;
+import java.util.List;
 
 public class AddDelegatePage extends BaseComp {
     private WebDriver driver;
-   private WebDriverWait wait;
+    private WebDriverWait wait;
+    JavascriptExecutor js;
 
     //Department Name
     private By departmentNameDropDownList = By.id("ddl_deps_ddlSelectButton");
     private By departmentNameSearch = By.id("ddl_deps_txtSearch");
     private By departmentNameText = By.id("ddl_deps_ddlSelectButtonTarget");
+    private By departmentNameListItems = By.id("ddl_deps_collapsibleDiv");
 
-    //Delegated Employee
+    //Delegate Employee
     private By delegatedEmployeeDropDownList = By.id("ddl_delg_jobs_ddlSelectButton");
     private By delegatedEmployeeSearch = By.id("ddl_delg_jobs_txtSearch");
     private By delegatedEmployeeText = By.id("ddl_delg_jobs_ddlSelectButtonTarget");
@@ -62,11 +66,41 @@ public class AddDelegatePage extends BaseComp {
     private By acceptPopUpButton = By.id("btnP0");
     private By rejectPopUpButton = By.id("btnP1");
 
+    //Errors
+    private By departmentNameErrorIcon = By.id("span_A_ddl_deps");
+    private By departmentNameErrorMessage = By.cssSelector("#span_A_ddl_deps .span_error span");
+
+    private By delegateEmployeeErrorIcon = By.id("span_A_ddl_delg_jobs");
+    private By delegateEmployeeErrorMessage = By.cssSelector("#span_A_ddl_delg_jobs .span_error span");
+
+    private By periodTypeErrorIcon = By.id("span_A_ddl_period");
+    private By periodTypeErrorMessage = By.cssSelector("#span_A_ddl_period .span_error span");
+
+    private By delegateDateFromErrorIcon = By.id("span_A_txt_deleg_from");
+    private By delegateDateFromErrorMessage =  By.cssSelector("#span_A_txt_deleg_from .span_error span");
+
+    private By delegateDateToErrorIcon = By.id("span_A_txt_deleg_to");
+    private By delegateDateToErrorMessage =  By.cssSelector("#span_A_txt_deleg_to .span_error span");
+
+    private By delegateTimeFromErrorIcon = By.id("spanA_txtDelegateTimeFrom");
+    private By delegateTimeFromErrorMessage =  By.cssSelector("#spanA_txtDelegateTimeFrom .span_error span");
+
+    private By delegateTimeToErrorIcon = By.id("spanA_txtDelegateTimeTo");
+    private By delegateTimeToErrorMessage =  By.cssSelector("#spanA_txtDelegateTimeTo .span_error span");
+
+    private By delegateTimeFromPeriodErrorIcon = By.id("spanA_ddlDelegateTimeFrom");
+    private By delegateTimeFromPeriodErrorMessage =  By.cssSelector("#spanA_ddlDelegateTimeFrom .span_error span");
+
+    private By delegateTimeToPeriodErrorIcon = By.id("spanA_ddlDelegateTimeTo");
+    private By delegateTimeToPeriodErrorMessage =  By.cssSelector("#spanA_ddlDelegateTimeTo .span_error span");
+
+
 
 
     //------------------------Constructor------------------------
 
     public AddDelegatePage(WebDriver driver){
+        super(driver);
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
@@ -85,8 +119,31 @@ public class AddDelegatePage extends BaseComp {
         return driver.findElement(departmentNameText).getAttribute("value");
     }
 
-    public voi
+    public void scrollInDepartmentNameDDL(String targetText){
+        // Locate the dropdown element and open it if necessary
+        WebElement dropdown = driver.findElement(departmentNameDropDownList);
+        dropdown.click();
+        boolean found = false;
 
+        // Loop through the dropdown items to find the specific text
+        while (!found) {
+            // Get all the currently visible items in the dropdown
+            List<WebElement> items = driver.findElements(departmentNameListItems);
+
+            for (WebElement item : items) {
+                if (item.getText().equals(targetText)) {
+                    item.click(); // Click the item if it matches the target text
+                    found = true;
+                    break;
+                }
+            }
+
+            // If not found, scroll the dropdown
+            if (!found) {
+                js.executeScript("arguments[0].scrollTop += arguments[0].offsetHeight;", dropdown);
+            }
+        }
+    }
 
     //Delegate Employee Name Methods
 
@@ -165,8 +222,9 @@ public class AddDelegatePage extends BaseComp {
         driver.findElement(saveButton).click();
     }
 
-    public void clickGoBackButton(){
+    public DelegatePage clickGoBackButton(){
         driver.findElement(goBackButton).click();
+        return new DelegatePage(driver);
     }
 
     //Pop Up Methods
@@ -181,7 +239,6 @@ public class AddDelegatePage extends BaseComp {
     public void rejectPopUp(){
         driver.findElement(rejectPopUpButton).click();
     }
-
 
 
 
