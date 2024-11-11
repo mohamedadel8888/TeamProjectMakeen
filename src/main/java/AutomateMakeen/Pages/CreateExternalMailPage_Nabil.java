@@ -29,8 +29,8 @@ public class CreateExternalMailPage_Nabil extends BaseComp {
 
 
     /**************************************************
-    *Subject Name Methods.
-    ***************************************************/
+     *Subject Name Methods.
+     ***************************************************/
 
     @FindBy(id = "txt_tr_subject")
     WebElement subjectOfTextBox;                    /*حقل ادخال موضوع البريد*/

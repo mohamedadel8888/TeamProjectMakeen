@@ -252,6 +252,4 @@ public class AddDelegatePage extends BaseComp {
         driver.findElement(rejectPopUpButton).click();
     }
 
-
-
 }
