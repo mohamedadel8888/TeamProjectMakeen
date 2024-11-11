@@ -13,7 +13,7 @@ import java.time.Duration;
 public class LoginPage extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
-    private static int flag = 0;
+
     @FindBy(id = "txtUserName")
     WebElement idWebElement;
 
@@ -46,7 +46,7 @@ public class LoginPage extends BaseComp {
     }
 
     public void goToLoginPage(){
-        driver.get("https://em.alqemam.com/qCMS_Test_v13.4.14");
+        driver.get("https://em.alqemam.com/qCMS_Test_v13.4.17 ");
     }
     public HomePage loginUserWithoutRemMe(String id , String password)
     {

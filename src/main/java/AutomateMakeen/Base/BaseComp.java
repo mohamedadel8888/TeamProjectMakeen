@@ -1,9 +1,12 @@
 package AutomateMakeen.Base;
 
+import AutomateMakeen.Pages.ContentAside;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,6 +16,7 @@ public class BaseComp {
     private WebDriver driver;
     private  WebDriverWait exWait;
     private Actions actions ;
+    public ContentAside contentAside ; ;
     public BaseComp(WebDriver driver)
     {
         driver.manage().window().maximize();
@@ -21,7 +25,7 @@ public class BaseComp {
         exWait = new WebDriverWait(driver,Duration.ofSeconds(10));
         this.driver = driver;
     }
-    public void cutPaseAction(WebElement copyFrom, WebElement copyTo, String txt ){
+    public void cutPastAction(WebElement copyFrom, WebElement copyTo, String txt ){
         actions = new Actions(driver);
         copyFrom.sendKeys(txt);
         actions.moveToElement(copyFrom).keyDown(Keys.CONTROL).sendKeys("a").sendKeys("x").keyUp(Keys.CONTROL).build().perform();
@@ -37,4 +41,25 @@ public class BaseComp {
         actions = new Actions(driver);
         actions.moveToElement(webElement).build().perform();
     }
+
+    public String getValidatorState(WebElement validator){
+        switch(validator.getAttribute("class")){
+            case "fa fa-question-circle redText": return "Red Circle";
+            case "fa fa-asterisk redText": return "Asterisk";
+            default: return "Error !!";
+        }
+    }
+    @FindBy(id = "txt_pickPopUp_srchParam")
+    WebElement docTypeControlTxtSearchWebElement;
+
+    @FindBy(id = "btn_pickPopUp_srch")
+    WebElement docTypeControlSearchBtnWebElement;
+
+    public void control(WebElement openControlWebElement,String searchTxt){
+        openControlWebElement.click();
+        docTypeControlTxtSearchWebElement.sendKeys(searchTxt);
+        docTypeControlSearchBtnWebElement.click();
+        driver.findElement(By.xpath("//div[@title='"+searchTxt+"']/../../td/input")).click();
+    }
+
 }
