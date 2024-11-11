@@ -64,6 +64,7 @@ public class TC_LoginPage extends TestInit {
                 Assert.assertEquals(loginPage.getErrorMessage(), loginPage.getErrorMessages(0));
         }
     }
+
     @DataProvider(name = "invalidPasswordData")
     public Object[] invalidPasswordData() {
         return new Object[]{"","000000","      ","1234567"};
