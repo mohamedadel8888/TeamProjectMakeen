@@ -164,11 +164,29 @@ public class CreateExternalMailPage extends BaseComp {
     }
 
     public void getTheValueOfCreatingDate() {
-        String name = dateOfCreatingMail.getAttribute("value");
-        System.out.println(name);
+        String date = dateOfCreatingMail.getAttribute("value");
+        System.out.println(date);
     }
 
+    public void getTheValueOfSubjectOfTheMail() {
+        String subject = subjectOfTextBox.getAttribute("value");
+        System.out.println(subject);
+    }
 
+    public void getTheValueOfNumberOfMail() {
+        String numberMail = numberOfEmail.getAttribute("value");
+        System.out.println(numberMail);
+    }
+
+    public void getTheValueOfTheDateOfTheMail() {
+        String MailDate = dateOfEmail.getAttribute("value");
+        System.out.println(MailDate);
+    }
+
+    public void getTheValueOfReferralNumberOfTheMail() {
+        String numberReferralMail = referredEmail.getAttribute("value");
+        System.out.println(numberReferralMail);
+    }
 
     public void pressOnGeneralSending() {
         generalSendingCheckBox.click();
