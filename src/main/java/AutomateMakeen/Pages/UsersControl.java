@@ -2,6 +2,7 @@ package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -59,13 +60,32 @@ public class UsersControl extends BaseComp {
     WebElement singleSearch;
     @FindBy (id ="btn_show_all")  /* عرض الكل */
     WebElement showAll;
+    @FindBy (id = "dv_Empty")  /* رساله لايوجد نتائج */
+    WebElement noResultMessage;
+    @FindBy (id = "txt_Page")
+    WebElement searchText;
+    @FindBy (id = "ddl_deps_collapsibleDiv")
+    WebElement divDeptChoose;
+
+    @FindBy(css = "li[value='-1']")
+    WebElement defaultChoose;
+
+    @FindBy (id = "ddl_deps_ddlSelectButtonTarget")
+    WebElement deptTargetChosen;
+
+
+    @FindBy (id = "spn_grid_paging")
+    WebElement pageNum;
+
+    @FindBy (xpath = "(//div[@full_title='000'])[1]")
+    WebElement firstElementInSearchTable;
 
 
     public void setChooseDept (String name){
         departmentChoose.click();
         WebElement search = driver.findElement(By.id("ddl_deps_txtSearch"));
         search.sendKeys(name);
-        List<WebElement> listItems = driver.findElements(By.xpath("(//label[normalize-space()="+name+"])[1]"));
+        List<WebElement> listItems = driver.findElements(By.xpath("(//div[@id='ddl_deps_YidWw4iKHVc%3d_nav'])[1]"));
         for (WebElement item : listItems) {
             if (item.getText().equals(name)) {
                 item.click();
@@ -73,10 +93,16 @@ public class UsersControl extends BaseComp {
             break;
         }
     }
-    public void clearChooseDept (){
+
+
+    public WebElement getChooseDept(){
+        return deptTargetChosen;
+    }
+    public void clearChooseDept(){
         departmentChoose.click();
-        WebElement noSelection = driver.findElement(By.xpath("(//i[@id='ddl_deps_ddlSelectButtonTarget'])[1]"));
-        noSelection.click();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollTop = 0;", divDeptChoose);
+        defaultChoose.click();
     }
 
 
@@ -134,7 +160,49 @@ public class UsersControl extends BaseComp {
     public void showall (){
         showAll.click();
     }
-
+    public WebElement getNoResultMessage() {
+        return noResultMessage;
+    }
+    public WebElement getPageNum() {
+        return pageNum;
+    }
+    public WebElement getSearchText() {
+        return searchText;
+    }
+    public void selectEmployeeByID(String number){
+        userID.sendKeys(number);
+        singleSearch();
+        WebElement select = driver .findElement(By.xpath("(//input[@id='cb_:1'])[1]"));
+        select.click();
+    }
+    public void addAccount (){
+        addAccount.click();
+    }
+    public void editAccount (){
+        editAccount.click();
+    }
+    public void permanentDisable(){
+        permanentDisable.click();
+    }
+    public void manageDisableUsers(){
+        manageDisableUsers.click();
+    }
+    public void activateUser(){
+        activateUser.click();
+    }
+    public void viewTasks (){
+        viewTasks.click();
+    }
+    public void editPassword(){
+        editPassword.click();
+    }
+    public void delegationControl (){
+        delegationControl.click();
+    }
+    public WebElement getUserName (){
+        WebElement firstElement = driver.findElement(By.xpath("(//td)[3]"));
+        return firstElement;
+    }
 
 
 }
