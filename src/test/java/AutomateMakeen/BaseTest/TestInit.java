@@ -5,8 +5,11 @@ import AutomateMakeen.Pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+
+import java.time.Duration;
 
 public class TestInit {
     protected String userID = "0342169";
@@ -22,8 +25,9 @@ public class TestInit {
     public WebDriver driver;
     public static LoginPage loginPage;
 
+
     public WebDriver initDriver(){
-        WebDriver driver = new EdgeDriver();
+        driver =new ChromeDriver();
         return driver;
     }
 
@@ -34,8 +38,9 @@ public class TestInit {
         contentAside = new ContentAside(driver);
     }
 
+
     public void quitDriver(){
-        driver.quit();
+        //driver.quit();
     }
 
     @AfterClass

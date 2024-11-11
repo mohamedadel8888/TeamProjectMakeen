@@ -1,5 +1,5 @@
 package AutomateMakeen.Pages;
-
+import java.util.concurrent.TimeUnit;
 import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,10 +8,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class ContentAside extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
+
     public ContentAside(WebDriver driver){
         super(driver);
         this.driver = driver;
@@ -38,6 +40,14 @@ public class ContentAside extends BaseComp {
     @FindBy (id = "s_m_141")/*اختيار انشاء بريد خارجي من قائمة البريد*/
     WebElement createExternalMailWebELement;
 
+    @FindBy(id = "cph_main_btn_edit_user")     /*اختيار زر تعديل الحساب من ادارة المستخدمين*/
+    private WebElement editUserButtonWebElement;
+
+    @FindBy(id = "cb_:1")       /*اختيار اول مربع من النتائج*/
+    private WebElement FirstCheckboxWebElement;
+
+
+
     public UsersControl goToUsersControl (){
         exWait.until(ExpectedConditions.elementToBeClickable(ControlPanel));
         ControlPanel.click();
@@ -51,4 +61,22 @@ public class ContentAside extends BaseComp {
         createExternalMailWebELement.click();
         return new CreateExternalMailPage(driver);
     }
+
+    public CreateExternalEditAccountPage goToCreateExternalEditAccount(){
+        exWait.until(ExpectedConditions.elementToBeClickable(ControlPanel));
+        ControlPanel.click();
+        userControl.click();
+        exWait.until(ExpectedConditions.elementToBeClickable(FirstCheckboxWebElement));
+        FirstCheckboxWebElement.click();
+        editUserButtonWebElement.click();
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return new CreateExternalEditAccountPage(driver);
+    }
+
+
+
 }
