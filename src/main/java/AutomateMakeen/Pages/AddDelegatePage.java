@@ -23,7 +23,8 @@ public class AddDelegatePage extends BaseComp {
     private By departmentNameDropDownList = By.cssSelector("#ddl_deps_ddlSelectButton > p");
     private By departmentNameSearch = By.id("ddl_deps_txtSearch");
     private By departmentNameText = By.id("ddl_deps_ddlSelectButtonTarget");
-    private By departmentNameListItems = By.id("ddl_deps_collapsibleDiv");
+    //private By departmentNameListItems = By.id("ddl_deps_collapsibleDiv");
+    private By departmentNameListItems = By.className("list_child");
 
     //Delegate Employee
     private By delegatedEmployeeDropDownList = By.id("ddl_delg_jobs_ddlSelectButton");
