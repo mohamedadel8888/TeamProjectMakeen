@@ -35,6 +35,8 @@ public class CreateExternalMailPage extends BaseComp {
     @FindBy(css = "span[onclick='extInboxCreation.showPickupDocType()']")
     WebElement openDocTypeControl;
 
+    @FindBy(id = "txt_doc_type_name")
+    WebElement typeNameWebElement;
     /*
     * Documnet Type Methods:
     *  1- insertDocType
@@ -95,6 +97,10 @@ public class CreateExternalMailPage extends BaseComp {
 
     public void docTypeControl(String txt){
         control(openDocTypeControl,txt);
+    }
+
+    public String getTypeName(){
+        return typeNameWebElement.getAttribute("value");
     }
 
     /******************************************
