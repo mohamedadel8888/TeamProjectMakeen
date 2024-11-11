@@ -24,7 +24,7 @@ public class TC_AddDelegatePage extends TestInit{
        homePage.goToHomePage();
        usersControl = contentAside.goToUsersControl();
        usersControl.selectEmployeeByID("3569897");
-        = usersControl.delegationControl();
+        //= usersControl.delegationControl();
 
         }
 
@@ -33,6 +33,6 @@ public class TC_AddDelegatePage extends TestInit{
     }
 
 
-}
+//}
 
 
