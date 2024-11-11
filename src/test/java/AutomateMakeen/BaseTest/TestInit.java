@@ -45,6 +45,6 @@ public class TestInit {
 
     @AfterClass
     public void afterClass(){
-        quitDriver();
+        //quitDriver();
     }
 }
