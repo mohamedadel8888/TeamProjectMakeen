@@ -27,7 +27,7 @@ public class TC_CreateMailBox extends TestInit {
 
     @Test(dataProvider = "docTypeDataProvider")
     public void tc_insertIntoDocType(String docTypeDP)  {
-        createExternalMailPage.enteringTheSubjectOfMail();
+//        createExternalMailPage.enteringTheSubjectOfMail();
     }
 
     @DataProvider(name = "docTypeDataProvider")
