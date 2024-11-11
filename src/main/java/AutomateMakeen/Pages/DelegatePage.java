@@ -87,13 +87,13 @@ public class DelegatePage extends BaseComp {
         driver.findElement(rejectPopUpButton).click();
     }
 
-    /*
+
     public UsersControl clickGoBackButton(){
         driver.findElement(goBackButton).click();
-        return new UserControl(driver);
+        return new UsersControl(driver);
+
     }
 
-     */
 
 
 
