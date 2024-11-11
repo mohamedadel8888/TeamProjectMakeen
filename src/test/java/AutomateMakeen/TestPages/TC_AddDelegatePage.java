@@ -30,14 +30,25 @@ public class TC_AddDelegatePage extends TestInit{
    }
 
     @Test
-    public void scrollinDepartmentName(){
+    public void addNewDelegateWithValidData(){
         usersControl.selectEmployeeByID("3569897");
         delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
-        //addDelegatePage.selectDepartmentNameFromDropDown("إدارة عسير");
-        addDelegatePage.scrollInDepartmentNameDDL("إدارة عسير");
-        //addDelegatePage.selectDelegatedEmployeeFromDropDown("إدارة عسير");
-        //addDelegatePage.chooseNewPeriodRadioButton();
+        addDelegatePage.selectDepartmentNameFromDropDown("إدارة عسير");
+        //addDelegatePage.scrollInDepartmentNameDDL("إدارة عسير");
+        addDelegatePage.selectDelegatedEmployeeFromDropDown("محمد حسنى");
+        addDelegatePage.chooseNewPeriodRadioButton();
+        addDelegatePage.inputDelegateDateFrom("11/05/1446");
+        addDelegatePage.inputDelegateDateTo("25/05/1446");
+        addDelegatePage.inputTimePeriodFrom("09:00");
+        addDelegatePage.selectTimePeriodFromDropDown("صباحا");
+        addDelegatePage.inputTimePeriodTo("10:00");
+        addDelegatePage.selectTimePeriodToDropDown("مساءا");
+        addDelegatePage.clickSaveButton();
+        addDelegatePage.acceptPopUp();
+        addDelegatePage.clickGoBackButton();
+        delegatePage.getDelegateResult("محمد حسنى");
+
     }
 
 

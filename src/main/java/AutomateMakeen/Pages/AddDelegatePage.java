@@ -55,7 +55,8 @@ public class AddDelegatePage extends BaseComp {
 
     //Buttons
     private By saveButton = By.cssSelector("[value='حفظ']");
-    private By goBackButton = By.cssSelector("[value='عودة']");
+    //private By goBackButton = By.cssSelector("[value='عودة']");
+    private By goBackButton = By.cssSelector("#fs_add_deleg > div.btn-bx > input:nth-child(2)");
 
 
     //PopUp Text
@@ -207,6 +208,8 @@ public class AddDelegatePage extends BaseComp {
     //Time Period Methods
 
     public void inputTimePeriodFrom(String date){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(delegateTimePeriodFromField));
+        driver.findElement(delegateTimePeriodFromField).click();
         driver.findElement(delegateTimePeriodFromField).sendKeys(date);
     }
 
@@ -231,6 +234,7 @@ public class AddDelegatePage extends BaseComp {
     }
 
     public DelegatePage clickGoBackButton(){
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(goBackButton));
         driver.findElement(goBackButton).click();
         return new DelegatePage(driver);
     }
