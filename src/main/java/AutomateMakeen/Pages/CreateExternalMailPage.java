@@ -168,7 +168,7 @@ public class CreateExternalMailPage extends BaseComp {
         System.out.println(name);
     }
 
-    public void
+
 
     public void pressOnGeneralSending() {
         generalSendingCheckBox.click();
