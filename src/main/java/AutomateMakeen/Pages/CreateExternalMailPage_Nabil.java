@@ -19,12 +19,16 @@ public class CreateExternalMailPage_Nabil extends BaseComp {
     }
 
 
+    /**************************************************
+     * dateOfCreatingMail Methods.
+     ***************************************************/
     @FindBy (id = "cph_main_txt_tr_date")
-    WebElement dateOfCreatingMail;                   /*تاريخ انشاء البريد و يأخذ تاريخ اليوم تلقائيا ولا يمكن تغيره */
+    WebElement dateOfCreatingMail;                  /*تاريخ انشاء البريد و يأخذ تاريخ اليوم تلقائيا ولا يمكن تغيره */
 
+    public String getTheValueOfCreatingDate() {
+        return dateOfCreatingMail.getAttribute("value");
+    }
 
-    @FindBy (id = "txt_tr_ref_letter")
-    WebElement referredEmail;                      /*الخطاب المشار اليه */
 
 
 
@@ -88,6 +92,9 @@ public class CreateExternalMailPage_Nabil extends BaseComp {
     /**************************************************
      *Number Of Referral Document(mail) Methods.
      ***************************************************/
+    @FindBy (id = "txt_tr_ref_letter")
+    WebElement referredEmail;                      /*الخطاب المشار اليه */
+
     public void enteringTheReferralMailNumber(String ReferralMailNumber) {
         referredEmail.sendKeys(ReferralMailNumber);
     }
@@ -95,6 +102,8 @@ public class CreateExternalMailPage_Nabil extends BaseComp {
     public String getTheValueOfReferralNumberOfTheMail() {
         return referredEmail.getAttribute("value");
     }
+
+
 
 
     /**************************************************
@@ -143,7 +152,4 @@ public class CreateExternalMailPage_Nabil extends BaseComp {
     }
 
 
-    public String getTheValueOfCreatingDate() {
-        return dateOfCreatingMail.getAttribute("value");
-    }
 }
