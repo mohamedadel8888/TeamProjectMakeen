@@ -348,23 +348,6 @@ public class CreateExternalMailPage extends BaseComp {
     @FindBy (id = "cph_main_chk_sendT3mem")
     WebElement generalSendingCheckBox;
 
-    /**************************************************
-     *Error Message Methods.
-     ***************************************************/
-    @FindBy(id = "spnA_txt_tr_subject")
-    WebElement subjectValidator;
-
-    @FindBy(css = "fa fa-question-circle redText")
-    WebElement subjectErrorMsg;
-
-    public String getSubValidatorState(){
-        return getValidatorState(subjectValidator);
-    }
-
-    public String getSubErrorMsg(){
-        subjectValidator.click();
-        return subjectErrorMsg.getText();
-    }
 
 
 
