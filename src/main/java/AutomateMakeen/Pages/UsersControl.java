@@ -195,8 +195,9 @@ public class UsersControl extends BaseComp {
     public void viewTasks (){
         viewTasks.click();
     }
-    public void editPassword(){
+    public EditPassword editPassword(){
         editPassword.click();
+        return new EditPassword(driver);
     }
     public DelegatePage delegationControl (){
         delegationControl.click();

@@ -13,8 +13,8 @@ public class TC_SearchInUsersControl extends TestInit {
 
     @BeforeClass(description = "Preconditions for each test in the class :" +
             "1- Login with authorized User." +
-            "2- Navigate to Create External Mail Page By Press 'البريد' in the content Aside" +
-            "then press 'انشاء بريد خارجي'")
+            "2- Navigate to User Control Page By Press 'لوحه التحكم ' in the content Aside" +
+            "then press 'ادارة المستخدمين'")
     public void setupClass()  {
         lunchDriver();
         loginPage.goToLoginPage();
@@ -144,7 +144,5 @@ public class TC_SearchInUsersControl extends TestInit {
         usersControl.selectEmployeeByID("1020311");
         Assert.assertEquals(usersControl.getUserName().getText(),"حمدي حمد حامد الحمدون");
     }
-
-
 }
 
