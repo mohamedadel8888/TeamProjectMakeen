@@ -26,8 +26,7 @@ public class TC_CreateMailBox extends TestInit {
         HomePage homePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
         homePage.goToHomePage();
         createExternalMailPage = contentAside.goToCreateExternalMail();
-        createExternalMailPage.getSubValidatorState();
-        createExternalMailPage.getSubErrorMsg();
+
     }
 
     @Test(dataProvider = "docTypeDataProvider")
