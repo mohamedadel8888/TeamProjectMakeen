@@ -11,28 +11,22 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
-public class TC_AddDelegatePage extends TestInit{
+public class TC_AddDelegatePage extends TestInit {
 
     AddDelegatePage addDelegatePage;
     UsersControl usersControl;
 
     @BeforeClass
-   public void setupClass()  {
-       lunchDriver();
-       loginPage.goToLoginPage();
-       HomePage homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
-       homePage.goToHomePage();
-       usersControl = contentAside.goToUsersControl();
-       usersControl.selectEmployeeByID("3569897");
-        = usersControl.delegationControl();
-
-        }
-
+    public void setupClass() {
+        lunchDriver();
+        loginPage.goToLoginPage();
+        HomePage homePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
+        homePage.goToHomePage();
+        usersControl = contentAside.goToUsersControl();
+        usersControl.selectEmployeeByID("3569897");
 
 
     }
-
-
 }
 
 

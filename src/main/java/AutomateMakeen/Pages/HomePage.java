@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class HomePage extends BaseComp {
-    protected WebDriver driver;
+    private WebDriver driver;
     private WebDriverWait exWait;
     @FindBy(id = "btn_session_time_out")
     WebElement signOutBtn;
@@ -23,8 +23,7 @@ public class HomePage extends BaseComp {
         super(driver);
         this.driver = driver;
         exWait = new WebDriverWait(driver , Duration.ofSeconds(10));
-        contentAside = new ContentAside(driver);
-
+        //contentAside = new ContentAside(driver);
     }
     public String getHomeUrl(){
         exWait.until(ExpectedConditions.urlContains("MainPage.aspx"));

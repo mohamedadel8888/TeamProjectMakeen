@@ -38,6 +38,9 @@ public class LoginPage extends BaseComp {
     @FindBy(id = "error_div")
     WebElement errorMsgWebElement;
 
+    @FindBy (id = "dvMobileCode")
+    WebElement mobileCode;
+
     public LoginPage (WebDriver driver){
         super(driver);
         this.driver = driver;
@@ -95,5 +98,8 @@ public class LoginPage extends BaseComp {
     public void clearAllFeild(){
         idWebElement.clear();
         passwordWebElement.clear();
+    }
+    public WebElement getMobileCode() {
+        return mobileCode;
     }
 }
