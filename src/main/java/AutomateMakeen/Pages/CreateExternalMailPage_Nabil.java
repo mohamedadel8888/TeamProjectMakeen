@@ -150,4 +150,23 @@ public class CreateExternalMailPage_Nabil extends BaseComp {
     }
 
 
+    /**************************************************
+     *Error Message Methods.
+     ***************************************************/
+    @FindBy(id = "spnA_txt_tr_subject")
+    WebElement subjectValidator;
+
+    @FindBy(css = "fa fa-question-circle redText")
+    WebElement subjectErrorMsg;
+
+    public String getRecipientValidatorState(){
+        return getValidatorState(subjectValidator);
+    }
+
+    public String getRecipientErrorMsg(){
+        subjectValidator.click();
+        return subjectErrorMsg.getText();
+    }
+
+
 }
