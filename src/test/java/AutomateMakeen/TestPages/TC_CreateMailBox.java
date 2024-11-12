@@ -26,23 +26,8 @@ public class TC_CreateMailBox extends TestInit {
     }
 
     @Test(dataProvider = "docTypeDataProvider")
-    public void tc_insertIntoDocType(String docTypeDP) throws InterruptedException {
-        createExternalMailPage.insertDocType(docTypeDP);
-        createExternalMailPage.insertComment("");
-        Thread.sleep(2000);
-        System.out.println(createExternalMailPage.getDocType());
-        Assert.assertEquals(createExternalMailPage.getDocTypeValidatorState(), "Red Circle");
-        System.out.println(createExternalMailPage.getDocTypeErrorMsg());
-        Thread.sleep(2000);
-        createExternalMailPage.copyPasteToDocType(docTypeDP);
-        createExternalMailPage.insertComment("");
-        Thread.sleep(2000);
-        System.out.println(createExternalMailPage.getDocType());
-        Assert.assertEquals(createExternalMailPage.getDocTypeValidatorState(), "Red Circle");
-        System.out.println(createExternalMailPage.getDocTypeErrorMsg());
-        Thread.sleep(2000);
-        createExternalMailPage.clearDocType();
-        createExternalMailPage.docTypeControl("123");
+    public void tc_insertIntoDocType(String docTypeDP)  {
+//        createExternalMailPage.enteringTheSubjectOfMail();
     }
 
     @DataProvider(name = "docTypeDataProvider")

@@ -1,14 +1,15 @@
 package AutomateMakeen.Pages;
-import java.util.concurrent.TimeUnit;
 import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
+import AutomateMakeen.Pages.UsersControl;
 import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.JavascriptExecutor;
+
 
 public class ContentAside extends BaseComp {
     private WebDriver driver;
@@ -17,66 +18,64 @@ public class ContentAside extends BaseComp {
     public ContentAside(WebDriver driver){
         super(driver);
         this.driver = driver;
-        exWait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    }
+        exWait = new WebDriverWait(driver, Duration.ofSeconds(10));}
 
     @FindBy(xpath = "(//i[@class='fa fa-angle-double-down'])[1]")
-    WebElement empAffairArrowWebElement;
+    private WebElement empAffairArrowWebElement;
 
-    @FindBy (id = "s_m_65")
-    WebElement adminStructureWebElement;
+    @FindBy(id = "s_m_65")
+    private WebElement adminStructureWebElement;
 
     @FindBy(id = "cph_main_btn_AddElement")
-    WebElement addNewDeptWebElement;
+    private WebElement addNewDeptWebElement;
 
-    @FindBy (id = "prog_cp")
-    WebElement ControlPanel;  /*لوحه التحكم */
-    @FindBy ( id = "s_m_62")
-    WebElement userControl ; /*ادارة المستخدمين */
+    @FindBy(id = "prog_cp")
+    private WebElement controlPanel;  /*لوحه التحكم */
 
-    @FindBy (xpath = "(//i[@class='fa fa-angle-double-down'])[3]")
-    WebElement mailArrowWebElement; /*زر قائمةالبريد في القائمة الجانية*/
+    @FindBy(id = "s_m_62")
+    private WebElement userControl;  /*ادارة المستخدمين */
 
-    @FindBy (id = "s_m_141")/*اختيار انشاء بريد خارجي من قائمة البريد*/
-    WebElement createExternalMailWebELement;
+    @FindBy(xpath = "(//i[@class='fa fa-angle-double-down'])[3]")
+    private WebElement mailArrowWebElement;  /*زر قائمةالبريد في القائمة الجانية*/
 
-    @FindBy(id = "cph_main_btn_edit_user")     /*اختيار زر تعديل الحساب من ادارة المستخدمين*/
-    private WebElement editUserButtonWebElement;
+    @FindBy(id = "s_m_141")
+    private WebElement createExternalMailWebELement;  /*اختيار انشاء بريد خارجي من قائمة البريد*/
 
-    @FindBy(id = "cb_:1")       /*اختيار اول مربع من النتائج*/
-    private WebElement FirstCheckboxWebElement;
+    @FindBy(id = "cph_main_btn_edit_user")
+    private WebElement editUserButtonWebElement;  /*اختيار زر تعديل الحساب من ادارة المستخدمين*/
+
+    @FindBy(id = "cb_:1")
+    private WebElement firstCheckboxWebElement;  /*اختيار اول مربع من النتائج*/
+
+    @FindBy (id = "txt_user_id")  /* رقم المستخدم */
+    private WebElement UserIDWebElement;
+
+    @FindBy (id ="btn_srch")    /* بحث */
+    private  WebElement singleSearch;
 
 
 
-    public UsersControl goToUsersControl (){
-        exWait.until(ExpectedConditions.elementToBeClickable(ControlPanel));
-        ControlPanel.click();
+    public UsersControl goToUsersControl() {
+        exWait.until(ExpectedConditions.elementToBeClickable(controlPanel));
+        controlPanel.click();
         userControl.click();
-        return new UsersControl(driver);
-    }
+        return new UsersControl(driver);}
 
-    public CreateExternalMailPage goToCreateExternalMail(){
+    public CreateExternalMailPage goToCreateExternalMail() {
         exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
         mailArrowWebElement.click();
         createExternalMailWebELement.click();
-        return new CreateExternalMailPage(driver);
-    }
+        return new CreateExternalMailPage(driver);}
 
-    public CreateExternalEditAccountPage goToCreateExternalEditAccount(){
-        exWait.until(ExpectedConditions.elementToBeClickable(ControlPanel));
-        ControlPanel.click();
+    public CreateExternalEditAccountPage goToCreateExternalEditAccount() {
+        exWait.until(ExpectedConditions.elementToBeClickable(controlPanel));
+        controlPanel.click();
         userControl.click();
-        exWait.until(ExpectedConditions.elementToBeClickable(FirstCheckboxWebElement));
-        FirstCheckboxWebElement.click();
+        exWait.until(ExpectedConditions.elementToBeClickable(firstCheckboxWebElement));
+        UserIDWebElement.sendKeys("1654198");
+        singleSearch.click();
+        firstCheckboxWebElement.click();
         editUserButtonWebElement.click();
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         return new CreateExternalEditAccountPage(driver);
     }
-
-
-
 }

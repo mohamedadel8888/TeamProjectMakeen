@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DelegatePage extends BaseComp {
 
-    private WebDriver driver;
+    protected WebDriver driver;
     //private WebDriverWait wait;
 
     private By delegatePageTitle = By.id("spn_title");
@@ -54,7 +54,7 @@ public class DelegatePage extends BaseComp {
         return listSearchResults.stream().anyMatch(s -> s.findElement(resultItems).getText().contains(delegate));
     }
 
-    public List<WebElement> getDelegatesList(String delegates) {
+    public List<WebElement> getDelegateList(String delegates) {
         return driver.findElements(By.xpath("//*[contains(@full_title, '" + delegates + "')]"));
     }
 

@@ -8,25 +8,17 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import AutomateMakeen.Pages.CreateExternalEditAccountPage;
 
 public class EditAccountPage extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
-    private static int flag = 0;
 
     public EditAccountPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         exWait = new WebDriverWait(driver, Duration.ofSeconds(10));}
 
-    @FindBy(id = "spn_title")
-    private WebElement editAccountTitleWebElement;
-
-    @FindBy(id = "span_deps")
-    private WebElement departmentNameWebElement;
-
-    @FindBy(id = "span_emp")
-    private WebElement userNameWebElement;
 
     @FindBy(name = "left")
     private WebElement leftButtonWebElement;
@@ -35,10 +27,10 @@ public class EditAccountPage extends BaseComp {
     private WebElement rightButtonWebElement;
 
     @FindBy(name = "all_right")
-    private WebElement allRightButtonWebElement;
+    private WebElement allLeftButtonWebElement;
 
     @FindBy(name = "all_left")
-    private WebElement allLeftButtonWebElement;
+    private WebElement allRightButtonWebElement;
 
     @FindBy(xpath = "//input[@value='حفظ']")
     private WebElement saveButtonWebElement;
@@ -55,21 +47,27 @@ public class EditAccountPage extends BaseComp {
     @FindBy(css = "div.popup_content")
     private WebElement ErrorMSWebElement;
 
+    @FindBy(id = "slc_all_activities")
+    private WebElement selectAllRightEmptyWebElement;
 
-    @FindBy(css = "select[name='66 الإعدادات']") // Replace 'yourSelectName'
-    private WebElement selectSettingsWebElement;
+    @FindBy(id = "slc_user_activities")
+    private WebElement selectAllLeftEmptyWebElement;
 
-    @FindBy(css = "select[name='66 الإعدادات -البريد']") // Replace 'yourSelectName'
-    private WebElement selectPostSettingsElement;
+    @FindBy(xpath = "//*[@id='slc_all_activities']")
+    private WebElement ArchiveSearchViewTransactionWebElement;
 
+    @FindBy(xpath = "//*[@id='slc_all_activities']/option[2]")
+    private WebElement DeleteEmployeeWebElement;
 
-    public void clickSettingsOption() {
-        Select select = new Select(selectPostSettingsElement);
-        select.selectByValue("29390");}
+    @FindBy(xpath = "//*[@id='spn_title']")
+    private WebElement editAccountTitleWebElement;
 
-    public void clickPostSettingsOption() {
-        Select select = new Select(selectSettingsWebElement);
-        select.selectByValue("27549");}
+    @FindBy(xpath = "//*[@id='span_deps']")
+    private WebElement departmentNameWebElement;
+
+    @FindBy(xpath = "//*[@id='span_emp']")
+    private WebElement userNameWebElement;
+
 
     public String getTitleText() {
         return editAccountTitleWebElement.getText();}
@@ -77,8 +75,24 @@ public class EditAccountPage extends BaseComp {
     public String getDepartmentName() {
         return departmentNameWebElement.getText();}
 
-    public String getSpanText() {
+    public String getSUserName() {
         return userNameWebElement.getText();}
+
+    public void clickArchiveTransaction() {
+        Select select = new Select(ArchiveSearchViewTransactionWebElement);
+        select.selectByValue("42966");}
+
+    public boolean isSelectSystemEmpty() {
+        Select select = new Select(selectAllRightEmptyWebElement);
+        return select.getAllSelectedOptions().isEmpty();}
+
+    public boolean isSelectUserEmpty() {
+        Select select = new Select(selectAllLeftEmptyWebElement);
+        return select.getAllSelectedOptions().isEmpty();}
+
+    public void clickDeleteEmployeeWeb() {
+        Select select = new Select(DeleteEmployeeWebElement);
+        select.selectByValue("42967");}
 
     public void clickLeftButton() {
         leftButtonWebElement.click();}
@@ -98,7 +112,7 @@ public class EditAccountPage extends BaseComp {
     public void clickBackButton() {
         backButtonWebElement.click();}
 
-    public void clickConfirmButton() {
+    public void clickAgreeButton() {
         confirmButtonWebElement.click();}
 
     public void clickNotAgreeButton() {
