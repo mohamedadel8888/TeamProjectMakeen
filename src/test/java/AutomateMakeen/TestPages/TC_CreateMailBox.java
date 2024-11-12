@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 public class TC_CreateMailBox extends TestInit {
     CreateExternalMailPage createExternalMailPage;
 
-    @BeforeClass(description = "Preconditions for each test in the class :" +
+    @Test(description = "Preconditions for each test in the class :" +
             "السماحية للدخول الي النظام : الأمانة الإلكترونية" +
             "الصلاحية للدخول الى البرنامج الرئيسي البريد ." +
             "الصلاحية للدخول الى البرنامج الفرعي انشاء بريد خارجي ." +
@@ -23,6 +23,8 @@ public class TC_CreateMailBox extends TestInit {
         HomePage homePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
         homePage.goToHomePage();
         createExternalMailPage = contentAside.goToCreateExternalMail();
+        createExternalMailPage.getSubValidatorState();
+        createExternalMailPage.getSubErrorMsg();
     }
 
     @Test(dataProvider = "docTypeDataProvider")
