@@ -365,6 +365,7 @@ public class CreateExternalMailPage extends BaseComp {
         subjectValidator.click();
         return subjectErrorMsg.getText();
     }
+
 }
 
 
