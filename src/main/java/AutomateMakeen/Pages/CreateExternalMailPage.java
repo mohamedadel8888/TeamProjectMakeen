@@ -443,5 +443,21 @@ public class CreateExternalMailPage extends BaseComp {
     public void pressOnGeneralSending() {
         generalSendingCheckBox.click();
     }
+    /**************************************************
+     *Error Message Methods.
+     ***************************************************/
+    @FindBy(id = "spnA_txt_tr_subject")
+    WebElement subjectValidator;
 
+    @FindBy(css = "fa fa-question-circle redText")
+    WebElement subjectErrorMsg;
+
+    public String getSubjectValidatorState(){
+        return getValidatorState(subjectValidator);
+    }
+
+    public String getSubjectErrorMsg(){
+        subjectValidator.click();
+        return subjectErrorMsg.getText();
+    }
 }
