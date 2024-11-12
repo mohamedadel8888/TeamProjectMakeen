@@ -25,9 +25,7 @@ public class CreateExternalMailPage_Nabil extends BaseComp {
     @FindBy (id = "cph_main_txt_tr_date")
     WebElement dateOfCreatingMail;                  /*تاريخ انشاء البريد و يأخذ تاريخ اليوم تلقائيا ولا يمكن تغيره */
 
-    public String getTheValueOfCreatingDate() {
-        return dateOfCreatingMail.getAttribute("value");
-    }
+    public String getTheValueOfCreatingDate() {return dateOfCreatingMail.getAttribute("value");}
 
 
 
