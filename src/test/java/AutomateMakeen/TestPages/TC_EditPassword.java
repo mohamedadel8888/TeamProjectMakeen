@@ -34,21 +34,21 @@ public class TC_EditPassword extends TestInit {
         driver.navigate().refresh();
     }
 
-    /*@Test
-    public void tc_ChangePasswordValidScenario (){
+    @Test
+    public void tc_ChangePasswordValidScenario (){    /* تغيير كلمه المرور بطريقه صحيحه */
         usersControl.selectEmployeeByID("0123456");
         editPassword = usersControl.editPassword();
-        editPassword.setNewPassword("7000123mmm");
-        editPassword.setConfirmNewPassword("7000123mmm");
+        editPassword.setNewPassword("7000123mmmm");
+        editPassword.setConfirmNewPassword("7000123mmmm");
         editPassword.save();
         editPassword.acceptIcon();
         homePage = new HomePage(driver);
         loginPage =homePage.signOut();
         loginPage.loginUserWithoutRemMe("0123456","7000123mmm");
         Assert.assertTrue(loginPage.getMobileCode().isDisplayed());
-    }*/
+    }
     @Test
-    public void tc_TestErrorMessages (){
+    public void tc_TestErrorMessages (){   /* التحقق من رسائل الخطأ */
         usersControl.selectEmployeeByID("0123456");
         editPassword = usersControl.editPassword();
         editPassword.save();
@@ -56,7 +56,7 @@ public class TC_EditPassword extends TestInit {
         Assert.assertEquals(editPassword.validation2(),"Red Circle");
     }
     @Test
-    public void tc_lessThan6Numbers(){
+    public void tc_lessThan6Numbers(){  /* التحقق من ادخال كلمه مرورو اقل من 6 ارقام */
         usersControl.selectEmployeeByID("0123456");
         editPassword = usersControl.editPassword();
         editPassword.setNewPassword("12345");
@@ -64,7 +64,7 @@ public class TC_EditPassword extends TestInit {
         Assert.assertEquals(editPassword.getErrorMessage1(),"كلمة المرور تقبل أكبر من 5 خانات");
     }
     @Test
-    public void tc_passwordNotMatching (){
+    public void tc_passwordNotMatching (){     /*التحقق من عدم مطابقه كلمه المرورو */
         usersControl.selectEmployeeByID("0123456");
         editPassword = usersControl.editPassword();
         editPassword.setNewPassword("123456");
@@ -73,7 +73,7 @@ public class TC_EditPassword extends TestInit {
         Assert.assertEquals(editPassword.getErrorMessage2(),"عفواً،كلمة المرور غير متطابقة");
     }
     @Test
-    public void tc_enterPasswordAsSameAsUserNumber(){
+    public void tc_enterPasswordAsSameAsUserNumber(){   /* ادخال كلمه مرور بنفس ارقام رقم الموظف */
         usersControl.selectEmployeeByID("0123456");
         editPassword = usersControl.editPassword();
         editPassword.setNewPassword("0123456");
@@ -86,7 +86,7 @@ public class TC_EditPassword extends TestInit {
     }
 
     @Test
-    public void tc_enterPasswordAsSameAsUserName(){
+    public void tc_enterPasswordAsSameAsUserName(){    /* ادخال كلمه مرور بنفس ارقام اسم الموظف */
         usersControl.selectEmployeeByID("6956529");
         editPassword = usersControl.editPassword();
         editPassword.setNewPassword("121212");
@@ -98,7 +98,7 @@ public class TC_EditPassword extends TestInit {
         Assert.assertEquals(editPassword.getErrorMessage2(),"عفواً،كلمة المرور غير مناسبة يرجي تغيرها بصيغة أخرى");
     }
     @Test
-    public void tc_enterEasyPassword(){
+    public void tc_enterSameNumberInPassword(){       /* ادخال نفس الرقم فقط  */
         usersControl.selectEmployeeByID("0123456");
         editPassword = usersControl.editPassword();
         editPassword.setNewPassword("111111");
@@ -112,7 +112,21 @@ public class TC_EditPassword extends TestInit {
         Assert.assertEquals(e2,"عفواً،كلمة المرور غير مناسبة يرجي تغيرها بصيغة أخرى");
     }
     @Test
-    public void tc_enterDataAndReturnWithoutSaving(){
+    public void tc_enterSameLetterInPassword(){       /* ادخال نفس الحرف فقط  */
+        usersControl.selectEmployeeByID("0123456");
+        editPassword = usersControl.editPassword();
+        editPassword.setNewPassword("aaaaaa");
+        editPassword.setConfirmNewPassword("aaaaaa");
+        editPassword.save();
+        String m1 = editPassword.validation1();
+        String e1 = editPassword.getErrorMessage1();
+        String m2 = editPassword.validation2();
+        String e2 = editPassword.getErrorMessage2();
+        Assert.assertEquals(e1,"عفواً،كلمة المرور غير مناسبة يرجي تغيرها بصيغة أخرى");
+        Assert.assertEquals(e2,"عفواً،كلمة المرور غير مناسبة يرجي تغيرها بصيغة أخرى");
+    }
+    @Test
+    public void tc_enterDataAndReturnWithoutSaving(){     /* ادخال بيانات والعوده بدون حفظ */
         usersControl.selectEmployeeByID("0123456");
         editPassword = usersControl.editPassword();
         editPassword.setNewPassword("111111");
