@@ -19,7 +19,6 @@ public class TC_SearchInUsersControl extends TestInit {
         lunchDriver();
         loginPage.goToLoginPage();
         HomePage homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
-        homePage.goToHomePage();
         usersControl = contentAside.goToUsersControl();
     }
 
