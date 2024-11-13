@@ -315,13 +315,18 @@ public class CreateExternalMailPage extends BaseComp {
     public void insertComment(String comment){
         commentWebElement.sendKeys(comment);
     }
+
+
     /**************************************************
      * dateOfCreatingMail Methods.
      ***************************************************/
     @FindBy (id = "cph_main_txt_tr_date")
     WebElement dateOfCreatingMail;                  /*تاريخ انشاء البريد و يأخذ تاريخ اليوم تلقائيا ولا يمكن تغيره */
 
-    public String getTheValueOfCreatingDate() {return dateOfCreatingMail.getAttribute("value");}
+    public String getTheValueOfCreatingDate() {
+        return dateOfCreatingMail.getAttribute("value");
+    }
+
 
 
 
@@ -443,6 +448,8 @@ public class CreateExternalMailPage extends BaseComp {
     public void pressOnGeneralSending() {
         generalSendingCheckBox.click();
     }
+
+
     /**************************************************
      *Error Message Methods.
      ***************************************************/
@@ -452,12 +459,18 @@ public class CreateExternalMailPage extends BaseComp {
     @FindBy(css = "fa fa-question-circle redText")
     WebElement subjectErrorMsg;
 
-    public String getSubjectValidatorState(){
+    public String getValidatorValidatorState(){
         return getValidatorState(subjectValidator);
     }
 
-    public String getSubjectErrorMsg(){
+    public String getValidatorErrorMsg(){
         subjectValidator.click();
         return subjectErrorMsg.getText();
     }
+
 }
+
+
+//    public void copyPasteToSub(String sub){
+//       cutPastAction(,,sub);
+//    }
