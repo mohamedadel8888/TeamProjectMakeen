@@ -1,5 +1,6 @@
 package AutomateMakeen.Pages;
 import AutomateMakeen.Base.BaseComp;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -77,5 +78,19 @@ public class ContentAside extends BaseComp {
         firstCheckboxWebElement.click();
         editUserButtonWebElement.click();
         return new CreateExternalEditAccountPage(driver);
+    }
+    @FindBy(id = "s_m_69")
+    WebElement exportedMailWebElement;
+    public ExportedMails goToExportedMail(){
+        try{
+            exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
+            mailArrowWebElement.click();
+            exportedMailWebElement.click();
+            return new ExportedMails(driver);
+        }catch(NoSuchElementException e){
+            mailArrowWebElement.click();
+            exportedMailWebElement.click();
+            return new ExportedMails(driver);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,7 +15,7 @@ import java.time.Duration;
 import java.util.List;
 
 public class CreateExternalMailPage extends BaseComp {
-    protected WebDriver driver;
+    private WebDriver driver;
     private WebDriverWait exWait;
     public CreateExternalMailPage(WebDriver driver){
         super(driver);
@@ -121,7 +122,7 @@ public class CreateExternalMailPage extends BaseComp {
     @FindBy(css = "b[id='spnA_txt_receiver_num'] span")
     WebElement receiverErrorMsgWebElement;
 
-    @FindBy(css = "span[onclick=pickPopUp.initialize('recivers','txt_receiver_num');]")
+    @FindBy(xpath = "//span[@onclick=\"pickPopUp.initialize('recivers','txt_receiver_num');\"]")
     WebElement openReceiverControl;
 
     @FindBy(id = "txt_receiver_name")
@@ -153,6 +154,7 @@ public class CreateExternalMailPage extends BaseComp {
     }
 
     public void setReceiverUsingControl(String receiverNum){
+        exWait.until(ExpectedConditions.visibilityOf(openReceiverControl));
         control(openReceiverControl,receiverNum);
     }
 
@@ -172,7 +174,7 @@ public class CreateExternalMailPage extends BaseComp {
     @FindBy(css = "b[id='spnA_txt_sender_num'] span")
     WebElement senderErrorMsgWebElement;
 
-    @FindBy(css = "span[onclick=pickPopUp.initialize('senders','txt_sender_num');]")
+    @FindBy(xpath = "//span[@onclick=\"pickPopUp.initialize('senders','txt_sender_num');\"]")
     WebElement openSenderControl;
 
     @FindBy(id = "txt_sender_name")
@@ -223,7 +225,7 @@ public class CreateExternalMailPage extends BaseComp {
     @FindBy(css = "b[id='spnA_txt_treat_classification_num'] span")
     WebElement treatClassificationErrorMsgWebElement;
 
-    @FindBy(css = "span[onclick='extInboxCreation.initalizeClassificationPopUp()']")
+    @FindBy(xpath = "//span[@onclick='extInboxCreation.initalizeClassificationPopUp()']")
     WebElement openTreatClassificationControl;
 
     @FindBy(id = "txt_treat_classification_name")
@@ -260,6 +262,34 @@ public class CreateExternalMailPage extends BaseComp {
 
     public String getTreatClassificationName(){
         return treatClassificationNameWebElement.getAttribute("value");
+    }
+    @FindBy(css = "span[onclick='extInboxCreation.initalizeClassificationPopUp()']")
+    WebElement openControlClassification;
+    @FindBy(id = "itemid_ddlSelectButtonTarget")
+    WebElement controlDDLWebElement;
+
+    @FindBy(css = "div[class='col-bx-5'] div[class=' '] input[type='text']")
+    WebElement controlSearchWebElement;
+
+    @FindBy(id = "itemid_txtSearch")
+    WebElement ddlSearchWebElement;
+
+    @FindBy(css = "div[class='content_bx'] li")
+    List<WebElement> listOfDdlItems;
+
+    @FindBy(css = "input[value='بحث']")
+    WebElement searchWebElement;
+    public String setTreatClassificationUsingControl(String mainClass , String subClass ){
+        openTreatClassificationControl.click();
+//        controlDDLWebElement.click();
+//        ddlSearchWebElement.sendKeys(mainClass);
+//        WebElement item = listOfDdlItems.stream().filter(s->s.getText().equals(mainClass)).findFirst().orElse(null);
+//        item.click();
+        controlSearchWebElement.sendKeys(subClass);
+        searchWebElement.click();
+        String activePeriod = driver.findElement(By.xpath("//div[contains(text(),'"+subClass+"')]/../../td[5]")).getText();
+        driver.findElement(By.xpath("//div[contains(text(),'"+subClass+"')]/../../td[1]")).click();
+        return activePeriod;        //return active period
     }
     /******************************************
      *    الاحالة
@@ -466,6 +496,26 @@ public class CreateExternalMailPage extends BaseComp {
     public String getValidatorErrorMsg(){
         subjectValidator.click();
         return subjectErrorMsg.getText();
+    }
+
+    @FindBy(id = "btn_EtEntrySend")
+    WebElement sendBtnWebElement;
+
+    @FindBy(css = "input[value='موافق']")
+    WebElement confirmWebElement;
+    public void clickSendConfirmBtn(){
+        sendBtnWebElement.click();
+        confirmWebElement.click();
+    }
+    /*********************************************
+     *                 Successful Adding
+     *********************************************/
+    @FindBy(css = ".txt_msg")
+    WebElement successfulMsgWebElement;
+
+    public boolean validateSuccessfulCreatingMail(){
+        exWait.until(ExpectedConditions.visibilityOf(successfulMsgWebElement));
+        return successfulMsgWebElement.getText().equals("تم إرسال بريد خارجي بنجاح");
     }
 
 }
