@@ -34,10 +34,19 @@ public class EditPassword extends BaseComp {
     @FindBy (xpath = "(//input[@onclick='cpUsers.backPWConfirm()'])[1]")
     WebElement backIcon;
 
-    @FindBy (id = "span_A_txt_pass_word")
+    @FindBy (xpath = "//b[@id='span_A_txt_pass_word']/p/span")
     WebElement errorMessage1;
-    @FindBy (id = "span_A_txt_pass_word_conf")
+
+    @FindBy (xpath = "//b[@id='span_A_txt_pass_word_conf']/p/span")
     WebElement errorMessage2;
+
+
+
+    @FindBy(id ="span_A_txt_pass_word")
+    WebElement validation1;
+    @FindBy (id="span_A_txt_pass_word_conf")
+    WebElement validation2;
+
 
     @FindBy (xpath = "(//span[contains(text(),'رسالة تأكيدية')])[1]")
     WebElement confirmationMessage;
@@ -47,54 +56,72 @@ public class EditPassword extends BaseComp {
     WebElement notAcceptIcon;
 
 
-    public WebElement getNewPassword() {
-        return newPassword;
+
+
+
+    public String  getNewPassword() {
+        return newPassword.getText();
     }
 
     public void setNewPassword(String newPassword1) {
         newPassword.sendKeys(newPassword1);
     }
 
-    public WebElement getConfirmNewPassword() {
-        return confirmNewPassword;
+    public String getConfirmNewPassword() {
+        return confirmNewPassword.getText();
     }
 
     public void setConfirmNewPassword(String confirmNewPassword1) {
         confirmNewPassword.sendKeys(confirmNewPassword1);
     }
 
-    public WebElement getErrorMessage1() {
-        return errorMessage1;
+    public String getErrorMessage1() {
+        return errorMessage1.getText();
     }
 
-    public WebElement getErrorMessage2() {
-        return errorMessage2;
+    public String getErrorMessage2() {
+        return errorMessage2.getText();
     }
 
     public WebElement getEditPasswordTitle() {
         return editPasswordTitle;
     }
 
-    public WebElement save() {
-        return saveIcon;
+    public void save() {
+       saveIcon.click();
     }
 
-    public WebElement back() {
-        return backIcon;
+    public void back() {
+        backIcon.click();
     }
 
 
     public WebElement getConfirmationMessage() {
         return confirmationMessage;
     }
-    public WebElement getAcceptIcon() {
+    public void acceptIcon() {
         exWait.until(ExpectedConditions.visibilityOf(getConfirmationMessage()));
-        return acceptIcon;
+         acceptIcon.click();
     }
 
     public WebElement getNotAcceptIcon() {
         exWait.until(ExpectedConditions.visibilityOf(getConfirmationMessage()));
         return notAcceptIcon;
     }
+
+    public String validation1() {
+        String message;
+        message=getValidatorState(validation1);
+        validation1.click();
+        return message;
+    }
+
+    public String validation2() {
+        String message;
+        message=getValidatorState(validation2);
+        validation2.click();
+        return message;
+    }
+
 
 }

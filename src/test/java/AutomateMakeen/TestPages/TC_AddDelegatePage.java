@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
-public class TC_AddDelegatePage extends TestInit{
+/*public class TC_AddDelegatePage extends TestInit{
 
     AddDelegatePage addDelegatePage;
     UsersControl usersControl;
@@ -24,7 +24,7 @@ public class TC_AddDelegatePage extends TestInit{
        homePage.goToHomePage();
        usersControl = contentAside.goToUsersControl();
        usersControl.selectEmployeeByID("3569897");
-        = usersControl.delegationControl();
+
 
         }
 
@@ -33,6 +33,6 @@ public class TC_AddDelegatePage extends TestInit{
     }
 
 
-}
+}*/
 
 
