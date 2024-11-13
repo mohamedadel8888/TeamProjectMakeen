@@ -28,7 +28,10 @@ public class TC_CreateMailBox extends TestInit {
 
     }
 
-
+    @Test(dataProvider = "docTypeDataProvider")
+    public void tc_createValidExternalMail(String docTypeDP) {
+        createExternalMailPage.enteringTheSubjectOfMail("");
+    }
 
     @DataProvider(name = "docTypeDataProvider")
     public Object[] docTypeDataProvider() {
