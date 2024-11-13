@@ -6,6 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
@@ -21,6 +22,10 @@ public class UsersControl extends BaseComp {
         exWait = new WebDriverWait(driver , Duration.ofSeconds(10));
         contentAside = new ContentAside(driver);
     }
+
+
+    @FindBy (xpath = "(//div[@class='col-bx-12'])[1]")
+    WebElement userControlPage;
 
     @FindBy (id = "cph_main_btn_add_user")    /* اضافه حساب */
     WebElement addAccount;
@@ -82,6 +87,10 @@ public class UsersControl extends BaseComp {
     WebElement firstElementInSearchTable;
 
 
+    public WebElement getUserControlPage() {
+        return userControlPage;
+    }
+
     public void setChooseDept (String name){
         departmentChoose.click();
         WebElement search = driver.findElement(By.id("ddl_deps_txtSearch"));
@@ -100,10 +109,13 @@ public class UsersControl extends BaseComp {
         return deptTargetChosen;
     }
     public void clearChooseDept(){
-        departmentChoose.click();
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollTop = 0;", divDeptChoose);
-        defaultChoose.click();
+        deptTargetChosen.click();
+        WebElement ulElement = divDeptChoose;   // Find all list items within the unordered list
+        List<WebElement> listItems = ulElement.findElements(By.tagName("li"));   // Check if there are any list items
+        if (!listItems.isEmpty()) {               // Select the first item (default)
+            WebElement defaultItem = listItems.get(0);
+            defaultItem.click();
+        }
     }
 
 
@@ -165,8 +177,8 @@ public class UsersControl extends BaseComp {
     public WebElement getNoResultMessage() {
         return noResultMessage;
     }
-    public WebElement getPageNum() {
-        return pageNum;
+    public String getPageNum() {
+        return pageNum.getText();
     }
     public WebElement getSearchText() {
         return searchText;
@@ -203,9 +215,9 @@ public class UsersControl extends BaseComp {
         delegationControl.click();
         return new DelegatePage(driver);
     }
-    public WebElement getUserName (){
+    public String getUserName (){
         WebElement firstElement = driver.findElement(By.xpath("(//td)[3]"));
-        return firstElement;
+        return firstElement.getText();
     }
 
 

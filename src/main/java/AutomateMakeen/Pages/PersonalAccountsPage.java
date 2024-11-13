@@ -4,11 +4,15 @@ import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class PersonalAccountsPage extends BaseComp {
-    protected WebDriver driver;
+     WebDriver driver;
+    private WebDriverWait wait;
 
     //PageTitle
     private By accountsPageTitle = By.cssSelector(".PopUpHead span");
@@ -29,11 +33,13 @@ public class PersonalAccountsPage extends BaseComp {
     public PersonalAccountsPage(WebDriver driver){
         super(driver);
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
 
 
     public boolean getDelegateEmployeeName(String delegateName) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(accountSections));
         List<WebElement> sections = driver.findElements(accountSections);
         for (WebElement section : sections) {
             List<WebElement>delegateElements = driver.findElements(accountsEmployeeNames);

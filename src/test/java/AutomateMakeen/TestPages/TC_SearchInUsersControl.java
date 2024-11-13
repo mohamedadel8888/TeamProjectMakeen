@@ -19,7 +19,6 @@ public class TC_SearchInUsersControl extends TestInit {
         lunchDriver();
         loginPage.goToLoginPage();
         HomePage homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
-        homePage.goToHomePage();
         usersControl = contentAside.goToUsersControl();
     }
 
@@ -129,7 +128,7 @@ public class TC_SearchInUsersControl extends TestInit {
         Assert.assertEquals(lName,"");
         Assert.assertEquals(userID,"");
         Assert.assertEquals(usersControl.getChooseDept().getText(),"إخترالادارة");
-        Assert.assertEquals(usersControl.getPageNum().getText(),"صفحة 1 من 225");
+        Assert.assertEquals(usersControl.getPageNum(),"صفحة 1 من 225");
     }
     @Test
     public void tc_clearTextPageSearchAndPressEnter (){  /*اختبار البحث عند الضغط على Enter يعود الى الصفحه الاولى */
@@ -137,12 +136,12 @@ public class TC_SearchInUsersControl extends TestInit {
         usersControl.getSearchText().sendKeys(Keys.ENTER);
         usersControl.getSearchText().clear();
         usersControl.getSearchText().sendKeys(Keys.ENTER);
-        Assert.assertTrue(usersControl.getPageNum().getText().contains("صفحة 1"));
+        Assert.assertTrue(usersControl.getPageNum().contains("صفحة 1"));
     }
     @Test
     public void tc_searchAboutEmployeeExitsByID(){
         usersControl.selectEmployeeByID("1020311");
-        Assert.assertEquals(usersControl.getUserName().getText(),"حمدي حمد حامد الحمدون");
+        Assert.assertEquals(usersControl.getUserName(),"حمدي حمد حامد الحمدون");
     }
 }
 
