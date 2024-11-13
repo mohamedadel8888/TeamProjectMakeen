@@ -12,7 +12,6 @@ import org.testng.annotations.Test;
 public class TC_CreateMailBox extends TestInit {
     private String subject;
     private String docType;
-    private String
     CreateExternalMailPage createExternalMailPage;
 
     @Test(description = "Preconditions for each test in the class :" +
@@ -31,7 +30,7 @@ public class TC_CreateMailBox extends TestInit {
 
     @Test(dataProvider = "docTypeDataProvider")
     public void tc_createValidExternalMail(String docTypeDP) {
-        createExternalMailPage.enteringTheSubjectOfMail();
+        createExternalMailPage.enteringTheSubjectOfMail("");
     }
 
     @DataProvider(name = "docTypeDataProvider")
