@@ -102,4 +102,16 @@ public class LoginPage extends BaseComp {
     public WebElement getMobileCode() {
         return mobileCode;
     }
+
+
+    //Navigate To Personal Accounts Page
+
+    public PersonalAccountsPage loginUserWithDelegateAccounts(String id , String password)
+    {
+        idWebElement.sendKeys(id);
+        passwordWebElement.sendKeys(password);
+        remeberMeWebElement.click();
+        loginBtnWebElement.click();
+        return new PersonalAccountsPage(driver);
+    }
 }

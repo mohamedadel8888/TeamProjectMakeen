@@ -8,6 +8,7 @@ import AutomateMakeen.Pages.UsersControl;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -27,13 +28,12 @@ public class TC_AddDelegatePage extends TestInit{
        usersControl = contentAside.goToUsersControl();
         }
 
-    @Test
+   @Test
     public void addNewDelegateWithValidData(){
         usersControl.selectEmployeeByID("3569897");
         delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
         addDelegatePage.selectDepartmentNameFromDropDown("إدارة عسير");
-        //addDelegatePage.scrollInDepartmentNameDDL("إدارة عسير");
         addDelegatePage.selectDelegatedEmployeeFromDropDown("محمد حسنى");
         addDelegatePage.chooseNewPeriodRadioButton();
         addDelegatePage.inputDelegateDateFrom("11/05/1446");
@@ -45,9 +45,27 @@ public class TC_AddDelegatePage extends TestInit{
         addDelegatePage.clickSaveButton();
         addDelegatePage.acceptPopUp();
         addDelegatePage.clickGoBackButton();
-        delegatePage.getDelegateResult("محمد حسنى");
+        boolean delegateAdded = delegatePage.getDelegateResult("محمد حسنى");
+        delegatePage.clickSignOut();
+        loginPage.loginUserWithDelegateAccounts("3569897","24602460");
+       //Assert.assertTrue(delegateAdded,"Incorrect Addition of New Delegate");
+    }
+
+    @Test
+    public void addNewDelegateWithDefaultAndEmptyData(){
+        usersControl.selectEmployeeByID("3569897");
+        delegatePage = usersControl.delegationControl();
+        addDelegatePage = delegatePage.clickAddButton();
+        addDelegatePage.selectDefaultDepartmentNameFromDropDown();
+        addDelegatePage.selectDefaultDelegatedEmployeeFromDropDown();
+        addDelegatePage.chooseNewPeriodRadioButton();
+        addDelegatePage.inputDelegateDateFrom("");
+        addDelegatePage.inputDelegateDateTo("");
+        addDelegatePage.clickSaveButton();
 
     }
+
+
 
 }
 
