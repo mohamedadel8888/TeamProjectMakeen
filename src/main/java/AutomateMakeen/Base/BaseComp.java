@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class BaseComp {
     private WebDriver driver;
@@ -61,5 +62,8 @@ public class BaseComp {
         docTypeControlSearchBtnWebElement.click();
         driver.findElement(By.xpath("//div[@title='"+searchTxt+"']/../../td/input")).click();
     }
+
+
+
 
 }
