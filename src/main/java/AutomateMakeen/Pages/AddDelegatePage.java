@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -264,5 +265,59 @@ public class AddDelegatePage extends BaseComp {
     public void rejectPopUp(){
         driver.findElement(rejectPopUpButton).click();
     }
+
+    //Error Messages Methods
+
+    public String getDepartmentNameErrorMessage(){
+        WebElement hoverOnAction = driver.findElement(departmentNameErrorIcon);
+        hoverOnAction(hoverOnAction);
+        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(departmentNameErrorMessage));
+        return toggletipNameElement.getText();
+    }
+
+    public String getDelegateEmployeeErrorMessage(){
+        WebElement hoverOnAction = driver.findElement(delegateEmployeeErrorIcon);
+        hoverOnAction(hoverOnAction);
+        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(delegateEmployeeErrorMessage));
+        return toggletipNameElement.getText();
+    }
+
+    public String getPeriodTypeErrorMessage(){
+        WebElement hoverOnAction = driver.findElement(periodTypeErrorIcon);
+        hoverOnAction(hoverOnAction);
+        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(periodTypeErrorMessage));
+        return toggletipNameElement.getText();
+    }
+
+    public String getDelegateDateFromErrorMessage(){
+        WebElement hoverOnAction = driver.findElement(delegateDateFromErrorIcon);
+        hoverOnAction(hoverOnAction);
+        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(delegateDateFromErrorMessage));
+        return toggletipNameElement.getText();
+    }
+
+    public String getDelegateDateToErrorMessage(){
+        WebElement hoverOnAction = driver.findElement(delegateDateToErrorIcon);
+        hoverOnAction(hoverOnAction);
+        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(delegateDateToErrorMessage));
+        return toggletipNameElement.getText();
+    }
+
+
+    public String getDelegateTimeFromErrorMessage(){
+        WebElement hoverOnAction = driver.findElement(delegateTimeFromErrorIcon);
+        hoverOnAction(hoverOnAction);
+        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(delegateTimeFromErrorMessage));
+        return toggletipNameElement.getText();
+    }
+
+    public String getDelegateTimeToErrorMessage(){
+        WebElement hoverOnAction = driver.findElement(delegateTimeToErrorIcon);
+        hoverOnAction(hoverOnAction);
+        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(delegateTimeToErrorMessage));
+        return toggletipNameElement.getText();
+    }
+
+
 
 }

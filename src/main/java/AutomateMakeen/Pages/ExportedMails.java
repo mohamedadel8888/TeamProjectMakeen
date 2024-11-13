@@ -40,8 +40,11 @@ public class ExportedMails extends BaseComp {
     @FindBy(id = "dv_inbox_trType")
     WebElement docTypeWebElement;
 
-//    public List<String> getMailData(){
-//        List<String> mailData = new ArrayList<>();
-////        mailData
-//    }
+    /*
+    public List<String> getMailData(){
+        List<String> mailData = new ArrayList<>();
+//        mailData
+    }
+
+     */
 }

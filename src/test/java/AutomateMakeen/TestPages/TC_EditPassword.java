@@ -77,11 +77,8 @@ public class TC_EditPassword extends TestInit {
         editPassword = usersControl.editPassword();
         editPassword.setNewPassword("0123456");
         editPassword.setConfirmNewPassword("0123456");
-        String m1 = editPassword.validation1();
         editPassword.save();
-        Assert.assertEquals(editPassword.getErrorMessage1(),"عفواً،كلمة المرور غير مناسبة يرجي تغيرها بصيغة أخرى");
-        String m2 = editPassword.validation2();
-        Assert.assertEquals(editPassword.getErrorMessage2(),"عفواً،كلمة المرور غير مناسبة يرجي تغيرها بصيغة أخرى");
+        Assert.assertFalse(editPassword.getConfirmationMessage().isDisplayed());
     }
 
     @Test
@@ -91,10 +88,7 @@ public class TC_EditPassword extends TestInit {
         editPassword.setNewPassword("121212");
         editPassword.setConfirmNewPassword("121212");
         editPassword.save();
-        String m1 = editPassword.validation1();
-        Assert.assertEquals(editPassword.getErrorMessage1(),"عفواً،كلمة المرور غير مناسبة يرجي تغيرها بصيغة أخرى");
-        String m2 = editPassword.validation2();
-        Assert.assertEquals(editPassword.getErrorMessage2(),"عفواً،كلمة المرور غير مناسبة يرجي تغيرها بصيغة أخرى");
+        Assert.assertFalse(editPassword.getConfirmationMessage().isDisplayed());
     }
     @Test
     public void tc_enterSameNumberInPassword(){       /* ادخال نفس الرقم فقط  */

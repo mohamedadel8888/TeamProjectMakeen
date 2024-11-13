@@ -82,6 +82,13 @@ public class EditPassword extends BaseComp {
     public String getErrorMessage2() {
         return errorMessage2.getText();
     }
+    public WebElement ErrorMessage1() {
+        return validation1;
+    }
+
+    public WebElement ErrorMessage2() {
+        return validation2;
+    }
 
     public WebElement getEditPasswordTitle() {
         return editPasswordTitle;

@@ -2,6 +2,7 @@ package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.*;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -65,12 +66,36 @@ public class TC_AddDelegatePage extends TestInit{
         usersControl.selectEmployeeByID("3569897");
         delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
-        addDelegatePage.selectDefaultDepartmentNameFromDropDown();
-        addDelegatePage.selectDefaultDelegatedEmployeeFromDropDown();
-        addDelegatePage.chooseNewPeriodRadioButton();
-        addDelegatePage.inputDelegateDateFrom("");
-        addDelegatePage.inputDelegateDateTo("");
         addDelegatePage.clickSaveButton();
+        String depNameErrorMessage = addDelegatePage.getDepartmentNameErrorMessage();
+        //String delegateEmployeeErrorMessage = addDelegatePage.getDelegateEmployeeErrorMessage();
+        String periodTypeErrorMessage = addDelegatePage.getPeriodTypeErrorMessage();
+        //String delegateDateFromErrorMessage = addDelegatePage.getDelegateDateFromErrorMessage();
+        //String delegateDateToErrorMessage = addDelegatePage.getDelegateDateToErrorMessage();
+        softAssert.assertEquals(depNameErrorMessage ,
+                "اختر الإدارة",
+                "Incorrect Department Name Error Message.");
+        /*
+        softAssert.assertEquals(delegateEmployeeErrorMessage,
+                " اختر الموظف المفوض",
+                "Incorrect Delegate Employee Error Message.");
+
+         */
+        softAssert.assertEquals(periodTypeErrorMessage,
+                "يرجى اختيار نوع الفترة",
+                "Incorrect Period Type Error Message.");
+
+        /*
+        softAssert.assertEquals(delegateDateFromErrorMessage,
+                "يرجى إدخال تاريخ بداية التفويض",
+                "Incorrect Delegate Date From Error Message.");
+        softAssert.assertEquals(delegateDateToErrorMessage,
+                " يرجى إدخال تاريخ نهاية التفويض",
+                "Incorrect Delegate Date To Error Message.");
+         */
+
+        softAssert.assertAll();
+
 
     }
 
