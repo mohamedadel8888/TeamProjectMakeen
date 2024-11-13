@@ -25,11 +25,14 @@ public class AddDelegatePage extends BaseComp {
     private By departmentNameText = By.id("ddl_deps_ddlSelectButtonTarget");
     //private By departmentNameListItems = By.id("ddl_deps_collapsibleDiv");
     private By departmentNameListItems = By.className("list_child");
+    private By defaultDepartmentName = By.xpath("//li[.='إخترالادارة']");
 
     //Delegate Employee
     private By delegatedEmployeeDropDownList = By.id("ddl_delg_jobs_ddlSelectButton");
     private By delegatedEmployeeSearch = By.id("ddl_delg_jobs_txtSearch");
     private By delegatedEmployeeText = By.id("ddl_delg_jobs_ddlSelectButtonTarget");
+    private By defaultDelegatedEmployeeDropDownList = By.cssSelector("#ddl_delg_jobs .slc_txt");
+    private By defaultDelegatedEmployee = By.cssSelector(" #ddl_delg_jobs [value='-1']");
 
     //Radio Buttons
     private By acceptedPeriodRadioButton = By.id("rd_period_accepted");
@@ -115,11 +118,16 @@ public class AddDelegatePage extends BaseComp {
         driver.findElement(By.xpath("//label[contains(text(), '" + option + "')]")).click();
     }
 
+    public void selectDefaultDepartmentNameFromDropDown() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(departmentNameDropDownList));
+        driver.findElement(departmentNameDropDownList).click();
+        driver.findElement(defaultDepartmentName).click();
+    }
+
     public String getDepartmentNameField(){
         wait.until(ExpectedConditions.visibilityOfElementLocated(departmentNameText));
         return driver.findElement(departmentNameText).getAttribute("value");
     }
-
 
     public void scrollInDepartmentNameDDL(String targetText){
         // Locate the dropdown element and open it if necessary
@@ -143,7 +151,6 @@ public class AddDelegatePage extends BaseComp {
                     break;
                 }
             }
-
             // If not found, scroll the dropdown
             if (!found) {
                 js.executeScript("arguments[0].scrollTop += arguments[0].offsetHeight;", dropdown);
@@ -158,6 +165,12 @@ public class AddDelegatePage extends BaseComp {
         driver.findElement(delegatedEmployeeDropDownList).click();
         driver.findElement(delegatedEmployeeSearch).sendKeys(option);
         driver.findElement(By.xpath("//label[contains(text(), '" + option + "')]")).click();
+    }
+
+    public void selectDefaultDelegatedEmployeeFromDropDown() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(defaultDelegatedEmployeeDropDownList));
+        Select dropdownElement = new Select(driver.findElement(defaultDelegatedEmployeeDropDownList));
+        dropdownElement.selectByVisibleText("إخترالموظف");
     }
 
     public String getDelegatedEmployeeNameField(){

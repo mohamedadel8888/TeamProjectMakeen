@@ -1,24 +1,29 @@
 package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
-import AutomateMakeen.Pages.AddDelegatePage;
-import AutomateMakeen.Pages.DelegatePage;
-import AutomateMakeen.Pages.HomePage;
-import AutomateMakeen.Pages.UsersControl;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import AutomateMakeen.Pages.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import java.time.chrono.HijrahDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 
 public class TC_AddDelegatePage extends TestInit{
 
-
-
-    UsersControl usersControl;
     DelegatePage delegatePage;
+    UsersControl usersControl;
     AddDelegatePage addDelegatePage;
+    PersonalAccountsPage personalAccountsPage;
+    SoftAssert softAssert = new SoftAssert();
+    //Today's Date in Hiijri
+    HijrahDate dateHijri = HijrahDate.now();
+    HijrahDate dateHijriPlus10Days = dateHijri.plus(10, ChronoUnit.DAYS);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    String hijriDateToday = dateHijri.format(formatter);
+    String hijri10DaysDate = dateHijriPlus10Days.format(formatter);
+
 
     @BeforeClass
    public void setupClass()  {
@@ -27,31 +32,53 @@ public class TC_AddDelegatePage extends TestInit{
        HomePage homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
        homePage.goToHomePage();
        usersControl = contentAside.goToUsersControl();
-   }
+        }
 
-    @Test
+   @Test
     public void addNewDelegateWithValidData(){
         usersControl.selectEmployeeByID("3569897");
         delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
-        addDelegatePage.selectDepartmentNameFromDropDown("إدارة عسير");
-        //addDelegatePage.scrollInDepartmentNameDDL("إدارة عسير");
-        addDelegatePage.selectDelegatedEmployeeFromDropDown("محمد حسنى");
+        addDelegatePage.selectDepartmentNameFromDropDown("ادارة الارشيف");
+        addDelegatePage.selectDelegatedEmployeeFromDropDown("عادل حسن");
         addDelegatePage.chooseNewPeriodRadioButton();
-        addDelegatePage.inputDelegateDateFrom("11/05/1446");
-        addDelegatePage.inputDelegateDateTo("25/05/1446");
-        addDelegatePage.inputTimePeriodFrom("09:00");
-        addDelegatePage.selectTimePeriodFromDropDown("صباحا");
-        addDelegatePage.inputTimePeriodTo("10:00");
-        addDelegatePage.selectTimePeriodToDropDown("مساءا");
+        addDelegatePage.inputDelegateDateFrom(hijriDateToday);
+        addDelegatePage.inputDelegateDateTo(hijri10DaysDate);
+        //addDelegatePage.inputTimePeriodFrom("11:59");
+        //addDelegatePage.selectTimePeriodFromDropDown("صباحا");
+        //addDelegatePage.inputTimePeriodTo("10:00");
+        //addDelegatePage.selectTimePeriodToDropDown("مساءا");
         addDelegatePage.clickSaveButton();
         addDelegatePage.acceptPopUp();
         addDelegatePage.clickGoBackButton();
-        delegatePage.getDelegateResult("محمد حسنى");
+        boolean delegateAdded = delegatePage.getDelegateResult("عادل حسن");
+        softAssert.assertTrue(delegateAdded,"Incorrect Addition of New Delegate");
+        delegatePage.clickSignOut();
+        personalAccountsPage = loginPage.loginUserWithDelegateAccounts("3569897","24602460");
+        boolean delegateAccountPresent = personalAccountsPage.getDelegateEmployeeName("عادل حسن");
+        softAssert.assertTrue(delegateAccountPresent,"Delegate Account Not Present");
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void addNewDelegateWithDefaultAndEmptyData(){
+        usersControl.selectEmployeeByID("3569897");
+        delegatePage = usersControl.delegationControl();
+        addDelegatePage = delegatePage.clickAddButton();
+        addDelegatePage.selectDefaultDepartmentNameFromDropDown();
+        addDelegatePage.selectDefaultDelegatedEmployeeFromDropDown();
+        addDelegatePage.chooseNewPeriodRadioButton();
+        addDelegatePage.inputDelegateDateFrom("");
+        addDelegatePage.inputDelegateDateTo("");
+        addDelegatePage.clickSaveButton();
 
     }
 
 
+
 }
+
+
+
 
 

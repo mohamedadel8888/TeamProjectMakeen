@@ -1,6 +1,7 @@
 package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +14,8 @@ import java.time.Duration;
 public class LoginPage extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
+    private By accountsPageTitle = By.cssSelector(".PopUpHead span");
+
     private static int flag = 0;
     @FindBy(id = "txtUserName")
     WebElement idWebElement;
@@ -37,6 +40,9 @@ public class LoginPage extends BaseComp {
 
     @FindBy(id = "error_div")
     WebElement errorMsgWebElement;
+
+    @FindBy (id = "dvMobileCode")
+    WebElement mobileCode;
 
     public LoginPage (WebDriver driver){
         super(driver);
@@ -95,5 +101,21 @@ public class LoginPage extends BaseComp {
     public void clearAllFeild(){
         idWebElement.clear();
         passwordWebElement.clear();
+    }
+    public WebElement getMobileCode() {
+        return mobileCode;
+    }
+
+
+    //Navigate To Personal Accounts Page
+
+    public PersonalAccountsPage loginUserWithDelegateAccounts(String id , String password)
+    {
+        idWebElement.sendKeys(id);
+        passwordWebElement.sendKeys(password);
+        remeberMeWebElement.click();
+        loginBtnWebElement.click();
+        exWait.until(ExpectedConditions.visibilityOfElementLocated(accountsPageTitle));
+        return new PersonalAccountsPage(driver);
     }
 }

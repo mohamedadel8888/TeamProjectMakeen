@@ -13,8 +13,8 @@ public class TC_SearchInUsersControl extends TestInit {
 
     @BeforeClass(description = "Preconditions for each test in the class :" +
             "1- Login with authorized User." +
-            "2- Navigate to Create External Mail Page By Press 'البريد' in the content Aside" +
-            "then press 'انشاء بريد خارجي'")
+            "2- Navigate to User Control Page By Press 'لوحه التحكم ' in the content Aside" +
+            "then press 'ادارة المستخدمين'")
     public void setupClass()  {
         lunchDriver();
         loginPage.goToLoginPage();
@@ -129,7 +129,7 @@ public class TC_SearchInUsersControl extends TestInit {
         Assert.assertEquals(lName,"");
         Assert.assertEquals(userID,"");
         Assert.assertEquals(usersControl.getChooseDept().getText(),"إخترالادارة");
-        Assert.assertEquals(usersControl.getPageNum().getText(),"صفحة 1 من 225");
+        Assert.assertEquals(usersControl.getPageNum(),"صفحة 1 من 225");
     }
     @Test
     public void tc_clearTextPageSearchAndPressEnter (){  /*اختبار البحث عند الضغط على Enter يعود الى الصفحه الاولى */
@@ -137,14 +137,12 @@ public class TC_SearchInUsersControl extends TestInit {
         usersControl.getSearchText().sendKeys(Keys.ENTER);
         usersControl.getSearchText().clear();
         usersControl.getSearchText().sendKeys(Keys.ENTER);
-        Assert.assertTrue(usersControl.getPageNum().getText().contains("صفحة 1"));
+        Assert.assertTrue(usersControl.getPageNum().contains("صفحة 1"));
     }
     @Test
     public void tc_searchAboutEmployeeExitsByID(){
         usersControl.selectEmployeeByID("1020311");
-        Assert.assertEquals(usersControl.getUserName().getText(),"حمدي حمد حامد الحمدون");
+        Assert.assertEquals(usersControl.getUserName(),"حمدي حمد حامد الحمدون");
     }
-
-
 }
 

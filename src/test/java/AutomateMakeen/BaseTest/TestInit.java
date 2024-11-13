@@ -35,7 +35,6 @@ public class TestInit {
         loginPage = new LoginPage(driver);
         contentAside = new ContentAside(driver);
         editAccountPage = new EditAccountPage(driver);
-
     }
 
     public void quitDriver(){
@@ -44,6 +43,6 @@ public class TestInit {
 
     @AfterClass
     public void afterClass(){
-        //quitDriver();
+        quitDriver();
     }
 }
