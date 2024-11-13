@@ -35,6 +35,9 @@ public class DelegatePage extends BaseComp {
     private By acceptPopUpButton = By.id("btnP0");
     private By rejectPopUpButton = By.id("btnP1");
 
+    //Sign Out Button
+    private By signOutButton = By.id("btn_session_time_out");
+
 
 
     //---------------------------------Constructor-------------------------------
@@ -88,9 +91,16 @@ public class DelegatePage extends BaseComp {
     }
 
 
+    //Go Back Method
     public UsersControl clickGoBackButton(){
         driver.findElement(goBackButton).click();
         return new UsersControl(driver);
+    }
 
+    //Sign Out Method
+
+    public LoginPage clickSignOut(){
+        driver.findElement(signOutButton).click();
+        return new LoginPage(driver);
     }
 }
