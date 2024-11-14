@@ -22,12 +22,13 @@ public class TestInit {
     public EditAccountPage editAccountPage;
     public WebDriver driver;
     public static LoginPage loginPage;
+    public static HomePage homePage;
 
-    public UsersControl usersControl;
-    public DelegatePage delegatePage;
-    public AddDelegatePage addDelegatePage;
-    public PersonalAccountsPage personalAccountsPage;
-    public EditDelegatePage editDelegatePage;
+    public static UsersControl usersControl;
+    public static DelegatePage delegatePage;
+    public static AddDelegatePage addDelegatePage;
+    public static PersonalAccountsPage personalAccountsPage;
+    public static EditDelegatePage editDelegatePage;
 
     protected SoftAssert softAssert = new SoftAssert();
 

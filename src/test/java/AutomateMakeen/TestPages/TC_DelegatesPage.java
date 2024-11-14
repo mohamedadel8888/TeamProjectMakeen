@@ -23,8 +23,8 @@ public class TC_DelegatesPage extends TestInit {
 
     @Test(priority = 1)
     public void correctNavigationToAddDelegatePage() {
-        usersControl.selectEmployeeByID("3569897");
 
+        usersControl.selectEmployeeByID("3569897");
         delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
         String pageTitle = addDelegatePage.getPageTitle();
@@ -36,8 +36,7 @@ public class TC_DelegatesPage extends TestInit {
 
     @Test (priority = 2)
     public void correctNavigationToEditDelegatePage() {
-        //usersControl.selectEmployeeByID("3569897");
-        //delegatePage = usersControl.delegationControl();
+
         delegatePage.clickCheckBoxDelegateEmployeeByID("5555444");
         editDelegatePage = delegatePage.clickEditButton();
         String pageTitle = editDelegatePage.getEditDelegateTitlePage();
@@ -54,8 +53,7 @@ public class TC_DelegatesPage extends TestInit {
 
     @Test(priority = 3)
     public void getDelegationInformation() {
-        //usersControl.selectEmployeeByID("3569897");
-        //delegatePage = usersControl.delegationControl();
+
         List<String> delegationInformationList = delegatePage.getDelegationInformationByEmployeeID("1601111");
         softAssert.assertEquals(delegationInformationList.get(2), "a a a a" ,"Incorrect Employee Name");
         softAssert.assertEquals(delegationInformationList.get(3), "1446/05/18", "Incorrect Delegate Date From");
@@ -68,13 +66,11 @@ public class TC_DelegatesPage extends TestInit {
 
     @Test(priority = 4)
     public void correctDeletionOfDelegation() {
-        //usersControl.selectEmployeeByID("3569897");
-        //delegatePage = usersControl.delegationControl();
+
         delegatePage.clickCheckBoxDelegateEmployeeByID("1601111");
         delegatePage.clickDeleteDelegatation();
         String deleteConfirmationMessage = delegatePage.getPopUpMessage();
         delegatePage.acceptPopUp();
-        //delegatePage.rejectPopUp();
         boolean delegationPresent = delegatePage.checkPresenceOfDelegationByEmployeeID("1601111");
         softAssert.assertEquals(deleteConfirmationMessage,
                 "هل تريد اتمام عملية الإلغاء؟",

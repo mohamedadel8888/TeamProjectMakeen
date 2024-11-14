@@ -2,10 +2,8 @@ package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.*;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -53,6 +51,9 @@ public class TC_AddDelegatePage extends TestInit {
         delegatePage.clickSignOut();
         personalAccountsPage = loginPage.loginUserWithDelegateAccounts("3569897", "24602460");
         boolean delegateAccountPresent = personalAccountsPage.getDelegateEmployeeName("عادل حسن");
+        homePage = personalAccountsPage.enterDelegateAccountByName("عادل حسن");
+        //homePage.goToHomePage();
+        usersControl = contentAside.goToUsersControl();
         softAssert.assertTrue(delegateAccountPresent, "Delegate Account Not Present");
         softAssert.assertAll();
     }
@@ -66,6 +67,7 @@ public class TC_AddDelegatePage extends TestInit {
         String depNameErrorMessage = addDelegatePage.getDepartmentNameErrorMessage();
         //String delegateEmployeeErrorMessage = addDelegatePage.getDelegateEmployeeErrorMessage();
         String periodTypeErrorMessage = addDelegatePage.getPeriodTypeErrorMessage();
+        addDelegatePage.clickGoBackButton();
         //String delegateDateFromErrorMessage = addDelegatePage.getDelegateDateFromErrorMessage();
         //String delegateDateToErrorMessage = addDelegatePage.getDelegateDateToErrorMessage();
         softAssert.assertEquals(depNameErrorMessage,
@@ -100,6 +102,8 @@ public class TC_AddDelegatePage extends TestInit {
         addDelegatePage.chooseAcceptedPeriodRadioButton();
         addDelegatePage.selectAcceptedPeriodFromDropDown(1);
         addDelegatePage.clickSaveButton();
+        addDelegatePage.clickGoBackButton();
+        addDelegatePage.acceptPopUp();
     }
 }
 
