@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DelegatePage extends BaseComp {
 
@@ -29,7 +30,6 @@ public class DelegatePage extends BaseComp {
 
     //Table of Delegates
     private By delegatesTable = By.cssSelector("#tbl_cpUsersDeleg tbody tr");
-    //private By resultItems = By.cssSelector("td div");
     private By resultItemsRow = By.xpath("//tr/td[3]/div");
 
     //Pop Up Text
@@ -62,7 +62,6 @@ public class DelegatePage extends BaseComp {
         List<WebElement> resultItems = driver.findElements(resultItemsRow);
         return resultItems.stream().anyMatch(s -> s.getText().contains(delegateName));
     }
-
 
     public List<WebElement> getDelegateList(String delegates) {
         return driver.findElements(By.xpath("//*[contains(@full_title, '" + delegates + "')]"));
@@ -110,4 +109,52 @@ public class DelegatePage extends BaseComp {
         driver.findElement(signOutButton).click();
         return new LoginPage(driver);
     }
+
+    //Choose A Certain Delegation By Employee Number
+    public void clickCheckBoxDelegateEmployeeByID(String employeeID){
+        driver.findElement(By.xpath("//table[@id='tbl_cpUsersDeleg']/tbody/tr/td[2]/div[text()='"+employeeID+"']/../../td[1]/input")).click();
+    }
+
+    //Check If Delegation is Present
+    public boolean checkPresenceOfDelegationByEmployeeID(String employeeID) {
+        List<WebElement> employeeIDs = driver.findElements(By.xpath("//table[@id='tbl_cpUsersDeleg']/tbody/tr/td[2]"));
+
+        for (WebElement employee : employeeIDs) {
+            if (employee.getText().equals(employeeID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getDelegationEmployeeNameByEmployeeID(String employeeID){
+        return driver.findElement(By.xpath("//table[@id='tbl_cpUsersDeleg']/tbody/tr/td[2]/div[text()='"+employeeID+"']/../../td[3]")).getText();
+    }
+
+    public String getDelegationFromDateValueByEmployeeID(String employeeID){
+        return driver.findElement(By.xpath("//table[@id='tbl_cpUsersDeleg']/tbody/tr/td[2]/div[text()='"+employeeID+"']/../../td[4]")).getText();
+    }
+
+    public String getDelegationToDateValueByEmployeeID(String employeeID){
+        return driver.findElement(By.xpath("//table[@id='tbl_cpUsersDeleg']/tbody/tr/td[2]/div[text()='"+employeeID+"']/../../td[5]")).getText();
+    }
+
+    public String getDelegationTimeFromValueByEmployeeID(String employeeID){
+        return driver.findElement(By.xpath("//table[@id='tbl_cpUsersDeleg']/tbody/tr/td[2]/div[text()='"+employeeID+"']/../../td[6]")).getText();
+    }
+
+    public String getDelegationTimeToValueByEmployeeID(String employeeID){
+        return driver.findElement(By.xpath("//table[@id='tbl_cpUsersDeleg']/tbody/tr/td[2]/div[text()='"+employeeID+"']/../../td[7]")).getText();
+    }
+
+    public List<String> getDelegationInformationByEmployeeID(String employeeID) {
+        return driver.findElements(By.xpath("//table[@id='tbl_cpUsersDeleg']/tbody/tr/td[2]/div[text()='" + employeeID + "']/../../td"))
+                .stream()
+                .map(WebElement::getText)  // Extract text from each cell in the row
+                .collect(Collectors.toList());
+    }
+
+
+
+
 }

@@ -19,6 +19,10 @@ public class AddDelegatePage extends BaseComp {
     private WebDriverWait wait;
     JavascriptExecutor js;
 
+
+    //Page Title
+    private By addDelegatePageTitle = By.id("spn_AddEdittitle");
+
     //Department Name
     //private By departmentNameDropDownList = By.id("ddl_deps_ddlSelectButton");
     private By departmentNameDropDownList = By.cssSelector("#ddl_deps_ddlSelectButton > p");
@@ -38,6 +42,9 @@ public class AddDelegatePage extends BaseComp {
     //Radio Buttons
     private By acceptedPeriodRadioButton = By.id("rd_period_accepted");
     private By newPeriodRadioButton = By.id("rd_new_period");
+
+    //Field That Shows Only When The Employee Has More than One Disable Period
+    private By chooseAcceptedPeriodDropDownList = By.id("ddl_period_accepted");
 
     //Dates Input Fields
     private By delegatedFromDateField = By.id("txt_deleg_from");
@@ -109,6 +116,12 @@ public class AddDelegatePage extends BaseComp {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+
+    //Page Title Mehods
+    public String getPageTitle() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(addDelegatePageTitle));
+        return driver.findElement(addDelegatePageTitle).getText();
+    }
 
     //Department Name Methods
 
@@ -183,6 +196,16 @@ public class AddDelegatePage extends BaseComp {
 
     public void chooseNewPeriodRadioButton(){
         driver.findElement(newPeriodRadioButton).click();
+    }
+
+    public void chooseAcceptedPeriodRadioButton(){
+        driver.findElement(acceptedPeriodRadioButton).click();
+    }
+
+    public void selectAcceptedPeriodFromDropDown(Integer index) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(chooseAcceptedPeriodDropDownList));
+        Select dropdownElement = new Select(driver.findElement(chooseAcceptedPeriodDropDownList));
+        dropdownElement.selectByIndex(index);
     }
 
     //Input Dates In Fields Methods
