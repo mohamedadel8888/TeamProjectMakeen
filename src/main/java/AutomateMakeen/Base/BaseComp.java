@@ -46,6 +46,7 @@ public class BaseComp {
     public String getValidatorState(WebElement validator){
         switch(validator.getAttribute("class")){
             case "fa fa-question-circle redText": return "Red Circle";
+            case "fa arow-none fa-asterisk":
             case "fa fa-asterisk redText": return "Asterisk";
             default: return "Error !!";
         }

@@ -65,6 +65,7 @@ public class ContentAside extends BaseComp {
     public CreateExternalMailPage goToCreateExternalMail() {
         exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
         mailArrowWebElement.click();
+        exWait.until(ExpectedConditions.elementToBeClickable(createExternalMailWebELement));
         createExternalMailWebELement.click();
         return new CreateExternalMailPage(driver);}
 
@@ -81,16 +82,40 @@ public class ContentAside extends BaseComp {
     }
     @FindBy(id = "s_m_69")
     WebElement exportedMailWebElement;
+    @FindBy(id ="tbl_outbox")
+    WebElement tableOutWebElement;
+    @FindBy(id ="tbl_inbox")
+    WebElement tableInWebElement;
+
     public ExportedMails goToExportedMail(){
         try{
             exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
             mailArrowWebElement.click();
             exportedMailWebElement.click();
+            exWait.until(ExpectedConditions.visibilityOf(tableOutWebElement));
             return new ExportedMails(driver);
         }catch(NoSuchElementException e){
             mailArrowWebElement.click();
             exportedMailWebElement.click();
+            exWait.until(ExpectedConditions.visibilityOf(tableOutWebElement));
             return new ExportedMails(driver);
+        }
+    }
+    @FindBy(id = "s_m_68")
+    WebElement importedMailWebElement;
+
+    public ImportedMails goToImportedMail(){
+        try{
+            exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
+            mailArrowWebElement.click();
+            importedMailWebElement.click();
+            exWait.until(ExpectedConditions.visibilityOf(tableInWebElement));
+            return new ImportedMails(driver);
+        }catch(NoSuchElementException e){
+            mailArrowWebElement.click();
+            importedMailWebElement.click();
+            exWait.until(ExpectedConditions.visibilityOf(tableInWebElement));
+            return new ImportedMails(driver);
         }
     }
 }
