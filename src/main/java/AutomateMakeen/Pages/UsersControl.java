@@ -6,6 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -41,6 +42,8 @@ public class UsersControl extends BaseComp {
     WebElement viewTasks ;
     @FindBy (id = "cph_main_btn_edit_password")   /* تعديل كلمه المرور */
     WebElement editPassword ;
+    @FindBy (xpath = "(//h1[contains(text(),'تعديل كلمة المرور')])[1]")
+    WebElement editPasswordTitle;
     @FindBy (id = "cph_main_btn_delegate_mang")  /* ادارة التفويض */
     WebElement delegationControl;
 
@@ -85,6 +88,9 @@ public class UsersControl extends BaseComp {
 
     @FindBy (xpath = "(//div[@full_title='000'])[1]")
     WebElement firstElementInSearchTable;
+
+
+
 
 
     public WebElement getUserControlPage() {
@@ -209,6 +215,10 @@ public class UsersControl extends BaseComp {
     }
     public EditPassword editPassword(){
         editPassword.click();
+        exWait.until(ExpectedConditions.visibilityOf(editPasswordTitle));
+        EditPassword editPassword1 = new EditPassword(driver);
+        editPassword1.newPassword.clear();
+        editPassword1.confirmNewPassword.clear();
         return new EditPassword(driver);
     }
     public DelegatePage delegationControl (){

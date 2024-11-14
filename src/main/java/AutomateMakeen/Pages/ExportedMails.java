@@ -42,6 +42,7 @@ public class ExportedMails extends BaseComp {
     @FindBy(id = "dv_inbox_trType")
     WebElement docTypeWebElement;
 
+    /*
     public List<String> getMailData(){
         exWait.until(ExpectedConditions.visibilityOf(subjectWebElement));
         List<String> mailData = new ArrayList<>();
@@ -51,4 +52,6 @@ public class ExportedMails extends BaseComp {
         mailData.add(docTypeWebElement.getText());
         return mailData;
     }
+
+     */
 }

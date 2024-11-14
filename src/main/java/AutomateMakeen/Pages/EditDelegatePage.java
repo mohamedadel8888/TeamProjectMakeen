@@ -9,6 +9,7 @@ public class EditDelegatePage extends BaseComp {
 
     protected WebDriver driver;
 
+    //Page Title
     private By editDelegatePageTitle = By.id("spn_AddEdittitle");
 
     //Department Name
@@ -16,6 +17,7 @@ public class EditDelegatePage extends BaseComp {
 
     //Delegate Employee
     private By delegateEmployeeEdit = By.id("ddl_delg_jobs");
+    private By delegateEmployeeFieldContent = By.id("ddl_delg_jobs_ddlSelectButtonTarget");
 
     //Dates Input Fields
     private By delegateEditFromDateField = By.id("txt_deleg_from");
@@ -76,5 +78,9 @@ public class EditDelegatePage extends BaseComp {
 
     public String getEditDelegateTitlePage() {
         return driver.findElement(editDelegatePageTitle).getText();
+    }
+
+    public String getEditDelegateEmployeeField(){
+        return driver.findElement(delegateEmployeeFieldContent).getText();
     }
 }

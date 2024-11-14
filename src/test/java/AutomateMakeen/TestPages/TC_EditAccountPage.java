@@ -18,11 +18,10 @@ import AutomateMakeen.Pages.UsersControl;
 
 public class TC_EditAccountPage extends TestInit {
     private WebDriver driver;
-    private WebDriverWait exWait;
     CreateExternalEditAccountPage createExternalEditAccountPage;
     UsersControl usersControl;
     String AssertText;
-
+    private WebDriverWait exWait;
 
 
 
@@ -40,6 +39,7 @@ public class TC_EditAccountPage extends TestInit {
         AssertText = editAccountPage.getDepartmentName();
         Assert.assertEquals(AssertText, "ادارة الكهرباء", "should be 'ادارة الكهرباء'");}
 
+
     @Test (priority = 2)
     public void TestNotAllowingEnteringTextInUserAndDepartment  ()  {
         boolean isInteractive = editAccountPage.isDepartmentFieldInteractive();
@@ -54,8 +54,12 @@ public class TC_EditAccountPage extends TestInit {
         editAccountPage.clickAllRightButton();
         boolean isEmpty = editAccountPage.isSelectUserEmpty();
         Assert.assertTrue(isEmpty, "empty");
+        editAccountPage.clickSaveButton();
+        boolean isPresent = editAccountPage.IsUserRedCircleElementPresent();
+        Assert.assertTrue(isPresent, "The element should be present.");
+        editAccountPage.clickSaveButton();
         editAccountPage.clickAllLeftButton();
-         isEmpty = editAccountPage.isSelectSystemEmpty();
+        isEmpty = editAccountPage.isSelectSystemEmpty();
         Assert.assertTrue(isEmpty, "empty");}
 
 
@@ -82,8 +86,7 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertTrue(isChecked, "should be checked.");
         editAccountPage.clickPrsEmpCheckbox();
         editAccountPage.clickArchEmpCheckbox();
-        editAccountPage.clickMakeenUserCheckbox();
-    }
+        editAccountPage.clickMakeenUserCheckbox();}
 
 
 
@@ -103,6 +106,9 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertTrue(isChecked, "should be checked.");
         isChecked = editAccountPage.IsMailCheckboxChecked();
         Assert.assertTrue(isChecked, "should be checked.");
+        try {TimeUnit.SECONDS.sleep(1);}
+        catch (InterruptedException e)
+        {throw new RuntimeException(e);}
         editAccountPage.clickBackToLoginPage();
         loginPage.loginUserWithoutRemMe(userID,userPasswd);
         homePage.goToHomePage();
@@ -130,7 +136,7 @@ public class TC_EditAccountPage extends TestInit {
         homePage.goToHomePage();
         editAccountPage.clickArchiveLink();
         editAccountPage.clickSearchLink();
-        try {TimeUnit.SECONDS.sleep(3);}
+        try {TimeUnit.SECONDS.sleep(2);}
         catch (InterruptedException e) {
             throw new RuntimeException(e);}
         AssertText = editAccountPage.getSearchHeadingText();
@@ -138,7 +144,10 @@ public class TC_EditAccountPage extends TestInit {
         editAccountPage.clickPowerOffIcon();
         loginPage.loginUserWithoutRemMe(userID,userPasswd);
         homePage.goToHomePage();
-        createExternalEditAccountPage = contentAside.goToCreateExternalEditAccount();}
+        createExternalEditAccountPage = contentAside.goToCreateExternalEditAccount();
+        try {TimeUnit.SECONDS.sleep(2);}
+        catch (InterruptedException e)
+        {throw new RuntimeException(e);}}
 
 
 }
