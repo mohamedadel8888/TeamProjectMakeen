@@ -21,26 +21,29 @@ public class TC_DelegatesPage extends TestInit {
         usersControl = contentAside.goToUsersControl();
     }
 
-    @Test
+    @Test(priority = 1)
     public void correctNavigationToAddDelegatePage() {
         usersControl.selectEmployeeByID("3569897");
 
         delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
         String pageTitle = addDelegatePage.getPageTitle();
+        delegatePage = addDelegatePage.clickGoBackButton();
         Assert.assertEquals(pageTitle,
                 "اضافة تفويض",
                 "Incorrect Navigation to Add Delegate Page");
     }
 
-    @Test
+    @Test (priority = 2)
     public void correctNavigationToEditDelegatePage() {
-        usersControl.selectEmployeeByID("3569897");
-        delegatePage = usersControl.delegationControl();
+        //usersControl.selectEmployeeByID("3569897");
+        //delegatePage = usersControl.delegationControl();
         delegatePage.clickCheckBoxDelegateEmployeeByID("5555444");
         editDelegatePage = delegatePage.clickEditButton();
         String pageTitle = editDelegatePage.getEditDelegateTitlePage();
         String delegateEmployeeField = editDelegatePage.getEditDelegateEmployeeField();
+        editDelegatePage.clickGoBack();
+        editDelegatePage.acceptPopUp();
         softAssert.assertEquals(pageTitle,
                 "تعديل تفويض",
                 "Incorrect Navigation to Edit Delegate Page");
@@ -49,10 +52,10 @@ public class TC_DelegatesPage extends TestInit {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(priority = 3)
     public void getDelegationInformation() {
-        usersControl.selectEmployeeByID("3569897");
-        delegatePage = usersControl.delegationControl();
+        //usersControl.selectEmployeeByID("3569897");
+        //delegatePage = usersControl.delegationControl();
         List<String> delegationInformationList = delegatePage.getDelegationInformationByEmployeeID("1601111");
         softAssert.assertEquals(delegationInformationList.get(2), "a a a a" ,"Incorrect Employee Name");
         softAssert.assertEquals(delegationInformationList.get(3), "1446/05/18", "Incorrect Delegate Date From");
@@ -63,10 +66,10 @@ public class TC_DelegatesPage extends TestInit {
     }
 
 
-    @Test
+    @Test(priority = 4)
     public void correctDeletionOfDelegation() {
-        usersControl.selectEmployeeByID("3569897");
-        delegatePage = usersControl.delegationControl();
+        //usersControl.selectEmployeeByID("3569897");
+        //delegatePage = usersControl.delegationControl();
         delegatePage.clickCheckBoxDelegateEmployeeByID("1601111");
         delegatePage.clickDeleteDelegatation();
         String deleteConfirmationMessage = delegatePage.getPopUpMessage();
