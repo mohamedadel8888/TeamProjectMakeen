@@ -30,12 +30,11 @@ public class TC_ImportedMails extends TestInit {
     public void setupClass() {
         lunchDriver();
         loginPage.goToLoginPage();
-        HomePage homePage = loginPage.loginUserWithoutRemMe("1561561", "112233");
-        homePage.goToHomePage();
+        loginPage.loginUserWithoutRemMe("1561561", "112233");
         importedMails = contentAside.goToImportedMail();
     }
 
-    @Test(dependsOnMethods = "AutomateMakeen.TestPages.TC_CreateMailBox.tc_createValidExternalMail")
+    @Test//(dependsOnMethods = "AutomateMakeen.TestPages.TC_CreateMailBox.tc_createValidExternalMail")
     public void tc_validateCreatedMailAddedToImportedMail(){
         importedMails.getRecentlyAddedMail(subject);
         List<String> mailData =importedMails.getMailData();

@@ -543,7 +543,6 @@ public class CreateExternalMailPage extends BaseComp {
         closeDivSave.click();
         return flag;
     }
-
     public void clearAllField(){
         clearTheValueOfSubjectOfTheMail();
         clearDocTypeNum();

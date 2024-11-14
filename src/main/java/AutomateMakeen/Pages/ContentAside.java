@@ -19,7 +19,7 @@ public class ContentAside extends BaseComp {
     public ContentAside(WebDriver driver){
         super(driver);
         this.driver = driver;
-        exWait = new WebDriverWait(driver, Duration.ofSeconds(10));}
+        exWait = new WebDriverWait(driver, Duration.ofSeconds(15));}
 
     @FindBy(xpath = "(//i[@class='fa fa-angle-double-down'])[1]")
     private WebElement empAffairArrowWebElement;
@@ -82,12 +82,16 @@ public class ContentAside extends BaseComp {
     }
     @FindBy(id = "s_m_69")
     WebElement exportedMailWebElement;
+
     @FindBy(id ="tbl_outbox")
     WebElement tableOutWebElement;
     @FindBy(id ="tbl_inbox")
     WebElement tableInWebElement;
 
+    @FindBy(id = "div_extGeha_notification")
+    WebElement notificationWebElement;
     public ExportedMails goToExportedMail(){
+        exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
         try{
             exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
             mailArrowWebElement.click();
@@ -95,6 +99,7 @@ public class ContentAside extends BaseComp {
             exWait.until(ExpectedConditions.visibilityOf(tableOutWebElement));
             return new ExportedMails(driver);
         }catch(NoSuchElementException e){
+            exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
             mailArrowWebElement.click();
             exportedMailWebElement.click();
             exWait.until(ExpectedConditions.visibilityOf(tableOutWebElement));
@@ -105,6 +110,7 @@ public class ContentAside extends BaseComp {
     WebElement importedMailWebElement;
 
     public ImportedMails goToImportedMail(){
+        exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
         try{
             exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
             mailArrowWebElement.click();
