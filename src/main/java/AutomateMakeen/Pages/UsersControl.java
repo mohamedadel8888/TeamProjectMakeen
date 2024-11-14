@@ -1,10 +1,7 @@
 package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -71,7 +68,7 @@ public class UsersControl extends BaseComp {
     WebElement showAll;
     @FindBy (id = "dv_Empty")  /* رساله لايوجد نتائج */
     WebElement noResultMessage;
-    @FindBy (id = "txt_Page")
+    @FindBy (id = "txt_Page")  /* حقل الصفحه */
     WebElement searchText;
     @FindBy (id = "ddl_deps_collapsibleDiv")
     WebElement divDeptChoose;
@@ -83,7 +80,7 @@ public class UsersControl extends BaseComp {
     WebElement deptTargetChosen;
 
 
-    @FindBy (id = "spn_grid_paging")
+    @FindBy (id = "spn_grid_paging")   /* نص : صفحه x من y  */
     WebElement pageNum;
 
     @FindBy (xpath = "(//div[@full_title='000'])[1]")
@@ -184,11 +181,17 @@ public class UsersControl extends BaseComp {
         return noResultMessage;
     }
     public String getPageNum() {
-        return pageNum.getText();
+        return pageNum.getAttribute("value");
     }
     public WebElement getSearchText() {
         return searchText;
     }
+    public void setSearchText(String num) {
+        searchText.clear();
+        searchText.sendKeys(num);
+        searchText.sendKeys(Keys.ENTER);
+    }
+
     public void selectEmployeeByID(String number){
         userID.sendKeys(number);
         singleSearch();
