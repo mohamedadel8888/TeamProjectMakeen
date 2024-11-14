@@ -26,8 +26,11 @@ public class PersonalAccountsPage extends BaseComp {
     //Account Type
     private By accountType = By.cssSelector("div.PersonalAccount > div:nth-child(1)");
 
-    //Enter Account
-    private By enterAccountButton = By.id("userovtAccount");
+    //Enter Main Account
+    private By enterAccountButton = By.xpath("//div[@class='AllContant']/div[1]/div[@id='userovtAccount']");
+    //private By enterAccountButton = By.id("userovtAccount");
+
+
 
     //-----------------------------Constructor------------------------------
     public PersonalAccountsPage(WebDriver driver){
@@ -51,6 +54,11 @@ public class PersonalAccountsPage extends BaseComp {
             }
         }
         return false;
+    }
+
+    public HomePage enterMainAccount(){
+        driver.findElement(enterAccountButton).click();
+        return new HomePage(driver);
     }
 
 
