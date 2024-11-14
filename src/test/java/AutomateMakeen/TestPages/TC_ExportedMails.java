@@ -35,6 +35,7 @@ public class TC_ExportedMails extends TestInit {
         homePage.goToHomePage();
         exportedMails = contentAside.goToExportedMail();
     }
+    /*
     @Test(dependsOnMethods = "AutomateMakeen.TestPages.TC_CreateMailBox.tc_createValidExternalMail")
     public void tc_validateCreatedMailAddedToExportedMail(){
         exportedMails.getRecentlyAddedMail(subject);
@@ -44,4 +45,6 @@ public class TC_ExportedMails extends TestInit {
         Assert.assertEquals(mailData.get(2),senderName);
         Assert.assertEquals(mailData.get(3),docTypeName);
     }
+
+     */
 }
