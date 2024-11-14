@@ -150,8 +150,6 @@ public class EditAccountPage extends BaseComp {
         return userNameWebElement.getText();}
 
 
-
-
     @FindBy(css = ".fas.fa-power-off")
     private WebElement powerOffIconWebElement;
     public void clickPowerOffIcon() {
@@ -168,6 +166,7 @@ public class EditAccountPage extends BaseComp {
     private WebElement searchLinkWebElement;
     public void clickSearchLink() {
         searchLinkWebElement.click();}
+
 
     @FindBy(xpath = "//*[@id='div_maken_content']/div/div[1]/div/div/div/div[1]/h1")
     private WebElement headingWebElement;
@@ -192,15 +191,18 @@ public class EditAccountPage extends BaseComp {
     public boolean IsMobileCheckboxChecked() {
         return LoginMobileCheckboxWebElement.isSelected();}
 
+
     @FindBy(id = "chk_empMail")
     private WebElement LoginMailCheckboxWebElement;
     public boolean IsMailCheckboxChecked() {
         return LoginMailCheckboxWebElement.isSelected();}
 
+
     @FindBy(css = "a.lnk_bck[onclick='userLogin.backToLoginPage();']")
     private WebElement backLinkWebElement;
     public void clickBackToLoginPage() {
         backLinkWebElement.click();}
+
 
     @FindBy(id = "chk_prs_emp")
     private WebElement prsEmpCheckboxWebElement;
@@ -223,6 +225,13 @@ public class EditAccountPage extends BaseComp {
     public void clickMakeenUserCheckbox() {
         MakeenUserCheckboxWebElement.click();}
     public boolean IsMakeenCheckBoxIsClicked() {
-        return MakeenUserCheckboxWebElement.isSelected();}
+        return archEmpCheckboxWebElement.isSelected();}
+
+
+    @FindBy(xpath = "//*[@id='span_A_slc_user_activities']")
+    WebElement UserRedCircleWebElement;
+    public boolean IsUserRedCircleElementPresent() {
+    return this.UserRedCircleWebElement != null && this.UserRedCircleWebElement.isDisplayed();}
+
 
 }
