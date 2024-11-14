@@ -111,9 +111,9 @@ public class EditPassword extends BaseComp {
          acceptIcon.click();
     }
 
-    public WebElement getNotAcceptIcon() {
+    public void notAcceptIcon() {
         exWait.until(ExpectedConditions.visibilityOf(getConfirmationMessage()));
-        return notAcceptIcon;
+        notAcceptIcon.click();
     }
 
     public String validation1() {
