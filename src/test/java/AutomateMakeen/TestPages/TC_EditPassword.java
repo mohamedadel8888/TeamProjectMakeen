@@ -4,14 +4,23 @@ import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.EditPassword;
 import AutomateMakeen.Pages.HomePage;
 import AutomateMakeen.Pages.UsersControl;
+import com.sun.source.tree.AssertTree;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
 public class TC_EditPassword extends TestInit {
     HomePage homePage ;
     UsersControl usersControl;
     EditPassword editPassword;
+    private WebDriverWait exWait ;
     @BeforeClass(description = "Preconditions for each test in the class :" +
             "1- Login with authorized User." +
             "2- Navigate to Edit Password Page By Press 'ادارة المستخدمين' in the content Aside" +
@@ -118,7 +127,7 @@ public class TC_EditPassword extends TestInit {
         editPassword.setNewPassword("0123456");
         editPassword.setConfirmNewPassword("0123456");
         editPassword.save();
-        Assert.assertFalse(editPassword.getConfirmationMessage().isDisplayed());
+        Assert.assertTrue(editPassword.getConfirmationMessage().isDisplayed());
     }
     @Test  (priority = 9)
     public void tc_enterPasswordAsSameAsUserName(){/* ادخال كلمه مرور بنفس ارقام اسم الموظف */
