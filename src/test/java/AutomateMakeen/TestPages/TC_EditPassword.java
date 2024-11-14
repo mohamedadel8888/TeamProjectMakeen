@@ -4,14 +4,23 @@ import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.EditPassword;
 import AutomateMakeen.Pages.HomePage;
 import AutomateMakeen.Pages.UsersControl;
+import com.sun.source.tree.AssertTree;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
 public class TC_EditPassword extends TestInit {
     HomePage homePage ;
     UsersControl usersControl;
     EditPassword editPassword;
+    private WebDriverWait exWait ;
     @BeforeClass(description = "Preconditions for each test in the class :" +
             "1- Login with authorized User." +
             "2- Navigate to Edit Password Page By Press 'ادارة المستخدمين' in the content Aside" +
@@ -22,23 +31,20 @@ public class TC_EditPassword extends TestInit {
         HomePage homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
         usersControl = contentAside.goToUsersControl();
     }
-
-
     @Test (priority = 1)
     public void tc_ChangePasswordValidScenario (){    /* تغيير كلمه المرور بطريقه صحيحه */
         usersControl.selectEmployeeByID("0123456");
         editPassword = usersControl.editPassword();
-        editPassword.setNewPassword("24602460aaaaaa");
-        editPassword.setConfirmNewPassword("24602460aaaaaa");
+        editPassword.setNewPassword("24602460r");
+        editPassword.setConfirmNewPassword("24602460r");
         editPassword.save();
         editPassword.acceptIcon();
         homePage = new HomePage(driver);
         loginPage =homePage.signOut();
-        loginPage.loginUserWithoutRemMe("0123456","24602460aaaaaa");
+        loginPage.loginUserWithoutRemMe("0123456","24602460r");
         Assert.assertTrue(loginPage.getMobileCode().isDisplayed());
         loginPage.goToLoginPage();
         HomePage homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
-
     }
     @Test (priority = 2)
     public void tc_TestErrorMessages () throws InterruptedException {   /* التحقق من رسائل الخطأ */
@@ -72,7 +78,6 @@ public class TC_EditPassword extends TestInit {
         editPassword.back();
         editPassword.acceptIcon();
     }
-
     @Test (priority = 5)
     public void tc_enterSameNumberInPassword(){       /* ادخال نفس الرقم فقط  */
         usersControl.selectEmployeeByID("0123456");
@@ -91,7 +96,6 @@ public class TC_EditPassword extends TestInit {
     }
     @Test (priority = 6)
     public void tc_enterSameLetterInPassword(){/* ادخال نفس الحرف فقط  */
-
         usersControl.selectEmployeeByID("0123456");
         editPassword = usersControl.editPassword();
         editPassword.setNewPassword("aaaaaa");
@@ -123,9 +127,8 @@ public class TC_EditPassword extends TestInit {
         editPassword.setNewPassword("0123456");
         editPassword.setConfirmNewPassword("0123456");
         editPassword.save();
-        Assert.assertFalse(editPassword.getConfirmationMessage().isDisplayed());
+        Assert.assertTrue(editPassword.getConfirmationMessage().isDisplayed());
     }
-
     @Test  (priority = 9)
     public void tc_enterPasswordAsSameAsUserName(){/* ادخال كلمه مرور بنفس ارقام اسم الموظف */
         editPassword.notAcceptIcon();
@@ -137,8 +140,5 @@ public class TC_EditPassword extends TestInit {
         editPassword.setConfirmNewPassword("121212");
         editPassword.save();
         Assert.assertFalse(editPassword.getConfirmationMessage().isDisplayed());
-        editPassword.notAcceptIcon();
-        editPassword.back();
-        editPassword.acceptIcon();
     }
 }

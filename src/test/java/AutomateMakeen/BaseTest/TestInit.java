@@ -49,11 +49,11 @@ public class TestInit {
         driver.quit();
     }
 
-    /*
+
     @AfterClass
     public void afterClass(){
         quitDriver();
     }
 
-     */
+
 }
