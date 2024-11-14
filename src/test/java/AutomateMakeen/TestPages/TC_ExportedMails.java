@@ -31,11 +31,10 @@ public class TC_ExportedMails extends TestInit {
     public void setupClass() {
         lunchDriver();
         loginPage.goToLoginPage();
-        HomePage homePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
-        homePage.goToHomePage();
+        loginPage.loginUserWithoutRemMe(userID, userPasswd);
         exportedMails = contentAside.goToExportedMail();
     }
-    @Test(dependsOnMethods = "AutomateMakeen.TestPages.TC_CreateMailBox.tc_createValidExternalMail")
+    @Test
     public void tc_validateCreatedMailAddedToExportedMail(){
         exportedMails.getRecentlyAddedMail(subject);
         List<String> mailData = exportedMails.getMailData();

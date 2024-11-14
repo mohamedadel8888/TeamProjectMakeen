@@ -6,7 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 public class TC_CreateMailBox extends TestInit {
     private String subject = "انشاء بريد خارجي";
@@ -33,18 +32,19 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage = contentAside.goToCreateExternalMail();
     }
 
-//    @Test
-//    public void tc_createValidExternalMail()  {
-//        createExternalMailPage.enteringTheSubjectOfMail(subject);
-//        createExternalMailPage.setDocTypeUsingControl(docTypeName);
-//        createExternalMailPage.setReceiverUsingControl(receiverName);
-//        createExternalMailPage.setSenderUsingControl(senderName);
-//        createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-//        createExternalMailPage.insertRecipient(recipient);
-//        createExternalMailPage.pressOnDeactivateReferralNumber();
-//        createExternalMailPage.clickSendConfirm();
-//        Assert.assertTrue(createExternalMailPage.validateSuccessfulCreatingMail());
-//    }
+    @Test
+    public void tc_createValidExternalMail()  {
+        createExternalMailPage.clearAllField();
+        createExternalMailPage.enteringTheSubjectOfMail(subject);
+        createExternalMailPage.setDocTypeUsingControl(docTypeName);
+        createExternalMailPage.setReceiverUsingControl(receiverName);
+        createExternalMailPage.setSenderUsingControl(senderName);
+        createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
+        createExternalMailPage.insertRecipient(recipient);
+        createExternalMailPage.pressOnDeactivateReferralNumber();
+        createExternalMailPage.clickSendConfirm();
+        Assert.assertTrue(createExternalMailPage.validateSuccessfulCreatingMail());
+    }
 
     static int Subjectflag = 0;
     @Test(dataProvider = "subjectDataProvider")
@@ -65,10 +65,12 @@ public class TC_CreateMailBox extends TestInit {
         if(subData.length() == 141){
             createExternalMailPage.clickDeclineSend();
             createExternalMailPage.getTopOfThePage();
+            createExternalMailPage.pressOnDeactivateReferralNumber();
             Assert.assertEquals(createExternalMailPage.getSubjectValidatorState(),"Asterisk");
             Assert.assertEquals(createExternalMailPage.getTheValueOfSubjectOfTheMail().length(),
                     140);
         }else{
+            createExternalMailPage.pressOnDeactivateReferralNumber();
             Assert.assertEquals(createExternalMailPage.getSubjectValidatorState(),"Red Circle");
             Assert.assertEquals(createExternalMailPage.getSubjectErrorMsg(),"برجاء إدخال الموضوع");
         }
@@ -98,6 +100,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.setDocTypeNum(docTypeData);
         createExternalMailPage.clickSend();
         createExternalMailPage.getTopOfThePage();
+        createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getDocTypeValidatorState(),"Red Circle");
         if(docTypeData.equals("1111")){
             Assert.assertEquals(createExternalMailPage.getDocTypeErrorMsg(),
@@ -131,6 +134,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.copyPasteToDocTypeNum(docTypeData);
         createExternalMailPage.clickSend();
         createExternalMailPage.getTopOfThePage();
+        createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getDocTypeValidatorState(),"Red Circle");
         Assert.assertEquals(createExternalMailPage.getDocTypeErrorMsg(),
                     "عفواً نوع المستند يقبل أرقام فقط");
@@ -160,6 +164,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.insertReceiverNum(receiverData);
         createExternalMailPage.clickSend();
         createExternalMailPage.getTopOfThePage();
+        createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getReceiverValidatorState(),"Red Circle");
         if(receiverData.equals("1111")){
             Assert.assertEquals(createExternalMailPage.getReceiverErrorMsg(),
@@ -187,6 +192,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.copyPasteToReceiverNum(receiverData);
         createExternalMailPage.clickSend();
         createExternalMailPage.getTopOfThePage();
+        createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getReceiverValidatorState(),"Red Circle");
         Assert.assertEquals(createExternalMailPage.getReceiverErrorMsg(),
                 "عفوا, المرسل اليه يقبل ارقام فقط");
@@ -211,6 +217,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.insertSenderNum(senderData);
         createExternalMailPage.clickSend();
         createExternalMailPage.getTopOfThePage();
+        createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Red Circle");
         if(senderData.equals("1111")){
             Assert.assertEquals(createExternalMailPage.getSenderErrorMsg(),
@@ -239,6 +246,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.copyPasteToSenderNum(senderData);
         createExternalMailPage.clickSend();
         createExternalMailPage.getTopOfThePage();
+        createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Red Circle");
         Assert.assertEquals(createExternalMailPage.getSenderErrorMsg(),
                 "عفوا, المرسل يقبل ارقام فقط");
@@ -252,60 +260,77 @@ public class TC_CreateMailBox extends TestInit {
     /****************************************************/
     static int classFlag = 0;
     @Test(dataProvider = "controlDataProvider")
-    public void tc_testTreatClassFieldWithInsertInvalidData(String senderData) {
-        createExternalMailPage.clearSenderNum();
+    public void tc_testTreatClassFieldWithInsertInvalidData(String classData) {
+        createExternalMailPage.clearTreatClassificationNum();
         if(classFlag == 0){
 //            Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Asterisk");
             createExternalMailPage.clearAllField();
             createExternalMailPage.enteringTheSubjectOfMail(subject);
             createExternalMailPage.setDocTypeNum(docTypeNum);
             createExternalMailPage.setReceiverUsingControl(receiverName);
-            createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
+            createExternalMailPage.setSenderUsingControl(senderName);
             createExternalMailPage.insertRecipient(recipient);
             createExternalMailPage.pressOnDeactivateReferralNumber();
             classFlag = 1;
         }
-        createExternalMailPage.insertSenderNum(senderData);
+        createExternalMailPage.insertTreatClassificationNum(classData);
         createExternalMailPage.clickSend();
         createExternalMailPage.getTopOfThePage();
-        Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Red Circle");
-        if(senderData.equals("1111")){
-            Assert.assertEquals(createExternalMailPage.getSenderErrorMsg(),
-                    "رقم المرسل غير صحيح أو غير موجود");
+        createExternalMailPage.pressOnDeactivateReferralNumber();
+        Assert.assertEquals(createExternalMailPage.getTreatClassificationValidatorState(),"Red Circle");
+        if(classData.equals("1111")){
+            Assert.assertEquals(createExternalMailPage.getTreatClassificationErrorMsg(),
+                    "نوع التصنيف غير صحيح أو غير موجود");
         }else{
-            Assert.assertEquals(createExternalMailPage.getSenderErrorMsg(),"برجاء إدخال المرسل");
+            Assert.assertEquals(createExternalMailPage.getTreatClassificationErrorMsg(),"برجاء إدخال تصنيف المعامله");
         }
     }
 
 
-//    static int senderCPFlag = 0;
-//    @Test(dataProvider = "receiverCPDataProvider")
-//    public void tc_testSenderFieldWithCopyPasteInvalidData(String senderData) {
-//        createExternalMailPage.clearSenderNum();
-//        if(senderCPFlag == 0){
-////            Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Asterisk");
-//            createExternalMailPage.clearAllField();
-//            createExternalMailPage.enteringTheSubjectOfMail(subject);
-//            createExternalMailPage.setDocTypeUsingControl(docTypeName);
-//            createExternalMailPage.setReceiverUsingControl(receiverName);
-//            createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-//            createExternalMailPage.insertRecipient(recipient);
-//            createExternalMailPage.pressOnDeactivateReferralNumber();
-//            senderCPFlag = 1;
-//        }
-//        createExternalMailPage.copyPasteToSenderNum(senderData);
-//        createExternalMailPage.clickSend();
-//        createExternalMailPage.getTopOfThePage();
-//        Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Red Circle");
-//        Assert.assertEquals(createExternalMailPage.getSenderErrorMsg(),
-//                "عفوا, المرسل يقبل ارقام فقط");
-//    }
-//    @DataProvider(name = "receiverCPDataProvider")
-//    public Object[] receiverCPDataProvider() {
-//        return new Object[]{"أبجد", "ABCD", "(@*%~^)", "١٣٠", "",
-//        };
-//    }
+    static int classCPFlag = 0;
+    @Test(dataProvider = "receiverCPDataProvider")
+    public void tc_testTreatClassFieldWithCopyPasteInvalidData(String classData) {
+        createExternalMailPage.clearTreatClassificationNum();
+        if(classCPFlag == 0){
+//            Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Asterisk");
+            createExternalMailPage.clearAllField();
+            createExternalMailPage.enteringTheSubjectOfMail(subject);
+            createExternalMailPage.setDocTypeUsingControl(docTypeName);
+            createExternalMailPage.setReceiverUsingControl(receiverName);
+            createExternalMailPage.setSenderUsingControl(senderName);
+            createExternalMailPage.insertRecipient(recipient);
+            createExternalMailPage.pressOnDeactivateReferralNumber();
+            classCPFlag = 1;
+        }
+        createExternalMailPage.copyPasteToTreatClassificationNum(classData);
+        createExternalMailPage.clickSend();
+        createExternalMailPage.getTopOfThePage();
+        createExternalMailPage.pressOnDeactivateReferralNumber();
+        Assert.assertEquals(createExternalMailPage.getTreatClassificationValidatorState(),"Red Circle");
+        Assert.assertEquals(createExternalMailPage.getTreatClassificationErrorMsg(),
+                "عفواً نوع التصنيف يقبل أرقام فقط");
+    }
 
+    /*******************************************************************/
+    @Test
+    public void tc_testRecipientFieldWithInsertInvalidData() {
+//        createExternalMailPage.clearRecipient();
+//      Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Asterisk");
+        createExternalMailPage.clearAllField();
+        createExternalMailPage.enteringTheSubjectOfMail(subject);
+        createExternalMailPage.setDocTypeNum(docTypeNum);
+        createExternalMailPage.setReceiverUsingControl(receiverName);
+        createExternalMailPage.setSenderUsingControl(senderName);
+        createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
+        createExternalMailPage.pressOnDeactivateReferralNumber();
+        createExternalMailPage.clickSend();
+        createExternalMailPage.getTopOfThePage();
+        createExternalMailPage.pressOnDeactivateReferralNumber();
+        Assert.assertEquals(createExternalMailPage.getRecipientValidatorState(),"Red Circle");
+        Assert.assertEquals(createExternalMailPage.getRecipientErrorMsg(),
+                    "برجاء إدخال جهة الإحالة");
+
+    }
 }
 
 //@Test
