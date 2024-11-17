@@ -1,0 +1,89 @@
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:/Users/MARWAN.KHALIL/IdeaProjects/TeamProjectMakeen">
+        <classes>
+<!--            <class name="AutomateMakeen.TestPages.TC_AddDelegatePage">-->
+<!--                <methods>-->
+<!--                    <include name="addNewDelegateWithValidData"/>-->
+<!--                    <include name="addNewDelegateWithDefaultAndEmptyData"/>-->
+<!--                    <include name="addNewDelegateWithMoreThanOneDisablePeriod"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+            <class name="AutomateMakeen.TestPages.TC_CreateMailBox">
+                <methods>
+                    <include name="tc_testSubjectFieldWithInsertInvalidData"/>
+                    <include name="tc_testDocTypeFieldWithInsertInvalidData"/>
+                    <include name="tc_testDocTypeFieldWithCopyPasteInvalidData"/>
+                    <include name="tc_testReceiverFieldWithInsertInvalidData"/>
+                    <include name="tc_testReceiverFieldWithCopyPasteInvalidData"/>
+                    <include name="tc_testSenderFieldWithInsertInvalidData"/>
+                    <include name="tc_testSenderFieldWithCopyPasteInvalidData"/>
+                    <include name="tc_testTreatClassFieldWithInsertInvalidData"/>
+                    <include name="tc_testTreatClassFieldWithCopyPasteInvalidData"/>
+                    <include name="tc_testRecipientFieldWithInsertInvalidData"/>
+                    <include name="tc_createValidExternalMail"/>
+                </methods>
+            </class>
+            <class name="AutomateMakeen.TestPages.TC_ExportedMails">
+                <methods>
+                    <include name="tc_validateCreatedMailAddedToExportedMail"/>
+                </methods>
+            </class>
+            <class name="AutomateMakeen.TestPages.TC_ImportedMails">
+                <methods>
+                    <include name="tc_validateCreatedMailAddedToImportedMail"/>
+                </methods>
+            </class>
+<!--            <class name="AutomateMakeen.TestPages.TC_EditAccountPage">-->
+<!--                <methods>-->
+<!--                    <include name="TestNavigateToEditAccountPage"/>-->
+<!--                    <include name="TestNotAllowingEnteringTextInUserAndDepartment"/>-->
+<!--                    <include name="TestMakingFieldsEmpty"/>-->
+<!--                    <include name="TestFieldsScrolling"/>-->
+<!--                    <include name="TestCheckBoxesAreWorking"/>-->
+<!--                    <include name="TestMobileAndMailCheckBoxes"/>-->
+<!--                    <include name="TestAddingMission"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="AutomateMakeen.TestPages.TC_EditPassword">-->
+<!--                <methods>-->
+<!--                    <include name="tc_ChangePasswordValidScenario"/>-->
+<!--                    <include name="tc_TestErrorMessages"/>-->
+<!--                    <include name="tc_lessThan6Numbers"/>-->
+<!--                    <include name="tc_passwordNotMatching"/>-->
+<!--                    <include name="tc_enterSameNumberInPassword"/>-->
+<!--                    <include name="tc_enterSameLetterInPassword"/>-->
+<!--                    <include name="tc_enterDataAndReturnWithoutSaving"/>-->
+<!--                    <include name="tc_enterPasswordAsSameAsUserNumber"/>-->
+<!--                    <include name="tc_enterPasswordAsSameAsUserName"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="AutomateMakeen.TestPages.TC_LoginPage">-->
+<!--                <methods>-->
+<!--                    <include name="tc_loginWithValidUser"/>-->
+<!--                    <include name="tc_loginWithInvalidUser"/>-->
+<!--                    <include name="tc_loginWithInvalidPassword"/>-->
+<!--                    <include name="atc_loginWithRememberMe"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--            <class name="AutomateMakeen.TestPages.TC_SearchInUsersControl">-->
+<!--                <methods>-->
+<!--                    <include name="tc_searchByFname"/>-->
+<!--                    <include name="tc_searchBySname"/>-->
+<!--                    <include name="tc_searchByThirdName"/>-->
+<!--                    <include name="tc_searchByLastName"/>-->
+<!--                    <include name="tc_searchByUserID"/>-->
+<!--                    <include name="tc_searchByDept"/>-->
+<!--                    <include name="tc_searchByFnameExitElement"/>-->
+<!--                    <include name="tc_searchBySnameExitElement"/>-->
+<!--                    <include name="tc_searchByThirdNameExitElement"/>-->
+<!--                    <include name="tc_searchByLastNameExitElement"/>-->
+<!--                    <include name="tc_searchByUserIDExitElement"/>-->
+<!--                    <include name="tc_searchByDeptExitElement"/>-->
+<!--                    <include name="tc_testShowAllFunctionality"/>-->
+<!--                    <include name="tc_clearTextPageSearchAndPressEnter"/>-->
+<!--                    <include name="tc_searchAboutEmployeeExitsByID"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+        </classes>
+    </test>
+</suite>
