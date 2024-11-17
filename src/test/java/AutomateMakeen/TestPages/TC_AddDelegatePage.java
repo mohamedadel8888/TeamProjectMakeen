@@ -2,8 +2,11 @@ package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.*;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.time.LocalTime;
 import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -18,6 +21,12 @@ public class TC_AddDelegatePage extends TestInit {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     String hijriDateToday = dateHijri.format(formatter);
     String hijri10DaysDate = dateHijriPlus10Days.format(formatter);
+
+    //Time Now
+    LocalTime currentTime = LocalTime.now();
+    LocalTime updatedTime = currentTime.plusMinutes(2);
+    String currentTimeFormat = updatedTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+    String timePeriod = currentTime.isBefore(LocalTime.NOON) ? "صباحا" : "مساءا";
 
 
     @BeforeClass
@@ -39,10 +48,10 @@ public class TC_AddDelegatePage extends TestInit {
         addDelegatePage.chooseNewPeriodRadioButton();
         addDelegatePage.inputDelegateDateFrom(hijriDateToday);
         addDelegatePage.inputDelegateDateTo(hijri10DaysDate);
-        //addDelegatePage.inputTimePeriodFrom("11:59");
-        //addDelegatePage.selectTimePeriodFromDropDown("صباحا");
-        //addDelegatePage.inputTimePeriodTo("10:00");
-        //addDelegatePage.selectTimePeriodToDropDown("مساءا");
+        //addDelegatePage.inputTimePeriodFrom(currentTimeFormat);
+        //addDelegatePage.selectTimePeriodFromDropDown(timePeriod);
+        //addDelegatePage.inputTimePeriodTo(currentTimeFormat);
+        //addDelegatePage.selectTimePeriodToDropDown(timePeriod);
         addDelegatePage.clickSaveButton();
         addDelegatePage.acceptPopUp();
         addDelegatePage.clickGoBackButton();
@@ -52,8 +61,16 @@ public class TC_AddDelegatePage extends TestInit {
         personalAccountsPage = loginPage.loginUserWithDelegateAccounts("3569897", "24602460");
         boolean delegateAccountPresent = personalAccountsPage.getDelegateEmployeeName("عادل حسن");
         homePage = personalAccountsPage.enterDelegateAccountByName("عادل حسن");
-        //homePage.goToHomePage();
         usersControl = contentAside.goToUsersControl();
+        usersControl.selectEmployeeByID("3569897");
+        usersControl.delegationControl();
+        delegatePage.clickCheckBoxDelegateEmployeeByID("1006000");
+        delegatePage.clickDeleteDelegatation();
+        delegatePage.acceptPopUp();
+        delegatePage.signOut();
+        loginPage.clearAllFeild();
+        loginPage.loginUserWithoutRemMe(userID, userPasswd);
+        contentAside.goToUsersControl();
         softAssert.assertTrue(delegateAccountPresent, "Delegate Account Not Present");
         softAssert.assertAll();
     }
@@ -102,8 +119,8 @@ public class TC_AddDelegatePage extends TestInit {
         addDelegatePage.chooseAcceptedPeriodRadioButton();
         addDelegatePage.selectAcceptedPeriodFromDropDown(1);
         addDelegatePage.clickSaveButton();
-        addDelegatePage.clickGoBackButton();
-        addDelegatePage.acceptPopUp();
+        boolean popUpDisplayed= addDelegatePage.isPopUpDisplayed();
+        Assert.assertTrue(popUpDisplayed,"PopUp Not Displayed");
     }
 }
 
