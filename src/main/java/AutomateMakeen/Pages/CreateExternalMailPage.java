@@ -555,6 +555,4 @@ public class CreateExternalMailPage extends BaseComp {
 }
 
 
-//    public void copyPasteToSub(String sub){
-//       cutPastAction(,,sub);
-//    }
+
