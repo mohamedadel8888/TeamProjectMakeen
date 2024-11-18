@@ -89,7 +89,6 @@ public class TC_CreateMailBox extends TestInit {
     public void tc_testDocTypeFieldWithInsertInvalidData(String docTypeData) {
         createExternalMailPage.clearDocTypeNum();
         if(docTypeFlag == 0){
-//            Assert.assertEquals(createExternalMailPage.getDocTypeValidatorState(),"Asterisk");
             createExternalMailPage.clearAllField();
             createExternalMailPage.enteringTheSubjectOfMail(subject);
             createExternalMailPage.setReceiverUsingControl(receiverName);
@@ -124,7 +123,6 @@ public class TC_CreateMailBox extends TestInit {
     public void tc_testDocTypeFieldWithCopyPasteInvalidData(String docTypeData) {
         createExternalMailPage.clearDocTypeNum();
         if(docTypeCPFlag == 0){
-//            Assert.assertEquals(createExternalMailPage.getDocTypeValidatorState(),"Asterisk");
             createExternalMailPage.clearAllField();
             createExternalMailPage.enteringTheSubjectOfMail(subject);
             createExternalMailPage.setReceiverUsingControl(receiverName);
@@ -184,7 +182,6 @@ public class TC_CreateMailBox extends TestInit {
     public void tc_testReceiverFieldWithCopyPasteInvalidData(String receiverData) {
         createExternalMailPage.clearReceiverNum();
         if(receiverCPFlag == 0){
-//            Assert.assertEquals(createExternalMailPage.getReceiverValidatorState(),"Asterisk");
             createExternalMailPage.clearAllField();
             createExternalMailPage.enteringTheSubjectOfMail(subject);
             createExternalMailPage.setDocTypeUsingControl(docTypeName);
@@ -210,7 +207,6 @@ public class TC_CreateMailBox extends TestInit {
     public void tc_testSenderFieldWithInsertInvalidData(String senderData) {
         createExternalMailPage.clearSenderNum();
         if(senderFlag == 0){
-//            Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Asterisk");
             createExternalMailPage.clearAllField();
             createExternalMailPage.enteringTheSubjectOfMail(subject);
             createExternalMailPage.setDocTypeNum(docTypeNum);
@@ -240,7 +236,6 @@ public class TC_CreateMailBox extends TestInit {
     public void tc_testSenderFieldWithCopyPasteInvalidData(String senderData) {
         createExternalMailPage.clearSenderNum();
         if(senderCPFlag == 0){
-//            Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Asterisk");
             createExternalMailPage.clearAllField();
             createExternalMailPage.enteringTheSubjectOfMail(subject);
             createExternalMailPage.setDocTypeUsingControl(docTypeName);
@@ -271,7 +266,6 @@ public class TC_CreateMailBox extends TestInit {
     public void tc_testTreatClassFieldWithInsertInvalidData(String classData) {
         createExternalMailPage.clearTreatClassificationNum();
         if(classFlag == 0){
-//            Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Asterisk");
             createExternalMailPage.clearAllField();
             createExternalMailPage.enteringTheSubjectOfMail(subject);
             createExternalMailPage.setDocTypeNum(docTypeNum);
@@ -301,7 +295,6 @@ public class TC_CreateMailBox extends TestInit {
     public void tc_testTreatClassFieldWithCopyPasteInvalidData(String classData) {
         createExternalMailPage.clearTreatClassificationNum();
         if(classCPFlag == 0){
-//            Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Asterisk");
             createExternalMailPage.clearAllField();
             createExternalMailPage.enteringTheSubjectOfMail(subject);
             createExternalMailPage.setDocTypeUsingControl(docTypeName);
@@ -324,8 +317,6 @@ public class TC_CreateMailBox extends TestInit {
     @Test(description = "Test Create External Mail Using Invalid recipient" +
             "and valid data in rest of fields",priority = 10)
     public void tc_testRecipientFieldWithInsertInvalidData() {
-//        createExternalMailPage.clearRecipient();
-//      Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Asterisk");
         createExternalMailPage.clearAllField();
         createExternalMailPage.enteringTheSubjectOfMail(subject);
         createExternalMailPage.setDocTypeNum(docTypeNum);
