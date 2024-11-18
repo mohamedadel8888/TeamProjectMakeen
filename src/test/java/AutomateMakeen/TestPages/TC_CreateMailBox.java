@@ -79,7 +79,7 @@ public class TC_CreateMailBox extends TestInit {
 
     @DataProvider(name = "subjectDataProvider")
     public Object[] subjectDataProvider() throws Exception{
-        return getJsonArrayAsObjectArray("DataProviderSubject","subjects");
+        return getJsonArrayAsObjectArray("DataProviderCreateMailBox","subjects");
     }
 
     static int docTypeFlag = 0;
@@ -110,7 +110,7 @@ public class TC_CreateMailBox extends TestInit {
     }
     @DataProvider(name = "controlDataProvider")
     public Object[] controlDataProvider()throws Exception {
-        return getJsonArrayAsObjectArray("DataProviderSubject","docTypeData");
+        return getJsonArrayAsObjectArray("DataProviderCreateMailBox","docTypeData");
     }
 
     static int docTypeCPFlag = 0;
