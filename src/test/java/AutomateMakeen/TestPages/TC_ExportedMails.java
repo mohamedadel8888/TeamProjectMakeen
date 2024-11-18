@@ -22,7 +22,7 @@ public class TC_ExportedMails extends TestInit {
     private String recipient = "مروان خليل";
     private String activeDays;
     ExportedMails exportedMails;
-
+    protected static String importNumber;
     @BeforeClass(description = "Preconditions for each test in the class :" +
             "السماحية للدخول الي النظام : الأمانة الإلكترونية" +
             "الصلاحية للدخول الى البرنامج الرئيسي البريد ." +
@@ -34,7 +34,7 @@ public class TC_ExportedMails extends TestInit {
         loginPage.loginUserWithoutRemMe(userID, userPasswd);
         exportedMails = contentAside.goToExportedMail();
     }
-    @Test
+    @Test(priority = 1)
     public void tc_validateCreatedMailAddedToExportedMail(){
         exportedMails.getRecentlyAddedMail(subject);
         List<String> mailData = exportedMails.getMailData();
@@ -42,5 +42,6 @@ public class TC_ExportedMails extends TestInit {
         Assert.assertEquals(mailData.get(1),recipient);
         Assert.assertEquals(mailData.get(2),senderName);
         Assert.assertEquals(mailData.get(3),docTypeName);
+        importNumber = mailData.get(4);
     }
 }
