@@ -3,6 +3,7 @@ package AutomateMakeen.TestPages;
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.HomePage;
 import AutomateMakeen.Pages.UsersControl;
+import io.opentelemetry.api.common.Value;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -25,7 +26,7 @@ public class TC_SearchInUsersControl extends TestInit {
 
     @Test
     public void tc_searchByFname (){
-        usersControl.setFirstName("150");
+        UsersControl.setFirstName("150");
         usersControl.singleSearch();
         Assert.assertTrue(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
@@ -69,7 +70,7 @@ public class TC_SearchInUsersControl extends TestInit {
     /********************************/
     @Test
     public void tc_searchByFnameExitElement (){
-        usersControl.setFirstName("10");
+        UsersControl.setFirstName("10");
         usersControl.singleSearch();
         Assert.assertFalse(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
@@ -112,9 +113,9 @@ public class TC_SearchInUsersControl extends TestInit {
     }
     /**********************************************/
     @Test
-    public void tc_testShowAllFunctionality(){
+    public void tc_testShowAllFunctionality(){  /* التحقق من عرض الكل */
         usersControl.setUserID("10");
-        usersControl.setFirstName("10");
+        UsersControl.setFirstName("10");
         usersControl.singleSearch();
         usersControl.showall();
         String fName = usersControl.getFirstName().getAttribute("value");
@@ -128,7 +129,7 @@ public class TC_SearchInUsersControl extends TestInit {
         Assert.assertEquals(lName,"");
         Assert.assertEquals(userID,"");
         Assert.assertEquals(usersControl.getChooseDept().getText(),"إخترالادارة");
-        Assert.assertEquals(usersControl.getPageNum(),"صفحة 1 من 225");
+        Assert.assertEquals(usersControl.getSearchText().getAttribute("value"),"1");
     }
     @Test
     public void tc_clearTextPageSearchAndPressEnter (){  /*اختبار البحث عند الضغط على Enter يعود الى الصفحه الاولى */
@@ -142,6 +143,28 @@ public class TC_SearchInUsersControl extends TestInit {
     public void tc_searchAboutEmployeeExitsByID(){
         usersControl.selectEmployeeByID("1020311");
         Assert.assertEquals(usersControl.getUserName(),"حمدي حمد حامد الحمدون");
+    }
+    @Test
+    public void tc_testUserNumberAcceptOnly_7Numbers (){    /* حقل رقم الموظف لايقبل اكتر من 7 ارقام */
+        usersControl.setUserID("123456789");
+        usersControl.singleSearch();
+        Assert.assertEquals(usersControl.getUserID().getAttribute("value"),"1234567");
+        usersControl.clearAllFeild();
+    }
+    @Test
+    public void tc_testUserNumberWithOnly_4Numbers (){     /* حقل رقم الموظف لايظهر نتائج لرقم اقل من 7 */
+        usersControl.setUserID("1234");
+        usersControl.singleSearch();
+        Assert.assertTrue(usersControl.getNoResultMessage().isDisplayed());
+        usersControl.clearAllFeild();
+    }
+    @Test
+    public void tc_goToPageNotExitsAndPressEnter (){    /*كتابه رقم صفحه اكبر من الموجود و عند الضغط على Enter يعود الى الصفحه  15 */
+        usersControl.setSearchText("15");
+        String location1 = usersControl.getPageNum();
+        usersControl.setSearchText("300");
+        String location2 = usersControl.getPageNum();
+        Assert.assertEquals(location2,location1);
     }
 }
 

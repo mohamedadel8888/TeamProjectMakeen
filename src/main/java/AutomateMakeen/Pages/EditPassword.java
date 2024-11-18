@@ -1,6 +1,7 @@
 package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -33,6 +34,11 @@ public class EditPassword extends BaseComp {
     WebElement saveIcon;
     @FindBy (xpath = "(//input[@onclick='cpUsers.backPWConfirm()'])[1]")
     WebElement backIcon;
+
+
+
+    @FindBy (xpath = "(//span[@id='txt_user_name'])[1]")
+    WebElement userName;
 
     @FindBy (xpath = "//b[@id='span_A_txt_pass_word']/p/span")
     WebElement errorMessage1;
@@ -111,9 +117,9 @@ public class EditPassword extends BaseComp {
          acceptIcon.click();
     }
 
-    public WebElement getNotAcceptIcon() {
+    public void notAcceptIcon() {
         exWait.until(ExpectedConditions.visibilityOf(getConfirmationMessage()));
-        return notAcceptIcon;
+        notAcceptIcon.click();
     }
 
     public String validation1() {
@@ -128,6 +134,10 @@ public class EditPassword extends BaseComp {
         message=getValidatorState(validation2);
         validation2.click();
         return message;
+    }
+
+    public WebElement getUserName() {
+        return userName;
     }
 
 

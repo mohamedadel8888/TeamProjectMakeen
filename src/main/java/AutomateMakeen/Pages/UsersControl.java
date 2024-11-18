@@ -1,11 +1,9 @@
 package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -41,6 +39,8 @@ public class UsersControl extends BaseComp {
     WebElement viewTasks ;
     @FindBy (id = "cph_main_btn_edit_password")   /* تعديل كلمه المرور */
     WebElement editPassword ;
+    @FindBy (xpath = "(//h1[contains(text(),'تعديل كلمة المرور')])[1]")
+    WebElement editPasswordTitle;
     @FindBy (id = "cph_main_btn_delegate_mang")  /* ادارة التفويض */
     WebElement delegationControl;
 
@@ -68,7 +68,7 @@ public class UsersControl extends BaseComp {
     WebElement showAll;
     @FindBy (id = "dv_Empty")  /* رساله لايوجد نتائج */
     WebElement noResultMessage;
-    @FindBy (id = "txt_Page")
+    @FindBy (id = "txt_Page")  /* حقل الصفحه */
     WebElement searchText;
     @FindBy (id = "ddl_deps_collapsibleDiv")
     WebElement divDeptChoose;
@@ -80,11 +80,14 @@ public class UsersControl extends BaseComp {
     WebElement deptTargetChosen;
 
 
-    @FindBy (id = "spn_grid_paging")
+    @FindBy (id = "spn_grid_paging")   /* نص : صفحه x من y  */
     WebElement pageNum;
 
     @FindBy (xpath = "(//div[@full_title='000'])[1]")
     WebElement firstElementInSearchTable;
+
+
+
 
 
     public WebElement getUserControlPage() {
@@ -178,11 +181,17 @@ public class UsersControl extends BaseComp {
         return noResultMessage;
     }
     public String getPageNum() {
-        return pageNum.getText();
+        return pageNum.getAttribute("value");
     }
     public WebElement getSearchText() {
         return searchText;
     }
+    public void setSearchText(String num) {
+        searchText.clear();
+        searchText.sendKeys(num);
+        searchText.sendKeys(Keys.ENTER);
+    }
+
     public void selectEmployeeByID(String number){
         userID.sendKeys(number);
         singleSearch();
@@ -209,6 +218,10 @@ public class UsersControl extends BaseComp {
     }
     public EditPassword editPassword(){
         editPassword.click();
+        exWait.until(ExpectedConditions.visibilityOf(editPasswordTitle));
+        EditPassword editPassword1 = new EditPassword(driver);
+        editPassword1.newPassword.clear();
+        editPassword1.confirmNewPassword.clear();
         return new EditPassword(driver);
     }
     public DelegatePage delegationControl (){

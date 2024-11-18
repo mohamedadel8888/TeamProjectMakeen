@@ -4,11 +4,17 @@ import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class EditDelegatePage extends BaseComp {
 
     protected WebDriver driver;
+    private WebDriverWait wait;
 
+    //Page Title
     private By editDelegatePageTitle = By.id("spn_AddEdittitle");
 
     //Department Name
@@ -16,6 +22,7 @@ public class EditDelegatePage extends BaseComp {
 
     //Delegate Employee
     private By delegateEmployeeEdit = By.id("ddl_delg_jobs");
+    private By delegateEmployeeFieldContent = By.id("ddl_delg_jobs_ddlSelectButtonTarget");
 
     //Dates Input Fields
     private By delegateEditFromDateField = By.id("txt_deleg_from");
@@ -43,7 +50,7 @@ public class EditDelegatePage extends BaseComp {
 
     //Buttons
     private By saveButton = By.cssSelector("[value='حفظ']");
-    private By goBackButton = By.cssSelector("[value='عودة']");
+    private By goBackButton = By.cssSelector("#fs_add_deleg > div.btn-bx > input:nth-child(2)");
 
     //Errors
 
@@ -72,9 +79,29 @@ public class EditDelegatePage extends BaseComp {
     public EditDelegatePage(WebDriver driver){
         super(driver);
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public String getEditDelegateTitlePage() {
         return driver.findElement(editDelegatePageTitle).getText();
     }
+
+    public String getEditDelegateEmployeeField(){
+        return driver.findElement(delegateEmployeeFieldContent).getText();
+    }
+
+    public DelegatePage clickGoBack(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(goBackButton));
+        driver.findElement(goBackButton).click();
+        return new DelegatePage(driver);
+    }
+
+    public void acceptPopUp(){
+        driver.findElement(acceptPopUpButton).click();
+    }
+
+    public void rejectPopUp(){
+        driver.findElement(rejectPopUpButton).click();
+    }
+
 }

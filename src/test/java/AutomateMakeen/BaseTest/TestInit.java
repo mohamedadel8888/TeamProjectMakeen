@@ -1,13 +1,12 @@
 package AutomateMakeen.BaseTest;
 
-import AutomateMakeen.Pages.ContentAside;
-import AutomateMakeen.Pages.LoginPage;
+import AutomateMakeen.Pages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import AutomateMakeen.Pages.EditAccountPage;
+import org.testng.asserts.SoftAssert;
 
 public class TestInit {
     protected String userID = "0342169";
@@ -23,6 +22,15 @@ public class TestInit {
     public EditAccountPage editAccountPage;
     public WebDriver driver;
     public static LoginPage loginPage;
+    public static HomePage homePage;
+
+    public static UsersControl usersControl;
+    public static DelegatePage delegatePage;
+    public static AddDelegatePage addDelegatePage;
+    public static PersonalAccountsPage personalAccountsPage;
+    public static EditDelegatePage editDelegatePage;
+
+    protected SoftAssert softAssert = new SoftAssert();
 
     public WebDriver initDriver(){
         WebDriver driver = new EdgeDriver();
@@ -42,10 +50,13 @@ public class TestInit {
     }
 
     /*
+
     @AfterClass
     public void afterClass(){
         quitDriver();
     }
 
      */
+
+
 }

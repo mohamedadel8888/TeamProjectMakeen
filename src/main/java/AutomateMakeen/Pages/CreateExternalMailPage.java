@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -35,7 +34,7 @@ public class CreateExternalMailPage extends BaseComp {
     @FindBy(id = "spnA_txt_doc_type_num")
     WebElement docTypeValidator;
 
-    @FindBy(css = "b[id='spnA_txt_doc_type_num'] p[class='span_error']")
+    @FindBy(css = "#spnA_txt_doc_type_num p[class='span_error'] span")
     WebElement errorMsgWebElement;
 
     @FindBy(css = "span[onclick='extInboxCreation.showPickupDocType()']")
@@ -103,6 +102,10 @@ public class CreateExternalMailPage extends BaseComp {
 
     public void setDocTypeUsingControl(String docCode){
         control(openDocTypeControl,docCode);
+    }
+
+    public void setDocTypeNum(String docCode){
+        docTypeWebElement.sendKeys(docCode);
     }
 
     public String getTypeName(){
@@ -332,6 +335,11 @@ public class CreateExternalMailPage extends BaseComp {
         defaultChooseInRecipientList.click();
     }
 
+    public void getTopOfThePage(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, 0);");
+    }
+
     public String getRecipientValidatorState(){
         return getValidatorState(recipientValidatorWebElement);
     }
@@ -384,6 +392,10 @@ public class CreateExternalMailPage extends BaseComp {
      */
     public String getTheValueOfSubjectOfTheMail() {
         return subjectOfTextBox.getAttribute("value");
+    }
+
+    public void clearTheValueOfSubjectOfTheMail() {
+        subjectOfTextBox.clear();
     }
 
 
@@ -486,14 +498,14 @@ public class CreateExternalMailPage extends BaseComp {
     @FindBy(id = "spnA_txt_tr_subject")
     WebElement subjectValidator;
 
-    @FindBy(css = "fa fa-question-circle redText")
+    @FindBy(css = "#spnA_txt_tr_subject p[class='span_error'] span")
     WebElement subjectErrorMsg;
 
-    public String getValidatorValidatorState(){
+    public String getSubjectValidatorState(){
         return getValidatorState(subjectValidator);
     }
 
-    public String getValidatorErrorMsg(){
+    public String getSubjectErrorMsg(){
         subjectValidator.click();
         return subjectErrorMsg.getText();
     }
@@ -503,9 +515,21 @@ public class CreateExternalMailPage extends BaseComp {
 
     @FindBy(css = "input[value='موافق']")
     WebElement confirmWebElement;
-    public void clickSendConfirmBtn(){
+
+    @FindBy(id="divMasterAlert_close-lnk2")
+    WebElement closeDivSave;
+
+    @FindBy(css="input[value='غير موافق ']")
+    WebElement declineBtnWebElement;
+    public void clickSendConfirm(){
         sendBtnWebElement.click();
         confirmWebElement.click();
+    }
+    public void clickDeclineSend(){
+        declineBtnWebElement.click();
+    }
+    public void clickSend(){
+        sendBtnWebElement.click();
     }
     /*********************************************
      *                 Successful Adding
@@ -515,7 +539,17 @@ public class CreateExternalMailPage extends BaseComp {
 
     public boolean validateSuccessfulCreatingMail(){
         exWait.until(ExpectedConditions.visibilityOf(successfulMsgWebElement));
-        return successfulMsgWebElement.getText().equals("تم إرسال بريد خارجي بنجاح");
+        boolean flag = successfulMsgWebElement.getText().equals("تم إرسال بريد خارجي بنجاح");
+        closeDivSave.click();
+        return flag;
+    }
+    public void clearAllField(){
+        clearTheValueOfSubjectOfTheMail();
+        clearDocTypeNum();
+        clearReceiverNum();
+        clearSenderNum();
+        clearRecipient();
+        clearTreatClassificationNum();
     }
 
 }

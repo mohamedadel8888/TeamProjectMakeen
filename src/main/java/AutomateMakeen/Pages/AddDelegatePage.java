@@ -1,10 +1,7 @@
 package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -18,6 +15,10 @@ public class AddDelegatePage extends BaseComp {
     protected WebDriver driver;
     private WebDriverWait wait;
     JavascriptExecutor js;
+
+
+    //Page Title
+    private By addDelegatePageTitle = By.id("spn_AddEdittitle");
 
     //Department Name
     //private By departmentNameDropDownList = By.id("ddl_deps_ddlSelectButton");
@@ -38,6 +39,9 @@ public class AddDelegatePage extends BaseComp {
     //Radio Buttons
     private By acceptedPeriodRadioButton = By.id("rd_period_accepted");
     private By newPeriodRadioButton = By.id("rd_new_period");
+
+    //Field That Shows Only When The Employee Has More than One Disable Period
+    private By chooseAcceptedPeriodDropDownList = By.id("ddl_period_accepted");
 
     //Dates Input Fields
     private By delegatedFromDateField = By.id("txt_deleg_from");
@@ -62,6 +66,8 @@ public class AddDelegatePage extends BaseComp {
     //private By goBackButton = By.cssSelector("[value='عودة']");
     private By goBackButton = By.cssSelector("#fs_add_deleg > div.btn-bx > input:nth-child(2)");
 
+    //PopUp Div
+    private By popUpDiv = By.cssSelector("#dv_alertPopup > div");
 
     //PopUp Text
     private By messagePopUp = By.className("popup_content");
@@ -109,6 +115,12 @@ public class AddDelegatePage extends BaseComp {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+
+    //Page Title Mehods
+    public String getPageTitle() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(addDelegatePageTitle));
+        return driver.findElement(addDelegatePageTitle).getText();
+    }
 
     //Department Name Methods
 
@@ -185,6 +197,16 @@ public class AddDelegatePage extends BaseComp {
         driver.findElement(newPeriodRadioButton).click();
     }
 
+    public void chooseAcceptedPeriodRadioButton(){
+        driver.findElement(acceptedPeriodRadioButton).click();
+    }
+
+    public void selectAcceptedPeriodFromDropDown(Integer index) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(chooseAcceptedPeriodDropDownList));
+        Select dropdownElement = new Select(driver.findElement(chooseAcceptedPeriodDropDownList));
+        dropdownElement.selectByIndex(index);
+    }
+
     //Input Dates In Fields Methods
 
     public void inputDelegateDateFrom(String date){
@@ -254,6 +276,15 @@ public class AddDelegatePage extends BaseComp {
     }
 
     //Pop Up Methods
+    public boolean isPopUpDisplayed(){
+        try {
+            return driver.findElement(popUpDiv).isDisplayed();
+        }
+        catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
     public String getPopUpMessage(){
         return driver.findElement(messagePopUp).getText();
     }
@@ -278,28 +309,28 @@ public class AddDelegatePage extends BaseComp {
     public String getDelegateEmployeeErrorMessage(){
         WebElement hoverOnAction = driver.findElement(delegateEmployeeErrorIcon);
         hoverOnAction(hoverOnAction);
-        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(delegateEmployeeErrorMessage));
+        WebElement toggletipNameElement = wait.until(ExpectedConditions.visibilityOfElementLocated(delegateEmployeeErrorMessage));
         return toggletipNameElement.getText();
     }
 
     public String getPeriodTypeErrorMessage(){
         WebElement hoverOnAction = driver.findElement(periodTypeErrorIcon);
         hoverOnAction(hoverOnAction);
-        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(periodTypeErrorMessage));
+        WebElement toggletipNameElement = wait.until(ExpectedConditions.visibilityOfElementLocated(periodTypeErrorMessage));
         return toggletipNameElement.getText();
     }
 
     public String getDelegateDateFromErrorMessage(){
         WebElement hoverOnAction = driver.findElement(delegateDateFromErrorIcon);
         hoverOnAction(hoverOnAction);
-        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(delegateDateFromErrorMessage));
+        WebElement toggletipNameElement = wait.until(ExpectedConditions.visibilityOfElementLocated(delegateDateFromErrorMessage));
         return toggletipNameElement.getText();
     }
 
     public String getDelegateDateToErrorMessage(){
         WebElement hoverOnAction = driver.findElement(delegateDateToErrorIcon);
         hoverOnAction(hoverOnAction);
-        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(delegateDateToErrorMessage));
+        WebElement toggletipNameElement = wait.until(ExpectedConditions.visibilityOfElementLocated(delegateDateToErrorMessage));
         return toggletipNameElement.getText();
     }
 
@@ -307,14 +338,14 @@ public class AddDelegatePage extends BaseComp {
     public String getDelegateTimeFromErrorMessage(){
         WebElement hoverOnAction = driver.findElement(delegateTimeFromErrorIcon);
         hoverOnAction(hoverOnAction);
-        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(delegateTimeFromErrorMessage));
+        WebElement toggletipNameElement = wait.until(ExpectedConditions.visibilityOfElementLocated(delegateTimeFromErrorMessage));
         return toggletipNameElement.getText();
     }
 
     public String getDelegateTimeToErrorMessage(){
         WebElement hoverOnAction = driver.findElement(delegateTimeToErrorIcon);
         hoverOnAction(hoverOnAction);
-        WebElement toggletipNameElement= wait.until(ExpectedConditions.visibilityOfElementLocated(delegateTimeToErrorMessage));
+        WebElement toggletipNameElement = wait.until(ExpectedConditions.visibilityOfElementLocated(delegateTimeToErrorMessage));
         return toggletipNameElement.getText();
     }
 

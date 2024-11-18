@@ -5,19 +5,16 @@ import AutomateMakeen.Pages.*;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+
+import java.time.LocalTime;
 import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 
-public class TC_AddDelegatePage extends TestInit{
+public class TC_AddDelegatePage extends TestInit {
 
-    DelegatePage delegatePage;
-    UsersControl usersControl;
-    AddDelegatePage addDelegatePage;
-    PersonalAccountsPage personalAccountsPage;
-    SoftAssert softAssert = new SoftAssert();
+
     //Today's Date in Hiijri
     HijrahDate dateHijri = HijrahDate.now();
     HijrahDate dateHijriPlus10Days = dateHijri.plus(10, ChronoUnit.DAYS);
@@ -25,18 +22,24 @@ public class TC_AddDelegatePage extends TestInit{
     String hijriDateToday = dateHijri.format(formatter);
     String hijri10DaysDate = dateHijriPlus10Days.format(formatter);
 
+    //Time Now
+    LocalTime currentTime = LocalTime.now();
+    LocalTime updatedTime = currentTime.plusMinutes(2);
+    String currentTimeFormat = updatedTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+    String timePeriod = currentTime.isBefore(LocalTime.NOON) ? "صباحا" : "مساءا";
+
 
     @BeforeClass
-   public void setupClass()  {
-       lunchDriver();
-       loginPage.goToLoginPage();
-       HomePage homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
-       homePage.goToHomePage();
-       usersControl = contentAside.goToUsersControl();
-        }
+    public void setupClass() {
+        lunchDriver();
+        loginPage.goToLoginPage();
+        HomePage homePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
+        homePage.goToHomePage();
+        usersControl = contentAside.goToUsersControl();
+    }
 
-   @Test
-    public void addNewDelegateWithValidData(){
+    @Test
+    public void addNewDelegateWithValidData() {
         usersControl.selectEmployeeByID("3569897");
         delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
@@ -45,24 +48,35 @@ public class TC_AddDelegatePage extends TestInit{
         addDelegatePage.chooseNewPeriodRadioButton();
         addDelegatePage.inputDelegateDateFrom(hijriDateToday);
         addDelegatePage.inputDelegateDateTo(hijri10DaysDate);
-        //addDelegatePage.inputTimePeriodFrom("11:59");
-        //addDelegatePage.selectTimePeriodFromDropDown("صباحا");
-        //addDelegatePage.inputTimePeriodTo("10:00");
-        //addDelegatePage.selectTimePeriodToDropDown("مساءا");
+        //addDelegatePage.inputTimePeriodFrom(currentTimeFormat);
+        //addDelegatePage.selectTimePeriodFromDropDown(timePeriod);
+        //addDelegatePage.inputTimePeriodTo(currentTimeFormat);
+        //addDelegatePage.selectTimePeriodToDropDown(timePeriod);
         addDelegatePage.clickSaveButton();
         addDelegatePage.acceptPopUp();
         addDelegatePage.clickGoBackButton();
         boolean delegateAdded = delegatePage.getDelegateResult("عادل حسن");
-        softAssert.assertTrue(delegateAdded,"Incorrect Addition of New Delegate");
+        softAssert.assertTrue(delegateAdded, "Incorrect Addition of New Delegate");
         delegatePage.clickSignOut();
-        personalAccountsPage = loginPage.loginUserWithDelegateAccounts("3569897","24602460");
+        personalAccountsPage = loginPage.loginUserWithDelegateAccounts("3569897", "24602460");
         boolean delegateAccountPresent = personalAccountsPage.getDelegateEmployeeName("عادل حسن");
-        softAssert.assertTrue(delegateAccountPresent,"Delegate Account Not Present");
+        homePage = personalAccountsPage.enterDelegateAccountByName("عادل حسن");
+        usersControl = contentAside.goToUsersControl();
+        usersControl.selectEmployeeByID("3569897");
+        usersControl.delegationControl();
+        delegatePage.clickCheckBoxDelegateEmployeeByID("1006000");
+        delegatePage.clickDeleteDelegatation();
+        delegatePage.acceptPopUp();
+        delegatePage.signOut();
+        loginPage.clearAllFeild();
+        loginPage.loginUserWithoutRemMe(userID, userPasswd);
+        contentAside.goToUsersControl();
+        softAssert.assertTrue(delegateAccountPresent, "Delegate Account Not Present");
         softAssert.assertAll();
     }
 
     @Test
-    public void addNewDelegateWithDefaultAndEmptyData(){
+    public void addNewDelegateWithDefaultAndEmptyData() {
         usersControl.selectEmployeeByID("3569897");
         delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
@@ -70,21 +84,20 @@ public class TC_AddDelegatePage extends TestInit{
         String depNameErrorMessage = addDelegatePage.getDepartmentNameErrorMessage();
         //String delegateEmployeeErrorMessage = addDelegatePage.getDelegateEmployeeErrorMessage();
         String periodTypeErrorMessage = addDelegatePage.getPeriodTypeErrorMessage();
+        addDelegatePage.clickGoBackButton();
         //String delegateDateFromErrorMessage = addDelegatePage.getDelegateDateFromErrorMessage();
         //String delegateDateToErrorMessage = addDelegatePage.getDelegateDateToErrorMessage();
-        softAssert.assertEquals(depNameErrorMessage ,
+        softAssert.assertEquals(depNameErrorMessage,
                 "اختر الإدارة",
                 "Incorrect Department Name Error Message.");
         /*
         softAssert.assertEquals(delegateEmployeeErrorMessage,
                 " اختر الموظف المفوض",
                 "Incorrect Delegate Employee Error Message.");
-
-         */
+        */
         softAssert.assertEquals(periodTypeErrorMessage,
                 "يرجى اختيار نوع الفترة",
                 "Incorrect Period Type Error Message.");
-
         /*
         softAssert.assertEquals(delegateDateFromErrorMessage,
                 "يرجى إدخال تاريخ بداية التفويض",
@@ -93,14 +106,22 @@ public class TC_AddDelegatePage extends TestInit{
                 " يرجى إدخال تاريخ نهاية التفويض",
                 "Incorrect Delegate Date To Error Message.");
          */
-
         softAssert.assertAll();
-
-
     }
 
-
-
+    @Test
+    public void addNewDelegateWithMoreThanOneDisablePeriod() {
+        usersControl.selectEmployeeByID("3569897");
+        delegatePage = usersControl.delegationControl();
+        addDelegatePage = delegatePage.clickAddButton();
+        addDelegatePage.selectDepartmentNameFromDropDown("قسم تحت الامين");
+        addDelegatePage.selectDelegatedEmployeeFromDropDown("1515111");
+        addDelegatePage.chooseAcceptedPeriodRadioButton();
+        addDelegatePage.selectAcceptedPeriodFromDropDown(1);
+        addDelegatePage.clickSaveButton();
+        boolean popUpDisplayed= addDelegatePage.isPopUpDisplayed();
+        Assert.assertTrue(popUpDisplayed,"PopUp Not Displayed");
+    }
 }
 
 

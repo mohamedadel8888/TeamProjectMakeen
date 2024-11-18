@@ -1,6 +1,7 @@
 package AutomateMakeen.Base;
 
 import AutomateMakeen.Pages.ContentAside;
+import AutomateMakeen.Pages.LoginPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -46,6 +47,7 @@ public class BaseComp {
     public String getValidatorState(WebElement validator){
         switch(validator.getAttribute("class")){
             case "fa fa-question-circle redText": return "Red Circle";
+            case "fa arow-none fa-asterisk":
             case "fa fa-asterisk redText": return "Asterisk";
             default: return "Error !!";
         }
@@ -56,11 +58,19 @@ public class BaseComp {
     @FindBy(id = "btn_pickPopUp_srch")
     WebElement docTypeControlSearchBtnWebElement;
 
+    @FindBy(id = "btn_session_time_out")
+    WebElement signOutBtn;
+
     public void control(WebElement openControlWebElement,String searchTxt){
         openControlWebElement.click();
         docTypeControlTxtSearchWebElement.sendKeys(searchTxt);
         docTypeControlSearchBtnWebElement.click();
         driver.findElement(By.xpath("//div[@title='"+searchTxt+"']/../../td/input")).click();
+    }
+
+    public LoginPage signOut(){
+        signOutBtn.click();
+        return new LoginPage(driver);
     }
 
 
