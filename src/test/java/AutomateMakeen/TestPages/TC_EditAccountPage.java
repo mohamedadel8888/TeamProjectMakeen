@@ -16,6 +16,8 @@ import java.time.Duration;
 import AutomateMakeen.Pages.UsersControl;
 
 
+// قبل الاختبار يجب ان يكون المستخدم لديه حساب مفعل وصلاحية الوصول لكل هذه المعلومات وتعديلها
+// المتغير لا يسمح بالكتابة في حقول اسم المستخدم والادارة
 public class TC_EditAccountPage extends TestInit {
     private WebDriver driver;
     CreateExternalEditAccountPage createExternalEditAccountPage;
@@ -24,7 +26,8 @@ public class TC_EditAccountPage extends TestInit {
     private WebDriverWait exWait;
 
 
-
+    // اختبار تسجيل الدخول والوصول لصفحة تعديل الحساب
+    // وان اسم المستحدم والادارة صحيحين
     @Test (priority = 1)
     public void TestNavigateToEditAccountPage()  {
         lunchDriver();
@@ -40,6 +43,7 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertEquals(AssertText, "ادارة الكهرباء", "should be 'ادارة الكهرباء'");}
 
 
+    // اختبار عدم السماحية بالكتابة في حقول اسم المستخدم والادارة في حالة انا المتغير لا يسمح بذلك
     @Test (priority = 2)
     public void TestNotAllowingEnteringTextInUserAndDepartment  ()  {
         boolean isInteractive = editAccountPage.isDepartmentFieldInteractive();
@@ -48,7 +52,7 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertFalse(isInteractive, "The input field should not be interactive.");}
 
 
-
+    // اختبار امكانية نقل المهمات بين الحقول وتفريغها وظهور رسالة التحذير
     @Test (priority = 3)
     public void TestMakingFieldsEmpty ()  {
         editAccountPage.clickAllRightButton();
@@ -63,6 +67,7 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertTrue(isEmpty, "empty");}
 
 
+    // اختبار الاسكرول في حقول المهمات
     @Test (priority = 4)
     public void TestFieldsScrolling()  {
         editAccountPage.clickAllRightButton();
@@ -73,6 +78,7 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertTrue(isScrollBarWorking, "scroll should be working");}
 
 
+    // اختبار ان صناديق الاختيار لا تعمل
     @Test (priority = 5)
     public void TestCheckBoxesAreWorking()  {
         editAccountPage.clickPrsEmpCheckbox();
@@ -89,7 +95,7 @@ public class TC_EditAccountPage extends TestInit {
         editAccountPage.clickMakeenUserCheckbox();}
 
 
-
+    // اختبار من ان صناديق الاختيار الخاصة بالموبايل والايميل تعمل
     @Test (priority = 6)
     public void TestMobileAndMailCheckBoxes()  {
         editAccountPage.clickEmailChickBox();
@@ -117,6 +123,7 @@ public class TC_EditAccountPage extends TestInit {
         editAccountPage.clickMobileChickBox();}
 
 
+    // اختبار اضافة مهمة وظهورها عند المستخدم
     @Test (priority = 7)
     public void TestAddingMission()  {
         editAccountPage.clickAllRightButton();
