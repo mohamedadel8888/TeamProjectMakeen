@@ -1,6 +1,5 @@
 package AutomateMakeen.TestPages;
 import AutomateMakeen.BaseTest.TestInit;
-import AutomateMakeen.Pages.CreateExternalEditAccountPage;
 import AutomateMakeen.Pages.HomePage;
 import AutomateMakeen.Pages.UsersControl;
 import org.openqa.selenium.JavascriptExecutor;
@@ -16,22 +15,33 @@ import java.time.Duration;
 import AutomateMakeen.Pages.UsersControl;
 
 
+// قبل الاختبار يجب ان يكون المستخدم لديه حساب مفعل وصلاحية الوصول لكل هذه المعلومات وتعديلها
+// المتغير لا يسمح بالكتابة في حقول اسم المستخدم والادارة
 public class TC_EditAccountPage extends TestInit {
     private WebDriver driver;
-    CreateExternalEditAccountPage createExternalEditAccountPage;
+
     UsersControl usersControl;
     String AssertText;
     private WebDriverWait exWait;
 
 
 
-    @Test (priority = 1)
-    public void TestNavigateToEditAccountPage()  {
+    @BeforeClass
+    public void setupClass() {
         lunchDriver();
         loginPage.goToLoginPage();
-        HomePage homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
+        HomePage homePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
         homePage.goToHomePage();
-        createExternalEditAccountPage = contentAside.goToCreateExternalEditAccount();
+        usersControl = contentAside.goToUsersControl();
+
+    }
+
+    // اختبار تسجيل الدخول والوصول لصفحة تعديل الحساب
+    // وان اسم المستحدم والادارة صحيحين
+    @Test (priority = 1)
+    public void TestNavigateToEditAccountPage()  {
+
+        contentAside.goToCreateExternalEditAccount();
         AssertText = editAccountPage.getTitleText();
         Assert.assertEquals(AssertText, "تعديل حساب مستخدم", "should be 'تعديل حساب مستخدم'");
         AssertText = editAccountPage.getSUserName();
@@ -40,6 +50,7 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertEquals(AssertText, "ادارة الكهرباء", "should be 'ادارة الكهرباء'");}
 
 
+    // اختبار عدم السماحية بالكتابة في حقول اسم المستخدم والادارة في حالة انا المتغير لا يسمح بذلك
     @Test (priority = 2)
     public void TestNotAllowingEnteringTextInUserAndDepartment  ()  {
         boolean isInteractive = editAccountPage.isDepartmentFieldInteractive();
@@ -48,7 +59,7 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertFalse(isInteractive, "The input field should not be interactive.");}
 
 
-
+    // اختبار امكانية نقل المهمات بين الحقول وتفريغها وظهور رسالة التحذير
     @Test (priority = 3)
     public void TestMakingFieldsEmpty ()  {
         editAccountPage.clickAllRightButton();
@@ -63,6 +74,7 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertTrue(isEmpty, "empty");}
 
 
+    // اختبار الاسكرول في حقول المهمات
     @Test (priority = 4)
     public void TestFieldsScrolling()  {
         editAccountPage.clickAllRightButton();
@@ -73,6 +85,7 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertTrue(isScrollBarWorking, "scroll should be working");}
 
 
+    // اختبار ان صناديق الاختيار لا تعمل
     @Test (priority = 5)
     public void TestCheckBoxesAreWorking()  {
         editAccountPage.clickPrsEmpCheckbox();
@@ -89,7 +102,7 @@ public class TC_EditAccountPage extends TestInit {
         editAccountPage.clickMakeenUserCheckbox();}
 
 
-
+    // اختبار من ان صناديق الاختيار الخاصة بالموبايل والايميل تعمل
     @Test (priority = 6)
     public void TestMobileAndMailCheckBoxes()  {
         editAccountPage.clickEmailChickBox();
@@ -106,25 +119,20 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertTrue(isChecked, "should be checked.");
         isChecked = editAccountPage.IsMailCheckboxChecked();
         Assert.assertTrue(isChecked, "should be checked.");
-        try {TimeUnit.SECONDS.sleep(1);}
-        catch (InterruptedException e)
-        {throw new RuntimeException(e);}
         editAccountPage.clickBackToLoginPage();
         loginPage.loginUserWithoutRemMe(userID,userPasswd);
         homePage.goToHomePage();
-        createExternalEditAccountPage = contentAside.goToCreateExternalEditAccount();
+        contentAside.goToCreateExternalEditAccount();
         editAccountPage.clickEmailChickBox();
         editAccountPage.clickMobileChickBox();}
 
 
+    // اختبار اضافة مهمة وظهورها عند المستخدم
     @Test (priority = 7)
     public void TestAddingMission()  {
         editAccountPage.clickAllRightButton();
         editAccountPage.clickArchiveTransaction();
         editAccountPage.clickLeftButton();
-        try {TimeUnit.SECONDS.sleep(1);}
-        catch (InterruptedException e)
-        {throw new RuntimeException(e);}
         editAccountPage.clickSaveButton();
         AssertText = editAccountPage.getErrorMS();
         Assert.assertEquals(AssertText, "هل تريد اتمام عملية الحفظ؟", "should be 'هل تريد اتمام عملية الحفظ؟'");
@@ -136,18 +144,12 @@ public class TC_EditAccountPage extends TestInit {
         homePage.goToHomePage();
         editAccountPage.clickArchiveLink();
         editAccountPage.clickSearchLink();
-        try {TimeUnit.SECONDS.sleep(2);}
-        catch (InterruptedException e) {
-            throw new RuntimeException(e);}
         AssertText = editAccountPage.getSearchHeadingText();
         Assert.assertEquals(AssertText, "بحث", "should be 'بحث'");
         editAccountPage.clickPowerOffIcon();
         loginPage.loginUserWithoutRemMe(userID,userPasswd);
         homePage.goToHomePage();
-        createExternalEditAccountPage = contentAside.goToCreateExternalEditAccount();
-        try {TimeUnit.SECONDS.sleep(2);}
-        catch (InterruptedException e)
-        {throw new RuntimeException(e);}}
+        contentAside.goToCreateExternalEditAccount();}
 
 
 }
