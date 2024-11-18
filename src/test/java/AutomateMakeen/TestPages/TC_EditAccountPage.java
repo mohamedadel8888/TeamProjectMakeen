@@ -1,6 +1,5 @@
 package AutomateMakeen.TestPages;
 import AutomateMakeen.BaseTest.TestInit;
-import AutomateMakeen.Pages.CreateExternalEditAccountPage;
 import AutomateMakeen.Pages.HomePage;
 import AutomateMakeen.Pages.UsersControl;
 import org.openqa.selenium.JavascriptExecutor;
@@ -20,21 +19,29 @@ import AutomateMakeen.Pages.UsersControl;
 // المتغير لا يسمح بالكتابة في حقول اسم المستخدم والادارة
 public class TC_EditAccountPage extends TestInit {
     private WebDriver driver;
-    CreateExternalEditAccountPage createExternalEditAccountPage;
+
     UsersControl usersControl;
     String AssertText;
     private WebDriverWait exWait;
 
 
+
+    @BeforeClass
+    public void setupClass() {
+        lunchDriver();
+        loginPage.goToLoginPage();
+        HomePage homePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
+        homePage.goToHomePage();
+        usersControl = contentAside.goToUsersControl();
+
+    }
+
     // اختبار تسجيل الدخول والوصول لصفحة تعديل الحساب
     // وان اسم المستحدم والادارة صحيحين
     @Test (priority = 1)
     public void TestNavigateToEditAccountPage()  {
-        lunchDriver();
-        loginPage.goToLoginPage();
-        HomePage homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
-        homePage.goToHomePage();
-        createExternalEditAccountPage = contentAside.goToCreateExternalEditAccount();
+
+        contentAside.goToCreateExternalEditAccount();
         AssertText = editAccountPage.getTitleText();
         Assert.assertEquals(AssertText, "تعديل حساب مستخدم", "should be 'تعديل حساب مستخدم'");
         AssertText = editAccountPage.getSUserName();
@@ -112,13 +119,10 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertTrue(isChecked, "should be checked.");
         isChecked = editAccountPage.IsMailCheckboxChecked();
         Assert.assertTrue(isChecked, "should be checked.");
-        try {TimeUnit.SECONDS.sleep(1);}
-        catch (InterruptedException e)
-        {throw new RuntimeException(e);}
         editAccountPage.clickBackToLoginPage();
         loginPage.loginUserWithoutRemMe(userID,userPasswd);
         homePage.goToHomePage();
-        createExternalEditAccountPage = contentAside.goToCreateExternalEditAccount();
+        contentAside.goToCreateExternalEditAccount();
         editAccountPage.clickEmailChickBox();
         editAccountPage.clickMobileChickBox();}
 
@@ -129,9 +133,6 @@ public class TC_EditAccountPage extends TestInit {
         editAccountPage.clickAllRightButton();
         editAccountPage.clickArchiveTransaction();
         editAccountPage.clickLeftButton();
-        try {TimeUnit.SECONDS.sleep(1);}
-        catch (InterruptedException e)
-        {throw new RuntimeException(e);}
         editAccountPage.clickSaveButton();
         AssertText = editAccountPage.getErrorMS();
         Assert.assertEquals(AssertText, "هل تريد اتمام عملية الحفظ؟", "should be 'هل تريد اتمام عملية الحفظ؟'");
@@ -143,18 +144,12 @@ public class TC_EditAccountPage extends TestInit {
         homePage.goToHomePage();
         editAccountPage.clickArchiveLink();
         editAccountPage.clickSearchLink();
-        try {TimeUnit.SECONDS.sleep(2);}
-        catch (InterruptedException e) {
-            throw new RuntimeException(e);}
         AssertText = editAccountPage.getSearchHeadingText();
         Assert.assertEquals(AssertText, "بحث", "should be 'بحث'");
         editAccountPage.clickPowerOffIcon();
         loginPage.loginUserWithoutRemMe(userID,userPasswd);
         homePage.goToHomePage();
-        createExternalEditAccountPage = contentAside.goToCreateExternalEditAccount();
-        try {TimeUnit.SECONDS.sleep(2);}
-        catch (InterruptedException e)
-        {throw new RuntimeException(e);}}
+        contentAside.goToCreateExternalEditAccount();}
 
 
 }
