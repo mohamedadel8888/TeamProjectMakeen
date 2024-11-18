@@ -86,8 +86,6 @@ public class TC_DelegatesPage extends TestInit {
             System.out.println("Condition failed: delegationPresent is true.");
         }
 
-
-
         softAssert.assertAll();
     }
 
