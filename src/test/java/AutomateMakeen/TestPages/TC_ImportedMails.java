@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static AutomateMakeen.TestPages.TC_ExportedMails.importNumber;
+import static AutomateMakeen.TestPages.TC_OutboxMails.importNumber;
 
 public class TC_ImportedMails extends TestInit {
     private String subject = "انشاء بريد خارجي";
