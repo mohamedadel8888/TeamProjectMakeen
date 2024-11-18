@@ -14,6 +14,9 @@ import org.testng.asserts.SoftAssert;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.time.LocalTime;
+import java.time.chrono.HijrahDate;
+import java.time.temporal.ChronoUnit;
 
 public class TestInit {
     protected String userID = "0342169";
@@ -36,6 +39,16 @@ public class TestInit {
     public static AddDelegatePage addDelegatePage;
     public static PersonalAccountsPage personalAccountsPage;
     public static EditDelegatePage editDelegatePage;
+
+    //HijriDates
+    protected HijrahDate dateHijriMinus = HijrahDate.now().minus(1, ChronoUnit.DAYS);
+    protected HijrahDate dateHijri = HijrahDate.now();
+    protected HijrahDate dateHijriPlus10Days = dateHijri.plus(10, ChronoUnit.DAYS);
+
+    //Time
+    protected LocalTime currentTime = LocalTime.now();
+    protected LocalTime updatedTime = currentTime.plusMinutes(2);
+
 
     protected SoftAssert softAssert = new SoftAssert();
 
