@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -82,12 +83,56 @@ public class EditDelegatePage extends BaseComp {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+
+    public void inputEditDelegateDateFrom(String date){
+        driver.findElement(delegateEditFromDateField).sendKeys(date);
+    }
+
+    public void inputEditDelegateDateTo(String date){
+        driver.findElement(delegateEditToDateField).sendKeys(date);
+    }
+
+    public void clearEditDelegateDateFrom(){
+        driver.findElement(delegateEditFromDateField).clear();
+    }
+
+    public void clearEditDelegateDateTo(){
+        driver.findElement(delegateEditToDateField).clear();
+    }
+
+
     public String getEditDelegateTitlePage() {
         return driver.findElement(editDelegatePageTitle).getText();
     }
 
     public String getEditDelegateEmployeeField(){
         return driver.findElement(delegateEmployeeFieldContent).getText();
+    }
+
+
+    public void inputEditTimePeriodFrom(String date){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(delegateTimePeriodFromField));
+        driver.findElement(delegateTimePeriodFromField).click();
+        driver.findElement(delegateTimePeriodFromField).sendKeys(date);
+    }
+
+    public void inputEditTimePeriodTo(String date){
+        driver.findElement(delegateTimePeriodToField).sendKeys(date);
+    }
+
+    public void selectEditTimePeriodFromDropDown(String option){
+        Select dropdownElement = new Select(driver.findElement(delegateTimePeriodFromDropDown));
+        dropdownElement.selectByVisibleText(option);
+    }
+
+    public void selectEditTimePeriodToDropDown(String option){
+        Select dropdownElement = new Select(driver.findElement(delegateTimePeriodToDropDown));
+        dropdownElement.selectByVisibleText(option);
+    }
+
+
+    public void clickSaveButton(){
+        driver.findElement(saveButton).click();
     }
 
     public DelegatePage clickGoBack(){
@@ -103,5 +148,22 @@ public class EditDelegatePage extends BaseComp {
     public void rejectPopUp(){
         driver.findElement(rejectPopUpButton).click();
     }
+
+
+    public String getEditDelegateDateFromErrorMessage(){
+        WebElement hoverOnAction = driver.findElement(delegateEditDateFromErrorIcon);
+        hoverOnAction(hoverOnAction);
+        WebElement toggletipNameElement = wait.until(ExpectedConditions.visibilityOfElementLocated(delegateEditDateFromErrorMessage));
+        return toggletipNameElement.getText();
+    }
+
+    public String getEditDelegateDateToErrorMessage(){
+        WebElement hoverOnAction = driver.findElement(delegateEditDateToErrorIcon);
+        hoverOnAction(hoverOnAction);
+        WebElement toggletipNameElement = wait.until(ExpectedConditions.visibilityOfElementLocated(delegateEditDateToErrorMessage));
+        return toggletipNameElement.getText();
+    }
+
+
 
 }

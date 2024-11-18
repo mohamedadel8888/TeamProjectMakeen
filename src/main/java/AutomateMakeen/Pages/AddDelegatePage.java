@@ -2,12 +2,10 @@ package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.sql.Driver;
 import java.time.Duration;
 import java.util.List;
 
@@ -19,6 +17,9 @@ public class AddDelegatePage extends BaseComp {
 
     //Page Title
     private By addDelegatePageTitle = By.id("spn_AddEdittitle");
+
+    //SubGov
+    private By subGovDepartmentDropDownList = By.id("divDdlSubGovDeptDelegates_ddlSelectButton");
 
     //Department Name
     //private By departmentNameDropDownList = By.id("ddl_deps_ddlSelectButton");
@@ -120,6 +121,14 @@ public class AddDelegatePage extends BaseComp {
     public String getPageTitle() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(addDelegatePageTitle));
         return driver.findElement(addDelegatePageTitle).getText();
+    }
+
+    //SubGovernment Methods
+    public void selectSubGovernmentNameFromDropDown(String option) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(departmentNameDropDownList));
+        driver.findElement(departmentNameDropDownList).click();
+        driver.findElement(departmentNameSearch).sendKeys(option);
+        driver.findElement(By.xpath("//label[contains(text(), '" + option + "')]")).click();
     }
 
     //Department Name Methods

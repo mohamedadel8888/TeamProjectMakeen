@@ -2,31 +2,31 @@ package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.*;
-import org.testng.Assert;
+import AutomateMakeen.Utilities.Data;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.LocalTime;
-import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
+
+   /* السماحية للدخول الي النظام .
+الصلاحية للدخول الي لوحة التحكم .
+الصلاحية للدخول الي ادارة المستخدمين .
+الصلاحية لادارة تفويض موظف .
+     */
 
 public class TC_AddDelegatePage extends TestInit {
 
-
     //Today's Date in Hiijri
-    HijrahDate dateHijri = HijrahDate.now();
-    HijrahDate dateHijriPlus10Days = dateHijri.plus(10, ChronoUnit.DAYS);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     String hijriDateToday = dateHijri.format(formatter);
     String hijri10DaysDate = dateHijriPlus10Days.format(formatter);
 
     //Time Now
-    LocalTime currentTime = LocalTime.now();
-    LocalTime updatedTime = currentTime.plusMinutes(2);
     String currentTimeFormat = updatedTime.format(DateTimeFormatter.ofPattern("HH:mm"));
-    String timePeriod = currentTime.isBefore(LocalTime.NOON) ? "صباحا" : "مساءا";
+    String currenttimePeriod = currentTime.isBefore(LocalTime.NOON) ? "صباحا" : "مساءا";
 
 
     @BeforeClass
@@ -38,47 +38,43 @@ public class TC_AddDelegatePage extends TestInit {
         usersControl = contentAside.goToUsersControl();
     }
 
-    @Test
+    @Test (priority = 1)
     public void addNewDelegateWithValidData() {
-        usersControl.selectEmployeeByID("3569897");
+        usersControl.selectEmployeeByID(Data.validEmployeeIDToDelegate);
         delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
-        addDelegatePage.selectDepartmentNameFromDropDown("ادارة الارشيف");
-        addDelegatePage.selectDelegatedEmployeeFromDropDown("عادل حسن");
+        addDelegatePage.selectDepartmentNameFromDropDown(Data.validDepartmentName);
+        addDelegatePage.selectDelegatedEmployeeFromDropDown(Data.validDelegatedEmployeeName);
         addDelegatePage.chooseNewPeriodRadioButton();
         addDelegatePage.inputDelegateDateFrom(hijriDateToday);
         addDelegatePage.inputDelegateDateTo(hijri10DaysDate);
-        //addDelegatePage.inputTimePeriodFrom(currentTimeFormat);
-        //addDelegatePage.selectTimePeriodFromDropDown(timePeriod);
-        //addDelegatePage.inputTimePeriodTo(currentTimeFormat);
-        //addDelegatePage.selectTimePeriodToDropDown(timePeriod);
         addDelegatePage.clickSaveButton();
         addDelegatePage.acceptPopUp();
         addDelegatePage.clickGoBackButton();
-        boolean delegateAdded = delegatePage.getDelegateResult("عادل حسن");
+        boolean delegateAdded = delegatePage.getDelegateResult(Data.validDelegatedEmployeeName);
         softAssert.assertTrue(delegateAdded, "Incorrect Addition of New Delegate");
         delegatePage.clickSignOut();
-        personalAccountsPage = loginPage.loginUserWithDelegateAccounts("3569897", "24602460");
-        boolean delegateAccountPresent = personalAccountsPage.getDelegateEmployeeName("عادل حسن");
-        homePage = personalAccountsPage.enterDelegateAccountByName("عادل حسن");
+        personalAccountsPage = loginPage.loginUserWithDelegateAccounts(Data.validEmployeeIDToDelegate, Data.validPassword);
+        boolean delegateAccountPresent = personalAccountsPage.getDelegateEmployeeName(Data.validDelegatedEmployeeName);
+        homePage = personalAccountsPage.enterDelegateAccountByName(Data.validDelegatedEmployeeName);
         usersControl = contentAside.goToUsersControl();
-        usersControl.selectEmployeeByID("3569897");
+        usersControl.selectEmployeeByID(Data.validEmployeeIDToDelegate);
         usersControl.delegationControl();
-        delegatePage.clickCheckBoxDelegateEmployeeByID("1006000");
+        delegatePage.clickCheckBoxDelegateEmployeeByID(Data.validDelegatedEmployeeID);
         delegatePage.clickDeleteDelegatation();
         delegatePage.acceptPopUp();
         delegatePage.signOut();
         loginPage.clearAllFeild();
         loginPage.loginUserWithoutRemMe(userID, userPasswd);
         contentAside.goToUsersControl();
+        usersControl.selectEmployeeByID(Data.validEmployeeIDToDelegate);
+        usersControl.delegationControl();
         softAssert.assertTrue(delegateAccountPresent, "Delegate Account Not Present");
         softAssert.assertAll();
     }
 
-    @Test
+    @Test (priority = 2)
     public void addNewDelegateWithDefaultAndEmptyData() {
-        usersControl.selectEmployeeByID("3569897");
-        delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
         addDelegatePage.clickSaveButton();
         String depNameErrorMessage = addDelegatePage.getDepartmentNameErrorMessage();
@@ -91,37 +87,53 @@ public class TC_AddDelegatePage extends TestInit {
                 "اختر الإدارة",
                 "Incorrect Department Name Error Message.");
         /*
+
         softAssert.assertEquals(delegateEmployeeErrorMessage,
                 " اختر الموظف المفوض",
                 "Incorrect Delegate Employee Error Message.");
-        */
+
+         */
+
         softAssert.assertEquals(periodTypeErrorMessage,
                 "يرجى اختيار نوع الفترة",
                 "Incorrect Period Type Error Message.");
         /*
+
         softAssert.assertEquals(delegateDateFromErrorMessage,
                 "يرجى إدخال تاريخ بداية التفويض",
                 "Incorrect Delegate Date From Error Message.");
         softAssert.assertEquals(delegateDateToErrorMessage,
                 " يرجى إدخال تاريخ نهاية التفويض",
                 "Incorrect Delegate Date To Error Message.");
+
          */
+
         softAssert.assertAll();
     }
 
+
+    /*
+//اختبار Radio Button "اعتماد الفترة" لموظف معطل مؤقت في فترات اخري
+// عند اختيار فترة معينة تظهر في الجزء التالي الخاص بتحديد فترة التكليف
     @Test
     public void addNewDelegateWithMoreThanOneDisablePeriod() {
-        usersControl.selectEmployeeByID("3569897");
+        usersControl.selectEmployeeByID(Data.validEmployeeIDToDelegate);
         delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
-        addDelegatePage.selectDepartmentNameFromDropDown("قسم تحت الامين");
-        addDelegatePage.selectDelegatedEmployeeFromDropDown("1515111");
+        addDelegatePage.selectDepartmentNameFromDropDown(Data.validDepartmentNameMoreThanOnePeriod);
+        addDelegatePage.selectDelegatedEmployeeFromDropDown(Data.validDelegatedEmployeeNameMoreThanOnePeriod);
         addDelegatePage.chooseAcceptedPeriodRadioButton();
         addDelegatePage.selectAcceptedPeriodFromDropDown(1);
         addDelegatePage.clickSaveButton();
+        addDelegatePage.clickGoBackButton();
+        addDelegatePage.acceptPopUp();
+        delegatePage.clickGoBackButton();
+        delegatePage.acceptPopUp();
         boolean popUpDisplayed= addDelegatePage.isPopUpDisplayed();
         Assert.assertTrue(popUpDisplayed,"PopUp Not Displayed");
     }
+
+     */
 }
 
 
