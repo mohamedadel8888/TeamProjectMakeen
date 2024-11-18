@@ -3,31 +3,30 @@ package AutomateMakeen.TestPages;
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.*;
 import AutomateMakeen.Utilities.Data;
-import org.testng.Assert;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.LocalTime;
-import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
+
+   /* السماحية للدخول الي النظام .
+الصلاحية للدخول الي لوحة التحكم .
+الصلاحية للدخول الي ادارة المستخدمين .
+الصلاحية لادارة تفويض موظف .
+     */
 
 public class TC_AddDelegatePage extends TestInit {
 
-
     //Today's Date in Hiijri
-    HijrahDate dateHijri = HijrahDate.now();
-    HijrahDate dateHijriPlus10Days = dateHijri.plus(10, ChronoUnit.DAYS);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     String hijriDateToday = dateHijri.format(formatter);
     String hijri10DaysDate = dateHijriPlus10Days.format(formatter);
 
     //Time Now
-    LocalTime currentTime = LocalTime.now();
-    LocalTime updatedTime = currentTime.plusMinutes(2);
     String currentTimeFormat = updatedTime.format(DateTimeFormatter.ofPattern("HH:mm"));
-    String timePeriod = currentTime.isBefore(LocalTime.NOON) ? "صباحا" : "مساءا";
+    String currenttimePeriod = currentTime.isBefore(LocalTime.NOON) ? "صباحا" : "مساءا";
 
 
     @BeforeClass
@@ -39,7 +38,7 @@ public class TC_AddDelegatePage extends TestInit {
         usersControl = contentAside.goToUsersControl();
     }
 
-    @Test
+    @Test (priority = 1)
     public void addNewDelegateWithValidData() {
         usersControl.selectEmployeeByID(Data.validEmployeeIDToDelegate);
         delegatePage = usersControl.delegationControl();
@@ -68,22 +67,22 @@ public class TC_AddDelegatePage extends TestInit {
         loginPage.clearAllFeild();
         loginPage.loginUserWithoutRemMe(userID, userPasswd);
         contentAside.goToUsersControl();
+        usersControl.selectEmployeeByID(Data.validEmployeeIDToDelegate);
+        usersControl.delegationControl();
         softAssert.assertTrue(delegateAccountPresent, "Delegate Account Not Present");
         softAssert.assertAll();
     }
 
-    @Test
+    @Test (priority = 2)
     public void addNewDelegateWithDefaultAndEmptyData() {
-        usersControl.selectEmployeeByID(Data.validEmployeeIDToDelegate);
-        delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
         addDelegatePage.clickSaveButton();
         String depNameErrorMessage = addDelegatePage.getDepartmentNameErrorMessage();
-        String delegateEmployeeErrorMessage = addDelegatePage.getDelegateEmployeeErrorMessage();
+        //String delegateEmployeeErrorMessage = addDelegatePage.getDelegateEmployeeErrorMessage();
         String periodTypeErrorMessage = addDelegatePage.getPeriodTypeErrorMessage();
         addDelegatePage.clickGoBackButton();
-        String delegateDateFromErrorMessage = addDelegatePage.getDelegateDateFromErrorMessage();
-        String delegateDateToErrorMessage = addDelegatePage.getDelegateDateToErrorMessage();
+        //String delegateDateFromErrorMessage = addDelegatePage.getDelegateDateFromErrorMessage();
+        //String delegateDateToErrorMessage = addDelegatePage.getDelegateDateToErrorMessage();
         softAssert.assertEquals(depNameErrorMessage,
                 "اختر الإدارة",
                 "Incorrect Department Name Error Message.");

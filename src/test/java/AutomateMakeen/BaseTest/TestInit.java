@@ -8,6 +8,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.asserts.SoftAssert;
 
+import java.time.LocalTime;
+import java.time.chrono.HijrahDate;
+import java.time.temporal.ChronoUnit;
+
 public class TestInit {
     protected String userID = "0342169";
     protected String userPasswd = "24602460";
@@ -29,6 +33,15 @@ public class TestInit {
     public static AddDelegatePage addDelegatePage;
     public static PersonalAccountsPage personalAccountsPage;
     public static EditDelegatePage editDelegatePage;
+
+    //HijriDates
+    protected HijrahDate dateHijriMinus = HijrahDate.now().minus(1, ChronoUnit.DAYS);
+    protected HijrahDate dateHijri = HijrahDate.now();
+    protected HijrahDate dateHijriPlus10Days = dateHijri.plus(10, ChronoUnit.DAYS);
+
+    //Time
+    protected LocalTime currentTime = LocalTime.now();
+    protected LocalTime updatedTime = currentTime.plusMinutes(2);
 
     protected SoftAssert softAssert = new SoftAssert();
 

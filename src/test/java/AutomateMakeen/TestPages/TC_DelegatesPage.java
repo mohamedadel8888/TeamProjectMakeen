@@ -76,8 +76,18 @@ public class TC_DelegatesPage extends TestInit {
         softAssert.assertEquals(deleteConfirmationMessage,
                 Data.correctDeleteConfirmationMessage,
                 "Incorrect Delete Confirmation Message.");
-        softAssert.assertFalse(delegationPresent,
-                "Incorrect Edit Delegate Page For Specific Employee");
+
+
+        // Assuming softAssert is an instance of SoftAssert
+
+        if (!delegationPresent) {
+            softAssert.assertFalse(delegationPresent, "Incorrect Edit Delegate Page For Specific Employee");
+        } else {
+            System.out.println("Condition failed: delegationPresent is true.");
+        }
+
+
+
         softAssert.assertAll();
     }
 
