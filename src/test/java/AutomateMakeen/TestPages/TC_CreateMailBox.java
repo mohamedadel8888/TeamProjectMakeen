@@ -2,6 +2,7 @@ package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.*;
+import org.apache.logging.log4j.core.util.JsonUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -33,14 +34,14 @@ public class TC_CreateMailBox extends TestInit {
     }
 
     @Test
-    public void tc_createValidExternalMail()  {
+    public void tc_createValidExternalMail() throws Exception {
         createExternalMailPage.clearAllField();
-        createExternalMailPage.enteringTheSubjectOfMail(subject);
-        createExternalMailPage.setDocTypeUsingControl(docTypeName);
-        createExternalMailPage.setReceiverUsingControl(receiverName);
-        createExternalMailPage.setSenderUsingControl(senderName);
-        createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-        createExternalMailPage.insertRecipient(recipient);
+        createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
+        createExternalMailPage.setDocTypeUsingControl(getJsonData("ValidExternalMailData","docTypeNum"));
+        createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
+        createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
+        createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
+        createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
         createExternalMailPage.pressOnDeactivateReferralNumber();
         createExternalMailPage.clickSendConfirm();
         Assert.assertTrue(createExternalMailPage.validateSuccessfulCreatingMail());
@@ -48,15 +49,15 @@ public class TC_CreateMailBox extends TestInit {
 
     static int Subjectflag = 0;
     @Test(dataProvider = "subjectDataProvider")
-    public void tc_testSubjectFieldWithInsertInvalidData(String subData) throws InterruptedException {
+    public void tc_testSubjectFieldWithInsertInvalidData(String subData) throws Exception {
         createExternalMailPage.clearTheValueOfSubjectOfTheMail();
         if(Subjectflag == 0){
             createExternalMailPage.clearAllField();
-            createExternalMailPage.setDocTypeUsingControl(docTypeName);
-            createExternalMailPage.setReceiverUsingControl(receiverName);
-            createExternalMailPage.setSenderUsingControl(senderName);
-            createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-            createExternalMailPage.insertRecipient(recipient);
+            createExternalMailPage.setDocTypeUsingControl(getJsonData("ValidExternalMailData","docTypeName"));
+            createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
+            createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
+            createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
+            createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
             createExternalMailPage.pressOnDeactivateReferralNumber();
             Subjectflag = 1;
         }
@@ -77,11 +78,10 @@ public class TC_CreateMailBox extends TestInit {
     }
 
     @DataProvider(name = "subjectDataProvider")
-    public Object[] subjectDataProvider() {
-        return new Object[]{"","><{};'",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        };
+    public Object[] subjectDataProvider() throws Exception{
+        return getJsonArrayAsObjectArray("DataProviderSubject","subjects");
     }
+
     static int docTypeFlag = 0;
     @Test(dataProvider = "controlDataProvider")
     public void tc_testDocTypeFieldWithInsertInvalidData(String docTypeData) {

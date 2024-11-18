@@ -9,6 +9,8 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static AutomateMakeen.TestPages.TC_ExportedMails.importNumber;
+
 public class TC_ImportedMails extends TestInit {
     private String subject = "انشاء بريد خارجي";
     private String docTypeNum = "123";
@@ -34,7 +36,7 @@ public class TC_ImportedMails extends TestInit {
         importedMails = contentAside.goToImportedMail();
     }
 
-    @Test//(dependsOnMethods = "AutomateMakeen.TestPages.TC_CreateMailBox.tc_createValidExternalMail")
+    @Test(priority = 1)
     public void tc_validateCreatedMailAddedToImportedMail(){
         importedMails.getRecentlyAddedMail(subject);
         List<String> mailData =importedMails.getMailData();
@@ -42,5 +44,6 @@ public class TC_ImportedMails extends TestInit {
         Assert.assertEquals(mailData.get(1),"محمد أحمد أحمد علي");
         Assert.assertEquals(mailData.get(2),senderName);
         Assert.assertEquals(mailData.get(3),docTypeName);
+        Assert.assertEquals(mailData.get(4),importNumber);
     }
 }

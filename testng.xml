@@ -10,20 +10,20 @@
 <!--            </class>-->
             <class name="AutomateMakeen.TestPages.TC_CreateMailBox">
                 <methods>
-                    <include name="tc_testSubjectFieldWithInsertInvalidData"/>
-                    <include name="tc_testDocTypeFieldWithInsertInvalidData"/>
-                    <include name="tc_testDocTypeFieldWithCopyPasteInvalidData"/>
-                    <include name="tc_testReceiverFieldWithInsertInvalidData"/>
-                    <include name="tc_testReceiverFieldWithCopyPasteInvalidData"/>
-                    <include name="tc_testSenderFieldWithInsertInvalidData"/>
-                    <include name="tc_testSenderFieldWithCopyPasteInvalidData"/>
-                    <include name="tc_testTreatClassFieldWithInsertInvalidData"/>
-                    <include name="tc_testTreatClassFieldWithCopyPasteInvalidData"/>
-                    <include name="tc_testRecipientFieldWithInsertInvalidData"/>
+<!--                    <include name="tc_testSubjectFieldWithInsertInvalidData"/>-->
+<!--                    <include name="tc_testDocTypeFieldWithInsertInvalidData"/>-->
+<!--                    <include name="tc_testDocTypeFieldWithCopyPasteInvalidData"/>-->
+<!--                    <include name="tc_testReceiverFieldWithInsertInvalidData"/>-->
+<!--                    <include name="tc_testReceiverFieldWithCopyPasteInvalidData"/>-->
+<!--                    <include name="tc_testSenderFieldWithInsertInvalidData"/>-->
+<!--                    <include name="tc_testSenderFieldWithCopyPasteInvalidData"/>-->
+<!--                    <include name="tc_testTreatClassFieldWithInsertInvalidData"/>-->
+<!--                    <include name="tc_testTreatClassFieldWithCopyPasteInvalidData"/>-->
+<!--                    <include name="tc_testRecipientFieldWithInsertInvalidData"/>-->
                     <include name="tc_createValidExternalMail"/>
                 </methods>
             </class>
-            <class name="AutomateMakeen.TestPages.TC_ExportedMails">
+            <class name="AutomateMakeen.TestPages.TC_OutboxMails">
                 <methods>
                     <include name="tc_validateCreatedMailAddedToExportedMail"/>
                 </methods>

@@ -19,7 +19,7 @@ public class ImportedMails extends BaseComp {
     public ImportedMails(WebDriver driver){
         super(driver);
         this.driver = driver;
-        exWait = new WebDriverWait(driver , Duration.ofSeconds(10));
+        exWait = new WebDriverWait(driver , Duration.ofSeconds(15));
         contentAside = new ContentAside(driver);
     }
 
@@ -41,13 +41,17 @@ public class ImportedMails extends BaseComp {
 
     @FindBy(id = "dv_inbox_trType")
     WebElement docTypeImpWebElement;
+
+    @FindBy(id = "dv_inbox_trIncNum")
+    WebElement importNumberWebElement;
     public List<String> getMailData(){
-        exWait.until(ExpectedConditions.visibilityOf(subjectImpWebElement));
+        //exWait.until(ExpectedConditions.visibilityOf(subjectImpWebElement));
         List<String> mailData = new ArrayList<>();
         mailData.add(subjectImpWebElement.getText());
         mailData.add(recipientOwnerWebElement.getText());
         mailData.add(senderImpWebElement.getText());
         mailData.add(docTypeImpWebElement.getText());
+        mailData.add(importNumberWebElement.getText());
         return mailData;
     }
 }
