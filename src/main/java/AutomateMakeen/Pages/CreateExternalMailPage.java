@@ -29,7 +29,7 @@ public class CreateExternalMailPage extends BaseComp {
      * *****************************************/
 
     @FindBy(id ="txt_doc_type_num")
-    WebElement docTypeWebElement;
+    WebElement docTypeWebElement; /*نوع المستند*/
 
     @FindBy(id = "spnA_txt_doc_type_num")
     WebElement docTypeValidator;
@@ -521,6 +521,9 @@ public class CreateExternalMailPage extends BaseComp {
 
     @FindBy(css="input[value='غير موافق ']")
     WebElement declineBtnWebElement;
+
+    @FindBy(css = ".lds-message")
+    WebElement loadingAfterSave;
     public void clickSendConfirm(){
         sendBtnWebElement.click();
         confirmWebElement.click();
@@ -541,6 +544,7 @@ public class CreateExternalMailPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(successfulMsgWebElement));
         boolean flag = successfulMsgWebElement.getText().equals("تم إرسال بريد خارجي بنجاح");
         closeDivSave.click();
+
         return flag;
     }
     public void clearAllField(){

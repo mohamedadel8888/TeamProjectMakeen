@@ -32,7 +32,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage = contentAside.goToCreateExternalMail();
     }
 
-    @Test
+    @Test(description = "Test Create External Mail Usnig Valid data",priority = 11)
     public void tc_createValidExternalMail()  {
         createExternalMailPage.clearAllField();
         createExternalMailPage.enteringTheSubjectOfMail(subject);
@@ -47,8 +47,9 @@ public class TC_CreateMailBox extends TestInit {
     }
 
     static int Subjectflag = 0;
-    @Test(dataProvider = "subjectDataProvider")
-    public void tc_testSubjectFieldWithInsertInvalidData(String subData) throws InterruptedException {
+    @Test(dataProvider = "subjectDataProvider",description = "Test Create External Mail Usnig Invalid subject" +
+            "and valid data in rest of fields",priority = 1)
+    public void tc_testSubjectFieldWithInsertInvalidData(String subData)  {
         createExternalMailPage.clearTheValueOfSubjectOfTheMail();
         if(Subjectflag == 0){
             createExternalMailPage.clearAllField();
@@ -83,7 +84,8 @@ public class TC_CreateMailBox extends TestInit {
         };
     }
     static int docTypeFlag = 0;
-    @Test(dataProvider = "controlDataProvider")
+    @Test(dataProvider = "controlDataProvider",description = "Test Create External Mail Usnig Invalid Doc type" +
+            "and valid data in rest of fields",priority = 2)
     public void tc_testDocTypeFieldWithInsertInvalidData(String docTypeData) {
         createExternalMailPage.clearDocTypeNum();
         if(docTypeFlag == 0){
@@ -117,7 +119,8 @@ public class TC_CreateMailBox extends TestInit {
     }
 
     static int docTypeCPFlag = 0;
-    @Test(dataProvider = "controlCPDataProvider")
+    @Test(dataProvider = "controlCPDataProvider",description = "Test Create External Mail Usnig copy paste by insert Invalid subject" +
+            "and valid data in rest of fields",priority = 3)
     public void tc_testDocTypeFieldWithCopyPasteInvalidData(String docTypeData) {
         createExternalMailPage.clearDocTypeNum();
         if(docTypeCPFlag == 0){
@@ -147,7 +150,8 @@ public class TC_CreateMailBox extends TestInit {
     /*********************************************************/
 
     static int receiverFlag = 0;
-    @Test(dataProvider = "controlDataProvider")
+    @Test(dataProvider = "controlDataProvider",description = "Test Create External Mail Using Invalid Receiver" +
+            "and valid data in rest of fields",priority = 4)
     public void tc_testReceiverFieldWithInsertInvalidData(String receiverData) {
         createExternalMailPage.clearReceiverNum();
         if(receiverFlag == 0){
@@ -175,7 +179,8 @@ public class TC_CreateMailBox extends TestInit {
     }
 
     static int receiverCPFlag = 0;
-    @Test(dataProvider = "controlCPDataProvider")
+    @Test(dataProvider = "controlCPDataProvider",description = "Test Create External Mail by copy paste Using Invalid Receiver" +
+            "and valid data in rest of fields",priority = 5)
     public void tc_testReceiverFieldWithCopyPasteInvalidData(String receiverData) {
         createExternalMailPage.clearReceiverNum();
         if(receiverCPFlag == 0){
@@ -200,7 +205,8 @@ public class TC_CreateMailBox extends TestInit {
 
     /********************************************/
     static int senderFlag = 0;
-    @Test(dataProvider = "controlDataProvider")
+    @Test(dataProvider = "controlDataProvider",description = "Test Create External Mail Using Invalid Sender" +
+            "and valid data in rest of fields",priority = 6)
     public void tc_testSenderFieldWithInsertInvalidData(String senderData) {
         createExternalMailPage.clearSenderNum();
         if(senderFlag == 0){
@@ -229,7 +235,8 @@ public class TC_CreateMailBox extends TestInit {
 
 
     static int senderCPFlag = 0;
-    @Test(dataProvider = "receiverCPDataProvider")
+    @Test(dataProvider = "receiverCPDataProvider",description = "Test Create External Mail Using copy paste in Invalid Receiver" +
+            "and valid data in rest of fields",priority = 7)
     public void tc_testSenderFieldWithCopyPasteInvalidData(String senderData) {
         createExternalMailPage.clearSenderNum();
         if(senderCPFlag == 0){
@@ -259,7 +266,8 @@ public class TC_CreateMailBox extends TestInit {
 
     /****************************************************/
     static int classFlag = 0;
-    @Test(dataProvider = "controlDataProvider")
+    @Test(dataProvider = "controlDataProvider",description = "Test Create External Mail Using Invalid treat classification" +
+            "and valid data in rest of fields",priority = 8)
     public void tc_testTreatClassFieldWithInsertInvalidData(String classData) {
         createExternalMailPage.clearTreatClassificationNum();
         if(classFlag == 0){
@@ -288,7 +296,8 @@ public class TC_CreateMailBox extends TestInit {
 
 
     static int classCPFlag = 0;
-    @Test(dataProvider = "receiverCPDataProvider")
+    @Test(dataProvider = "receiverCPDataProvider",description = "Test Create External Mail Using copy paste Invalid treat classification" +
+            "and valid data in rest of fields",priority = 9)
     public void tc_testTreatClassFieldWithCopyPasteInvalidData(String classData) {
         createExternalMailPage.clearTreatClassificationNum();
         if(classCPFlag == 0){
@@ -312,7 +321,8 @@ public class TC_CreateMailBox extends TestInit {
     }
 
     /*******************************************************************/
-    @Test
+    @Test(description = "Test Create External Mail Using Invalid recipient" +
+            "and valid data in rest of fields",priority = 10)
     public void tc_testRecipientFieldWithInsertInvalidData() {
 //        createExternalMailPage.clearRecipient();
 //      Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Asterisk");

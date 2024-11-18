@@ -8,6 +8,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.asserts.SoftAssert;
 
+import java.time.Duration;
+
 public class TestInit {
     protected String userID = "0342169";
     protected String userPasswd = "24602460";
@@ -43,6 +45,7 @@ public class TestInit {
         loginPage = new LoginPage(driver);
         contentAside = new ContentAside(driver);
         editAccountPage = new EditAccountPage(driver);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
     public void quitDriver(){
