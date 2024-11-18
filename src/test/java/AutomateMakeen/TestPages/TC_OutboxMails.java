@@ -20,6 +20,7 @@ public class TC_OutboxMails extends TestInit {
     private String recipient = "مروان خليل";
     private String activeDays;
     OutboxMails outboxMails;
+    protected static String importNumber;
 
     @BeforeClass(description = "Preconditions for each test in the class :" +
             "السماحية للدخول الي النظام : الأمانة الإلكترونية" +
@@ -40,5 +41,6 @@ public class TC_OutboxMails extends TestInit {
         Assert.assertEquals(mailData.get(1),recipient);
         Assert.assertEquals(mailData.get(2),senderName);
         Assert.assertEquals(mailData.get(3),docTypeName);
+        importNumber = mailData.get(4);
     }
 }
