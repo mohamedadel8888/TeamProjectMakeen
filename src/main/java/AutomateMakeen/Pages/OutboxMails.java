@@ -12,11 +12,11 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExportedMails extends BaseComp {
+public class OutboxMails extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
 
-    public ExportedMails(WebDriver driver){
+    public OutboxMails(WebDriver driver){
         super(driver);
         this.driver = driver;
         exWait = new WebDriverWait(driver , Duration.ofSeconds(10));

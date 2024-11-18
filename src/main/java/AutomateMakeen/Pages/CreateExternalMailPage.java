@@ -29,10 +29,10 @@ public class CreateExternalMailPage extends BaseComp {
      * *****************************************/
 
     @FindBy(id ="txt_doc_type_num")
-    WebElement docTypeWebElement;
+    WebElement docTypeWebElement;               /*حقل ادخال نوع المستند*/
 
     @FindBy(id = "spnA_txt_doc_type_num")
-    WebElement docTypeValidator;
+    WebElement docTypeValidator;                /*علامة ال*/
 
     @FindBy(css = "#spnA_txt_doc_type_num p[class='span_error'] span")
     WebElement errorMsgWebElement;
@@ -187,9 +187,6 @@ public class CreateExternalMailPage extends BaseComp {
         senderNumWebElement.sendKeys(senderName);
     }
 
-    public String getSenderNum(){
-        return senderNumWebElement.getAttribute("value");
-    }
 
     public void clearSenderNum(){
         senderNumWebElement.clear();

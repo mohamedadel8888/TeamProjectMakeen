@@ -7,9 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
-import AutomateMakeen.Pages.UsersControl;
-import java.util.concurrent.TimeUnit;
-import org.openqa.selenium.JavascriptExecutor;
 
 
 public class ContentAside extends BaseComp {
@@ -90,20 +87,20 @@ public class ContentAside extends BaseComp {
 
     @FindBy(id = "div_extGeha_notification")
     WebElement notificationWebElement;
-    public ExportedMails goToExportedMail(){
+    public OutboxMails goToExportedMail(){
         exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
         try{
             exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
             mailArrowWebElement.click();
             exportedMailWebElement.click();
             exWait.until(ExpectedConditions.visibilityOf(tableOutWebElement));
-            return new ExportedMails(driver);
+            return new OutboxMails(driver);
         }catch(NoSuchElementException e){
             exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
             mailArrowWebElement.click();
             exportedMailWebElement.click();
             exWait.until(ExpectedConditions.visibilityOf(tableOutWebElement));
-            return new ExportedMails(driver);
+            return new OutboxMails(driver);
         }
     }
     @FindBy(id = "s_m_68")
