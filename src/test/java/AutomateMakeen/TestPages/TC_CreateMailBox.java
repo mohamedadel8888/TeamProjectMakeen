@@ -343,31 +343,3 @@ public class TC_CreateMailBox extends TestInit {
     }
 }
 
-//@Test
-//public void tc_createValidExternalMail()  {
-//    createExternalMailPage.enteringTheSubjectOfMail(subject);
-//    createExternalMailPage.setDocTypeUsingControl(docTypeName);
-//    createExternalMailPage.setReceiverUsingControl(receiverName);
-//    createExternalMailPage.setSenderUsingControl(senderName);
-//    createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-//    createExternalMailPage.insertRecipient(recipient);
-//    createExternalMailPage.pressOnDeactivateReferralNumber();
-//    createExternalMailPage.clickSendConfirmBtn();
-//    Assert.assertTrue(createExternalMailPage.validateSuccessfulCreatingMail());
-//        ExportedMails exportedMails = contentAside.goToExportedMail();
-//        exportedMails.getRecentlyAddedMail(subject);
-//        List<String> mailData = exportedMails.getMailData();
-//        Assert.assertEquals(mailData.get(0),subject);
-//        Assert.assertEquals(mailData.get(1),recipient);
-//        Assert.assertEquals(mailData.get(2),senderName);
-//        Assert.assertEquals(mailData.get(3),docTypeName);
-//        loginPage = homePage.signOut();
-//        homePage = loginPage.loginUserWithoutRemMe("1561561", "112233");
-//        ImportedMails importedMails = contentAside.goToImportedMail();
-//        importedMails.getRecentlyAddedMail(subject);
-//        mailData =importedMails.getMailData();
-//        Assert.assertEquals(mailData.get(0),subject);
-//        Assert.assertEquals(mailData.get(1),"محمد أحمد أحمد علي");
-//        Assert.assertEquals(mailData.get(2),senderName);
-//        Assert.assertEquals(mailData.get(3),docTypeName);
-//}
