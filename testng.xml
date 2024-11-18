@@ -23,7 +23,7 @@
                     <include name="tc_createValidExternalMail"/>
                 </methods>
             </class>
-            <class name="AutomateMakeen.TestPages.TC_ExportedMails">
+            <class name="AutomateMakeen.TestPages.TC_OutboxMails">
                 <methods>
                     <include name="tc_validateCreatedMailAddedToExportedMail"/>
                 </methods>

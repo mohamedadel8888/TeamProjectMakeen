@@ -29,10 +29,10 @@ public class CreateExternalMailPage extends BaseComp {
      * *****************************************/
 
     @FindBy(id ="txt_doc_type_num")
-    WebElement docTypeWebElement; /*نوع المستند*/
+    WebElement docTypeWebElement;               /*حقل ادخال نوع المستند*/
 
     @FindBy(id = "spnA_txt_doc_type_num")
-    WebElement docTypeValidator;
+    WebElement docTypeValidator;                /*علامة ال*/
 
     @FindBy(css = "#spnA_txt_doc_type_num p[class='span_error'] span")
     WebElement errorMsgWebElement;
@@ -187,9 +187,6 @@ public class CreateExternalMailPage extends BaseComp {
         senderNumWebElement.sendKeys(senderName);
     }
 
-    public String getSenderNum(){
-        return senderNumWebElement.getAttribute("value");
-    }
 
     public void clearSenderNum(){
         senderNumWebElement.clear();
@@ -521,9 +518,6 @@ public class CreateExternalMailPage extends BaseComp {
 
     @FindBy(css="input[value='غير موافق ']")
     WebElement declineBtnWebElement;
-
-    @FindBy(css = ".lds-message")
-    WebElement loadingAfterSave;
     public void clickSendConfirm(){
         sendBtnWebElement.click();
         confirmWebElement.click();
@@ -544,7 +538,6 @@ public class CreateExternalMailPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(successfulMsgWebElement));
         boolean flag = successfulMsgWebElement.getText().equals("تم إرسال بريد خارجي بنجاح");
         closeDivSave.click();
-
         return flag;
     }
     public void clearAllField(){
@@ -559,6 +552,4 @@ public class CreateExternalMailPage extends BaseComp {
 }
 
 
-//    public void copyPasteToSub(String sub){
-//       cutPastAction(,,sub);
-//    }
+

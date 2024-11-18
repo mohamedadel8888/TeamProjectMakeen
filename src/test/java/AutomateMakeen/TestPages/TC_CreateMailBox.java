@@ -2,6 +2,7 @@ package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.*;
+import org.apache.logging.log4j.core.util.JsonUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -32,32 +33,31 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage = contentAside.goToCreateExternalMail();
     }
 
-    @Test(description = "Test Create External Mail Usnig Valid data",priority = 11)
-    public void tc_createValidExternalMail()  {
+    @Test
+    public void tc_createValidExternalMail() throws Exception {
         createExternalMailPage.clearAllField();
-        createExternalMailPage.enteringTheSubjectOfMail(subject);
-        createExternalMailPage.setDocTypeUsingControl(docTypeName);
-        createExternalMailPage.setReceiverUsingControl(receiverName);
-        createExternalMailPage.setSenderUsingControl(senderName);
-        createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-        createExternalMailPage.insertRecipient(recipient);
+        createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
+        createExternalMailPage.setDocTypeUsingControl(getJsonData("ValidExternalMailData","docTypeNum"));
+        createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
+        createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
+        createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
+        createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
         createExternalMailPage.pressOnDeactivateReferralNumber();
         createExternalMailPage.clickSendConfirm();
         Assert.assertTrue(createExternalMailPage.validateSuccessfulCreatingMail());
     }
 
     static int Subjectflag = 0;
-    @Test(dataProvider = "subjectDataProvider",description = "Test Create External Mail Usnig Invalid subject" +
-            "and valid data in rest of fields",priority = 1)
-    public void tc_testSubjectFieldWithInsertInvalidData(String subData)  {
+    @Test(dataProvider = "subjectDataProvider")
+    public void tc_testSubjectFieldWithInsertInvalidData(String subData) throws Exception {
         createExternalMailPage.clearTheValueOfSubjectOfTheMail();
         if(Subjectflag == 0){
             createExternalMailPage.clearAllField();
-            createExternalMailPage.setDocTypeUsingControl(docTypeName);
-            createExternalMailPage.setReceiverUsingControl(receiverName);
-            createExternalMailPage.setSenderUsingControl(senderName);
-            createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-            createExternalMailPage.insertRecipient(recipient);
+            createExternalMailPage.setDocTypeUsingControl(getJsonData("ValidExternalMailData","docTypeName"));
+            createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
+            createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
+            createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
+            createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
             createExternalMailPage.pressOnDeactivateReferralNumber();
             Subjectflag = 1;
         }
@@ -78,14 +78,12 @@ public class TC_CreateMailBox extends TestInit {
     }
 
     @DataProvider(name = "subjectDataProvider")
-    public Object[] subjectDataProvider() {
-        return new Object[]{"","><{};'",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        };
+    public Object[] subjectDataProvider() throws Exception{
+        return getJsonArrayAsObjectArray("DataProviderSubject","subjects");
     }
+
     static int docTypeFlag = 0;
-    @Test(dataProvider = "controlDataProvider",description = "Test Create External Mail Usnig Invalid Doc type" +
-            "and valid data in rest of fields",priority = 2)
+    @Test(dataProvider = "controlDataProvider")
     public void tc_testDocTypeFieldWithInsertInvalidData(String docTypeData) {
         createExternalMailPage.clearDocTypeNum();
         if(docTypeFlag == 0){
@@ -118,8 +116,7 @@ public class TC_CreateMailBox extends TestInit {
     }
 
     static int docTypeCPFlag = 0;
-    @Test(dataProvider = "controlCPDataProvider",description = "Test Create External Mail Usnig copy paste by insert Invalid subject" +
-            "and valid data in rest of fields",priority = 3)
+    @Test(dataProvider = "controlCPDataProvider")
     public void tc_testDocTypeFieldWithCopyPasteInvalidData(String docTypeData) {
         createExternalMailPage.clearDocTypeNum();
         if(docTypeCPFlag == 0){
@@ -148,8 +145,7 @@ public class TC_CreateMailBox extends TestInit {
     /*********************************************************/
 
     static int receiverFlag = 0;
-    @Test(dataProvider = "controlDataProvider",description = "Test Create External Mail Using Invalid Receiver" +
-            "and valid data in rest of fields",priority = 4)
+    @Test(dataProvider = "controlDataProvider")
     public void tc_testReceiverFieldWithInsertInvalidData(String receiverData) {
         createExternalMailPage.clearReceiverNum();
         if(receiverFlag == 0){
@@ -177,8 +173,7 @@ public class TC_CreateMailBox extends TestInit {
     }
 
     static int receiverCPFlag = 0;
-    @Test(dataProvider = "controlCPDataProvider",description = "Test Create External Mail by copy paste Using Invalid Receiver" +
-            "and valid data in rest of fields",priority = 5)
+    @Test(dataProvider = "controlCPDataProvider")
     public void tc_testReceiverFieldWithCopyPasteInvalidData(String receiverData) {
         createExternalMailPage.clearReceiverNum();
         if(receiverCPFlag == 0){
@@ -202,8 +197,7 @@ public class TC_CreateMailBox extends TestInit {
 
     /********************************************/
     static int senderFlag = 0;
-    @Test(dataProvider = "controlDataProvider",description = "Test Create External Mail Using Invalid Sender" +
-            "and valid data in rest of fields",priority = 6)
+    @Test(dataProvider = "controlDataProvider")
     public void tc_testSenderFieldWithInsertInvalidData(String senderData) {
         createExternalMailPage.clearSenderNum();
         if(senderFlag == 0){
@@ -231,8 +225,7 @@ public class TC_CreateMailBox extends TestInit {
 
 
     static int senderCPFlag = 0;
-    @Test(dataProvider = "receiverCPDataProvider",description = "Test Create External Mail Using copy paste in Invalid Receiver" +
-            "and valid data in rest of fields",priority = 7)
+    @Test(dataProvider = "receiverCPDataProvider")
     public void tc_testSenderFieldWithCopyPasteInvalidData(String senderData) {
         createExternalMailPage.clearSenderNum();
         if(senderCPFlag == 0){
@@ -261,8 +254,7 @@ public class TC_CreateMailBox extends TestInit {
 
     /****************************************************/
     static int classFlag = 0;
-    @Test(dataProvider = "controlDataProvider",description = "Test Create External Mail Using Invalid treat classification" +
-            "and valid data in rest of fields",priority = 8)
+    @Test(dataProvider = "controlDataProvider")
     public void tc_testTreatClassFieldWithInsertInvalidData(String classData) {
         createExternalMailPage.clearTreatClassificationNum();
         if(classFlag == 0){
@@ -290,8 +282,7 @@ public class TC_CreateMailBox extends TestInit {
 
 
     static int classCPFlag = 0;
-    @Test(dataProvider = "receiverCPDataProvider",description = "Test Create External Mail Using copy paste Invalid treat classification" +
-            "and valid data in rest of fields",priority = 9)
+    @Test(dataProvider = "receiverCPDataProvider")
     public void tc_testTreatClassFieldWithCopyPasteInvalidData(String classData) {
         createExternalMailPage.clearTreatClassificationNum();
         if(classCPFlag == 0){
@@ -314,8 +305,7 @@ public class TC_CreateMailBox extends TestInit {
     }
 
     /*******************************************************************/
-    @Test(description = "Test Create External Mail Using Invalid recipient" +
-            "and valid data in rest of fields",priority = 10)
+    @Test
     public void tc_testRecipientFieldWithInsertInvalidData() {
         createExternalMailPage.clearAllField();
         createExternalMailPage.enteringTheSubjectOfMail(subject);
@@ -334,3 +324,31 @@ public class TC_CreateMailBox extends TestInit {
     }
 }
 
+//@Test
+//public void tc_createValidExternalMail()  {
+//    createExternalMailPage.enteringTheSubjectOfMail(subject);
+//    createExternalMailPage.setDocTypeUsingControl(docTypeName);
+//    createExternalMailPage.setReceiverUsingControl(receiverName);
+//    createExternalMailPage.setSenderUsingControl(senderName);
+//    createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
+//    createExternalMailPage.insertRecipient(recipient);
+//    createExternalMailPage.pressOnDeactivateReferralNumber();
+//    createExternalMailPage.clickSendConfirmBtn();
+//    Assert.assertTrue(createExternalMailPage.validateSuccessfulCreatingMail());
+//        ExportedMails exportedMails = contentAside.goToExportedMail();
+//        exportedMails.getRecentlyAddedMail(subject);
+//        List<String> mailData = exportedMails.getMailData();
+//        Assert.assertEquals(mailData.get(0),subject);
+//        Assert.assertEquals(mailData.get(1),recipient);
+//        Assert.assertEquals(mailData.get(2),senderName);
+//        Assert.assertEquals(mailData.get(3),docTypeName);
+//        loginPage = homePage.signOut();
+//        homePage = loginPage.loginUserWithoutRemMe("1561561", "112233");
+//        ImportedMails importedMails = contentAside.goToImportedMail();
+//        importedMails.getRecentlyAddedMail(subject);
+//        mailData =importedMails.getMailData();
+//        Assert.assertEquals(mailData.get(0),subject);
+//        Assert.assertEquals(mailData.get(1),"محمد أحمد أحمد علي");
+//        Assert.assertEquals(mailData.get(2),senderName);
+//        Assert.assertEquals(mailData.get(3),docTypeName);
+//}
