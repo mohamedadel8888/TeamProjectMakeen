@@ -23,6 +23,14 @@ public class TC_EditDelegatePage extends TestInit {
         usersControl = contentAside.goToUsersControl();
     }
 
+    /*
+     هذا الاختبار يتحقق من تعديل بيانات مفوض باستخدام بيانات صحيحة من خلال:
+ 1. تسجيل الدخول إلى النظام.
+ 2. الانتقال إلى قائمة "ادارة المستخدمين".
+ 3. اختيار تفويض معين والنقر على زر "تعديل".
+ 4. إدخال بيانات صحيحة (في المفوض من والمفوض الي) وحفظ التعديلات.
+ 5. التحقق من أن التعديلات تم حفظها بنجاح وعرض البيانات المحدثة.
+     */
     @Test (priority = 1)
     public void editDelegateWithValidData() {
 
@@ -42,10 +50,16 @@ public class TC_EditDelegatePage extends TestInit {
         softAssert.assertAll();
 
     }
-
-
+/*
+ هذا الاختبار يتحقق من التعامل مع تعديل بيانات مفوض باستخدام تواريخ غير صحيحة (تواريخ في الماضي) من خلال:
+// 1. تسجيل الدخول إلى النظام.
+// 2. الانتقال إلى قائمة "ادارة المستخدمين".
+// 3. اختيار تفويض معين والنقر على زر "تعديل".
+// 4. إدخال تواريخ غير صالحة (مثل تاريخ بدء في الماضي) وحفظ التعديلات.
+// 5. التحقق من عرض رسالة خطأ توضح أن التواريخ غير صالحة.
+ */
     @Test (priority = 2)
-    public void editDelegateWithInValidPastDates() {
+    public void editDelegateWithInvalidPastDates() {
         delegatePage.clickCheckBoxDelegateEmployeeByID(Data.validEmployeeIDToEditDelegation);
         editDelegatePage = delegatePage.clickEditButton();
         editDelegatePage.clearEditDelegateDateFrom();

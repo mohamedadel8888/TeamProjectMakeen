@@ -1,0 +1,31 @@
+{
+  "correctDelegatePageName": "اضافة تفويض",
+  "validEmployeeIDToDelegate": "3569897",
+  "validPassword": "24602460",
+  "validEmployeeIDToEditDelegation": "5555444",
+  "correctEditDelegatePageName" : "تعديل تفويض",
+  "editDelegateDateFrom": "20/06/1446",
+  "editDelegateDateTo" : "30/06/1446",
+  "correctEditDelegateDateFrom" : "1446/06/20",
+  "correctEditDelegateDateTo" : "1446/06/30",
+
+  "editInvalidDelegateDateFrom" : "01/05/1446",
+  "editInvalidDelegateDateTo" : "06/05/1446",
+  "validEmployeeIDToGetDelegationInformation" : "1601111",
+  "correctEmployeeName" : "a a a a",
+  "correctDelegateDateFrom" : "1446/06/20",
+  "correctDelegateDateTo" : "1446/06/30",
+  "correctDelegateTimeFrom" : "09:00 ص",
+  "correctDelegateTimeTo" : "10:00 م",
+  "validEmployeeIDToDeleteDelegation" : "1601111",
+  "correctDeleteConfirmationMessage" : "هل تريد اتمام عملية الإلغاء؟",
+  "validDepartmentName" : "ادارة الارشيف",
+  "validDelegatedEmployeeName" : "عادل حسن",
+  "validDelegatedEmployeeID" : "1006000",
+
+
+
+  "validDepartmentNameMoreThanOnePeriod" : "قسم تحت الامين",
+  "validDelegatedEmployeeNameMoreThanOnePeriod" : "1515111"
+
+}
