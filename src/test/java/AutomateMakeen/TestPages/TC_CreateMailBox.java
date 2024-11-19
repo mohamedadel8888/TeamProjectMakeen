@@ -79,20 +79,20 @@ public class TC_CreateMailBox extends TestInit {
 
     @DataProvider(name = "subjectDataProvider")
     public Object[] subjectDataProvider() throws Exception{
-        return getJsonArrayAsObjectArray("DataProviderSubject","subjects");
+        return getJsonArrayAsObjectArray("DataProviderCreateMailBox","subjects");
     }
 
     static int docTypeFlag = 0;
     @Test(dataProvider = "controlDataProvider")
-    public void tc_testDocTypeFieldWithInsertInvalidData(String docTypeData) {
+    public void tc_testDocTypeFieldWithInsertInvalidData(String docTypeData)throws Exception {
         createExternalMailPage.clearDocTypeNum();
         if(docTypeFlag == 0){
             createExternalMailPage.clearAllField();
-            createExternalMailPage.enteringTheSubjectOfMail(subject);
-            createExternalMailPage.setReceiverUsingControl(receiverName);
-            createExternalMailPage.setSenderUsingControl(senderName);
-            createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-            createExternalMailPage.insertRecipient(recipient);
+            createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
+            createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
+            createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
+            createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
+            createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
             createExternalMailPage.pressOnDeactivateReferralNumber();
             docTypeFlag = 1;
         }
@@ -109,10 +109,8 @@ public class TC_CreateMailBox extends TestInit {
         }
     }
     @DataProvider(name = "controlDataProvider")
-    public Object[] controlDataProvider() {
-        return new Object[]{"أبجد", "ABCD", "(@*%~^)", "١٣٠", "",
-              "1111"
-        };
+    public Object[] controlDataProvider()throws Exception {
+        return getJsonArrayAsObjectArray("DataProviderCreateMailBox","docTypeData");
     }
 
     static int docTypeCPFlag = 0;
