@@ -70,6 +70,7 @@ public class TestInit {
         loginPage = new LoginPage(driver);
         contentAside = new ContentAside(driver);
         editAccountPage = new EditAccountPage(driver);
+//        Listeners listeners = new Listeners(driver);
     }
 
     public String getJsonData(String fileName,String field) throws FileNotFoundException {
@@ -95,10 +96,10 @@ public class TestInit {
     }
 
 
-    @AfterClass
-    public void afterClass(){
-        quitDriver();
-    }
+//    @AfterClass
+//    public void afterClass(){
+//        quitDriver();
+//    }
 
 
 }
