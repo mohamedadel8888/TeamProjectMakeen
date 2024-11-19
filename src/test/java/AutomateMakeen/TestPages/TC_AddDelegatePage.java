@@ -38,6 +38,8 @@ public class TC_AddDelegatePage extends TestInit {
         usersControl = contentAside.goToUsersControl();
     }
 
+
+
     @Test (priority = 1)
     public void addNewDelegateWithValidData() {
         usersControl.selectEmployeeByID(Data.validEmployeeIDToDelegate);
