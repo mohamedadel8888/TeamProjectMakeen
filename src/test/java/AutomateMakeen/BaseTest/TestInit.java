@@ -23,16 +23,9 @@ import java.time.LocalTime;
 import java.time.chrono.HijrahDate;
 import java.time.temporal.ChronoUnit;
 
-public class TestInit {
+public class TestInit  {
     protected String userID = "0342169";
     protected String userPasswd = "24602460";
-    protected String itemName = "ادارة المواصلاات";
-    protected String itemEnglishName = "management Of traffic";
-    protected String type = "إدارة";
-    protected String higherItem = "وكالة الوكالة";
-    protected String day = "20";
-    protected String month = "ديسمبر";
-    protected String year = "2023";
     protected ContentAside contentAside;
     public EditAccountPage editAccountPage;
     public WebDriver driver;

@@ -9,16 +9,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TC_CreateMailBox extends TestInit {
-    private String subject = "انشاء بريد خارجي";
-    private String docTypeNum = "123";
-    private String docTypeName = "اعادة المياة";
-    private String receiverNum = "5432";
-    private String receiverName = "مرسل جديد";
-    private String senderNum = "14912";
-    private String senderName = "جديده سلمى";
-    private String treatClassification = "تصريح بناء جديد";
-    private String recipient = "مروان خليل";
-    private String activeDays;
     HomePage homePage;
     CreateExternalMailPage createExternalMailPage;
     @BeforeClass(description = "Preconditions for each test in the class :" +
@@ -33,6 +23,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage = contentAside.goToCreateExternalMail();
     }
 
+    /*تيست كيس بدخل في كل الحقول الالزاميه و ادخل بيانات صحيحة و الغاء حقل الخطاب المشار اليه عن طريق مربع الاختيار */
     @Test
     public void tc_createValidExternalMail() throws Exception {
         createExternalMailPage.clearAllField();
@@ -101,7 +92,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.getTopOfThePage();
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getDocTypeValidatorState(),"Red Circle");
-        if(docTypeData.equals("1111")){
+        if(docTypeData.equals("11111111111111111")){
             Assert.assertEquals(createExternalMailPage.getDocTypeErrorMsg(),
                     "نوع المستند غير صحيح أو غير موجود");
         }else{
@@ -110,24 +101,24 @@ public class TC_CreateMailBox extends TestInit {
     }
     @DataProvider(name = "controlDataProvider")
     public Object[] controlDataProvider()throws Exception {
-        return getJsonArrayAsObjectArray("DataProviderCreateMailBox","docTypeData");
+        return getJsonArrayAsObjectArray("DataProviderCreateMailBox","control");
     }
 
     static int docTypeCPFlag = 0;
     @Test(dataProvider = "controlCPDataProvider")
-    public void tc_testDocTypeFieldWithCopyPasteInvalidData(String docTypeData) {
+    public void tc_testDocTypeFieldWithCopyPasteInvalidData(String docTypeDataExceptNumbers) throws Exception{
         createExternalMailPage.clearDocTypeNum();
         if(docTypeCPFlag == 0){
             createExternalMailPage.clearAllField();
-            createExternalMailPage.enteringTheSubjectOfMail(subject);
-            createExternalMailPage.setReceiverUsingControl(receiverName);
-            createExternalMailPage.setSenderUsingControl(senderName);
-            createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-            createExternalMailPage.insertRecipient(recipient);
+            createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
+            createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
+            createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
+            createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
+            createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
             createExternalMailPage.pressOnDeactivateReferralNumber();
             docTypeCPFlag = 1;
         }
-        createExternalMailPage.copyPasteToDocTypeNum(docTypeData);
+        createExternalMailPage.copyPasteToDocTypeNum(docTypeDataExceptNumbers);
         createExternalMailPage.clickSend();
         createExternalMailPage.getTopOfThePage();
         createExternalMailPage.pressOnDeactivateReferralNumber();
@@ -136,24 +127,23 @@ public class TC_CreateMailBox extends TestInit {
                     "عفواً نوع المستند يقبل أرقام فقط");
     }
     @DataProvider(name = "controlCPDataProvider")
-    public Object[] controlCPDataProvider() {
-        return new Object[]{"أبجد", "ABCD", "(@*%~^)", "١٣٠", "",
-        };
+    public Object[] controlCPDataProvider() throws Exception{
+        return getJsonArrayAsObjectArray("DataProviderCreateMailBox","CP");
     }
     /*********************************************************/
 
     static int receiverFlag = 0;
     @Test(dataProvider = "controlDataProvider")
-    public void tc_testReceiverFieldWithInsertInvalidData(String receiverData) {
+    public void tc_testReceiverFieldWithInsertInvalidData(String receiverData) throws Exception {
         createExternalMailPage.clearReceiverNum();
         if(receiverFlag == 0){
 //            Assert.assertEquals(createExternalMailPage.getReceiverValidatorState(),"Asterisk");
             createExternalMailPage.clearAllField();
-            createExternalMailPage.enteringTheSubjectOfMail(subject);
-            createExternalMailPage.setDocTypeNum(docTypeNum);
-            createExternalMailPage.setSenderUsingControl(senderName);
-            createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-            createExternalMailPage.insertRecipient(recipient);
+            createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
+            createExternalMailPage.setDocTypeNum(getJsonData("ValidExternalMailData","docTypeNum"));
+            createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
+            createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
+            createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
             createExternalMailPage.pressOnDeactivateReferralNumber();
             receiverFlag = 1;
         }
@@ -162,7 +152,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.getTopOfThePage();
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getReceiverValidatorState(),"Red Circle");
-        if(receiverData.equals("1111")){
+        if(receiverData.equals("11111111111111111")){
             Assert.assertEquals(createExternalMailPage.getReceiverErrorMsg(),
                     "رقم المرسل إليه غير صحيح أو غير موجود");
         }else{
@@ -172,15 +162,15 @@ public class TC_CreateMailBox extends TestInit {
 
     static int receiverCPFlag = 0;
     @Test(dataProvider = "controlCPDataProvider")
-    public void tc_testReceiverFieldWithCopyPasteInvalidData(String receiverData) {
+    public void tc_testReceiverFieldWithCopyPasteInvalidData(String receiverData) throws Exception {
         createExternalMailPage.clearReceiverNum();
         if(receiverCPFlag == 0){
             createExternalMailPage.clearAllField();
-            createExternalMailPage.enteringTheSubjectOfMail(subject);
-            createExternalMailPage.setDocTypeUsingControl(docTypeName);
-            createExternalMailPage.setSenderUsingControl(senderName);
-            createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-            createExternalMailPage.insertRecipient(recipient);
+            createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
+            createExternalMailPage.setDocTypeUsingControl(getJsonData("ValidExternalMailData","docTypeName"));
+            createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
+            createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
+            createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
             createExternalMailPage.pressOnDeactivateReferralNumber();
             receiverCPFlag = 1;
         }
@@ -196,15 +186,15 @@ public class TC_CreateMailBox extends TestInit {
     /********************************************/
     static int senderFlag = 0;
     @Test(dataProvider = "controlDataProvider")
-    public void tc_testSenderFieldWithInsertInvalidData(String senderData) {
+    public void tc_testSenderFieldWithInsertInvalidData(String senderData) throws Exception {
         createExternalMailPage.clearSenderNum();
         if(senderFlag == 0){
             createExternalMailPage.clearAllField();
-            createExternalMailPage.enteringTheSubjectOfMail(subject);
-            createExternalMailPage.setDocTypeNum(docTypeNum);
-            createExternalMailPage.setReceiverUsingControl(receiverName);
-            createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-            createExternalMailPage.insertRecipient(recipient);
+            createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
+            createExternalMailPage.setDocTypeNum(getJsonData("ValidExternalMailData","docTypeNum"));
+            createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
+            createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
+            createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
             createExternalMailPage.pressOnDeactivateReferralNumber();
             senderFlag = 1;
         }
@@ -213,7 +203,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.getTopOfThePage();
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Red Circle");
-        if(senderData.equals("1111")){
+        if(senderData.equals("11111111111111111")){
             Assert.assertEquals(createExternalMailPage.getSenderErrorMsg(),
                     "رقم المرسل غير صحيح أو غير موجود");
         }else{
@@ -224,15 +214,15 @@ public class TC_CreateMailBox extends TestInit {
 
     static int senderCPFlag = 0;
     @Test(dataProvider = "receiverCPDataProvider")
-    public void tc_testSenderFieldWithCopyPasteInvalidData(String senderData) {
+    public void tc_testSenderFieldWithCopyPasteInvalidData(String senderData) throws Exception {
         createExternalMailPage.clearSenderNum();
         if(senderCPFlag == 0){
             createExternalMailPage.clearAllField();
-            createExternalMailPage.enteringTheSubjectOfMail(subject);
-            createExternalMailPage.setDocTypeUsingControl(docTypeName);
-            createExternalMailPage.setReceiverUsingControl(receiverName);
-            createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-            createExternalMailPage.insertRecipient(recipient);
+            createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
+            createExternalMailPage.setDocTypeUsingControl(getJsonData("ValidExternalMailData","docTypeName"));
+            createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
+            createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
+            createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
             createExternalMailPage.pressOnDeactivateReferralNumber();
             senderCPFlag = 1;
         }
@@ -253,15 +243,15 @@ public class TC_CreateMailBox extends TestInit {
     /****************************************************/
     static int classFlag = 0;
     @Test(dataProvider = "controlDataProvider")
-    public void tc_testTreatClassFieldWithInsertInvalidData(String classData) {
+    public void tc_testTreatClassFieldWithInsertInvalidData(String classData) throws Exception {
         createExternalMailPage.clearTreatClassificationNum();
         if(classFlag == 0){
             createExternalMailPage.clearAllField();
-            createExternalMailPage.enteringTheSubjectOfMail(subject);
-            createExternalMailPage.setDocTypeNum(docTypeNum);
-            createExternalMailPage.setReceiverUsingControl(receiverName);
-            createExternalMailPage.setSenderUsingControl(senderName);
-            createExternalMailPage.insertRecipient(recipient);
+            createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
+            createExternalMailPage.setDocTypeNum(getJsonData("ValidExternalMailData","docTypeNum"));
+            createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
+            createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
+            createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
             createExternalMailPage.pressOnDeactivateReferralNumber();
             classFlag = 1;
         }
@@ -270,7 +260,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.getTopOfThePage();
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getTreatClassificationValidatorState(),"Red Circle");
-        if(classData.equals("1111")){
+        if(classData.equals("11111111111111111")){
             Assert.assertEquals(createExternalMailPage.getTreatClassificationErrorMsg(),
                     "نوع التصنيف غير صحيح أو غير موجود");
         }else{
@@ -281,15 +271,15 @@ public class TC_CreateMailBox extends TestInit {
 
     static int classCPFlag = 0;
     @Test(dataProvider = "receiverCPDataProvider")
-    public void tc_testTreatClassFieldWithCopyPasteInvalidData(String classData) {
+    public void tc_testTreatClassFieldWithCopyPasteInvalidData(String classData) throws Exception {
         createExternalMailPage.clearTreatClassificationNum();
         if(classCPFlag == 0){
             createExternalMailPage.clearAllField();
-            createExternalMailPage.enteringTheSubjectOfMail(subject);
-            createExternalMailPage.setDocTypeUsingControl(docTypeName);
-            createExternalMailPage.setReceiverUsingControl(receiverName);
-            createExternalMailPage.setSenderUsingControl(senderName);
-            createExternalMailPage.insertRecipient(recipient);
+            createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
+            createExternalMailPage.setDocTypeUsingControl(getJsonData("ValidExternalMailData","docTypeName"));
+            createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
+            createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
+            createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
             createExternalMailPage.pressOnDeactivateReferralNumber();
             classCPFlag = 1;
         }
@@ -304,13 +294,13 @@ public class TC_CreateMailBox extends TestInit {
 
     /*******************************************************************/
     @Test
-    public void tc_testRecipientFieldWithInsertInvalidData() {
+    public void tc_testRecipientFieldWithInsertInvalidData() throws Exception {
         createExternalMailPage.clearAllField();
-        createExternalMailPage.enteringTheSubjectOfMail(subject);
-        createExternalMailPage.setDocTypeNum(docTypeNum);
-        createExternalMailPage.setReceiverUsingControl(receiverName);
-        createExternalMailPage.setSenderUsingControl(senderName);
-        createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
+        createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
+        createExternalMailPage.setDocTypeNum(getJsonData("ValidExternalMailData","docTypeNum"));
+        createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
+        createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
+        createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
         createExternalMailPage.pressOnDeactivateReferralNumber();
         createExternalMailPage.clickSend();
         createExternalMailPage.getTopOfThePage();
@@ -318,7 +308,6 @@ public class TC_CreateMailBox extends TestInit {
         Assert.assertEquals(createExternalMailPage.getRecipientValidatorState(),"Red Circle");
         Assert.assertEquals(createExternalMailPage.getRecipientErrorMsg(),
                     "برجاء إدخال جهة الإحالة");
-
     }
 }
 

@@ -508,7 +508,7 @@ public class CreateExternalMailPage extends BaseComp {
     }
 
     @FindBy(id = "btn_EtEntrySend")
-    WebElement sendBtnWebElement;
+    WebElement sendBtnWebElement;                   /*زر ارسال*/
 
     @FindBy(css = "input[value='موافق']")
     WebElement confirmWebElement;
