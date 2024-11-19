@@ -15,7 +15,7 @@ public class TC_UsersControl extends TestInit {
             "1- Login with authorized User." +
             "2- Navigate to User Control Page By Press 'لوحه التحكم ' in the content Aside" +
             "then press 'ادارة المستخدمين'")
-    public void setupClass()  {
+    public void setupClass() {
         lunchDriver();
         loginPage.goToLoginPage();
         HomePage homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
@@ -24,97 +24,97 @@ public class TC_UsersControl extends TestInit {
 
 
     @Test (priority = 1)
-    public void tc_searchByFname (){
-        UsersControl.setFirstName("150");
+    public void tc_searchByFnameNotExits () throws Exception{
+        UsersControl.setFirstName(getJsonData("UserControl","NotExitsName"));
         usersControl.singleSearch();
         Assert.assertTrue(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
     }
     @Test (priority = 2)
-    public void tc_searchBySname (){
-        usersControl.setSecondName("150");
+    public void tc_searchBySnameNotExits ()throws Exception{
+        usersControl.setSecondName(getJsonData("UserControl","NotExitsName"));
         usersControl.singleSearch();
         Assert.assertTrue(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
 
     }
     @Test (priority = 3)
-    public void tc_searchByThirdName (){
-        usersControl.setThirdName("150");
+    public void tc_searchByThirdNameNotExits ()throws Exception{
+        usersControl.setThirdName(getJsonData("UserControl","NotExitsName"));
         usersControl.singleSearch();
         Assert.assertTrue(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
     }
     @Test   (priority = 4)
-    public void tc_searchByLastName(){
-        usersControl.setLastName("150");
+    public void tc_searchByLastNameNotExits()throws Exception{
+        usersControl.setLastName(getJsonData("UserControl","NotExitsName"));
         usersControl.singleSearch();
         Assert.assertTrue(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
     }
     @Test   (priority = 5)
-    public void tc_searchByUserID (){
-        usersControl.setUserID("150");
+    public void tc_searchByUserIDNotExits ()throws Exception{
+        usersControl.setUserID(getJsonData("UserControl","NotExitsName"));
         usersControl.singleSearch();
         Assert.assertTrue(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
     }
     @Test  (priority = 6)
-    public void tc_searchByDept (){
-        usersControl.setChooseDept("''");
+    public void tc_searchByDeptNotExits ()throws Exception{
+        usersControl.setChooseDept(getJsonData("UserControl","DeptHasNoUsers"));
         usersControl.singleSearch();
         Assert.assertTrue(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
     }
     /********************************/
     @Test   (priority = 7)
-    public void tc_searchByFnameExitElement (){
-        UsersControl.setFirstName("10");
+    public void tc_searchByFnameExitElement ()throws Exception{
+        UsersControl.setFirstName(getJsonData("UserControl","ExitsName"));
         usersControl.singleSearch();
         Assert.assertFalse(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
     }
     @Test (priority = 8)
-    public void tc_searchBySnameExitElement (){
-        usersControl.setSecondName("10");
+    public void tc_searchBySnameExitElement ()throws Exception{
+        usersControl.setSecondName(getJsonData("UserControl","ExitsName"));
         usersControl.singleSearch();
         Assert.assertFalse(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
 
     }
     @Test (priority = 9)
-    public void tc_searchByThirdNameExitElement (){
-        usersControl.setThirdName("10");
+    public void tc_searchByThirdNameExitElement ()throws Exception{
+        usersControl.setThirdName(getJsonData("UserControl","ExitsName"));
         usersControl.singleSearch();
         Assert.assertFalse(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
     }
     @Test  (priority = 10)
-    public void tc_searchByLastNameExitElement(){
-        usersControl.setLastName("10");
+    public void tc_searchByLastNameExitElement()throws Exception{
+        usersControl.setLastName(getJsonData("UserControl","ExitsName"));
         usersControl.singleSearch();
         Assert.assertFalse(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
     }
     @Test  (priority = 11)
-    public void tc_searchByUserIDExitElement (){
-        usersControl.setUserID("10");
+    public void tc_searchByUserIDExitElement ()throws Exception{
+        usersControl.setUserID(getJsonData("UserControl","ExitsName"));
         usersControl.singleSearch();
         Assert.assertFalse(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
     }
     @Test  (priority = 12)
-    public void tc_searchByDeptExitElement (){
-        usersControl.setChooseDept("1");
+    public void tc_searchByDeptExitElement ()throws Exception{
+        usersControl.setChooseDept(getJsonData("UserControl","DeptHasUsers"));
         usersControl.singleSearch();
         Assert.assertFalse(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
     }
     /**********************************************/
     @Test   (priority = 13)
-    public void tc_testShowAllFunctionality(){  /* التحقق من عرض الكل */
-        usersControl.setUserID("10");
-        UsersControl.setFirstName("10");
+    public void tc_testShowAllFunctionality()throws Exception{  /* التحقق من عرض الكل */
+        usersControl.setUserID(getJsonData("UserControl","ExitsName"));
+        UsersControl.setFirstName(getJsonData("UserControl","ExitsName"));
         usersControl.singleSearch();
         usersControl.showall();
         String fName = usersControl.getFirstName().getAttribute("value");
