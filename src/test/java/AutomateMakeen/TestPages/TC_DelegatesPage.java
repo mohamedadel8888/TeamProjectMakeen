@@ -78,7 +78,21 @@ public class TC_DelegatesPage extends TestInit {
      */
     @Test(priority = 3)
     public void getValidDelegationInformationSpecificEmployee() throws FileNotFoundException {
+        addDelegatePage = delegatePage.clickAddButton();
+        addDelegatePage.selectDepartmentNameFromDropDown(getJsonData("DelegateData","validDepartmentNameToGet"));
+        addDelegatePage.selectDelegatedEmployeeFromDropDown(getJsonData("DelegateData","validDelegatedEmployeeNameToGet"));
+        addDelegatePage.chooseNewPeriodRadioButton();
+        addDelegatePage.inputDelegateDateFrom(getJsonData("DelegateData","infoDelegateDateFromTo"));
+        addDelegatePage.inputDelegateDateTo(getJsonData("DelegateData","infoDelegateDateTo"));
 
+        addDelegatePage.inputTimePeriodFrom(getJsonData("DelegateData","infoDelegateTimeFrom"));
+        addDelegatePage.inputTimePeriodTo(getJsonData("DelegateData","infoDelegateTimeTo"));
+        addDelegatePage.selectTimePeriodFromDropDown(getJsonData("DelegateData","infoDelegateTimePeriodFrom"));
+        addDelegatePage.selectTimePeriodToDropDown(getJsonData("DelegateData","infoDelegateTimePeriodTo"));
+
+        addDelegatePage.clickSaveButton();
+        addDelegatePage.acceptPopUp();
+        addDelegatePage.clickGoBackButton();
         List<String> delegationInformationList =
                 delegatePage.getDelegationInformationByEmployeeID(getJsonData("DelegateData","validEmployeeIDToGetDelegationInformation"));
         softAssert.assertEquals(delegationInformationList.get(2),

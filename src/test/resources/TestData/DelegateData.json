@@ -11,7 +11,16 @@
 
   "editInvalidDelegateDateFrom" : "01/05/1446",
   "editInvalidDelegateDateTo" : "06/05/1446",
+
   "validEmployeeIDToGetDelegationInformation" : "1601111",
+  "validDepartmentNameToGet" : "000 اسلام0",
+  "validDelegatedEmployeeNameToGet" : "1601111",
+  "infoDelegateDateFromTo": "20/06/1446",
+  "infoDelegateDateTo" : "30/06/1446",
+  "infoDelegateTimeFrom": "09:00",
+  "infoDelegateTimeTo" :"10:00",
+  "infoDelegateTimePeriodFrom": "صباحا",
+  "infoDelegateTimePeriodTo": "مساءا",
   "correctEmployeeName" : "a a a a",
   "correctDelegateDateFrom" : "1446/06/20",
   "correctDelegateDateTo" : "1446/06/30",
