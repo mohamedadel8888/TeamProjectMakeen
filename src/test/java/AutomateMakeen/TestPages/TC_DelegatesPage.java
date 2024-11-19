@@ -2,7 +2,6 @@ package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.*;
-import AutomateMakeen.Utilities.Data;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -34,7 +33,7 @@ public class TC_DelegatesPage extends TestInit {
     @Test(priority = 1)
     public void correctNavigationToAddDelegatePage() throws FileNotFoundException {
 
-        usersControl.selectEmployeeByID(Data.validEmployeeIDToDelegate);
+        usersControl.selectEmployeeByID(getJsonData("DelegateData","validEmployeeIDToDelegate"));
         delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
         String pageTitle = addDelegatePage.getPageTitle();
@@ -80,7 +79,8 @@ public class TC_DelegatesPage extends TestInit {
     @Test(priority = 3)
     public void getValidDelegationInformationSpecificEmployee() throws FileNotFoundException {
 
-        List<String> delegationInformationList = delegatePage.getDelegationInformationByEmployeeID(Data.validEmployeeIDToGetDelegationInformation);
+        List<String> delegationInformationList =
+                delegatePage.getDelegationInformationByEmployeeID(getJsonData("DelegateData","validEmployeeIDToGetDelegationInformation"));
         softAssert.assertEquals(delegationInformationList.get(2),
                 getJsonData("DelegateData","correctEmployeeName"),
                 "Incorrect Employee Name");

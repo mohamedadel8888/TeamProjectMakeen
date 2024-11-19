@@ -44,9 +44,4 @@ public class Data {
     public static String validDepartmentNameMoreThanOnePeriod = "قسم تحت الامين";
     public static String validDelegatedEmployeeNameMoreThanOnePeriod = "1515111";
 
-
-
-
-
-
 }
