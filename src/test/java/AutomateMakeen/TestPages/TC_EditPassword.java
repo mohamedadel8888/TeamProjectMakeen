@@ -129,7 +129,21 @@ public class TC_EditPassword extends TestInit {
         editPassword.save();
         Assert.assertTrue(editPassword.getConfirmationMessage().isDisplayed());
     }
-    @Test  (priority = 9)
+
+    @Test  (priority =9)
+    public void tc_enterPasswordAsSameAsOldPassword(){   /* ادخال كلمه مرور بنفس كلمه المرور القديمه */
+        usersControl.selectEmployeeByID("0123456");
+        editPassword = usersControl.editPassword();
+        editPassword.setNewPassword("24602460r");
+        editPassword.setConfirmNewPassword("24602460r");
+        editPassword.save();
+        String m2 = editPassword.validation2();
+        String e2 = editPassword.getErrorMessage2();
+        Assert.assertEquals(e2,"عذراً كلمة المرور التى ادخلتها تم استخدامها من قبل خلال آخر 1 تغييرات , يُرجى تغييرها بصيغة أخرى");
+    }
+
+
+    @Test  (priority = 10)
     public void tc_enterPasswordAsSameAsUserName(){/* ادخال كلمه مرور بنفس ارقام اسم الموظف */
         editPassword.notAcceptIcon();
         editPassword.back();
