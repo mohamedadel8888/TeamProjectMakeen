@@ -1,30 +1,21 @@
 package AutomateMakeen.TestPages;
+
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.HomePage;
 import AutomateMakeen.Pages.UsersControl;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import java.time.Duration;
-import org.testng.annotations.Test;
-import java.util.concurrent.TimeUnit;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+
 import java.time.Duration;
-import AutomateMakeen.Pages.UsersControl;
-
-
-// قبل الاختبار يجب ان يكون المستخدم لديه حساب مفعل وصلاحية الوصول لكل هذه المعلومات وتعديلها
-// المتغير لا يسمح بالكتابة في حقول اسم المستخدم والادارة
 public class TC_EditAccountPage extends TestInit {
     private WebDriver driver;
-
-    UsersControl usersControl;
-    String AssertText;
+    private UsersControl usersControl;
+    private String AssertText;
     private WebDriverWait exWait;
-
-
 
     @BeforeClass
     public void setupClass() {
@@ -33,35 +24,33 @@ public class TC_EditAccountPage extends TestInit {
         HomePage homePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
         homePage.goToHomePage();
         usersControl = contentAside.goToUsersControl();
-
     }
 
     // اختبار تسجيل الدخول والوصول لصفحة تعديل الحساب
     // وان اسم المستحدم والادارة صحيحين
-    @Test (priority = 1)
-    public void TestNavigateToEditAccountPage()  {
-
+    @Test(priority = 1)
+    public void TestNavigateToEditAccountPage() {
         contentAside.goToCreateExternalEditAccount();
         AssertText = editAccountPage.getTitleText();
         Assert.assertEquals(AssertText, "تعديل حساب مستخدم", "should be 'تعديل حساب مستخدم'");
         AssertText = editAccountPage.getSUserName();
         Assert.assertEquals(AssertText, "عبدالرحمن السيد محمد حموده", "should be 'عبدالرحمن السيد محمد حموده'");
         AssertText = editAccountPage.getDepartmentName();
-        Assert.assertEquals(AssertText, "ادارة الكهرباء", "should be 'ادارة الكهرباء'");}
-
+        Assert.assertEquals(AssertText, "ادارة الكهرباء", "should be 'ادارة الكهرباء'");
+    }
 
     // اختبار عدم السماحية بالكتابة في حقول اسم المستخدم والادارة في حالة انا المتغير لا يسمح بذلك
-    @Test (priority = 2)
-    public void TestNotAllowingEnteringTextInUserAndDepartment  ()  {
+    @Test(priority = 2)
+    public void TestNotAllowingEnteringTextInUserAndDepartment() {
         boolean isInteractive = editAccountPage.isDepartmentFieldInteractive();
         Assert.assertFalse(isInteractive, "The input field should not be interactive.");
-         isInteractive = editAccountPage.isNameFieldInteractive();
-        Assert.assertFalse(isInteractive, "The input field should not be interactive.");}
-
+        isInteractive = editAccountPage.isNameFieldInteractive();
+        Assert.assertFalse(isInteractive, "The input field should not be interactive.");
+    }
 
     // اختبار امكانية نقل المهمات بين الحقول وتفريغها وظهور رسالة التحذير
-    @Test (priority = 3)
-    public void TestMakingFieldsEmpty ()  {
+    @Test(priority = 3)
+    public void TestMakingFieldsEmpty() {
         editAccountPage.clickAllRightButton();
         boolean isEmpty = editAccountPage.isSelectUserEmpty();
         Assert.assertTrue(isEmpty, "empty");
@@ -71,23 +60,23 @@ public class TC_EditAccountPage extends TestInit {
         editAccountPage.clickSaveButton();
         editAccountPage.clickAllLeftButton();
         isEmpty = editAccountPage.isSelectSystemEmpty();
-        Assert.assertTrue(isEmpty, "empty");}
-
+        Assert.assertTrue(isEmpty, "empty");
+    }
 
     // اختبار الاسكرول في حقول المهمات
-    @Test (priority = 4)
-    public void TestFieldsScrolling()  {
+    @Test(priority = 4)
+    public void TestFieldsScrolling() {
         editAccountPage.clickAllRightButton();
         boolean isScrollBarWorking = editAccountPage.isScrollBarWorkingForArchive();
         Assert.assertTrue(isScrollBarWorking, "scroll should be working");
         editAccountPage.clickAllLeftButton();
         isScrollBarWorking = editAccountPage.isScrollBarWorkingForUser();
-        Assert.assertTrue(isScrollBarWorking, "scroll should be working");}
-
+        Assert.assertTrue(isScrollBarWorking, "scroll should be working");
+    }
 
     // اختبار ان صناديق الاختيار لا تعمل
-    @Test (priority = 5)
-    public void TestCheckBoxesAreWorking()  {
+    @Test(priority = 5)
+    public void TestCheckBoxesAreWorking() {
         editAccountPage.clickPrsEmpCheckbox();
         editAccountPage.clickArchEmpCheckbox();
         editAccountPage.clickMakeenUserCheckbox();
@@ -99,12 +88,12 @@ public class TC_EditAccountPage extends TestInit {
         Assert.assertTrue(isChecked, "should be checked.");
         editAccountPage.clickPrsEmpCheckbox();
         editAccountPage.clickArchEmpCheckbox();
-        editAccountPage.clickMakeenUserCheckbox();}
-
+        editAccountPage.clickMakeenUserCheckbox();
+    }
 
     // اختبار من ان صناديق الاختيار الخاصة بالموبايل والايميل تعمل
-    @Test (priority = 6)
-    public void TestMobileAndMailCheckBoxes()  {
+    @Test(priority = 6)
+    public void TestMobileAndMailCheckBoxes() throws Exception {
         editAccountPage.clickEmailChickBox();
         editAccountPage.clickEmailChickBox();
         editAccountPage.clickEmailChickBox();
@@ -114,22 +103,23 @@ public class TC_EditAccountPage extends TestInit {
         editAccountPage.clickSaveButton();
         editAccountPage.clickAgreeButton();
         editAccountPage.clickPowerOffIcon();
-        HomePage homePage = loginPage.loginUserWithoutRemMe("1654198","123321");
+        HomePage homePage = loginPage.loginUserWithoutRemMe(getJsonData("EditAccount", "UserID") ,getJsonData("EditAccount", "UserPW")  );
         boolean isChecked = editAccountPage.IsMobileCheckboxChecked();
         Assert.assertTrue(isChecked, "should be checked.");
         isChecked = editAccountPage.IsMailCheckboxChecked();
         Assert.assertTrue(isChecked, "should be checked.");
         editAccountPage.clickBackToLoginPage();
-        loginPage.loginUserWithoutRemMe(userID,userPasswd);
+        loginPage.loginUserWithoutRemMe(userID, userPasswd);
         homePage.goToHomePage();
         contentAside.goToCreateExternalEditAccount();
         editAccountPage.clickEmailChickBox();
-        editAccountPage.clickMobileChickBox();}
-
+        editAccountPage.clickMobileChickBox();
+    }
 
     // اختبار اضافة مهمة وظهورها عند المستخدم
-    @Test (priority = 7)
-    public void TestAddingMission()  {
+    @Test(priority = 7)
+    public void TestAddingMission() {
+
         editAccountPage.clickAllRightButton();
         editAccountPage.clickArchiveTransaction();
         editAccountPage.clickLeftButton();
@@ -140,16 +130,15 @@ public class TC_EditAccountPage extends TestInit {
         editAccountPage.clickSaveButton();
         editAccountPage.clickAgreeButton();
         editAccountPage.clickPowerOffIcon();
-        HomePage homePage = loginPage.loginUserWithoutRemMe("1654198","123321");
+        HomePage homePage = loginPage.loginUserWithoutRemMe("1654198", "123321");
         homePage.goToHomePage();
         editAccountPage.clickArchiveLink();
         editAccountPage.clickSearchLink();
         AssertText = editAccountPage.getSearchHeadingText();
         Assert.assertEquals(AssertText, "بحث", "should be 'بحث'");
         editAccountPage.clickPowerOffIcon();
-        loginPage.loginUserWithoutRemMe(userID,userPasswd);
+        loginPage.loginUserWithoutRemMe(userID, userPasswd);
         homePage.goToHomePage();
-        contentAside.goToCreateExternalEditAccount();}
-
-
+        contentAside.goToCreateExternalEditAccount();
+    }
 }
