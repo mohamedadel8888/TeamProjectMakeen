@@ -1,16 +1,14 @@
 package AutomateMakeen.TestPages;
 
-import AutomateMakeen.Base.BaseComp;
 import AutomateMakeen.BaseTest.TestInit;
-import AutomateMakeen.Pages.ExportedMails;
-import AutomateMakeen.Pages.HomePage;
+import AutomateMakeen.Pages.OutboxMails;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
-public class TC_ExportedMails extends TestInit {
+public class TC_OutboxMails extends TestInit {
     private String subject = "انشاء بريد خارجي";
     private String docTypeNum = "123";
     private String docTypeName = "اعادة المياة";
@@ -21,7 +19,8 @@ public class TC_ExportedMails extends TestInit {
     private String treatClassification = "تصريح بناء جديد";
     private String recipient = "مروان خليل";
     private String activeDays;
-    ExportedMails exportedMails;
+    OutboxMails outboxMails;
+    protected static String importNumber;
 
     @BeforeClass(description = "Preconditions for each test in the class :" +
             "السماحية للدخول الي النظام : الأمانة الإلكترونية" +
@@ -32,15 +31,16 @@ public class TC_ExportedMails extends TestInit {
         lunchDriver();
         loginPage.goToLoginPage();
         loginPage.loginUserWithoutRemMe(userID, userPasswd);
-        exportedMails = contentAside.goToExportedMail();
+        outboxMails = contentAside.goToExportedMail();
     }
     @Test
     public void tc_validateCreatedMailAddedToExportedMail(){
-        exportedMails.getRecentlyAddedMail(subject);
-        List<String> mailData = exportedMails.getMailData();
+        outboxMails.getRecentlyAddedMail(subject);
+        List<String> mailData = outboxMails.getMailData();
         Assert.assertEquals(mailData.get(0),subject);
         Assert.assertEquals(mailData.get(1),recipient);
         Assert.assertEquals(mailData.get(2),senderName);
         Assert.assertEquals(mailData.get(3),docTypeName);
+        importNumber = mailData.get(4);
     }
 }
