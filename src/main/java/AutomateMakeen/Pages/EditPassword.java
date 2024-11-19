@@ -24,46 +24,41 @@ public class EditPassword extends BaseComp {
 
 
 
-    @FindBy (id = "txt_pass_word")
+    @FindBy (id = "txt_pass_word")  /*حقل كلمه سر جديدة */
     WebElement newPassword;
-    @FindBy (id = "txt_pass_word_conf")
+    @FindBy (id = "txt_pass_word_conf")   /*حقل اعاده كتابه كلمه السر */
     WebElement confirmNewPassword;
-    @FindBy (xpath = "(//h1[contains(text(),'تعديل كلمة المرور')])[1]")
+    @FindBy (css = "div[id='fs_edit_pw']") /*عنوان صفحه تعديل كلمه المرور*/
     WebElement editPasswordTitle;
-    @FindBy (xpath = "(//input[@onclick='cpUsers.saveEditedPw()'])[1]")
+    @FindBy (css = "input[onclick='cpUsers.saveEditedPw()']") /* ايقونة الحفظ */
     WebElement saveIcon;
-    @FindBy (xpath = "(//input[@onclick='cpUsers.backPWConfirm()'])[1]")
+    @FindBy (css = "input[onclick='cpUsers.backPWConfirm()']") /* ايقونة العودة */
     WebElement backIcon;
 
 
 
-    @FindBy (xpath = "(//span[@id='txt_user_name'])[1]")
+    @FindBy (id = "txt_user_name")  /*حقل اسم المستخدم */
     WebElement userName;
 
-    @FindBy (xpath = "//b[@id='span_A_txt_pass_word']/p/span")
+    @FindBy (css = "#span_A_txt_pass_word") /*رساله الخطأ الاولى*/
     WebElement errorMessage1;
 
-    @FindBy (xpath = "//b[@id='span_A_txt_pass_word_conf']/p/span")
+    @FindBy (css = "#span_A_txt_pass_word_conf") /*رساله الخطأ الثانية */
     WebElement errorMessage2;
 
 
 
-    @FindBy(id ="span_A_txt_pass_word")
+    @FindBy(id ="span_A_txt_pass_word") /* الاستريك الاول */
     WebElement validation1;
-    @FindBy (id="span_A_txt_pass_word_conf")
+    @FindBy (id="span_A_txt_pass_word_conf")   /*الاستريك الثاني */
     WebElement validation2;
 
-
-    @FindBy (xpath = "(//span[contains(text(),'رسالة تأكيدية')])[1]")
+    @FindBy (css = "div[class='popup_title']")  /* عنوان شاشه الرساله التأكيدية */
     WebElement confirmationMessage;
-    @FindBy (id = "btnP0")
+    @FindBy (id = "btnP0")   /* زر موافق*/
     WebElement acceptIcon;
-    @FindBy (id = "btnP1")
+    @FindBy (id = "btnP1")    /*زر عير موافق */
     WebElement notAcceptIcon;
-
-
-
-
 
     public String  getNewPassword() {
         return newPassword.getText();
