@@ -17,15 +17,8 @@ public class HomePage extends BaseComp {
     WebElement signOutBtn;
     @FindBy(css = "li[onclick='goto_mainpage();'] a")
     WebElement homePageIconWebElement;
-    @FindBy(id="div_notifucation")
-    WebElement alertMessage;
-    @FindBy (className = "close_box")
-    WebElement closeNotificationsIcon;
 
 
-    public WebElement getAlertMessage() {
-        return alertMessage;
-    }
 
     public void goToHomePage(){
         homePageIconWebElement.click();
