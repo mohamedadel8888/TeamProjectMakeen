@@ -36,7 +36,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
         createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
         createExternalMailPage.pressOnDeactivateReferralNumber();
-        //Assert.assertTrue(createExternalMailPage.addFile("file name","src\\test\\resources\\Screenshot.png"));
+        Assert.assertTrue(createExternalMailPage.addFile("file name","src\\test\\resources\\UplodedImage.png"));
         createExternalMailPage.clickSendConfirm();
         Assert.assertTrue(createExternalMailPage.validateSuccessfulCreatingMail());
     }
