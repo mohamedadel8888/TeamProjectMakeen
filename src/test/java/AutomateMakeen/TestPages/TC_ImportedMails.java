@@ -37,13 +37,13 @@ public class TC_ImportedMails extends TestInit {
     }
 
     @Test(priority = 1)
-    public void tc_validateCreatedMailAddedToImportedMail(){
-        importedMails.getRecentlyAddedMail(subject);
+    public void tc_validateCreatedMailAddedToImportedMail() throws Exception{
+        importedMails.getRecentlyAddedMail(getJsonData("ValidExternalMailData","subject"));
         List<String> mailData =importedMails.getMailData();
-        Assert.assertEquals(mailData.get(0),subject);
+        Assert.assertEquals(mailData.get(0),getJsonData("ValidExternalMailData","subject"));
         Assert.assertEquals(mailData.get(1),"محمد أحمد أحمد علي");
-        Assert.assertEquals(mailData.get(2),senderName);
-        Assert.assertEquals(mailData.get(3),docTypeName);
+        Assert.assertEquals(mailData.get(2),getJsonData("ValidExternalMailData","senderName"));
+        Assert.assertEquals(mailData.get(3),getJsonData("ValidExternalMailData","docTypeName"));
         Assert.assertEquals(mailData.get(4),importNumber);
     }
 }

@@ -20,7 +20,9 @@ public class ContentAside extends BaseComp {
     public ContentAside(WebDriver driver){
         super(driver);
         this.driver = driver;
-        exWait = new WebDriverWait(driver, Duration.ofSeconds(15));}
+        exWait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+    }
 
     @FindBy(xpath = "(//i[@class='fa fa-angle-double-down'])[1]")
     private WebElement empAffairArrowWebElement;
@@ -55,18 +57,25 @@ public class ContentAside extends BaseComp {
     @FindBy (id ="btn_srch")    /* بحث */
     private  WebElement singleSearch;
 
+//    @FindBy(css=".alrt-bx")
+//    WebElement alertMessage;
+//    @FindBy (className = "close_box")
+//    WebElement closeNotificationsIcon;
 
-
+    @FindBy(id = "div_extGeha_notification")
+    WebElement notificationWebElement;
     public UsersControl goToUsersControl() {
+        exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
         exWait.until(ExpectedConditions.elementToBeClickable(controlPanel));
         controlPanel.click();
         userControl.click();
-        return new UsersControl(driver);}
+        return new UsersControl(driver);
+    }
 
     public CreateExternalMailPage goToCreateExternalMail() {
+        exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
         exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
         mailArrowWebElement.click();
-        exWait.until(ExpectedConditions.elementToBeClickable(createExternalMailWebELement));
         createExternalMailWebELement.click();
         return new CreateExternalMailPage(driver);}
 
@@ -89,8 +98,7 @@ public class ContentAside extends BaseComp {
     @FindBy(id ="tbl_inbox")
     WebElement tableInWebElement;
 
-    @FindBy(id = "div_extGeha_notification")
-    WebElement notificationWebElement;
+
     public OutboxMails goToExportedMail(){
         exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
         try{
