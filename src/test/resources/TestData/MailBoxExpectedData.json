@@ -1,0 +1,18 @@
+{
+  "Asterisk":"Asterisk",
+  "RedCircle":"Red Circle",
+  "SubjectErrorMessage":"برجاء إدخال الموضوع",
+  "DocTypeErrorMessage":"نوع المستند غير صحيح أو غير موجود",
+  "DocTypeNotFound":"برجاء إدخال نوع المستند",
+  "DocTypeNumberOnly":"عفواً نوع المستند يقبل أرقام فقط",
+  "ReceiverNumberNotFound":"رقم المرسل إليه غير صحيح أو غير موجود",
+  "ReceiverErrorMessage":"برجاء إدخال المرسل إليه",
+  "ReceiverNumberOnly":"عفوا, المرسل اليه يقبل ارقام فقط",
+  "ReceiverNumberError":"رقم المرسل غير صحيح أو غير موجود",
+  "SenderError":"برجاء إدخال المرسل",
+  "SenderNumberErrorMessage":"عفوا, المرسل يقبل ارقام فقط",
+  "TreatClassificationErrorMessage":"نوع التصنيف غير صحيح أو غير موجود",
+  "TreatClassificationError":"برجاء إدخال تصنيف المعامله",
+  "TreatClassificationNumberErrorMessage":"عفواً نوع التصنيف يقبل أرقام فقط",
+  "PlaceToBeSendErrorMessage":"برجاء إدخال جهة الإحالة"
+}

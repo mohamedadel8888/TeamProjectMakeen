@@ -9,16 +9,6 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 public class TC_OutboxMails extends TestInit {
-    private String subject = "انشاء بريد خارجي";
-    private String docTypeNum = "123";
-    private String docTypeName = "اعادة المياة";
-    private String receiverNum = "5432";
-    private String receiverName = "مرسل جديد";
-    private String senderNum = "14912";
-    private String senderName = "جديده سلمى";
-    private String treatClassification = "تصريح بناء جديد";
-    private String recipient = "مروان خليل";
-    private String activeDays;
     OutboxMails outboxMails;
     protected static String importNumber;
 
@@ -34,13 +24,13 @@ public class TC_OutboxMails extends TestInit {
         outboxMails = contentAside.goToExportedMail();
     }
     @Test
-    public void tc_validateCreatedMailAddedToExportedMail(){
-        outboxMails.getRecentlyAddedMail(subject);
+    public void tc_validateCreatedMailAddedToExportedMail() throws Exception{
+        outboxMails.getRecentlyAddedMail(getJsonData("ValidExternalMailData","subject"));
         List<String> mailData = outboxMails.getMailData();
-        Assert.assertEquals(mailData.get(0),subject);
-        Assert.assertEquals(mailData.get(1),recipient);
-        Assert.assertEquals(mailData.get(2),senderName);
-        Assert.assertEquals(mailData.get(3),docTypeName);
+        Assert.assertEquals(mailData.get(0),getJsonData("ValidExternalMailData","subject"));
+        Assert.assertEquals(mailData.get(1),getJsonData("ValidExternalMailData","recipient"));
+        Assert.assertEquals(mailData.get(2),getJsonData("ValidExternalMailData","senderName"));
+        Assert.assertEquals(mailData.get(3),getJsonData("ValidExternalMailData","docTypeNum"));
         importNumber = mailData.get(4);
     }
 }
