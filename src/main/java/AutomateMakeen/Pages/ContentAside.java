@@ -73,9 +73,9 @@ public class ContentAside extends BaseComp {
     }
 
     public CreateExternalMailPage goToCreateExternalMail() {
+        exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
         exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
         mailArrowWebElement.click();
-        exWait.until(ExpectedConditions.elementToBeClickable(createExternalMailWebELement));
         createExternalMailWebELement.click();
         return new CreateExternalMailPage(driver);}
 
