@@ -12,10 +12,21 @@ import java.time.Duration;
 public class HomePage extends BaseComp {
     protected WebDriver driver;
     private WebDriverWait exWait;
+
     @FindBy(id = "btn_session_time_out")
     WebElement signOutBtn;
     @FindBy(css = "li[onclick='goto_mainpage();'] a")
     WebElement homePageIconWebElement;
+    @FindBy(id="div_notifucation")
+    WebElement alertMessage;
+    @FindBy (className = "close_box")
+    WebElement closeNotificationsIcon;
+
+
+    public WebElement getAlertMessage() {
+        return alertMessage;
+    }
+
     public void goToHomePage(){
         homePageIconWebElement.click();
     }

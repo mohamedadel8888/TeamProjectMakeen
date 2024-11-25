@@ -4,24 +4,30 @@ import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.HomePage;
 import AutomateMakeen.Pages.UsersControl;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 public class TC_UsersControl extends TestInit {
     UsersControl usersControl;
+    WebDriverWait ex = new WebDriverWait(driver,Duration.ofSeconds(5));
 
     @BeforeClass(description = "Preconditions for each test in the class :" +
             "1- Login with authorized User." +
             "2- Navigate to User Control Page By Press 'لوحه التحكم ' in the content Aside" +
             "then press 'ادارة المستخدمين'")
-    public void setupClass() {
+    public void setupClass(){
         lunchDriver();
         loginPage.goToLoginPage();
-        HomePage homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
+        HomePage homePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
         usersControl = contentAside.goToUsersControl();
     }
-
 
     @Test (priority = 1)
     public void tc_searchByFnameNotExits () throws Exception{
@@ -127,41 +133,40 @@ public class TC_UsersControl extends TestInit {
         Assert.assertEquals(thirdName,"");
         Assert.assertEquals(lName,"");
         Assert.assertEquals(userID,"");
-        Assert.assertEquals(usersControl.getChooseDept().getText(),"إخترالادارة");
-        Assert.assertEquals(usersControl.getSearchText().getAttribute("value"),"1");
+        Assert.assertEquals(usersControl.getChooseDept().getText(),getJsonData("UserControl","DeptDefaultChoose"));
     }
     @Test  (priority = 14)
-    public void tc_clearTextPageSearchAndPressEnter (){  /*اختبار البحث عند الضغط على Enter يعود الى الصفحه الاولى */
-        usersControl.getSearchText().sendKeys("20");
+    public void tc_clearTextPageSearchAndPressEnter ()throws Exception{  /*اختبار البحث عند الضغط على Enter يعود الى الصفحه الاولى */
+        usersControl.getSearchText().sendKeys(getJsonData("UserControl","ExitsPageNumber"));
         usersControl.getSearchText().sendKeys(Keys.ENTER);
         usersControl.getSearchText().clear();
         usersControl.getSearchText().sendKeys(Keys.ENTER);
         Assert.assertTrue(usersControl.getPageNum().contains("صفحة 1"));
     }
     @Test  (priority = 14)
-    public void tc_searchAboutEmployeeExitsByID(){
-        usersControl.selectEmployeeByID("1020311");
-        Assert.assertEquals(usersControl.getUserName(),"حمدي حمد حامد الحمدون");
+    public void tc_searchAboutEmployeeExitsByID()throws Exception{
+        usersControl.selectEmployeeByID(getJsonData("UserControl","SpecificUser"));
+        Assert.assertEquals(usersControl.getUserName(),getJsonData("UserControl","NameOfSpecificUser"));
     }
     @Test (priority = 15)
-    public void tc_testUserNumberAcceptOnly_7Numbers (){    /* حقل رقم الموظف لايقبل اكتر من 7 ارقام */
-        usersControl.setUserID("123456789");
+    public void tc_testUserNumberAcceptOnly_7Numbers ()throws Exception{    /* حقل رقم الموظف لايقبل اكتر من 7 ارقام */
+        usersControl.setUserID(getJsonData("UserControl","UserIdGreatThan7"));
         usersControl.singleSearch();
-        Assert.assertEquals(usersControl.getUserID().getAttribute("value"),"1234567");
+        Assert.assertEquals(usersControl.getUserID().getAttribute("value"),getJsonData("UserControl","ValidValueGreatThan7"));
         usersControl.clearAllFeild();
     }
     @Test  (priority = 16)
-    public void tc_testUserNumberWithOnly_4Numbers (){     /* حقل رقم الموظف لايظهر نتائج لرقم اقل من 7 */
-        usersControl.setUserID("1234");
+    public void tc_testUserNumberWithOnly_4Numbers ()throws Exception{     /* حقل رقم الموظف لايظهر نتائج لرقم اقل من 7 */
+        usersControl.setUserID(getJsonData("UserControl","UserIdLessThan7"));
         usersControl.singleSearch();
         Assert.assertTrue(usersControl.getNoResultMessage().isDisplayed());
         usersControl.clearAllFeild();
     }
     @Test (priority = 17)
-    public void tc_goToPageNotExitsAndPressEnter (){    /*كتابه رقم صفحه اكبر من الموجود و عند الضغط على Enter يعود الى الصفحه  15 */
-        usersControl.setSearchText("15");
+    public void tc_goToPageNotExitsAndPressEnter ()throws Exception{    /*كتابه رقم صفحه اكبر من الموجود و عند الضغط على Enter يعود الى الصفحه  15 */
+        usersControl.setSearchText(getJsonData("UserControl","ExitsPageNumber"));
         String location1 = usersControl.getPageNum();
-        usersControl.setSearchText("300");
+        usersControl.setSearchText(getJsonData("UserControl","NotExitsPageNumber"));
         String location2 = usersControl.getPageNum();
         Assert.assertEquals(location2,location1);
     }

@@ -20,7 +20,9 @@ public class ContentAside extends BaseComp {
     public ContentAside(WebDriver driver){
         super(driver);
         this.driver = driver;
-        exWait = new WebDriverWait(driver, Duration.ofSeconds(15));}
+        exWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+    }
 
     @FindBy(xpath = "(//i[@class='fa fa-angle-double-down'])[1]")
     private WebElement empAffairArrowWebElement;
@@ -58,6 +60,7 @@ public class ContentAside extends BaseComp {
 
 
     public UsersControl goToUsersControl() {
+
         exWait.until(ExpectedConditions.elementToBeClickable(controlPanel));
         controlPanel.click();
         userControl.click();
