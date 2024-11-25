@@ -23,16 +23,9 @@ import java.time.LocalTime;
 import java.time.chrono.HijrahDate;
 import java.time.temporal.ChronoUnit;
 
-public class TestInit {
+public class TestInit  {
     protected String userID = "0342169";
     protected String userPasswd = "24602460";
-    protected String itemName = "ادارة المواصلاات";
-    protected String itemEnglishName = "management Of traffic";
-    protected String type = "إدارة";
-    protected String higherItem = "وكالة الوكالة";
-    protected String day = "20";
-    protected String month = "ديسمبر";
-    protected String year = "2023";
     protected ContentAside contentAside;
     public EditAccountPage editAccountPage;
     public WebDriver driver;
@@ -70,6 +63,7 @@ public class TestInit {
         loginPage = new LoginPage(driver);
         contentAside = new ContentAside(driver);
         editAccountPage = new EditAccountPage(driver);
+//        Listeners listeners = new Listeners(driver);
     }
 
     public String getJsonData(String fileName,String field) throws FileNotFoundException {
@@ -95,10 +89,10 @@ public class TestInit {
     }
 
 
-    @AfterClass
-    public void afterClass(){
-        quitDriver();
-    }
+//    @AfterClass
+//    public void afterClass(){
+//        quitDriver();
+//    }
 
 
 }

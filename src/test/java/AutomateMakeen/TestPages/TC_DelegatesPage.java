@@ -2,7 +2,6 @@ package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.*;
-import AutomateMakeen.Utilities.Data;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -34,7 +33,7 @@ public class TC_DelegatesPage extends TestInit {
     @Test(priority = 1)
     public void correctNavigationToAddDelegatePage() throws FileNotFoundException {
 
-        usersControl.selectEmployeeByID(Data.validEmployeeIDToDelegate);
+        usersControl.selectEmployeeByID(getJsonData("DelegateData","validEmployeeIDToDelegate"));
         delegatePage = usersControl.delegationControl();
         addDelegatePage = delegatePage.clickAddButton();
         String pageTitle = addDelegatePage.getPageTitle();
@@ -79,8 +78,23 @@ public class TC_DelegatesPage extends TestInit {
      */
     @Test(priority = 3)
     public void getValidDelegationInformationSpecificEmployee() throws FileNotFoundException {
+        addDelegatePage = delegatePage.clickAddButton();
+        addDelegatePage.selectDepartmentNameFromDropDown(getJsonData("DelegateData","validDepartmentNameToGet"));
+        addDelegatePage.selectDelegatedEmployeeFromDropDown(getJsonData("DelegateData","validDelegatedEmployeeNameToGet"));
+        addDelegatePage.chooseNewPeriodRadioButton();
+        addDelegatePage.inputDelegateDateFrom(getJsonData("DelegateData","infoDelegateDateFromTo"));
+        addDelegatePage.inputDelegateDateTo(getJsonData("DelegateData","infoDelegateDateTo"));
 
-        List<String> delegationInformationList = delegatePage.getDelegationInformationByEmployeeID(Data.validEmployeeIDToGetDelegationInformation);
+        addDelegatePage.inputTimePeriodFrom(getJsonData("DelegateData","infoDelegateTimeFrom"));
+        addDelegatePage.inputTimePeriodTo(getJsonData("DelegateData","infoDelegateTimeTo"));
+        addDelegatePage.selectTimePeriodFromDropDown(getJsonData("DelegateData","infoDelegateTimePeriodFrom"));
+        addDelegatePage.selectTimePeriodToDropDown(getJsonData("DelegateData","infoDelegateTimePeriodTo"));
+
+        addDelegatePage.clickSaveButton();
+        addDelegatePage.acceptPopUp();
+        addDelegatePage.clickGoBackButton();
+        List<String> delegationInformationList =
+                delegatePage.getDelegationInformationByEmployeeID(getJsonData("DelegateData","validEmployeeIDToGetDelegationInformation"));
         softAssert.assertEquals(delegationInformationList.get(2),
                 getJsonData("DelegateData","correctEmployeeName"),
                 "Incorrect Employee Name");

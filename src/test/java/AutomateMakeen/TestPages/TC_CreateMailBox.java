@@ -9,6 +9,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TC_CreateMailBox extends TestInit {
+    // Test data for creating an external mailbox
     private String subject = "انشاء بريد خارجي";
     private String docTypeNum = "123";
     private String docTypeName = "اعادة المياة";
@@ -21,6 +22,8 @@ public class TC_CreateMailBox extends TestInit {
     private String activeDays;
     HomePage homePage;
     CreateExternalMailPage createExternalMailPage;
+
+    // Setup method to initialize preconditions for tests in this class
     @BeforeClass(description = "Preconditions for each test in the class :" +
             "السماحية للدخول الي النظام : الأمانة الإلكترونية" +
             "الصلاحية للدخول الى البرنامج الرئيسي البريد ." +
@@ -33,6 +36,7 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage = contentAside.goToCreateExternalMail();
     }
 
+    // Test method to create a valid external mail
     @Test
     public void tc_createValidExternalMail() throws Exception {
         createExternalMailPage.clearAllField();
@@ -43,10 +47,12 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
         createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient"));
         createExternalMailPage.pressOnDeactivateReferralNumber();
+        Assert.assertTrue(createExternalMailPage.addFile("file name","src\\test\\resources\\Screenshot.png"));
         createExternalMailPage.clickSendConfirm();
         Assert.assertTrue(createExternalMailPage.validateSuccessfulCreatingMail());
     }
 
+    // Test method to validate the subject field using invalid data
     static int Subjectflag = 0;
     @Test(dataProvider = "subjectDataProvider")
     public void tc_testSubjectFieldWithInsertInvalidData(String subData) throws Exception {
@@ -68,23 +74,24 @@ public class TC_CreateMailBox extends TestInit {
             createExternalMailPage.getTopOfThePage();
             createExternalMailPage.pressOnDeactivateReferralNumber();
             Assert.assertEquals(createExternalMailPage.getSubjectValidatorState(),"Asterisk");
-            Assert.assertEquals(createExternalMailPage.getTheValueOfSubjectOfTheMail().length(),
-                    140);
-        }else{
+            Assert.assertEquals(createExternalMailPage.getTheValueOfSubjectOfTheMail().length(), 140);
+        } else {
             createExternalMailPage.pressOnDeactivateReferralNumber();
             Assert.assertEquals(createExternalMailPage.getSubjectValidatorState(),"Red Circle");
             Assert.assertEquals(createExternalMailPage.getSubjectErrorMsg(),"برجاء إدخال الموضوع");
         }
     }
 
+    // Data provider for subject field tests
     @DataProvider(name = "subjectDataProvider")
-    public Object[] subjectDataProvider() throws Exception{
+    public Object[] subjectDataProvider() throws Exception {
         return getJsonArrayAsObjectArray("DataProviderCreateMailBox","subjects");
     }
 
+    // Test method to validate the document type field using invalid data
     static int docTypeFlag = 0;
     @Test(dataProvider = "controlDataProvider")
-    public void tc_testDocTypeFieldWithInsertInvalidData(String docTypeData)throws Exception {
+    public void tc_testDocTypeFieldWithInsertInvalidData(String docTypeData) throws Exception {
         createExternalMailPage.clearDocTypeNum();
         if(docTypeFlag == 0){
             createExternalMailPage.clearAllField();
@@ -102,17 +109,19 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getDocTypeValidatorState(),"Red Circle");
         if(docTypeData.equals("1111")){
-            Assert.assertEquals(createExternalMailPage.getDocTypeErrorMsg(),
-                    "نوع المستند غير صحيح أو غير موجود");
-        }else{
+            Assert.assertEquals(createExternalMailPage.getDocTypeErrorMsg(),"نوع المستند غير صحيح أو غير موجود");
+        } else {
             Assert.assertEquals(createExternalMailPage.getDocTypeErrorMsg(),"برجاء إدخال نوع المستند");
         }
     }
+
+    // Data provider for control data tests
     @DataProvider(name = "controlDataProvider")
-    public Object[] controlDataProvider()throws Exception {
+    public Object[] controlDataProvider() throws Exception {
         return getJsonArrayAsObjectArray("DataProviderCreateMailBox","docTypeData");
     }
 
+    // Test method to validate the document type field using copy-paste invalid data
     static int docTypeCPFlag = 0;
     @Test(dataProvider = "controlCPDataProvider")
     public void tc_testDocTypeFieldWithCopyPasteInvalidData(String docTypeData) {
@@ -132,22 +141,21 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.getTopOfThePage();
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getDocTypeValidatorState(),"Red Circle");
-        Assert.assertEquals(createExternalMailPage.getDocTypeErrorMsg(),
-                    "عفواً نوع المستند يقبل أرقام فقط");
+        Assert.assertEquals(createExternalMailPage.getDocTypeErrorMsg(),"عفواً نوع المستند يقبل أرقام فقط");
     }
+
+    // Data provider for control copy-paste data tests
     @DataProvider(name = "controlCPDataProvider")
     public Object[] controlCPDataProvider() {
-        return new Object[]{"أبجد", "ABCD", "(@*%~^)", "١٣٠", "",
-        };
+        return new Object[]{"أبجد", "ABCD", "(@*%~^)", "١٣٠", ""};
     }
-    /*********************************************************/
 
+    // Test method to validate the receiver field using invalid data
     static int receiverFlag = 0;
     @Test(dataProvider = "controlDataProvider")
     public void tc_testReceiverFieldWithInsertInvalidData(String receiverData) {
         createExternalMailPage.clearReceiverNum();
-        if(receiverFlag == 0){
-//            Assert.assertEquals(createExternalMailPage.getReceiverValidatorState(),"Asterisk");
+        if(receiverFlag == 0) {
             createExternalMailPage.clearAllField();
             createExternalMailPage.enteringTheSubjectOfMail(subject);
             createExternalMailPage.setDocTypeNum(docTypeNum);
@@ -163,13 +171,13 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getReceiverValidatorState(),"Red Circle");
         if(receiverData.equals("1111")){
-            Assert.assertEquals(createExternalMailPage.getReceiverErrorMsg(),
-                    "رقم المرسل إليه غير صحيح أو غير موجود");
-        }else{
+            Assert.assertEquals(createExternalMailPage.getReceiverErrorMsg(),"رقم المرسل إليه غير صحيح أو غير موجود");
+        } else {
             Assert.assertEquals(createExternalMailPage.getReceiverErrorMsg(),"برجاء إدخال المرسل إليه");
         }
     }
 
+    // Test method to validate the receiver field using copy-paste invalid data
     static int receiverCPFlag = 0;
     @Test(dataProvider = "controlCPDataProvider")
     public void tc_testReceiverFieldWithCopyPasteInvalidData(String receiverData) {
@@ -189,11 +197,10 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.getTopOfThePage();
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getReceiverValidatorState(),"Red Circle");
-        Assert.assertEquals(createExternalMailPage.getReceiverErrorMsg(),
-                "عفوا, المرسل اليه يقبل ارقام فقط");
+        Assert.assertEquals(createExternalMailPage.getReceiverErrorMsg(),"عفوا, المرسل اليه يقبل ارقام فقط");
     }
 
-    /********************************************/
+    // Test method to validate the sender field using invalid data
     static int senderFlag = 0;
     @Test(dataProvider = "controlDataProvider")
     public void tc_testSenderFieldWithInsertInvalidData(String senderData) {
@@ -214,14 +221,13 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Red Circle");
         if(senderData.equals("1111")){
-            Assert.assertEquals(createExternalMailPage.getSenderErrorMsg(),
-                    "رقم المرسل غير صحيح أو غير موجود");
-        }else{
+            Assert.assertEquals(createExternalMailPage.getSenderErrorMsg(),"رقم المرسل غير صحيح أو غير موجود");
+        } else {
             Assert.assertEquals(createExternalMailPage.getSenderErrorMsg(),"برجاء إدخال المرسل");
         }
     }
 
-
+    // Test method to validate the sender field using copy-paste invalid data
     static int senderCPFlag = 0;
     @Test(dataProvider = "receiverCPDataProvider")
     public void tc_testSenderFieldWithCopyPasteInvalidData(String senderData) {
@@ -241,16 +247,16 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.getTopOfThePage();
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getSenderValidatorState(),"Red Circle");
-        Assert.assertEquals(createExternalMailPage.getSenderErrorMsg(),
-                "عفوا, المرسل يقبل ارقام فقط");
-    }
-    @DataProvider(name = "receiverCPDataProvider")
-    public Object[] receiverCPDataProvider() {
-        return new Object[]{"أبجد", "ABCD", "(@*%~^)", "١٣٠", "",
-        };
+        Assert.assertEquals(createExternalMailPage.getSenderErrorMsg(),"عفوا, المرسل يقبل ارقام فقط");
     }
 
-    /****************************************************/
+    // Data provider for receiver copy-paste data tests
+    @DataProvider(name = "receiverCPDataProvider")
+    public Object[] receiverCPDataProvider() {
+        return new Object[]{"أبجد", "ABCD", "(@*%~^)", "١٣٠", ""};
+    }
+
+    // Test method to validate the treatment classification field using invalid data
     static int classFlag = 0;
     @Test(dataProvider = "controlDataProvider")
     public void tc_testTreatClassFieldWithInsertInvalidData(String classData) {
@@ -271,14 +277,13 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getTreatClassificationValidatorState(),"Red Circle");
         if(classData.equals("1111")){
-            Assert.assertEquals(createExternalMailPage.getTreatClassificationErrorMsg(),
-                    "نوع التصنيف غير صحيح أو غير موجود");
-        }else{
+            Assert.assertEquals(createExternalMailPage.getTreatClassificationErrorMsg(),"نوع التصنيف غير صحيح أو غير موجود");
+        } else {
             Assert.assertEquals(createExternalMailPage.getTreatClassificationErrorMsg(),"برجاء إدخال تصنيف المعامله");
         }
     }
 
-
+    // Test method to validate the treatment classification field using copy-paste invalid data
     static int classCPFlag = 0;
     @Test(dataProvider = "receiverCPDataProvider")
     public void tc_testTreatClassFieldWithCopyPasteInvalidData(String classData) {
@@ -298,11 +303,10 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.getTopOfThePage();
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getTreatClassificationValidatorState(),"Red Circle");
-        Assert.assertEquals(createExternalMailPage.getTreatClassificationErrorMsg(),
-                "عفواً نوع التصنيف يقبل أرقام فقط");
+        Assert.assertEquals(createExternalMailPage.getTreatClassificationErrorMsg(),"عفواً نوع التصنيف يقبل أرقام فقط");
     }
 
-    /*******************************************************************/
+    // Test method to validate the recipient field using invalid data
     @Test
     public void tc_testRecipientFieldWithInsertInvalidData() {
         createExternalMailPage.clearAllField();
@@ -316,37 +320,6 @@ public class TC_CreateMailBox extends TestInit {
         createExternalMailPage.getTopOfThePage();
         createExternalMailPage.pressOnDeactivateReferralNumber();
         Assert.assertEquals(createExternalMailPage.getRecipientValidatorState(),"Red Circle");
-        Assert.assertEquals(createExternalMailPage.getRecipientErrorMsg(),
-                    "برجاء إدخال جهة الإحالة");
-
+        Assert.assertEquals(createExternalMailPage.getRecipientErrorMsg(),"برجاء إدخال جهة الإحالة");
     }
 }
-
-//@Test
-//public void tc_createValidExternalMail()  {
-//    createExternalMailPage.enteringTheSubjectOfMail(subject);
-//    createExternalMailPage.setDocTypeUsingControl(docTypeName);
-//    createExternalMailPage.setReceiverUsingControl(receiverName);
-//    createExternalMailPage.setSenderUsingControl(senderName);
-//    createExternalMailPage.setTreatClassificationUsingControl("تصنيف رئيسي",treatClassification);
-//    createExternalMailPage.insertRecipient(recipient);
-//    createExternalMailPage.pressOnDeactivateReferralNumber();
-//    createExternalMailPage.clickSendConfirmBtn();
-//    Assert.assertTrue(createExternalMailPage.validateSuccessfulCreatingMail());
-//        ExportedMails exportedMails = contentAside.goToExportedMail();
-//        exportedMails.getRecentlyAddedMail(subject);
-//        List<String> mailData = exportedMails.getMailData();
-//        Assert.assertEquals(mailData.get(0),subject);
-//        Assert.assertEquals(mailData.get(1),recipient);
-//        Assert.assertEquals(mailData.get(2),senderName);
-//        Assert.assertEquals(mailData.get(3),docTypeName);
-//        loginPage = homePage.signOut();
-//        homePage = loginPage.loginUserWithoutRemMe("1561561", "112233");
-//        ImportedMails importedMails = contentAside.goToImportedMail();
-//        importedMails.getRecentlyAddedMail(subject);
-//        mailData =importedMails.getMailData();
-//        Assert.assertEquals(mailData.get(0),subject);
-//        Assert.assertEquals(mailData.get(1),"محمد أحمد أحمد علي");
-//        Assert.assertEquals(mailData.get(2),senderName);
-//        Assert.assertEquals(mailData.get(3),docTypeName);
-//}

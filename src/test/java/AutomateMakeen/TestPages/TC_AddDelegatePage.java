@@ -2,11 +2,8 @@ package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.*;
-import AutomateMakeen.Utilities.Data;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import java.io.FileNotFoundException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

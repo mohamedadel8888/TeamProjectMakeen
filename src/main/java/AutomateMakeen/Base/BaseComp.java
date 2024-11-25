@@ -73,7 +73,4 @@ public class BaseComp {
         return new LoginPage(driver);
     }
 
-
-
-
 }
