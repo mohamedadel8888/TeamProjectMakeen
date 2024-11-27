@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 
 public class Helper {
     public static void captureScreenshot (WebDriver driver, String screenshotName) throws IOException {
-        Path dest = Paths.get("C:\\Users\\abdelrahman.hamouda\\IdeaProjects\\TeamProjectMakeen\\screenshots", screenshotName + ".png");
+        Path dest = Paths.get("C:\\Users\\mohamed.galal\\IdeaProjects\\TeamProjectMakeen\\screenshots", screenshotName + ".png");
         Files.createDirectories(dest.getParent());
         FileOutputStream out = new FileOutputStream(dest.toString());
         out.write(((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES));
