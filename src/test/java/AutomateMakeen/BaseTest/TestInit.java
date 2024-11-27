@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.io.FileHandler;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.asserts.SoftAssert;
@@ -82,6 +83,20 @@ public class TestInit  {
             dataArray[i] = jsonArray.get(i).getAsString();
         }
         return dataArray;
+    }
+
+    @AfterMethod
+
+    public void ScreenshotOnFail(ITestResult result) throws IOException {
+
+        if (result.getStatus() == ITestResult.FAILURE) {
+
+            System.out.println("Failed");
+            System.out.println("Taking Schreenshot....");
+            Helper.captureScreenshot(driver, result.getName());
+
+
+        }
     }
 
     public void quitDriver(){

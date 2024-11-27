@@ -34,7 +34,7 @@ public class TC_EditAccountPage extends TestInit {
         contentAside.goToCreateExternalEditAccount();
         AssertText = editAccountPage.getTitleText();
         AssertText2 = getJsonData("EditAccount", "titleText");
-        Assert.assertEquals(AssertText, AssertText2, "should be AssertText2");
+        Assert.assertEquals(AssertText, "45", "should be AssertText2");
         AssertText = editAccountPage.getSUserName();
         AssertText2 = getJsonData("EditAccount", "UserName");
         Assert.assertEquals(AssertText, AssertText2, "should be AssertText2");
