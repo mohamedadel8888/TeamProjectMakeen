@@ -3,7 +3,6 @@ package AutomateMakeen.BaseTest;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.io.FileHandler;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -34,7 +33,7 @@ public class Listeners implements ITestListener {
             // Create a timestamped screenshot name
             String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            File destination = new File("./screenshots/" + screenshotName + "_" + timestamp + ".png");
+            File destination = new File("AutomateMakeen/BaseTest/screenshots/" + screenshotName + "_" + timestamp + ".png");
             FileHandler.copy(screenshot, destination);
             System.out.println("Screenshot saved at: " + destination.getAbsolutePath());
         } catch (IOException e) {
