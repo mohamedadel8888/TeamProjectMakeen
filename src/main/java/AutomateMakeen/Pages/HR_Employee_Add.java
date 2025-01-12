@@ -82,7 +82,10 @@ public class HR_Employee_Add extends BaseComp {
         driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
         driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
         driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
-
+    }
+    private By treatmentJobBy = By.id("drp_gov_emp_mandate_job_ddlSelectButtonTarget");
+    public String getTreatJob(){
+        return driver.findElement(treatmentJobBy).getText();
     }
 
     private By attachmentContainerBy = By.id("attachDiv_file_name_0");

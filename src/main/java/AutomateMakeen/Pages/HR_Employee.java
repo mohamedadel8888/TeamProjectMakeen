@@ -2,6 +2,7 @@ package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -64,12 +65,54 @@ public class HR_Employee extends BaseComp {
             return false;
         }
     }
+
+    private By tabJobInfoBy = By.id("tb_ctrldiv_Tab_Hrf_1");
+    private By treatmentJobBy = By.id("txt_srch_mandate_job_name");
+    public void searchByTreatmentJob(String treatmentJob){
+        driver.findElement(tabJobInfoBy).click();
+        driver.findElement(treatmentJobBy).sendKeys(treatmentJob);
+    }
     private By empIdBy = By.id("txt_srch_Nation_num");
     public void searchByEmpId(String empId) {
         driver.findElement(empIdBy).sendKeys(empId);
     }
     public boolean validateSearchByEmpId(String empNum){
         return driver.findElement(By.xpath("//table[@id='tbl_employees']/tbody/tr/td[2]/div")).isDisplayed();
+    }
+
+    public String getTreatmentManagement(String empNum){
+        return driver.findElement(By.xpath("//table[@id='tbl_employees']/tbody/tr/td[2]/div[text()='"+empNum+"']/../../td[7]/div")).getText();
+    }
+
+    private By ddlTreatmentManagementBy = By.id("drp_srch_emp_dep_ddlSelectButtonTarget");
+    private By searchBarTreatmentManagementBy = By.id("drp_srch_emp_dep_txtSearch");
+
+    public void searchByTreatmentManagement(String treatmentManagement){
+        driver.findElement(tabJobInfoBy).click();
+        driver.findElement(ddlTreatmentManagementBy).click();
+        driver.findElement(searchBarTreatmentManagementBy).sendKeys(treatmentManagement);
+        try{
+            driver.findElement(By.xpath("//ul[@id='drp_srch_emp_dep_collapsibleDiv']/li/div/label[text()='"+treatmentManagement+"']")).click();
+        } catch (Exception e) {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].scrollBy(0,30);", ddlTreatmentManagementBy);
+            driver.findElement(By.xpath("//ul[@id='drp_srch_emp_dep_collapsibleDiv']/li/div/label[text()='"+treatmentManagement+"']")).click();
+        }
+
+    }
+
+    private By gridEmptyBy = By.id("div_employees_Empty");
+    public boolean validateSearchEmpty(){
+        try{
+            return driver.findElement(gridEmptyBy).isDisplayed();
+        }catch(Exception e){
+            return !(driver.findElement(By.xpath("//table[@id='tbl_employees']/tbody/tr/td[2]/div")).isDisplayed());
+
+        }
+    }
+
+    public void selectSearchByEmpId(){
+         driver.findElement(By.xpath("//table[@id='tbl_employees']/tbody/tr/td[1]/input")).click();
     }
 
     private By empMobileNumBy = By.id("txt_srch_Mob_num");
@@ -95,4 +138,18 @@ public class HR_Employee extends BaseComp {
         driver.findElement(editPageBy).click();
         return new HR_Employee_Edit(driver);
     }
+
+    private By viewPageBy = By.id("cph_main_btn_view");
+    public HR_Employee_View goToViewPage(){
+        driver.findElement(viewPageBy).click();
+        return new HR_Employee_View(driver);
+    }
+
+    private By deletePageBy = By.id("cph_main_btn_disable");
+    private By confirmDeleteBy = By.cssSelector("input[value='موافق']");
+    public void deleteEmp(){
+        driver.findElement(deletePageBy).click();
+        driver.findElement(confirmDeleteBy).click();
+    }
+
 }

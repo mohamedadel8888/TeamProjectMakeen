@@ -32,6 +32,13 @@ public class HR_Employee_Edit extends BaseComp {
         driver.findElement(lNameBy).sendKeys(lName);
     }
 
+    public void clearEmpName(){
+        driver.findElement(fNameBy).clear();
+        driver.findElement(sNameBy).clear();
+        driver.findElement(tNameBy).clear();
+        driver.findElement(lNameBy).clear();
+    }
+
     private By fEngNameBy = By.id("txt_gov_emp_fname_eng");
     private By sEngNameBy = By.id("txt_gov_emp_sname_eng");
     private By tEngNameBy = By.id("txt_gov_emp_tname_eng");
