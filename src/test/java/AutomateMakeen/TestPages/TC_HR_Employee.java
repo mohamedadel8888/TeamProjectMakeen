@@ -41,6 +41,25 @@ public class TC_HR_Employee extends TestInit {
         Assert.assertTrue(hrEmployee.validateSearchByName("مروان خليل شاشة الموظفين"));
         Assert.assertTrue(hrEmployee.validateSearchByEmpNum(empEmpLocal));
     }
+
+    @Test
+    public void TC_searchByEmpNameAdvanced() {
+        hrEmployee.searchByName("مروان",1);
+        hrEmployee.clickSearchBtn();
+        Assert.assertTrue(hrEmployee.validateSearchResults("مروان",1));
+        hrEmployee.clearEmpName();
+        hrEmployee.searchByName("خليل",2);
+        hrEmployee.clickSearchBtn();
+        Assert.assertTrue(hrEmployee.validateSearchResults("خليل",2));
+        hrEmployee.clearEmpName();
+        hrEmployee.searchByName("محمود",3);
+        hrEmployee.clickSearchBtn();
+        Assert.assertTrue(hrEmployee.validateSearchResults("محمود",3));
+        hrEmployee.clearEmpName();
+        hrEmployee.searchByName("السيد",4);
+        hrEmployee.clickSearchBtn();
+        Assert.assertTrue(hrEmployee.validateSearchResults("السيد",4));
+    }
     @Test(description = "test case that test search functionality by employee name")
     public void TC_searchByEmpNum(){
         hrEmployee.searchByEmpNum(empEmpLocal);

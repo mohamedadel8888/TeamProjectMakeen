@@ -4,9 +4,11 @@ import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class HR_Employee extends BaseComp {
     private WebDriver driver;
@@ -24,22 +26,61 @@ public class HR_Employee extends BaseComp {
     private By lNameFieldBy = By.id("txt_srch_lname");
 
     public void searchByName(String name , int number){
-        switch (number){
+        if(!name.isEmpty()) {
+            switch (number){
+                case 1:
+                    driver.findElement(fNameFieldBy).sendKeys(name);
+                    break;
+                case 2:
+                    driver.findElement(sNameFieldBy).sendKeys(name);
+                    break;
+                case 3:
+                    driver.findElement(tNameFieldBy).sendKeys(name);
+                    break;
+                case 4:
+                    driver.findElement(lNameFieldBy).sendKeys(name);
+                    break;
+                default:
+                    System.out.println("Invalid search number");
+            }
+        }
+    }
+    public void clearEmpName(){
+        driver.findElement(fNameFieldBy).clear();
+        driver.findElement(sNameFieldBy).clear();
+        driver.findElement(tNameFieldBy).clear();
+        driver.findElement(lNameFieldBy).clear();
+    }
+    private By empNameColBy = By.xpath("//tr/td[3]/div");
+
+    public boolean validateSearchResults(String name,int split){
+        boolean flag;
+        switch(split){
             case 1:
-                driver.findElement(fNameFieldBy).sendKeys(name);
+                List<WebElement> empName = driver.findElements(empNameColBy);
+                flag = empName.stream().map(s-> s.getText().split(" ",2)[0])
+                        .allMatch(s->s.equals(name));
                 break;
             case 2:
-                driver.findElement(sNameFieldBy).sendKeys(name);
+                List<WebElement> empName2 = driver.findElements(empNameColBy);
+                flag = empName2.stream().map(s-> s.getText().split(" ",3)[1])
+                        .allMatch(s->s.equals(name));
                 break;
             case 3:
-                driver.findElement(tNameFieldBy).sendKeys(name);
+                List<WebElement> empName3 = driver.findElements(empNameColBy);
+                flag = empName3.stream().map(s-> s.getText().split(" ",4)[2])
+                        .allMatch(s->s.equals(name));
                 break;
             case 4:
-                driver.findElement(lNameFieldBy).sendKeys(name);
+                List<WebElement> empName4 = driver.findElements(empNameColBy);
+                flag = empName4.stream().map(s-> s.getText().split(" ",5)[3])
+                        .allMatch(s->s.equals(name));
                 break;
             default:
                 System.out.println("Invalid search number");
+                return false;
         }
+        return flag;
     }
     private By searchBtnBy = By.id("btn_Search");
     public void clickSearchBtn(){
@@ -151,5 +192,7 @@ public class HR_Employee extends BaseComp {
         driver.findElement(deletePageBy).click();
         driver.findElement(confirmDeleteBy).click();
     }
+
+
 
 }
