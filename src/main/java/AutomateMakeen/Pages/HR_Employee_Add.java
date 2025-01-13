@@ -73,12 +73,12 @@ public class HR_Employee_Add extends BaseComp {
     private By empPhoneAlterBy = By.id("txt_TransferNo");
     private By hireDateBy = By.id("txt_gov_emp_hire_date");
 
-    public void empJobDetails(String empPhoneLocal , String empPhoneGov , String empPhoneAlter){
+    public void empJobDetails(String empPhoneLocal , String empPhoneGov /*, String empPhoneAlter*/){
         driver.findElement(empTreatJobDDlBy).click();
         driver.findElement(empTreatJobFirstSelectionBy).click();
         driver.findElement(empPhoneInLocalBy).sendKeys(empPhoneLocal);
         driver.findElement(empPhoneInGovBy).sendKeys(empPhoneGov);
-        driver.findElement(empPhoneAlterBy).sendKeys(empPhoneAlter);
+        //driver.findElement(empPhoneAlterBy).sendKeys(empPhoneAlter);
         driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
         driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
         driver.findElement(hireDateBy).sendKeys(Keys.SPACE);

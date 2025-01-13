@@ -7,13 +7,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.asserts.SoftAssert;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.time.LocalTime;
 import java.time.chrono.HijrahDate;
 import java.time.temporal.ChronoUnit;
@@ -24,7 +22,7 @@ public class TestInit  {
     protected ContentAside contentAside;
     public WebDriver driver;
     public static LoginPage loginPage;
-    public static HomePage homePage;
+    public static qCMS_HomePage qCMSHomePage;
 
     //HijriDates
     protected HijrahDate dateHijriMinus = HijrahDate.now().minus(1, ChronoUnit.DAYS);

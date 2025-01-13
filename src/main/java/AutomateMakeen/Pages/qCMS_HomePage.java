@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class HomePage extends BaseComp {
+public class qCMS_HomePage extends BaseComp {
     protected WebDriver driver;
     private WebDriverWait exWait;
 
@@ -23,7 +23,7 @@ public class HomePage extends BaseComp {
     public void goToHomePage(){
         homePageIconWebElement.click();
     }
-    public HomePage(WebDriver driver){
+    public qCMS_HomePage(WebDriver driver){
         super(driver);
         this.driver = driver;
         exWait = new WebDriverWait(driver , Duration.ofSeconds(10));

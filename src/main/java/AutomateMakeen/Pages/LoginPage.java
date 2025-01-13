@@ -57,20 +57,20 @@ public class LoginPage extends BaseComp {
     public void goToLoginPage(){
         driver.get("https://em.alqemam.com/qCMS_Final_v"+makeenVersion);
     }
-    public HomePage loginUserWithoutRemMe(String id , String password)
+    public qCMS_HomePage loginUserWithoutRemMe(String id , String password)
     {
         idWebElement.sendKeys(id);
         passwordWebElement.sendKeys(password);
         loginBtnWebElement.click();
-        return new HomePage(driver);
+        return new qCMS_HomePage(driver);
     }
-    public HomePage loginUserWithRemMe(String id , String password)
+    public qCMS_HomePage loginUserWithRemMe(String id , String password)
     {
         idWebElement.sendKeys(id);
         passwordWebElement.sendKeys(password);
         remeberMeWebElement.click();
         loginBtnWebElement.click();
-        return new HomePage(driver);
+        return new qCMS_HomePage(driver);
     }
     public String getErrorMessage(){
         exWait.until(ExpectedConditions.visibilityOf(errorMsgWebElement));

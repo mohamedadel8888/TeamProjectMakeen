@@ -1,7 +1,7 @@
 package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
-import AutomateMakeen.Pages.HomePage;
+import AutomateMakeen.Pages.qCMS_HomePage;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -23,8 +23,8 @@ public class TC_LoginPage extends TestInit {
     public void tc_loginWithValidUser(){
         loginPage.clearAllFeild();
         System.out.println("التأكد من وظيفة تسجيل الدخول بحساب جديد بإستخدام رقم تعريفي صحيح و رقم سري صحيح");
-        HomePage homePage = loginPage.loginUserWithoutRemMe(userID ,userPasswd);
-        Assert.assertTrue(homePage.getHomeUrl().contains("MainPage.aspx"));
+        qCMS_HomePage qCMSHomePage = loginPage.loginUserWithoutRemMe(userID ,userPasswd);
+        Assert.assertTrue(qCMSHomePage.getHomeUrl().contains("MainPage.aspx"));
     }
     //Test login user with invalid user id and validate error message
     @Test(dataProvider = "invalidIdData")
@@ -75,8 +75,8 @@ public class TC_LoginPage extends TestInit {
     @Test
     public void atc_loginWithRememberMe(){
         loginPage.clearAllFeild();
-        HomePage homePage = loginPage.loginUserWithRemMe(userID,userPasswd);
-        loginPage = homePage.signOut();
+        qCMS_HomePage qCMSHomePage = loginPage.loginUserWithRemMe(userID,userPasswd);
+        loginPage = qCMSHomePage.signOut();
         Assert.assertEquals(loginPage.getUserIdContent(),userID);
         Assert.assertEquals(loginPage.getUserPasswdContent(),userPasswd);
     }

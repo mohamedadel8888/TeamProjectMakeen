@@ -10,10 +10,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class HR_Employee extends BaseComp {
+public class HR_Employee_grid extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
-    public HR_Employee(WebDriver driver) {
+    public HR_Employee_grid(WebDriver driver) {
         super(driver);
         this.driver = driver;
         //specific wait for every page

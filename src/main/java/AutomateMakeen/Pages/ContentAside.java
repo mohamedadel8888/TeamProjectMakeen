@@ -2,10 +2,7 @@ package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -26,11 +23,11 @@ public class ContentAside extends BaseComp {
     private By notificationBy = By.id("div_extGeha_notification");
     private By hrTreeBy = By.id("prog_prs");
     private By employeeTreeBy = By.id("s_m_67");
-    public HR_Employee goToEmployeePage(){
+    public HR_Employee_grid goToEmployeePage(){
         exWait.until(ExpectedConditions.invisibilityOf(driver.findElement(notificationBy)));
         exWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(hrTreeBy)));
         driver.findElement(hrTreeBy).click();
         driver.findElement(employeeTreeBy).click();
-        return new HR_Employee(driver);
+        return new HR_Employee_grid(driver);
     }
 }

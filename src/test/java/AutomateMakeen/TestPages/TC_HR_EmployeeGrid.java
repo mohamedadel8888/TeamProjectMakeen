@@ -1,7 +1,7 @@
 package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
-import AutomateMakeen.Pages.HR_Employee;
+import AutomateMakeen.Pages.HR_Employee_grid;
 import AutomateMakeen.Pages.HR_Employee_Add;
 import AutomateMakeen.Pages.HR_Employee_Edit;
 import AutomateMakeen.Pages.HR_Employee_View;
@@ -10,8 +10,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class TC_HR_Employee extends TestInit {
-    private HR_Employee hrEmployee;
+public class TC_HR_EmployeeGrid extends TestInit {
+    private HR_Employee_grid hrEmployee;
     private HR_Employee_Add hrEmployeeAdd;
     private HR_Employee_Edit hrEmployeeEdit;
     private HR_Employee_View hrEmployeeView;
@@ -43,18 +43,21 @@ public class TC_HR_Employee extends TestInit {
     }
 
     @Test
-    public void TC_searchByEmpNameAdvanced() {
+    public void TC_searchByEmpNameAdvanced() throws InterruptedException {
         hrEmployee.searchByName("مروان",1);
         hrEmployee.clickSearchBtn();
         Assert.assertTrue(hrEmployee.validateSearchResults("مروان",1));
+        Thread.sleep(2000);
         hrEmployee.clearEmpName();
         hrEmployee.searchByName("خليل",2);
         hrEmployee.clickSearchBtn();
         Assert.assertTrue(hrEmployee.validateSearchResults("خليل",2));
+        Thread.sleep(2000);
         hrEmployee.clearEmpName();
         hrEmployee.searchByName("محمود",3);
         hrEmployee.clickSearchBtn();
         Assert.assertTrue(hrEmployee.validateSearchResults("محمود",3));
+        Thread.sleep(2000);
         hrEmployee.clearEmpName();
         hrEmployee.searchByName("السيد",4);
         hrEmployee.clickSearchBtn();
@@ -107,7 +110,7 @@ public class TC_HR_Employee extends TestInit {
         // become true and it will add 1 to the id
         if(empId.charAt(0) == '0'){empId = (char) ('1' + faker.number().numberBetween(0, 9)) + empId.substring(1);}
         hrEmployeeAdd.empPersonalDetails(empId,empMobile,empEmail,"male");
-        hrEmployeeAdd.empJobDetails(empEmpLocal,empEmpTa7walaGov,"445545");
+        hrEmployeeAdd.empJobDetails(empEmpLocal,empEmpTa7walaGov/*,"445545"*/);
         treatJob = hrEmployeeAdd.getTreatJob();
         Assert.assertTrue(hrEmployeeAdd.addFile("file1","resourse/qr.pdf"));
         hrEmployeeAdd.clickSaveBtn();
