@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -13,11 +14,14 @@ import java.util.List;
 public class HR_Employee_grid extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
+    private JavascriptExecutor js ;
     public HR_Employee_grid(WebDriver driver) {
         super(driver);
         this.driver = driver;
         //specific wait for every page
         exWait = new WebDriverWait(driver , Duration.ofSeconds(10));
+        js = (JavascriptExecutor) driver;
+
     }
 
     private By fNameFieldBy = By.id("txt_srch_fname");
@@ -135,7 +139,6 @@ public class HR_Employee_grid extends BaseComp {
         try{
             driver.findElement(By.xpath("//ul[@id='drp_srch_emp_dep_collapsibleDiv']/li/div/label[text()='"+treatmentManagement+"']")).click();
         } catch (Exception e) {
-            JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("arguments[0].scrollBy(0,30);", ddlTreatmentManagementBy);
             driver.findElement(By.xpath("//ul[@id='drp_srch_emp_dep_collapsibleDiv']/li/div/label[text()='"+treatmentManagement+"']")).click();
         }
@@ -169,20 +172,23 @@ public class HR_Employee_grid extends BaseComp {
         }
     }
     private By addPageBy = By.id("cph_main_btn_add");
-    public HR_Employee_Add goToAddPage(){
+    public HR_Employee_Add goToAddPage() throws InterruptedException {
         driver.findElement(addPageBy).click();
+//        exWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-icon")));
         return new HR_Employee_Add(driver);
     }
 
     private By editPageBy = By.id("cph_main_btn_edit");
-    public HR_Employee_Edit goToEditPage(){
+    public HR_Employee_Edit goToEditPage() throws InterruptedException {
         driver.findElement(editPageBy).click();
+//        exWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-icon")));
         return new HR_Employee_Edit(driver);
     }
 
     private By viewPageBy = By.id("cph_main_btn_view");
-    public HR_Employee_View goToViewPage(){
+    public HR_Employee_View goToViewPage() throws InterruptedException {
         driver.findElement(viewPageBy).click();
+//        exWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading-icon")));
         return new HR_Employee_View(driver);
     }
 

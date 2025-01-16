@@ -4,10 +4,12 @@ import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.List;
 
 import static java.lang.Thread.sleep;
 
@@ -72,16 +74,23 @@ public class HR_Employee_Add extends BaseComp {
     private By empPhoneInGovBy = By.id("txt_gov_emp_ministry_num");
     private By empPhoneAlterBy = By.id("txt_TransferNo");
     private By hireDateBy = By.id("txt_gov_emp_hire_date");
-
-    public void empJobDetails(String empPhoneLocal , String empPhoneGov /*, String empPhoneAlter*/){
+    private By ddlTreatmentJobSearchBy = By.id("drp_gov_emp_mandate_job_txtSearch");
+    public void empJobDetails(String newTreatmentJob , String empPhoneLocal , String empPhoneGov , String hireYear , String hireMonth , String hireDay , String empPhoneAlter){
         driver.findElement(empTreatJobDDlBy).click();
+        driver.findElement(ddlTreatmentJobSearchBy).sendKeys(newTreatmentJob);
         driver.findElement(empTreatJobFirstSelectionBy).click();
         driver.findElement(empPhoneInLocalBy).sendKeys(empPhoneLocal);
         driver.findElement(empPhoneInGovBy).sendKeys(empPhoneGov);
-        //driver.findElement(empPhoneAlterBy).sendKeys(empPhoneAlter);
-        driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
-        driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
-        driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
+        insertDate(hireYear,hireMonth,hireDay);
+        try{
+            driver.findElement(empPhoneAlterBy).sendKeys(empPhoneAlter);
+        }catch(Exception e){
+            // Exception handling for case when phone alteration field is not present
+            System.out.println("Phone alteration field not found. Skipping this step.");
+        }
+//        driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
+//        driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
+//        driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
     }
     private By treatmentJobBy = By.id("drp_gov_emp_mandate_job_ddlSelectButtonTarget");
     public String getTreatJob(){
@@ -125,5 +134,28 @@ public class HR_Employee_Add extends BaseComp {
         driver.findElement(backBtnBy).click();
         driver.findElement(confirmSaveBtnBy).click();
 
+    }
+
+    private By calenderCreateDateBy = By.cssSelector(".fa.fa-calendar[onclick=\"CalenderObj.showCalender('txt_gov_emp_hire_date',true,prs_greg_date!=1?'Hij':'Georg')\"]");
+
+//    @FindBy(xpath = "//input[@class='btn']")
+//    List<WebElement> calenderDaySelectionWebElement;
+    private By calenderDaySelectionBy = By.cssSelector("input[class='btn']");
+
+    private By monthDDL = By.id("drp_Month");
+
+    Select calenderMonthSelect ;
+
+    private By calenderYearBy = By.id("tb_Year");
+    public void insertDate(String year,String month, String day){
+        driver.findElement(calenderCreateDateBy).click();
+        calenderMonthSelect = new Select(driver.findElement(monthDDL));
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(monthDDL)));
+        calenderMonthSelect.selectByVisibleText(month);
+        driver.findElement(calenderYearBy).clear();
+        driver.findElement(calenderYearBy).sendKeys(year);
+        List <WebElement> calenderDaySelectionWebElement = driver.findElements(calenderDaySelectionBy);
+        WebElement itemDay = calenderDaySelectionWebElement.stream().filter(s->s.getAttribute("value").contains(day)).findFirst().orElse(null);
+        itemDay.click();
     }
 }

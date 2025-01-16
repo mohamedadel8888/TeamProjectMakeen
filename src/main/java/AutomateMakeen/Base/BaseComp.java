@@ -22,6 +22,7 @@ public class BaseComp {
     {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
         PageFactory.initElements(driver,this);
         exWait = new WebDriverWait(driver,Duration.ofSeconds(10));
         this.driver = driver;

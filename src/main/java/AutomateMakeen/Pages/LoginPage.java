@@ -14,7 +14,7 @@ import java.time.Duration;
 public class LoginPage extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
-    private final String makeenVersion = "13.7.00.1";
+    private final String makeenVersion = "13.7.02";
 
 
 
@@ -55,7 +55,7 @@ public class LoginPage extends BaseComp {
         exWait = new WebDriverWait(driver , Duration.ofSeconds(10));
     }
     public void goToLoginPage(){
-        driver.get("https://em.alqemam.com/qCMS_Final_v"+makeenVersion);
+        driver.get("https://q-line-iis.alqemam.com/qCMS_Test_v"+makeenVersion);
     }
     public qCMS_HomePage loginUserWithoutRemMe(String id , String password)
     {

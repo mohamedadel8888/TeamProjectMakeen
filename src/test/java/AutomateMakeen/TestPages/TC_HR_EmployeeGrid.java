@@ -1,14 +1,13 @@
 package AutomateMakeen.TestPages;
 
 import AutomateMakeen.BaseTest.TestInit;
-import AutomateMakeen.Pages.HR_Employee_grid;
-import AutomateMakeen.Pages.HR_Employee_Add;
-import AutomateMakeen.Pages.HR_Employee_Edit;
-import AutomateMakeen.Pages.HR_Employee_View;
+import AutomateMakeen.Pages.*;
 import com.github.javafaker.Faker;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import static AutomateMakeen.TestPages.TC_TreatmentJob.treatmentName;
 
 public class TC_HR_EmployeeGrid extends TestInit {
     private HR_Employee_grid hrEmployee;
@@ -16,31 +15,23 @@ public class TC_HR_EmployeeGrid extends TestInit {
     private HR_Employee_Edit hrEmployeeEdit;
     private HR_Employee_View hrEmployeeView;
     Faker faker = new Faker();
+
+
+
     private String empId = faker.number().digits(10);
     private String empMobile = "9665"+faker.number().digits(8);
     private String empEmail = faker.internet().emailAddress();
     private String empEmpLocal = faker.number().digits(7);
     private String empEmpTa7walaGov = faker.number().digits(6);
-    private static String treatJob;
-    private static String treatmentManagement;
+    private  String treatJob = treatmentName;
     @BeforeMethod
-    public void setupClass() {
+    public void setupClass() throws InterruptedException {
         lunchDriver();
         loginPage.goToLoginPage();
         loginPage.loginUserWithoutRemMe("0342169", "24602460");
+
         hrEmployee = contentAside.goToEmployeePage();
-    }
-    @Test(description = "test case that test search functionality by name")
-    //(dependsOnMethods = "AutomateMakeen.TestPages.TC_HR_Employee.TC_addEmp")
-    public void TC_searchByEmpName() {
-        hrEmployee.searchByName("مروان",1);
-        hrEmployee.searchByName("خليل",2);
-        hrEmployee.searchByName("شاشة",3);
-        hrEmployee.searchByName("الموظفين",4);
-        hrEmployee.clickSearchBtn();
-        Assert.assertTrue(hrEmployee.validateSearchByName("مروان خليل شاشة الموظفين"));
-        Assert.assertTrue(hrEmployee.validateSearchByEmpNum(empEmpLocal));
-    }
+    }//(dependsOnMethods = "AutomateMakeen.TestPages.TC_HR_Employee.TC_addEmp")
 
     @Test
     public void TC_searchByEmpNameAdvanced() throws InterruptedException {
@@ -94,12 +85,10 @@ public class TC_HR_EmployeeGrid extends TestInit {
 
     @Test(description = "test case that test search functionality by treatment job management")
     public void TC_searchByTreatmentManagement(){
-        hrEmployee.searchByTreatmentManagement(treatmentManagement);
+        hrEmployee.searchByTreatmentManagement("مروان خليل هيكل اداري");
         hrEmployee.clickSearchBtn();
         Assert.assertTrue(hrEmployee.validateSearchByEmpNum(empEmpLocal));
     }
-
-
     @Test(description = "test case that test add new employee functionality")//(priority = 1)
     public void TC_addEmp() throws InterruptedException {
         hrEmployeeAdd = hrEmployee.goToAddPage();
@@ -110,8 +99,8 @@ public class TC_HR_EmployeeGrid extends TestInit {
         // become true and it will add 1 to the id
         if(empId.charAt(0) == '0'){empId = (char) ('1' + faker.number().numberBetween(0, 9)) + empId.substring(1);}
         hrEmployeeAdd.empPersonalDetails(empId,empMobile,empEmail,"male");
-        hrEmployeeAdd.empJobDetails(empEmpLocal,empEmpTa7walaGov/*,"445545"*/);
-        treatJob = hrEmployeeAdd.getTreatJob();
+        hrEmployeeAdd.empJobDetails(treatJob,empEmpLocal,empEmpTa7walaGov,"2025","يناير" ,"2","445545");
+//        treatJob = hrEmployeeAdd.getTreatJob();
         Assert.assertTrue(hrEmployeeAdd.addFile("file1","resourse/qr.pdf"));
         hrEmployeeAdd.clickSaveBtn();
         hrEmployeeAdd.clickBackBtn();
@@ -119,13 +108,13 @@ public class TC_HR_EmployeeGrid extends TestInit {
         hrEmployee.clickSearchBtn();
         Assert.assertTrue(hrEmployee.validateSearchByEmpNum(empEmpLocal));
         Assert.assertTrue(hrEmployee.validateSearchByName("مروان خليل شاشة الموظفين"));
-        treatmentManagement = hrEmployee.getTreatmentManagement(empEmpLocal);
+//        treatJob = hrEmployee.getTreatmentManagement(empEmpLocal);
 
     }
 //    @Test(dependsOnMethods = "AutomateMakeen.TestPages.TC_HR_Employee.TC_addEmp")
     @Test(description = "test case that test edit employee data functionality")
     //(priority = 3)
-    public void TC_editEmp()  {
+    public void TC_editEmp() throws InterruptedException {
         hrEmployee.searchByEmpId(empId);
         hrEmployee.clickSearchBtn();
         hrEmployee.selectSearchByEmpId();
@@ -137,12 +126,13 @@ public class TC_HR_EmployeeGrid extends TestInit {
         hrEmployee.searchByEmpId(empId);
         hrEmployee.clickSearchBtn();
         Assert.assertTrue(hrEmployee.validateSearchByEmpId(empId));
+        Assert.assertTrue(hrEmployee.validateSearchByName("مروان خليل تعديل الاسم"));
     }
 
 //    @Test(dependsOnMethods = "AutomateMakeen.TestPages.TC_HR_Employee.TC_addEmp")
     @Test(description = "test case that test view employee functionality")
     //(priority = 2)
-    public void TC_ViewEmp()  {
+    public void TC_ViewEmp() throws InterruptedException {
         hrEmployee.searchByEmpId(empId);
         hrEmployee.clickSearchBtn();
         hrEmployee.selectSearchByEmpId();

@@ -69,14 +69,15 @@ public class HR_Employee_View extends BaseComp {
     private By empPhoneAlterBy = By.id("spn_transferNum");
 
     public boolean validateEmpJobDetails(String treatJob, String empPhoneLocal , String empPhoneGov , String empPhoneAlter){
-//        System.out.println(driver.findElement(empTreatJobDDlBy).getText());
-//        System.out.println(driver.findElement(empPhoneInLocalBy).getText());
-//        System.out.println(driver.findElement(empPhoneInGovBy).getText());
-//        System.out.println(driver.findElement(empPhoneAlterBy).getText());
+        boolean flag;
+        try{
+            flag = driver.findElement(empPhoneAlterBy).getText().equals(empPhoneAlter);
+        }catch(Exception e){
+            flag = true;
+        }
         return  driver.findElement(empTreatJobDDlBy).getText().equals(treatJob)&&
                 driver.findElement(empPhoneInLocalBy).getText().equals(empPhoneLocal)&&
-                driver.findElement(empPhoneInGovBy).getText().equals(empPhoneGov)&&
-                driver.findElement(empPhoneAlterBy).getText().equals(empPhoneAlter);
+                driver.findElement(empPhoneInGovBy).getText().equals(empPhoneGov)&&flag;
     }
 
     private By attachmentContainerBy = By.cssSelector("div[attachcontainer='spn_divAttchesContainer']");

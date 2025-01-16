@@ -128,6 +128,5 @@ public class HR_Employee_Edit extends BaseComp {
     public void clickBackBtn(){
         driver.findElement(backBtnBy).click();
         driver.findElement(confirmSaveBtnBy).click();
-
     }
 }
