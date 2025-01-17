@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import static AutomateMakeen.TestPages.TC_TreatmentJob.treatmentName;
 
 public class TC_HR_EmployeeGrid extends TestInit {
-    private HR_Employee_grid hrEmployee;
+    private HR_Employee_Grid hrEmployee;
     private HR_Employee_Add hrEmployeeAdd;
     private HR_Employee_Edit hrEmployeeEdit;
     private HR_Employee_View hrEmployeeView;

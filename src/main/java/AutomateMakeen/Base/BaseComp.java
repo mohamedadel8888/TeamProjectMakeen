@@ -9,9 +9,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class BaseComp {
     private WebDriver driver;
@@ -22,7 +25,6 @@ public class BaseComp {
     {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
         PageFactory.initElements(driver,this);
         exWait = new WebDriverWait(driver,Duration.ofSeconds(10));
         this.driver = driver;
@@ -72,5 +74,7 @@ public class BaseComp {
         signOutBtn.click();
         return new LoginPage(driver);
     }
+
+
 
 }

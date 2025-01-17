@@ -5,23 +5,20 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
 
-public class HR_Employee_grid extends BaseComp {
+public class HR_Employee_Grid extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
     private JavascriptExecutor js ;
-    public HR_Employee_grid(WebDriver driver) {
+    public HR_Employee_Grid(WebDriver driver) {
         super(driver);
         this.driver = driver;
         //specific wait for every page
         exWait = new WebDriverWait(driver , Duration.ofSeconds(10));
-        js = (JavascriptExecutor) driver;
-
     }
 
     private By fNameFieldBy = By.id("txt_srch_fname");
