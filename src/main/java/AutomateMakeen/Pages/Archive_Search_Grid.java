@@ -144,13 +144,7 @@ public class Archive_Search_Grid extends BaseComp {
     private By incomeMailNumberBy = By.id("cph_main_txt_inbox_no");
     private By incomeMailDateBy = By.id("span_calender_inbox_date");
 
-    private By calenderDaySelectionBy = By.cssSelector("input[class='btn']");
 
-    private By monthDDL = By.id("drp_Month");
-
-    Select calenderMonthSelect ;
-
-    private By calenderYearBy = By.id("tb_Year");
 
     private By incomeMailDateInputBy = By.id("txt_inbox_date");
     public void searchByIncomeMail(String incomeMailNumber , String year , String month , String day) {
@@ -162,13 +156,17 @@ public class Archive_Search_Grid extends BaseComp {
             driver.findElement(incomeMailDateInputBy).clear();
             driver.findElement(incomeMailNumberBy).sendKeys(incomeMailNumber);
         }
-        return;
     }
     private By archiveSearchBtnBy = By.id("btn_search");
     public void clickSearch() {
         driver.findElement(archiveSearchBtnBy).click();
     }
 
+    private By monthDDL = By.id("drp_Month");
+
+    Select calenderMonthSelect ;
+
+    private By calenderYearBy = By.id("tb_Year");
     public void setDate(String year, String month, String day){
         calenderMonthSelect = new Select(driver.findElement(monthDDL));
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(monthDDL)));
@@ -177,6 +175,41 @@ public class Archive_Search_Grid extends BaseComp {
         driver.findElement(calenderYearBy).sendKeys(year);
         driver.findElement(By.cssSelector("input[value='"+day+"']")).click();
     }
+    private By subjectFieldBy = By.id("cph_main_txt_subject");
+    public void searchByTreatmentSubject(String treatmentSubject){
+        driver.findElement(subjectFieldBy).sendKeys( treatmentSubject);
+    }
+
+    private By attachmentCommentFieldBy = By.id("txt_att_comment");
+    public void searchByAttachmentComment(String attachmentComment){
+        driver.findElement(attachmentCommentFieldBy).sendKeys(attachmentComment);
+        //لسه جزء اتواع المرفقات
+    }
+
+    private By archiveMailNumberBy = By.id("cph_main_txt_archive_no");
+    private By archiveMailDateBy = By.id("span_calender_archive_date");
+
+
+
+    private By archiveMailDateInputBy = By.id("txt_archive_date");
+    public void searchByArchive(String incomeMailNumber , String year , String month , String day) {
+        if (incomeMailNumber.isEmpty() && !(year.isEmpty() && month.isEmpty() && day.isEmpty())) {
+            driver.findElement(archiveMailNumberBy).clear();
+            driver.findElement(archiveMailDateBy).click();
+            this.setDate(year, month, day);
+        } else if (!incomeMailNumber.isEmpty() && (year.isEmpty() && month.isEmpty() && day.isEmpty())) {
+            driver.findElement(archiveMailDateInputBy).clear();
+            driver.findElement(archiveMailNumberBy).sendKeys(incomeMailNumber);
+        }
+    }
+
+    public void openTreatmentDetails(String treatment){
+        driver.findElement(By.xpath("//table[@id='tbl_arc']/tbody/tr/td[1]/div[text()='"+treatment+"']")).click();
+    }
+    public String getTreatmentSpecificDetail(String detail) {
+        return driver.findElement(By.xpath("//div[@class='content-bx']/div/div/span[text()='"+detail+"']/following::span[1]")).getText();
+    }
+
 
 
 }
