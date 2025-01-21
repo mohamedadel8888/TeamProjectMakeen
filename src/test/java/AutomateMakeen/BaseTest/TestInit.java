@@ -1,28 +1,28 @@
 package AutomateMakeen.BaseTest;
 
+import AutomateMakeen.Base.ContentAside;
 import AutomateMakeen.Pages.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.asserts.SoftAssert;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.time.Duration;
 import java.time.LocalTime;
 import java.time.chrono.HijrahDate;
 import java.time.temporal.ChronoUnit;
 
 public class TestInit  {
-    protected String userID = "0342169";
+    protected String userID = "1561561";
     protected String userPasswd = "24602460";
+    protected String userName ;//= "مروان خليل موظف اول";
+    protected String userDept ;//= "ادارة عامة آيه";
+
     protected ContentAside contentAside;
     public WebDriver driver;
     public static LoginPage loginPage;

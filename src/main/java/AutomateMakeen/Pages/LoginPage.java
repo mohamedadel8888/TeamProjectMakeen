@@ -14,7 +14,7 @@ import java.time.Duration;
 public class LoginPage extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
-    private final String makeenVersion = "13.7.02";
+    private final String makeenVersion = "13.7.03";
 
 
 

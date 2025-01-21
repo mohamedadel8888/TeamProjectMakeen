@@ -1,6 +1,8 @@
 package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
+import AutomateMakeen.Base.ContentAside;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,5 +39,16 @@ public class qCMS_HomePage extends BaseComp {
     public LoginPage signOut(){
         signOutBtn.click();
         return new LoginPage(driver);
+    }
+
+    private By userNameBy = By.id("user_name");
+    public String getUserName(){
+        return driver.findElement(userNameBy).getText();
+    }
+
+    private By userDeptBy = By.id("user_dep");
+    public String getUserDept(){
+        hoverOnAction(driver.findElement(userNameBy));
+        return driver.findElement(userDeptBy).getText();
     }
 }

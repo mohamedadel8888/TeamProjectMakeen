@@ -92,33 +92,7 @@ public class HR_Employee_Add extends BaseComp {
 //        driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
 //        driver.findElement(hireDateBy).sendKeys(Keys.SPACE);
     }
-    private By treatmentJobBy = By.id("drp_gov_emp_mandate_job_ddlSelectButtonTarget");
-    public String getTreatJob(){
-        return driver.findElement(treatmentJobBy).getText();
-    }
 
-    private By attachmentContainerBy = By.id("attachDiv_file_name_0");
-    // Method to validate if the file was added successfully
-    public boolean validateFileAdded(){
-        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(attachmentContainerBy)));
-        return driver.findElement(attachmentContainerBy).isDisplayed();
-    }
-
-    private By addAttachmentBy = By.id("btn_add_file");
-    private By fileNameWebElementBy = By.id("attachDiv_txt_FileName");
-    private By filePathBy = By.id("attachDiv_btn_ChooseFile");
-    private By confirmAddBtnBy = By.cssSelector("li p");
-    public boolean addFile(String fileName, String path) throws InterruptedException {
-        driver.findElement(addAttachmentBy).click();
-        driver.findElement(fileNameWebElementBy).sendKeys(fileName);
-        File file = new File(path);
-        String absolutePath = file.getAbsolutePath();
-        driver.findElement(filePathBy).sendKeys(absolutePath);
-        driver.findElement(filePathBy).clear();
-        boolean flag = validateFileAdded();
-        driver.findElement(confirmAddBtnBy).click();
-        return flag;
-    }
 
     private By saveBtnBy = By.cssSelector("input[onclick='employees.empForm.govEmployee.saveData();']");
     private By confirmSaveBtnBy = By.cssSelector("input[value='موافق']");
