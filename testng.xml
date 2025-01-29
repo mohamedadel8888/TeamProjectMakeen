@@ -24,12 +24,3 @@
         </classes>
     </test>
 </suite>
-
-        <!--            <class name="AutomateMakeen.TestPages.TC_LoginPage">-->
-        <!--                <methods>-->
-        <!--                    <include name="tc_loginWithValidUser"/>-->
-        <!--                    <include name="tc_loginWithInvalidUser"/>-->
-        <!--                    <include name="tc_loginWithInvalidPassword"/>-->
-        <!--                    <include name="atc_loginWithRememberMe"/>-->
-        <!--                </methods>-->
-        <!--            </class>-->

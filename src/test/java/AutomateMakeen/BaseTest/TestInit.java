@@ -28,15 +28,6 @@ public class TestInit  {
     public static LoginPage loginPage;
     public static qCMS_HomePage qCMSHomePage;
 
-    //HijriDates
-    protected HijrahDate dateHijriMinus = HijrahDate.now().minus(1, ChronoUnit.DAYS);
-    protected HijrahDate dateHijri = HijrahDate.now();
-    protected HijrahDate dateHijriPlus10Days = dateHijri.plus(10, ChronoUnit.DAYS);
-
-    //Time
-    protected LocalTime currentTime = LocalTime.now();
-    protected LocalTime updatedTime = currentTime.plusMinutes(2);
-
 
     protected SoftAssert softAssert = new SoftAssert();
 
@@ -54,28 +45,8 @@ public class TestInit  {
         contentAside = new ContentAside(driver);
     }
 
-    public String getJsonData(String fileName,String field) throws FileNotFoundException {
-        FileReader reader = new FileReader(Test_Data_Path+fileName+".json");
-        JsonElement jsonElement = JsonParser.parseReader(reader);
-        return jsonElement.getAsJsonObject().get(field).getAsString();
-    }
-
-    public Object[] getJsonArrayAsObjectArray(String fileName, String field) throws FileNotFoundException {
-        FileReader reader = new FileReader(Test_Data_Path + fileName + ".json");
-        JsonElement jsonElement = JsonParser.parseReader(reader);
-        JsonObject jsonObject = jsonElement.getAsJsonObject();
-        JsonArray jsonArray = jsonObject.getAsJsonArray(field);
-        Object[] dataArray = new Object[jsonArray.size()];
-        for (int i = 0; i < jsonArray.size(); i++) {
-            dataArray[i] = jsonArray.get(i).getAsString();
-        }
-        return dataArray;
-    }
-
-    @AfterMethod
-    public void quitDriver() throws InterruptedException {
-
-        Thread.sleep(2000);
+    //@AfterMethod
+    public void quitDriver(){
         driver.quit();
     }
 

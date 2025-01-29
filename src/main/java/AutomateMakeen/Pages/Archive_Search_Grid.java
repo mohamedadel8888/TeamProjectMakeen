@@ -92,15 +92,25 @@ public class Archive_Search_Grid extends BaseComp {
 
 
     private By incomeMailDateInputBy = By.id("txt_inbox_date");
-    public void searchByIncomeMail(String incomeMailNumber , String year , String month , String day) {
-        if (incomeMailNumber.isEmpty() && !(year.isEmpty() && month.isEmpty() && day.isEmpty())) {
-            driver.findElement(incomeMailNumberBy).clear();
-            driver.findElement(incomeMailDateBy).click();
-            this.setDate(year, month, day);
-        } else if (!incomeMailNumber.isEmpty() && (year.isEmpty() && month.isEmpty() && day.isEmpty())) {
-            driver.findElement(incomeMailDateInputBy).clear();
-            driver.findElement(incomeMailNumberBy).sendKeys(incomeMailNumber);
+    public void searchByIncomeMail(String fieldName , String data) {
+        switch(fieldName) {
+            case "رقم الوارد": {
+                driver.findElement(incomeMailNumberBy).clear();
+                driver.findElement(incomeMailDateInputBy).clear();
+                driver.findElement(incomeMailNumberBy).sendKeys(data);
+                break;
+            }
+            case "تاريخ الوارد": {
+                driver.findElement(incomeMailNumberBy).clear();
+                driver.findElement(incomeMailDateBy).click();
+                setDateWithSplit(data);
+                break;
+            }
         }
+    }
+
+    public boolean etIncomeNumIsEmpty() {
+        return driver.findElement(incomeMailNumberBy).getAttribute("value").isEmpty();
     }
     private By archiveSearchBtnBy = By.id("btn_search");
     public void clickSearch() {
@@ -171,7 +181,13 @@ public class Archive_Search_Grid extends BaseComp {
     }
 
     public boolean checkIfTreatmentExists(String treatment) {
-        return driver.findElement(By.xpath("//table[@id='tbl_arc']/tbody/tr/td/div[contains(.,'"+treatment+"')]")).isDisplayed();
+        try {
+            return driver.findElement(By.xpath("//table[@id='tbl_arc']/tbody/tr/td/div[contains(.,'" + treatment + "')]")).isDisplayed();
+        }
+        catch(Exception e) {
+            return false;
+        }
+
     }
 
     private By senderPopupBy = By.cssSelector("input[onclick=\"pickPopUp.initialize('senders', 'txt_sender_id');\"]");
@@ -283,7 +299,7 @@ public class Archive_Search_Grid extends BaseComp {
                 setDateWithSplit(exportData);
                 break;
             }case "تاريخ الي": {
-                driver.findElement(etExportNumBy).clear();
+//                driver.findElement(etExportNumBy).clear();
                 driver.findElement(etEportDateFromBy).clear();
                 driver.findElement(exCalDateToBy).click();
                 setDateWithSplit(exportData);
@@ -304,7 +320,7 @@ public class Archive_Search_Grid extends BaseComp {
         String year = parts[0];
         calenderMonthSelect = new Select(driver.findElement(monthDDL));
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(monthDDL)));
-        calenderMonthSelect.selectByVisibleText(month);
+        calenderMonthSelect.selectByValue(month);
         driver.findElement(calenderYearBy).clear();
         driver.findElement(calenderYearBy).sendKeys(year);
         driver.findElement(By.cssSelector("input[value='"+day+"']")).click();
@@ -341,6 +357,97 @@ public class Archive_Search_Grid extends BaseComp {
                 }
             }
         }
+        private By decisonNumBy = By.id("txt_intrLetDesc");
+
+        public void searchByDecisionNum(String decisionNum){
+            driver.findElement(decisonNumBy).sendKeys(decisionNum);
+        }
+    private By GenDateFromBy = By.cssSelector("span[onclick=\"arcSearch.changCalenderCulture('gen_From_Date', true)\"]");
+    private By GenDateToBy = By.cssSelector("span[onclick=\"arcSearch.changCalenderCulture('gen_To_Date', true);\"]");
+    private By genCalDateFromBy = By.id("gen_From_Date");
+    private By genCalDateToBy = By.id("gen_To_Date");
+    private By genEtSubjectBy = By.id("gen_title");
+    private By genDocTypeBy = By.cssSelector("span[onclick=\"pickPopUp.initialize('doctypes', 'txt_gen_doctype_id');\"]");
+    private By docTypeFieldBy = By.id("txt_gen_doctype_id");
+    private By genSubClassBy = By.cssSelector("div[id='cph_main_div_sub_classification'] span[class='srch_btn']");
+    private By subClassFieldBy = By.id("txt_sub_class_id");
+    private By genTypeBy = By.id("sel_gen_type_ddlSelectButton");
+    private By genSubClassFieldBy = By.id("txt_sub_class_id");
+    private By genTextBy  = By.id("txt_gen_text");
+    private By genToPopupBy = By.cssSelector(".srch_btn[onclick='arcSearch.showGeneralizeGroupsPopup();']");
+    public void searchByGeneralization(String fieldName , String testData){
+            switch (fieldName){
+                case "تاريخ من":
+                    driver.findElement(genCalDateToBy).clear();
+                    driver.findElement(genEtSubjectBy).clear();
+                    driver.findElement(docTypeFieldBy).clear();
+                    driver.findElement(subClassFieldBy).clear();
+                    driver.findElement(GenDateFromBy).click();
+                    setDateWithSplit(testData);
+                    break;
+                case "تاريخ الي":
+                    driver.findElement(genCalDateFromBy).clear();
+                    driver.findElement(genEtSubjectBy).clear();
+                    driver.findElement(docTypeFieldBy).clear();
+                    driver.findElement(subClassFieldBy).clear();
+                    driver.findElement(GenDateToBy).click();
+                    setDateWithSplit(testData);
+                    break;
+                case "الموضوع":
+                    driver.findElement(genCalDateFromBy).clear();
+                    driver.findElement(genCalDateToBy).clear();
+                    driver.findElement(docTypeFieldBy).clear();
+                    driver.findElement(subClassFieldBy).clear();
+                    driver.findElement(genEtSubjectBy).sendKeys(testData);
+                    break;
+                case "نوع المستند":
+                    driver.findElement(genCalDateFromBy).clear();
+                    driver.findElement(genCalDateToBy).clear();
+                    driver.findElement(genEtSubjectBy).clear();
+                    driver.findElement(subClassFieldBy).clear();
+                    control(driver.findElement(genDocTypeBy),testData);
+                    break;
+                case "التصنيف الفرعي":
+                    driver.findElement(genCalDateFromBy).clear();
+                    driver.findElement(genCalDateToBy).clear();
+                    driver.findElement(docTypeFieldBy).clear();
+                    driver.findElement(genEtSubjectBy).clear();
+                    control(driver.findElement(genSubClassBy),testData);
+                    break;
+                case "نوع التعميم":
+                    driver.findElement(genCalDateFromBy).clear();
+                    driver.findElement(genCalDateToBy).clear();
+                    driver.findElement(docTypeFieldBy).clear();
+                    driver.findElement(genEtSubjectBy).clear();
+                    driver.findElement(genSubClassFieldBy).clear();
+                    driver.findElement(genTypeBy).click();
+                    driver.findElement(By.xpath("//ul[@id='sel_gen_type_collapsibleDiv']/li/div/label[contains(.,'"+testData+"')]/..")).click();
+                    driver.findElement(genTypeBy).click();
+                    break;
+                case "نص التعميم":
+                    driver.findElement(genCalDateFromBy).clear();
+                    driver.findElement(genCalDateToBy).clear();
+                    driver.findElement(docTypeFieldBy).clear();
+                    driver.findElement(genEtSubjectBy).clear();
+                    driver.findElement(genSubClassFieldBy).clear();
+                    driver.findElement(genTypeBy).click();
+                    driver.findElement(By.cssSelector("ul[id='sel_gen_type_collapsibleDiv'] li[value='-1']")).click();
+                    driver.findElement(genTextBy).sendKeys(testData);
+                    break;
+                case "تعميم ل":
+                    driver.findElement(genCalDateFromBy).clear();
+                    driver.findElement(genCalDateToBy).clear();
+                    driver.findElement(docTypeFieldBy).clear();
+                    driver.findElement(genEtSubjectBy).clear();
+                    driver.findElement(genSubClassFieldBy).clear();
+                    driver.findElement(genTextBy).clear();
+                    control(driver.findElement(genToPopupBy),testData);
+
+            }
+        }
+        private By showAllBtnBy = By.id("btn_search_all");
+    public void clickShowAllBtn() { driver.findElement(showAllBtnBy).click(); }
+
 }
 
 

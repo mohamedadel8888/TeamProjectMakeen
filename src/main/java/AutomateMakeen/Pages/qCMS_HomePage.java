@@ -17,14 +17,8 @@ public class qCMS_HomePage extends BaseComp {
 
     @FindBy(id = "btn_session_time_out")
     WebElement signOutBtn;
-    @FindBy(css = "li[onclick='goto_mainpage();'] a")
-    WebElement homePageIconWebElement;
 
 
-
-    public void goToHomePage(){
-        homePageIconWebElement.click();
-    }
     public qCMS_HomePage(WebDriver driver){
         super(driver);
         this.driver = driver;

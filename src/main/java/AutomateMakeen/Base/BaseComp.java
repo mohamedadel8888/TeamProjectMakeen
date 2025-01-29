@@ -1,12 +1,15 @@
 package AutomateMakeen.Base;
 
-import AutomateMakeen.Pages.LoginPage;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.chrono.HijrahDate;
 
 import java.io.File;
 import java.time.Duration;
@@ -15,7 +18,8 @@ public class BaseComp {
     private WebDriver driver;
     private  WebDriverWait exWait;
     private Actions actions ;
-    public ContentAside contentAside ; ;
+    public ContentAside contentAside ;
+    ;
     public BaseComp(WebDriver driver)
     {
         driver.manage().window().maximize();
@@ -60,9 +64,23 @@ public class BaseComp {
 
     public void control(WebElement openControlWebElement,String searchTxt){
         openControlWebElement.click();
-        docTypeControlTxtSearchWebElement.sendKeys(searchTxt);
-        docTypeControlSearchBtnWebElement.click();
-        driver.findElement(By.xpath("//div[@title='"+searchTxt+"']/../../td/input")).click();
+        try{
+            docTypeControlTxtSearchWebElement.sendKeys(searchTxt);
+            docTypeControlSearchBtnWebElement.click();
+            driver.findElement(By.xpath("//div[@title='"+searchTxt+"']/../../td/input")).click();
+        }catch(Exception e){
+            try{
+                driver.findElement(By.cssSelector("div[class='content_bx'] input[type='text']")).sendKeys(searchTxt);
+                driver.findElement(By.cssSelector("div[class='btn-bx row-bx'] input[value='بحث']")).click();
+                driver.findElement(By.xpath("//div[@full_title='"+searchTxt+"']/../../td/input")).click();
+            }catch (Exception s){
+                driver.findElement(By.xpath("//div[text()='"+searchTxt+"']/../../td/input")).click();
+                driver.findElement(By.cssSelector("li[id='saveBtn_div_master_controls'] p")).click();
+
+            }
+
+
+        }
     }
 
     public LoginPage signOut(){
@@ -115,5 +133,19 @@ public class BaseComp {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollTop = 0;", driver.findElement(By.id("drp_dept_collapsibleDiv")));
         driver.findElement(defaultChooseInList).click();
+    }
+    @FindBy(css = "li[onclick='goto_mainpage();'] a")
+    WebElement homePageIconWebElement;
+    public void goToHomePage(){
+        homePageIconWebElement.click();
+    }
+
+    public static String getHijriDate() {
+        // Get the current date in the Hijri calendar
+        HijrahDate hijriDate = HijrahDate.from(LocalDate.now());
+
+        // Format the Hijri date in "yyyy/m/d" format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
+        return formatter.format(hijriDate);
     }
 }

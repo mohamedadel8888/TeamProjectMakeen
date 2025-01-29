@@ -23,10 +23,10 @@ public class TC_Mail_inbox_Grid extends TestInit {
 //    private String recipient = "مروان خليل";
 //    private String activeDays;
      static String etArchiveNum ;
-
+     static String etDecisionNumber;
      static String etIncomeNumber ;
 
-    Mail_Inbox_Grid importedMails;
+    Mail_Inbox_Grid mailInboxGrid;
     @BeforeClass(description = "Preconditions for each test in the class :" +
             "السماحية للدخول الي النظام : الأمانة الإلكترونية" +
             "الصلاحية للدخول الى البرنامج الرئيسي البريد ." +
@@ -35,16 +35,31 @@ public class TC_Mail_inbox_Grid extends TestInit {
     public void setupClass() {
         lunchDriver();
         loginPage.goToLoginPage();
-        loginPage.loginUserWithoutRemMe(userID, userPasswd);
-        importedMails = contentAside.goToImportedMail();
+        qCMSHomePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
+        userName = qCMSHomePage.getUserName();
+        userDept = qCMSHomePage.getUserDept();
+        mailInboxGrid = contentAside.goToImportedMail();
     }
 
     @Test(dependsOnMethods = "AutomateMakeen.TestPages.TC_Mail_CreateExMail.tc_createValidExternalMail")
-    public void tc_validateCreatedMailAddedToImportedMail() throws Exception{
-        importedMails.getRecentlyAddedMail(etSubject);
-        List<String> mailData = importedMails.getMailData();
+    public void tc_validateCreatedMailAddedToImportedMail() throws InterruptedException {
+        mailInboxGrid.getRecentlyAddedMail(etSubject);
+        List<String> mailData = mailInboxGrid.getMailData();
+        Assert.assertNotNull(mailData.get(4));
+        Assert.assertNotNull(mailData.get(5));
         etIncomeNumber = mailData.get(4);
         etArchiveNum = mailData.get(5);
         System.out.println("Import : "+etIncomeNumber+ " Archive : "+etArchiveNum);
+        mailInboxGrid.goToEtTabs("مذكرة داخلية");
+        mailInboxGrid.createDecisionForInternalMemo(userDept,"27280","يبليل");
+        etDecisionNumber = mailInboxGrid.getDecisionNum();
+    }
+    @Test
+    public void TC_createDecisionForInternalMemo() throws InterruptedException {
+        mailInboxGrid.getRecentlyAddedMail(
+                "تستستتت");
+        mailInboxGrid.goToEtTabs("مذكرة داخلية");
+        mailInboxGrid.createDecisionForInternalMemo(userDept,"27280","يبليل");
+        etDecisionNumber = mailInboxGrid.getDecisionNum();
     }
 }

@@ -4,8 +4,7 @@ import AutomateMakeen.Pages.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -65,7 +64,10 @@ public class ContentAside extends BaseComp {
     private By archiveTableBy = By.id("tbl_arc");
     public Archive_Search_Grid goToArchiveSearch() throws InterruptedException {
         WebDriverWait archivePageOpeningWait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        exWait.until(ExpectedConditions.invisibilityOf(driver.findElement(notificationBy)));
+        try{
+            exWait.until(ExpectedConditions.invisibilityOf(driver.findElement(notificationBy)));
+        }catch(Exception e){
+        }
         try{
             exWait.until(ExpectedConditions.elementToBeClickable(archiveTreeBy));
             driver.findElement(archiveTreeBy).click();
@@ -86,7 +88,10 @@ public class ContentAside extends BaseComp {
     private By inboxTreeBy = By.id ("s_m_68");
     private By inboxTableBy = By.id("tbl_inbox");
     public Mail_Inbox_Grid goToImportedMail(){
-        exWait.until(ExpectedConditions.invisibilityOf(driver.findElement(notificationBy)));
+        try{
+            exWait.until(ExpectedConditions.invisibilityOf(driver.findElement(notificationBy)));
+        }catch(Exception e){
+        }
         try{
             exWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(mailTreeBy)));
             driver.findElement(mailTreeBy).click();

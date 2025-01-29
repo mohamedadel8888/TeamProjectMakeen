@@ -1,26 +1,22 @@
 package AutomateMakeen.Pages;
+import AutomateMakeen.Pages.*;
 
 import AutomateMakeen.Base.BaseComp;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import AutomateMakeen.Pages.qCMS_HomePage;
 
 import java.time.Duration;
-
 
 public class LoginPage extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
-    private final String makeenVersion = "13.7.03";
+    private final String makeenVersion = "13.7.07";
 
 
-
-    private By accountsPageTitle = By.cssSelector(".PopUpHead span");
-
-    private static int flag = 0;
     @FindBy(id = "txtUserName")
     WebElement idWebElement;
 
@@ -36,11 +32,6 @@ public class LoginPage extends BaseComp {
     @FindBy(id = "btnLogin")
     WebElement loginBtnWebElement;
 
-    @FindBy(id = "btnActivationCode")
-    WebElement activationCodeWebElement;
-
-    @FindBy(css = "a[href='http://www.alqemam.com/alqemam/']")
-    WebElement alqemamLogoWebElement;
 
     @FindBy(id = "error_div")
     WebElement errorMsgWebElement;

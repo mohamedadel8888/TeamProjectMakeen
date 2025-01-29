@@ -322,13 +322,8 @@ public class Mail_CreateExMail extends BaseComp {
     // Method to insert a recipient by name
     public void insertRecipient(String recipientName) throws InterruptedException {
         recipientWebElement.click();
-        Thread.sleep(1000);
         recipientSearchWebElement.sendKeys(recipientName);
-        Thread.sleep(1000);
-
         WebElement recipient = recipientListWebElement.stream().filter(s -> s.getText().contains(recipientName)).findFirst().orElse(null);
-        Thread.sleep(1000);
-
         if (recipient != null) recipient.click();
     }
 
@@ -579,9 +574,20 @@ public class Mail_CreateExMail extends BaseComp {
         clearTreatClassificationNum();
     }
 
-    /*
-     * Method to add a file attachment
-     */
+    private By generaliziationCkBoxBy = By.id("cph_main_chk_sendT3mem");
+    private By sliderBarInOutGehaBy = By.cssSelector(".slider.round");
+    private By forAllBy = By.id("cph_main_rdGenPurbAll");
+
+    public void setTheEtGeneralized(){
+        driver.findElement(generaliziationCkBoxBy).click();
+        driver.findElement(sliderBarInOutGehaBy).click();
+        try{
+            driver.findElement(forAllBy).click();
+        }catch (Exception e){
+            driver.findElement(sliderBarInOutGehaBy).click();
+            driver.findElement(forAllBy).click();
+        }
+    }
 }
 
 
