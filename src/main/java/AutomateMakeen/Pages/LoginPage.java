@@ -1,20 +1,19 @@
 package AutomateMakeen.Pages;
-import AutomateMakeen.Pages.*;
 
 import AutomateMakeen.Base.BaseComp;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import AutomateMakeen.Pages.qCMS_HomePage;
 
 import java.time.Duration;
 
 public class LoginPage extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
-    private final String makeenVersion = "13.7.07";
+    private final String makeenVersion = "13.7.09";
 
 
     @FindBy(id = "txtUserName")

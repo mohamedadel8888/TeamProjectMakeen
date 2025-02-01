@@ -6,13 +6,10 @@ import AutomateMakeen.Pages.Archive_Search_Grid;
 import AutomateMakeen.Pages.Mail_CreateExMail;
 import AutomateMakeen.Pages.Mail_Inbox_Grid;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static AutomateMakeen.Base.BaseComp.getHijriDate;
@@ -20,16 +17,13 @@ import static AutomateMakeen.TestPages.TC_Mail_CreateExMail.*;
 import static AutomateMakeen.TestPages.TC_Mail_inbox_Grid.*;
 
 public class TC_Archive_Search_Grid extends TestInit {
-    private Archive_Search_Grid archiveSearchGrid ;
+    private Archive_Search_Grid archiveSearchGrid;
     private Mail_CreateExMail mail_CreateExMail;
-    Mail_Inbox_Grid mailInboxGrid;
+    private Mail_Inbox_Grid mailInboxGrid;
 
-    private final String testEtSubject = "Chief Paradigm Planner";
-    private final String testEtRedirect = "National Creative Specialist";
-    private final String testetIncomeNumber = "271461";
-    private final String testArchiveNumber = "204216";
-    private String testDay;
-    private final String testLetterNumber = "15135654";
+    private final String testEtRedirect = "Human Markets Associate";
+
+
     @BeforeClass
     public void setup() throws InterruptedException {
         lunchDriver();
@@ -42,6 +36,7 @@ public class TC_Archive_Search_Grid extends TestInit {
         mail_CreateExMail.setEtNum(letterNum);
         mail_CreateExMail.setEtDate(letterDate);
         mail_CreateExMail.setReferralMailNumber(referalEtNum);
+//        mail_CreateExMail.pressOnDeactivateReferralNumber();
         mail_CreateExMail.setDocTypeUsingControl(etDocType);
         mail_CreateExMail.setReceiverUsingControl(etReceivcer);
         mail_CreateExMail.setSenderUsingControl(etSender);
@@ -67,134 +62,133 @@ public class TC_Archive_Search_Grid extends TestInit {
         mail_CreateExMail.goToHomePage();
         archiveSearchGrid = contentAside.goToArchiveSearch();
     }
+
     @Test/*(dependsOnMethods = "AutomateMakeen.TestPages.TC_Mail_inbox_Grid.tc_validateCreatedMailAddedToImportedMail")*/
     public void TC_searchByEtIncomeNum() {
         //click on toggle date
         archiveSearchGrid.searchTabNavigator("الوارد");
-        archiveSearchGrid.searchByIncomeMail( "رقم الوارد" , etIncomeNumber );
+        archiveSearchGrid.searchByIncomeMail("رقم الوارد", etIncomeNumber);
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"رقم الوارد");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "رقم الوارد");
         archiveSearchGrid.searchByIncomeMail("تاريخ الوارد", getHijriDate());
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"تاريخ الوارد");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "تاريخ الوارد");
         softAssert.assertAll();
     }
 
 
-
     @Test
-    public void TC_searchByEtSubject(){
+    public void TC_searchByEtSubject() {
         archiveSearchGrid.searchTabNavigator("الموضوع");
         archiveSearchGrid.searchByEtSubject(etSubject);
-//        archiveSearchGrid.searchByEtSubject(testEtSubject);
         archiveSearchGrid.clickSearch();
-//        Assert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(testEtSubject));
         Assert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject));
     }
 
     @Test
-    public void TC_searchByEtAttachment(){
+    public void TC_searchByEtAttachment() {
         archiveSearchGrid.searchTabNavigator("المرفقات");
-        archiveSearchGrid.searchByAttachment("file1","");
+        archiveSearchGrid.searchByAttachment("file1", "");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"اسم المرفق");
-//        Assert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(""));
-        archiveSearchGrid.searchByAttachment("","أخري");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "اسم المرفق");
+        archiveSearchGrid.searchByAttachment("", "أخري");
         archiveSearchGrid.clickSearch();
-//        Assert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(testEtSubject));
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"نوع المرفق");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "نوع المرفق");
         softAssert.assertAll();
     }
+
     @Test
-    public void TC_searchByEtArchive(){
+    public void TC_searchByEtArchive() {
         archiveSearchGrid.searchTabNavigator("الارشيف");
-        //archiveSearchGrid.searchByArchive(etArchiveNum,"1446", "رجب","19");
-        archiveSearchGrid.searchByArchive("" ,"1446", "رجب",testDay);
+
+        archiveSearchGrid.searchByArchive("رقم الارشيف", etArchiveNum);
         archiveSearchGrid.clickSearch();
-//        Assert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(testEtSubject));
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"تايخ الانشاء");
-        archiveSearchGrid.searchByArchive(etArchiveNum ,"", "","");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "رقم الارشيف");
+
+        archiveSearchGrid.searchByArchive("تاريخ الانشاء", getHijriDate());
         archiveSearchGrid.clickSearch();
-//        Assert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(testEtSubject));
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"رقم الارشيف");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "تايخ الانشاء");
+
         softAssert.assertAll();
     }
+
     @Test
-    public void TC_searchByEtSender(){
+    public void TC_searchByEtSender() {
         archiveSearchGrid.searchTabNavigator("المرسل");
         //archiveSearchGrid.searchByEtSender(etSenderName);
         archiveSearchGrid.searchByEtSenderName(etSender);
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"المرسل");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "المرسل");
         archiveSearchGrid.clearEtSenderName();
-        //archiveSearchGrid.searchByLetterNumber(letterNum);
         archiveSearchGrid.searchByLetterNumber(letterNum);
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"رقم الخطاب");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "رقم الخطاب");
         archiveSearchGrid.clearLetterNumber();
-        archiveSearchGrid.setLetterDateFrom("1446", "رجب",testDay);
+        archiveSearchGrid.setLetterDateFrom(getHijriDate());
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"التايخ من");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "التايخ من");
         archiveSearchGrid.clearLetterDateFrom();
-        archiveSearchGrid.setLetterDateTo("1446", "رجب",testDay);
+        archiveSearchGrid.setLetterDateTo(getHijriDate());
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"التاريخ الي");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "التاريخ الي");
         archiveSearchGrid.clearLetterDateTo();
         archiveSearchGrid.setEtSource(etSender); // خانة المرسل في انشاء بريد خارجي
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"المصدر");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "المصدر");
         //Assert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject));
         softAssert.assertAll();
     }
 
     @Test
-    public void TC_searchByEtReceiver(){
+    public void TC_searchByEtReceiver() {
         archiveSearchGrid.searchTabNavigator("المستقبل");
         archiveSearchGrid.searchByEtReceiver("مروان خليل");
         archiveSearchGrid.clickSearch();
         softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject));
         softAssert.assertAll();
     }
+
     @Test
-    public void TC_searchByEtLinkCivil(){
+    public void TC_searchByEtLinkCivil() {
         archiveSearchGrid.searchTabNavigator("المواطن");
-        archiveSearchGrid.searchByLinkEt("الرقم التعريفي",civilId);
+        archiveSearchGrid.searchByLinkEt("الرقم التعريفي", civilId);
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"الرقم التعريفي");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "الرقم التعريفي");
         archiveSearchGrid.searchByLinkEt("الاسم الاول", "مروان");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"الاسمالاول");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "الاسمالاول");
         archiveSearchGrid.searchByLinkEt("الاسم الثاني", "خليل");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"الاسم الثاني");
-        archiveSearchGrid.searchByLinkEt("الاسم الثالث","ربط");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "الاسم الثاني");
+        archiveSearchGrid.searchByLinkEt("الاسم الثالث", "ربط");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"الاسم الثالث");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "الاسم الثالث");
         archiveSearchGrid.searchByLinkEt("الاسم الاخير", "مواطن");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"الاسم الاخير");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "الاسم الاخير");
         softAssert.assertAll();
     }
+
     @Test
-    public void TC_searchByExportData(){
+    public void TC_searchByExportData() {
         archiveSearchGrid.searchTabNavigator("الصادر");
-        archiveSearchGrid.searchByEtExport("رقم الصادر",etIncomeNumber);
+        archiveSearchGrid.searchByEtExport("رقم الصادر", etIncomeNumber);
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"رقم الصادر");
-        archiveSearchGrid.searchByEtExport("تاريخ من","1446/رجب/"+"20");
-        archiveSearchGrid.searchByEtExport("تاريخ الي","1446/رجب/"+"20");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "رقم الصادر");
+        archiveSearchGrid.searchByEtExport("تاريخ من", "1446/7/29");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("hghhh"),"التاريخ");  //تم تصدير المعاملة يوم 20
-//        archiveSearchGrid.searchByEtExport("تاريخ الي","1446/رجب/"+testDay);
-//        archiveSearchGrid.clickSearch();
-//        Assert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(testEtSubject));
-        archiveSearchGrid.searchByEtExport("الموجه اليه","مروان خليل موجه اليه");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(testEtRedirect), "التاريخ من");  //تم تصدير المعاملة يوم 20
+        archiveSearchGrid.searchByEtExport("تاريخ الي", "1446/7/29");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(testEtRedirect),"الموجه اليه");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(testEtRedirect), "التاريخ الي");  //تم تصدير المعاملة يوم 20
+        archiveSearchGrid.searchByEtExport("الموجه اليه", "مروان خليل");
+        archiveSearchGrid.clickSearch();
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(testEtRedirect), "الموجه اليه");
         softAssert.assertAll();
     }
+
     @Test
-    public void TC_searchByDocType(){
+    public void TC_searchByDocType() {
         archiveSearchGrid.searchTabNavigator("نوع المستند");
         archiveSearchGrid.searchByDocType(etDocType);
         archiveSearchGrid.clickSearch();
@@ -202,94 +196,107 @@ public class TC_Archive_Search_Grid extends TestInit {
     }
 
     @Test
-    public void TC_searchByEtCreator(){
+    public void TC_searchByEtCreator() {
         archiveSearchGrid.searchTabNavigator("منشئ المعاملة");
-        archiveSearchGrid.selectEtCreator("الادارة",userDept,"");
+        archiveSearchGrid.selectEtCreator("الادارة", userDept, "");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"خانة منشئ المعاملة");
-        archiveSearchGrid.selectEtCreator("الموظف",userDept,userName);
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "خانة منشئ المعاملة");
+        archiveSearchGrid.selectEtCreator("الموظف", userDept, userName);
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject),"خانة الموظف");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "خانة الموظف");
         softAssert.assertAll();
     }
+
     @Test
-    public void TC_searchByDecisionNum(){
+    public void TC_searchByDecisionNum() {
         archiveSearchGrid.searchTabNavigator("المذكرة الداخلية");
         archiveSearchGrid.searchByDecisionNum(etDecisionNumber);
         archiveSearchGrid.clickSearch();
         Assert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject));
     }
+
     @Test
-    public void TC_etDetails(){
+    public void TC_etDetails() {
         archiveSearchGrid.searchTabNavigator("الوارد");
-        archiveSearchGrid.searchByIncomeMail( "رقم الوارد" , etIncomeNumber );
+        archiveSearchGrid.searchByIncomeMail("رقم الوارد", etIncomeNumber);
         archiveSearchGrid.clickSearch();
         archiveSearchGrid.openTreatmentDetails(etSubject);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("مصدر المعاملة"),etSender);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("الموضوع"),etSubject+" وفقا للخطاب المشار إليه "+referalEtNum);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("المستقبل"),etReceivcer);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("منشئ الموضوع"),userName);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("نوع المستند"),etDocType);
-        softAssert.assertNotNull(archiveSearchGrid.getTreatmentSpecificDetail("رقم الخزنة"));
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("رقم الوارد"),etIncomeNumber);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تاريخ الوارد"),"1446/07/"+testDay);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("رقم الارشيف"),etArchiveNum);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تاريخ الإنشاء"),"1446/07/"+testDay);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تصنيف المعاملة"),etMainClass+" - "+etSubClass);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("مدة الإنجاز"),etPeriod+ " يوم");
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("رقم الخطاب"),letterNum);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تاريخ الخطاب"),"1446/07/"+testDay);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("الخطاب المشار إليه"),referalEtNum);
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("المعاملة لدى"),userDept+" - "+userName);
-//        softAssert.assertNotNull(archiveSearchGrid.getTreatmentSpecificDetail("الرد علي المعاملة"));
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("مصدر المعاملة"), etSender, "مصدر المعاملة");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("الموضوع"), etSubject + " وفقا للخطاب المشار إليه " + referalEtNum, "الموضوع");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("المستقبل"), etReceivcer, "المستقبل");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("منشئ الموضوع"), userName, "منشئ الموضوع");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("نوع المستند"), etDocType, "نوع المستند");
+        softAssert.assertNotNull(archiveSearchGrid.getTreatmentSpecificDetail("رقم الخزنة"), "رقم الخزنة");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("رقم الوارد"), etIncomeNumber, "رقم الوارد");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تاريخ الوارد"), getHijriDate(), "تاريخ الوارد");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("رقم الارشيف"), etArchiveNum, "رقم الارشيف");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تاريخ الإنشاء"), getHijriDate(), "تاريخ الانشاء");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تصنيف المعاملة"), etSubClass, "تصنيف المعاملة");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("مدة الإنجاز"), etPeriod + " يوم", "مدة الانجاز");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("رقم الخطاب"), letterNum, "رقم الخطاب");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تاريخ الخطاب"), getHijriDate(), "تاريخ الخطاب");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("الخطاب المشار إليه"), referalEtNum, "الخطاب المشار اليه");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("المعاملة لدى"), userDept + " - " + userName, "المعاملة لدي");
+        archiveSearchGrid.closeEtDetails();
         softAssert.assertAll();
     }
 
     @Test
-    public void TC_etGeneralization(){
+    public void TC_etGeneralization() {
         archiveSearchGrid.searchTabNavigator("التعميم");
-        archiveSearchGrid.searchByGeneralization("تاريخ من","1446/رجب/23");
+        archiveSearchGrid.searchByGeneralization("تاريخ من", "1446/7/29");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Chief Infrastructure Technician"),"خانة تاريخ من");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Senior Functionality Architect"), "خانة تاريخ من");
 
-        archiveSearchGrid.searchByGeneralization("تاريخ الي","1446/رجب/23");
+        archiveSearchGrid.searchByGeneralization("تاريخ الي", "1446/7/29");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Chief Infrastructure Technician"),"خانة تاريخ الي");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Senior Functionality Architect"), "خانة تاريخ الي");
 
-        archiveSearchGrid.searchByGeneralization("الموضوع","Chief Infrastructure Technician");
+        archiveSearchGrid.searchByGeneralization("الموضوع", "Senior Functionality Architect");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Chief Infrastructure Technician"),"خانة الموضوع");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Senior Functionality Architect"), "خانة الموضوع");
 
-        archiveSearchGrid.searchByGeneralization("نوع المستند","اعادة المياة");
+        archiveSearchGrid.searchByGeneralization("نوع المستند", "اعادة المياة");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Chief Infrastructure Technician"),"خانة نوع المستند");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Senior Functionality Architect"), "خانة نوع المستند");
 
-        archiveSearchGrid.searchByGeneralization("التصنيف الفرعي","مولد");
+        archiveSearchGrid.searchByGeneralization("التصنيف الفرعي", "مولد");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Chief Infrastructure Technician"),"خانة التصنيف الفرعي");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Senior Functionality Architect"), "خانة التصنيف الفرعي");
 
-        archiveSearchGrid.searchByGeneralization("نوع التعميم","الجميع");
+        archiveSearchGrid.searchByGeneralization("نوع التعميم", "الجميع");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Chief Infrastructure Technician"),"خانة نوع التعميم");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Senior Functionality Architect"), "خانة نوع التعميم");
 
-        archiveSearchGrid.searchByGeneralization("نص التعميم","مروان تعميم");
+        archiveSearchGrid.searchByGeneralization("نص التعميم", "با");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Chief Infrastructure Technician"),"خانة نص التعميم");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Senior Functionality Architect"), "خانة نص التعميم");
 
-        archiveSearchGrid.searchByGeneralization("تعميم ل","الامين");
+        archiveSearchGrid.searchByGeneralization("تعميم ل", "الامين");
         archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Chief Infrastructure Technician"),"خانة تعميم ل");
+        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Senior Functionality Architect"), "خانة تعميم ل");
         softAssert.assertAll();
     }
+
     @Test
     public void TC_showAllBtn() {
         archiveSearchGrid.searchTabNavigator("الوارد");
-        archiveSearchGrid.searchByIncomeMail( "رقم الوارد" , "123456" );
+        archiveSearchGrid.searchByIncomeMail("رقم الوارد", "123456");
         archiveSearchGrid.clickShowAllBtn();
         Assert.assertTrue(archiveSearchGrid.etIncomeNumIsEmpty());
     }
+
+    @Test
+    public void TC_ChangeDateBtn() {
+        archiveSearchGrid.toggleDateType();
+        softAssert.assertTrue(archiveSearchGrid.validateToggleDate("ميلادي"),"التاريخ الميلادي");
+        archiveSearchGrid.toggleDateType();
+        softAssert.assertTrue(archiveSearchGrid.validateToggleDate("هجري"),"التاريخ الهجري");
+        softAssert.assertAll();
+    }
+}
+
 //    @AfterMethod
 //    public void refresh(){
 //        driver.navigate().refresh();
 //    }
-}

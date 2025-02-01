@@ -4,6 +4,8 @@ import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.*;
 import com.github.javafaker.Faker;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -14,7 +16,10 @@ public class TC_HR_EmployeeGrid extends TestInit {
     private HR_Employee_Add hrEmployeeAdd;
     private HR_Employee_Edit hrEmployeeEdit;
     private HR_Employee_View hrEmployeeView;
-    Faker faker = new Faker();
+    static Faker faker = new Faker();
+    private HR_TreatmentJob_grid treatmentJobGrid;
+    private String treatmentManagement = "مروان خليل هيكل اداري";
+    static String treatmentName = faker.name().title();
 
 
 
@@ -24,12 +29,14 @@ public class TC_HR_EmployeeGrid extends TestInit {
     private String empEmpLocal = faker.number().digits(7);
     private String empEmpTa7walaGov = faker.number().digits(6);
     private  String treatJob = treatmentName;
-    @BeforeMethod
+    @BeforeClass
     public void setupClass() throws InterruptedException {
         lunchDriver();
         loginPage.goToLoginPage();
         loginPage.loginUserWithoutRemMe("0342169", "24602460");
-
+        treatmentJobGrid = contentAside.goToTreatmentJob();
+        treatmentJobGrid.addNewTreatmentJob(treatmentName,treatmentManagement);
+        treatmentJobGrid.goToHomePage();
         hrEmployee = contentAside.goToEmployeePage();
     }//(dependsOnMethods = "AutomateMakeen.TestPages.TC_HR_Employee.TC_addEmp")
 
@@ -87,7 +94,7 @@ public class TC_HR_EmployeeGrid extends TestInit {
     public void TC_searchByTreatmentManagement(){
         hrEmployee.searchByTreatmentManagement("مروان خليل هيكل اداري");
         hrEmployee.clickSearchBtn();
-        Assert.assertTrue(hrEmployee.validateSearchByEmpNum(empEmpLocal));
+        Assert.assertTrue(hrEmployee.searchByDeptTreatJop("مروان خليل هيكل اداري"));
     }
     @Test(description = "test case that test add new employee functionality")//(priority = 1)
     public void TC_addEmp() throws InterruptedException {
@@ -157,5 +164,9 @@ public class TC_HR_EmployeeGrid extends TestInit {
         hrEmployee.searchByEmpId(empId);
         hrEmployee.clickSearchBtn();
         Assert.assertTrue(hrEmployee.validateSearchEmpty(),"Employee deleted successfully");
+    }
+    @AfterMethod
+    public void tearDown() {
+        driver.navigate().refresh();
     }
 }

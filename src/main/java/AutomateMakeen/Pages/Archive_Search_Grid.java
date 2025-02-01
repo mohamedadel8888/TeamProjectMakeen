@@ -21,12 +21,33 @@ public class Archive_Search_Grid extends BaseComp {
 
     }
 
-    private By toggleDateType = By.id("ch_Culture");
+    private By toggleDateType = By.cssSelector(".slider.round");
 
     public void toggleDateType(){
         driver.findElement(toggleDateType).click();
     }
 
+    private By firstRowHijriDateBy = By.xpath("//tr[1]/td[5]/div");
+    private By firstRowMiladiDateBy = By.xpath("//tr[1]/td[4]/div");
+
+    private By todayDateInCal = By.id("div_TodayDate");
+    public boolean validateToggleDate(String dateType){
+        switch(dateType){
+            case "هجري":
+            {
+                driver.findElement(incomeMailDateBy).click();
+                return driver.findElement(todayDateInCal).getText().contains(getHijriDate()) &&
+                        driver.findElement(firstRowHijriDateBy).getText().contains(getHijriDate());
+            } case "ميلادي":{
+                driver.findElement(incomeMailDateBy).click();
+                return driver.findElement(todayDateInCal).getText().contains(getMiladiDate()) &&
+                        driver.findElement(firstRowMiladiDateBy).getText().contains(getMiladiDate());
+            } default:{
+                System.out.println("Wrong Input");
+                return false;
+            }
+        }
+    }
 //    private By calenderCreateDateBy = By.cssSelector(".fa.fa-calendar[onclick=\"CalenderObj.showCalender('txt_gov_emp_hire_date',true,prs_greg_date!=1?'Hij':'Georg')\"]");
 
     private By incomeTabBy = By.id("tb_ctrldiv_Tab_Hrf_0");
@@ -93,6 +114,7 @@ public class Archive_Search_Grid extends BaseComp {
 
     private By incomeMailDateInputBy = By.id("txt_inbox_date");
     public void searchByIncomeMail(String fieldName , String data) {
+        System.out.println("Method"+data);
         switch(fieldName) {
             case "رقم الوارد": {
                 driver.findElement(incomeMailNumberBy).clear();
@@ -127,14 +149,14 @@ public class Archive_Search_Grid extends BaseComp {
     Select calenderMonthSelect ;
 
     private By calenderYearBy = By.id("tb_Year");
-    public void setDate(String year, String month, String day){
-        calenderMonthSelect = new Select(driver.findElement(monthDDL));
-        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(monthDDL)));
-        calenderMonthSelect.selectByVisibleText(month);
-        driver.findElement(calenderYearBy).clear();
-        driver.findElement(calenderYearBy).sendKeys(year);
-        driver.findElement(By.cssSelector("input[value='"+day+"']")).click();
-    }
+//    public void setDate(String year, String month, String day){
+//        calenderMonthSelect = new Select(driver.findElement(monthDDL));
+//        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(monthDDL)));
+//        calenderMonthSelect.selectByVisibleText(month);
+//        driver.findElement(calenderYearBy).clear();
+//        driver.findElement(calenderYearBy).sendKeys(year);
+//        driver.findElement(By.cssSelector("input[value='"+day+"']")).click();
+//    }
     private By subjectFieldBy = By.id("cph_main_txt_subject");
     public void searchByEtSubject(String treatmentSubject){
         driver.findElement(subjectFieldBy).sendKeys( treatmentSubject);
@@ -150,7 +172,6 @@ public class Archive_Search_Grid extends BaseComp {
             driver.findElement(attachmentCommentFieldBy).clear();
             driver.findElement(attachmentTypeBy).click();
             driver.findElement(attachmentFilterBy).click();
-
         }
 
         //لسه جزء اتواع المرفقات
@@ -162,14 +183,20 @@ public class Archive_Search_Grid extends BaseComp {
 
 
     private By archiveMailDateInputBy = By.id("txt_archive_date");
-    public void searchByArchive(String etArchiveNumber , String year , String month , String day) {
-        if (etArchiveNumber.isEmpty() && !(year.isEmpty() && month.isEmpty() && day.isEmpty())) {
-            driver.findElement(archiveMailNumberBy).clear();
-            driver.findElement(archiveMailDateBy).click();
-            this.setDate(year, month, day);
-        } else if (!etArchiveNumber.isEmpty() && (year.isEmpty() && month.isEmpty() && day.isEmpty())) {
-            driver.findElement(archiveMailDateInputBy).clear();
-            driver.findElement(archiveMailNumberBy).sendKeys(etArchiveNumber);
+    public void searchByArchive(String fieldName , String data) {
+        switch(fieldName) {
+            case "رقم الارشيف": {
+                driver.findElement(archiveMailNumberBy).clear();
+                driver.findElement(archiveMailDateInputBy).clear();
+                driver.findElement(archiveMailNumberBy).sendKeys(data);
+                break;
+            }
+            case "تاريخ الانشاء": {
+                driver.findElement(archiveMailNumberBy).clear();
+                driver.findElement(archiveMailDateBy).click();
+                setDateWithSplit(data);
+                break;
+            }
         }
     }
 
@@ -211,17 +238,17 @@ public class Archive_Search_Grid extends BaseComp {
     private By dateToLabelBy = By.id("txt_letter_date_to");
     private By dateToCalBy = By.cssSelector("span[onclick=\"arcSearch.changCalenderCulture('txt_letter_date_to',true);\"]");
 
-    public void setLetterDateFrom(String year, String month, String day){
+    public void setLetterDateFrom(String date){
         driver.findElement(dateFromCalBy).click();
-        setDate(year, month, day);
+        setDateWithSplit(date);
     }
     public void clearLetterDateFrom(){
         driver.findElement(dateFromLabelBy).clear();
     }
 
-    public void setLetterDateTo(String year, String month, String day){
+    public void setLetterDateTo(String date){
         driver.findElement(dateToCalBy).click();
-        setDate(year, month, day);
+        setDateWithSplit(date);
     }
     public void clearLetterDateTo(){
         driver.findElement(dateToLabelBy).clear();
@@ -299,7 +326,6 @@ public class Archive_Search_Grid extends BaseComp {
                 setDateWithSplit(exportData);
                 break;
             }case "تاريخ الي": {
-//                driver.findElement(etExportNumBy).clear();
                 driver.findElement(etEportDateFromBy).clear();
                 driver.findElement(exCalDateToBy).click();
                 setDateWithSplit(exportData);
@@ -318,9 +344,13 @@ public class Archive_Search_Grid extends BaseComp {
         String day = parts[2];
         String month = parts[1];
         String year = parts[0];
+        System.out.println("day="+day);
+        System.out.println("month="+month);
+        System.out.println("year="+year);
+        int number = Integer.parseInt(month);
         calenderMonthSelect = new Select(driver.findElement(monthDDL));
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(monthDDL)));
-        calenderMonthSelect.selectByValue(month);
+        calenderMonthSelect.selectByIndex(number);
         driver.findElement(calenderYearBy).clear();
         driver.findElement(calenderYearBy).sendKeys(year);
         driver.findElement(By.cssSelector("input[value='"+day+"']")).click();
@@ -447,6 +477,10 @@ public class Archive_Search_Grid extends BaseComp {
         }
         private By showAllBtnBy = By.id("btn_search_all");
     public void clickShowAllBtn() { driver.findElement(showAllBtnBy).click(); }
+    private By closeDetailsBy = By.cssSelector("i[class='fa fa-close']");
+    public void closeEtDetails(){
+        driver.findElement(closeDetailsBy).click();
+    }
 
 }
 

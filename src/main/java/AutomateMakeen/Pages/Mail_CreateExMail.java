@@ -272,7 +272,7 @@ public class Mail_CreateExMail extends BaseComp {
     @FindBy(id = "itemid_ddlSelectButtonTarget")
     WebElement controlDDLWebElement;             // Dropdown element for Classification
 
-    @FindBy(css = "div[class='col-bx-5'] div[class=' '] input[type='text']")
+    @FindBy(id = "txt_pickPopUp_srchParam")
     WebElement controlSearchWebElement;          // Search input field within control
 
     @FindBy(id = "itemid_txtSearch")
@@ -284,13 +284,16 @@ public class Mail_CreateExMail extends BaseComp {
     @FindBy(css = "input[value='بحث']")
     WebElement searchWebElement;                 // Search button element
 
+    @FindBy(id="btn_pickPopUp_srch")
+    WebElement searchControlButton;             // Search button within control
     // Method to set Transaction Classification using control
     public String setTreatClassificationUsingControl(String mainClass, String subClass){
         openTreatClassificationControl.click();
         controlSearchWebElement.sendKeys(subClass);
-        searchWebElement.click();
-        String activePeriod = driver.findElement(By.xpath("//div[contains(text(),'" + subClass + "')]/../../td[5]")).getText();
+        searchControlButton.click();
+        String activePeriod = driver.findElement(By.xpath("//div[contains(text(),'" + subClass + "')]/../../td[4]/div")).getText();
         driver.findElement(By.xpath("//div[contains(text(),'" + subClass + "')]/../../td[1]")).click();
+
         return activePeriod; // Return active period
     }
 

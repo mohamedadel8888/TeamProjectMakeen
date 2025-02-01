@@ -3,11 +3,11 @@
 <suite name="Employee page test Suite">
     <test verbose="2" preserve-order="true" name="Employee Test">
         <classes>
-            <class name="AutomateMakeen.TestPages.TC_TreatmentJob">
-                <methods>
-                    <include name="TC_addTreatmentJob"/>
-                </methods>
-            </class>
+<!--            <class name="AutomateMakeen.TestPages.TC_TreatmentJob">-->
+<!--                <methods>-->
+<!--                    <include name="TC_addTreatmentJob"/>-->
+<!--                </methods>-->
+<!--            </class>-->
             <class name="AutomateMakeen.TestPages.TC_HR_EmployeeGrid">
                 <methods>
                     <include name="TC_addEmp"/>
