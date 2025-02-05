@@ -344,18 +344,21 @@ public class Archive_Search_Grid extends BaseComp {
         String day = parts[2];
         String month = parts[1];
         String year = parts[0];
-        System.out.println("day="+day);
-        System.out.println("month="+month);
-        System.out.println("year="+year);
-        int number = Integer.parseInt(month);
+        int monthInt = Integer.parseInt(month);
+        if (day.startsWith("0")) {
+            day = day.substring(1); // Remove the leading zero
+            System.out.println("day : *** "+day);
+        }
         calenderMonthSelect = new Select(driver.findElement(monthDDL));
+        driver.findElement(monthDDL).click();
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(monthDDL)));
-        calenderMonthSelect.selectByIndex(number);
+        calenderMonthSelect.selectByIndex(monthInt-1);
         driver.findElement(calenderYearBy).clear();
         driver.findElement(calenderYearBy).sendKeys(year);
-        driver.findElement(By.cssSelector("input[value='"+day+"']")).click();
+//        driver.findElement(By.cssSelector("[class='btn2day'][value='"+day+"']"/*, [class='btn'][value='"+day+"']"*/)).click();
+        driver.findElement(By.xpath("//input[@value='"+day+"' and (@class='btn' or @class='btn2day')]")).click();
 
-        }
+    }
 
         private By docTypePopupBy = By.cssSelector("input[onclick=\"pickPopUp.initialize('doctypes', 'txt_docType_id');\"]");
 

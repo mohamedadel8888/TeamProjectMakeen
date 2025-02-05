@@ -36,7 +36,6 @@ public class TC_Archive_Search_Grid extends TestInit {
         mail_CreateExMail.setEtNum(letterNum);
         mail_CreateExMail.setEtDate(letterDate);
         mail_CreateExMail.setReferralMailNumber(referalEtNum);
-//        mail_CreateExMail.pressOnDeactivateReferralNumber();
         mail_CreateExMail.setDocTypeUsingControl(etDocType);
         mail_CreateExMail.setReceiverUsingControl(etReceivcer);
         mail_CreateExMail.setSenderUsingControl(etSender);
@@ -68,6 +67,8 @@ public class TC_Archive_Search_Grid extends TestInit {
         //click on toggle date
         archiveSearchGrid.searchTabNavigator("الوارد");
         archiveSearchGrid.searchByIncomeMail("رقم الوارد", etIncomeNumber);
+//        archiveSearchGrid.searchByIncomeMail("رقم الوارد", "271954");
+
         archiveSearchGrid.clickSearch();
         softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "رقم الوارد");
         archiveSearchGrid.searchByIncomeMail("تاريخ الوارد", getHijriDate());
@@ -244,11 +245,11 @@ public class TC_Archive_Search_Grid extends TestInit {
     @Test
     public void TC_etGeneralization() {
         archiveSearchGrid.searchTabNavigator("التعميم");
-        archiveSearchGrid.searchByGeneralization("تاريخ من", "1446/7/29");
+        archiveSearchGrid.searchByGeneralization("تاريخ من", "1446/07/29");
         archiveSearchGrid.clickSearch();
         softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Senior Functionality Architect"), "خانة تاريخ من");
 
-        archiveSearchGrid.searchByGeneralization("تاريخ الي", "1446/7/29");
+        archiveSearchGrid.searchByGeneralization("تاريخ الي", "1446/07/29");
         archiveSearchGrid.clickSearch();
         softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists("Senior Functionality Architect"), "خانة تاريخ الي");
 

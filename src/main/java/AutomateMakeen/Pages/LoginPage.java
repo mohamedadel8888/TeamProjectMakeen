@@ -95,9 +95,6 @@ public class LoginPage extends BaseComp {
         idWebElement.clear();
         passwordWebElement.clear();
     }
-    public WebElement getMobileCode() {
-        return mobileCode;
-    }
 
 
     //Navigate To Personal Accounts Page

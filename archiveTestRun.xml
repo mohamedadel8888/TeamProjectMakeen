@@ -3,16 +3,6 @@
 <suite name="Employee page test Suite">
     <test verbose="2" preserve-order="true" name="Employee Test">
         <classes>
-<!--            <class name="AutomateMakeen.TestPages.TC_Mail_CreateExMail">-->
-<!--                <methods>-->
-<!--                    <include name="tc_createValidExternalMail"/>-->
-<!--                </methods>-->
-<!--            </class>-->
-<!--            <class name="AutomateMakeen.TestPages.TC_Mail_inbox_Grid">-->
-<!--                <methods>-->
-<!--                    <include name="tc_validateCreatedMailAddedToImportedMail"/>-->
-<!--                </methods>-->
-<!--            </class>-->
             <class name="AutomateMakeen.TestPages.TC_Archive_Search_Grid">
                 <methods>
                     <include name="TC_showAllBtn"/>
