@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Employee page test Suite">
+    <test verbose="2" preserve-order="true" name="Employee Test">
+        <classes>
+<!--            <class name="AutomateMakeen.TestPages.TC_TreatmentJob">-->
+<!--                <methods>-->
+<!--                    <include name="TC_addTreatmentJob"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+            <class name="AutomateMakeen.TestPages.TC_HR_EmployeeGrid">
+                <methods>
+                    <include name="TC_addEmp"/>
+                    <include name="TC_searchByTreatmentManagement"/>
+                    <include name="TC_searchByTreatmentJob"/>
+                    <include name="TC_searchByEmpNameAdvanced"/>
+                    <include name="TC_searchByEmpId"/>
+                    <include name="TC_searchByMobile"/>
+                    <include name="TC_ViewEmp"/>
+                    <include name="TC_editEmp"/>
+                    <include name="TC_deleteEmp"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
