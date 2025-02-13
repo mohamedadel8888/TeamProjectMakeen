@@ -2,7 +2,7 @@ trigger:
   - main
 
 pool:
-  name:  qline
+  name:  10.0.0.65
 
 
 #schedules:
