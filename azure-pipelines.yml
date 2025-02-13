@@ -37,21 +37,21 @@ jobs:
 
 
 
-# This job creates a work item
-- job: ErrorHandler
-  dependsOn: RunTests
-  condition: failed()
-  steps:
-  - task: CreateWorkItem@2
-    inputs:
-      workItemType: 'Bug'
-      title: 'Please Check the Result '
-      assignedTo: 'Marwan Khalil'
-      areaPath: 'qManagement\qCMS'
-      iterationPath: 'qManagement\2025'
-      fieldMappings: 'qline1=Makeen'
-      associate: true
-      authType: 'internal'
+# # This job creates a work item
+# - job: ErrorHandler
+#   dependsOn: RunTests
+#   condition: failed()
+#   steps:
+#   - task: CreateWorkItem@2
+#     inputs:
+#       workItemType: 'Bug'
+#       title: 'Please Check the Result '
+#       assignedTo: 'Marwan Khalil'
+#       areaPath: 'qManagement\qCMS'
+#       iterationPath: 'qManagement\2025'
+#       fieldMappings: 'qline1=Makeen'
+#       associate: true
+#       authType: 'internal'
 
 
 
