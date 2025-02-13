@@ -2,7 +2,7 @@ trigger:
   - main
 
 pool:
-  name:  10.0.0.65
+  name:  Qline-automation-10.0.0.65
 
 
 #schedules:
@@ -52,10 +52,10 @@ jobs:
   - task: CreateWorkItem@2
     inputs:
       workItemType: 'Bug'
-      teamProject: 'Makeen_Management'
+      teamProject: 'qManagement'
       title: 'Please Check the Result '
       assignedTo: 'Hagar El Said'
-      areaPath: 'Makeen_Management'
-      iterationPath: 'Makeen_Management'
+      areaPath: 'qManagement'
+      iterationPath: 'qManagement'
       associate: true
       authType: 'internal'
