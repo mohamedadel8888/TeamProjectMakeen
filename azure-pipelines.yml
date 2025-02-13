@@ -1,4 +1,19 @@
-# Maven
+
+
+trigger:
+  - main
+
+pool:
+  name:  Qline-automation-10.0.0.65
+
+
+#schedules:
+#- cron: "0 16 * * *"
+#  displayName: Daily midnight build
+#  branches:
+#    include:
+#    - main
+
 - task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
@@ -12,21 +27,6 @@
 # Build your Java project and run tests with Apache Maven.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
-trigger:
-  - main
-
-pool:
-  name: 
-  - Qline-automation-10.0.0.65
-
-
-#schedules:
-#- cron: "0 16 * * *"
-#  displayName: Daily midnight build
-#  branches:
-#    include:
-#    - main
 
 jobs:
 - job: RunTests
