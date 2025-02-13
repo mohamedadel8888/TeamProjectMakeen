@@ -1,0 +1,1 @@
+{"uuid":"64dcd7d5-04de-47c2-8023-20b7c33e84ff","name":"AutomateMakeen.TestPages.TC_LoginPage","children":["e6900498-9574-49f4-91b5-88dea40c8a0f"],"befores":[{"name":"setupClass","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1736855501181,"stop":1736855552773}],"afters":[],"start":1736855501129,"stop":1736855718637}
