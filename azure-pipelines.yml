@@ -17,7 +17,8 @@ trigger:
   - main
 
 pool:
-  name: Qline-10.0.0.62
+  name: 
+  - Qline-automation-10.0.0.65
 
 
 #schedules:
