@@ -19,7 +19,7 @@ jobs:
   - script: mvn dependency:copy-dependencies -DoutputDirectory=target/dependency
     displayName: "Copy Dependencies to Target Directory"
 
-  - script: ls -l target/dependency/
+  - script: dir target/dependency/
     displayName: "Check Downloaded Dependencies"
 
 - job: RunTestNGTests
