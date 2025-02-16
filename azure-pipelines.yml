@@ -13,11 +13,8 @@ jobs:
 - job: SetupMavenDependencies
   timeoutInMinutes: 0
   steps:
-  - script: mvn dependency:resolve
-    displayName: "Resolve Maven Dependencies"
-
-  - script: mvn dependency:copy-dependencies -DoutputDirectory=target/dependency
-    displayName: "Copy Dependencies to Target Directory"
+  - script: mvn clean install
+    displayName: "Force Maven to Download Dependencies"
 
   - script: dir target\dependency\
     displayName: "Check Downloaded Dependencies (Windows)"
@@ -28,6 +25,31 @@ jobs:
   steps:
   - script: java -cp "target/dependency/*;target/classes" org.testng.TestNG testng.xml
     displayName: "Run TestNG Tests"
+# trigger:
+#   - main
+
+# pool:
+#   name: Qline-automation-10.0.0.65
+
+# jobs:
+# - job: SetupMavenDependencies
+#   timeoutInMinutes: 0
+#   steps:
+#   - script: mvn dependency:resolve
+#     displayName: "Resolve Maven Dependencies"
+
+#   - script: mvn dependency:copy-dependencies -DoutputDirectory=target/dependency
+#     displayName: "Copy Dependencies to Target Directory"
+
+#   - script: dir target\dependency\
+#     displayName: "Check Downloaded Dependencies (Windows)"
+
+# - job: RunTestNGTests
+#   dependsOn: SetupMavenDependencies
+#   timeoutInMinutes: 0
+#   steps:
+#   - script: java -cp "target/dependency/*;target/classes" org.testng.TestNG testng.xml
+#     displayName: "Run TestNG Tests"
 
 # jobs:
 # - job: SetupMaven
