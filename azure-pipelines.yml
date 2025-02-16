@@ -9,7 +9,18 @@ trigger:
 pool:
   name: Qline-automation-10.0.0.65
 
+
+
 jobs:
+- job: SetupMaven
+  timeoutInMinutes: 0
+  steps:
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'dependency:resolve'
+    displayName: "Download Maven Dependencies"
+    
 - job: RunTestNGTests
   timeoutInMinutes: 0
   steps:
