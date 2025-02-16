@@ -9,22 +9,31 @@ trigger:
 pool:
   name: Qline-automation-10.0.0.65
 
-
 jobs:
-- job: SetupMaven
+- job: SetupMavenDependencies
   timeoutInMinutes: 0
   steps:
-  - task: Maven@2
-    inputs:
-      mavenPomFile: 'pom.xml'
-      goals: 'dependency:resolve'
-    displayName: "Download Maven Dependencies"
-    
+  - script: mvn dependency:resolve
+    displayName: "Resolve Maven Dependencies Without Maven Task"
+
 - job: RunTestNGTests
+  dependsOn: SetupMavenDependencies  # Ensure dependencies are downloaded first
   timeoutInMinutes: 0
   steps:
-  - script: java -cp "lib/*:target/classes" org.testng.TestNG testng.xml
+  - script: java -cp "target/dependency/*:target/classes" org.testng.TestNG testng.xml
     displayName: "Run TestNG Tests Without Maven"
+
+
+# jobs:
+# - job: SetupMaven
+#   timeoutInMinutes: 0
+#   steps:
+#   - task: Maven@2
+#     inputs:
+#       mavenPomFile: 'pom.xml'
+#       goals: 'dependency:resolve'
+#     displayName: "Download Maven Dependencies"
+    
 
 #schedules:
 #- cron: "0 16 * * *"
