@@ -47,7 +47,7 @@ jobs:
   timeoutInMinutes: 0
   steps:
 #  - checkout: none 
-  - task: Maven@2
+  - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
       goals: 'test -Dtest=TC_LoginPage'
