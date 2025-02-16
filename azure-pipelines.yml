@@ -9,19 +9,22 @@ trigger:
 pool:
   name: Qline-automation-10.0.0.65
 
-# jobs:
-# - job: SetupMavenDependencies
-#   timeoutInMinutes: 0
-#   steps:
-#   - script: mvn dependency:resolve
-#     displayName: "Resolve Maven Dependencies Without Maven Task"
+jobs:
+- job: SetupMavenDependencies
+  timeoutInMinutes: 0
+  steps:
+  - script: mvn dependency:resolve
+    displayName: "Resolve Maven Dependencies Without Maven Task"
 
-# - job: RunTestNGTests
-#   dependsOn: SetupMavenDependencies  # Ensure dependencies are downloaded first
-#   timeoutInMinutes: 0
-#   steps:
-#   - script: java -cp "target/dependency/*:target/classes" org.testng.TestNG testng.xml
-#     displayName: "Run TestNG Tests Without Maven"
+  - script: mvn dependency:copy-dependencies -DoutputDirectory=target/dependency
+    displayName: "Copy Dependencies to Target Directory"
+
+- job: RunTestNGTests
+  dependsOn: SetupMavenDependencies
+  timeoutInMinutes: 0
+  steps:
+  - script: java -cp "target/dependency/*:target/classes" org.testng.TestNG testng.xml
+    displayName: "Run TestNG Tests Without Maven"
 
 
 # jobs:
@@ -42,15 +45,15 @@ pool:
 #    include:
 #    - main
 
-jobs:
-- job: RunTests
-  timeoutInMinutes: 0
-  steps:
-#  - checkout: none 
-  - task: Maven@3
-    inputs:
-      mavenPomFile: 'pom.xml'
-      goals: 'test -Dtest=TC_LoginPage'
+# jobs:
+# - job: RunTests
+#   timeoutInMinutes: 0
+#   steps:
+# #  - checkout: none 
+#   - task: Maven@3
+#     inputs:
+#       mavenPomFile: 'pom.xml'
+#       goals: 'test -Dtest=TC_LoginPage'
 #    continueOnError: true
 
   # - task: PublishBuildArtifacts@1
