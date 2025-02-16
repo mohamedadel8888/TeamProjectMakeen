@@ -10,12 +10,11 @@ pool:
   name: Qline-automation-10.0.0.65
 
 
-
 jobs:
 - job: SetupMaven
   timeoutInMinutes: 0
   steps:
-  - task: Maven@3
+  - task: Maven@2
     inputs:
       mavenPomFile: 'pom.xml'
       goals: 'dependency:resolve'
