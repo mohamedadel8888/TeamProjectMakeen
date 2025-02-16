@@ -14,17 +14,20 @@ jobs:
   timeoutInMinutes: 0
   steps:
   - script: mvn dependency:resolve
-    displayName: "Resolve Maven Dependencies Without Maven Task"
+    displayName: "Resolve Maven Dependencies"
 
   - script: mvn dependency:copy-dependencies -DoutputDirectory=target/dependency
     displayName: "Copy Dependencies to Target Directory"
+
+  - script: ls -l target/dependency/
+    displayName: "Check Downloaded Dependencies"
 
 - job: RunTestNGTests
   dependsOn: SetupMavenDependencies
   timeoutInMinutes: 0
   steps:
   - script: java -cp "target/dependency/*:target/classes" org.testng.TestNG testng.xml
-    displayName: "Run TestNG Tests Without Maven"
+    displayName: "Run TestNG Tests"
 
 
 # jobs:
