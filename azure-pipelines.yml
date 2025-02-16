@@ -19,16 +19,15 @@ jobs:
   - script: mvn dependency:copy-dependencies -DoutputDirectory=target/dependency
     displayName: "Copy Dependencies to Target Directory"
 
-  - script: dir target/dependency/
-    displayName: "Check Downloaded Dependencies"
+  - script: dir target\dependency\
+    displayName: "Check Downloaded Dependencies (Windows)"
 
 - job: RunTestNGTests
   dependsOn: SetupMavenDependencies
   timeoutInMinutes: 0
   steps:
-  - script: java -cp "target/dependency/*:target/classes" org.testng.TestNG testng.xml
+  - script: java -cp "target/dependency/*;target/classes" org.testng.TestNG testng.xml
     displayName: "Run TestNG Tests"
-
 
 # jobs:
 # - job: SetupMaven
