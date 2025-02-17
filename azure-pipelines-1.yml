@@ -1,0 +1,39 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- main
+pool:
+  name: Qline-automation-10.0.0.65
+# schedules:
+# - cron: "0 14 * * *"
+#   displayName: Daily midnight build
+#   branches:
+#     include:
+#       - main
+jobs:
+- job: RunTests
+  displayName: "Run Tests"
+  timeoutInMinutes: 0
+  steps:
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      mavenOptions: '-Xmx3072m'
+      javaHomeOption: 'Path'
+      jdkDirectory: 'C:\Program Files\Java\jdk-23'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      mavenAuthenticateFeed: false
+      effectivePomSkip: false
+      sonarQubeRunAnalysis: false
+      goals: 'test -Dsurefire.suiteXmlFiles=testng.xml'
+  # - task: PublishBuildArtifacts@1
+  #   condition: failed()
+  #   displayName: 'Publish Screenshots as Artifact'
+  #   inputs:
+  #     PathtoPublish: 'C:\TFS 24agent\vsts-agent-win-x64-4.246.1\_work\1\s\Dashboard-master\Screens\screenshots'
+  #     ArtifactName: 'screenshots'
+
