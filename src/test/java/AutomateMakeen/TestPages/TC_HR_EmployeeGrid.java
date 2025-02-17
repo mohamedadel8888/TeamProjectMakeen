@@ -33,6 +33,7 @@ public class TC_HR_EmployeeGrid extends TestInit {
     public void setupClass() throws InterruptedException {
         lunchDriver();
         loginPage.goToLoginPage();
+        loginPage.clearAllFeild();
         loginPage.loginUserWithoutRemMe("0342169", "24602460");
         treatmentJobGrid = contentAside.goToTreatmentJob();
         treatmentJobGrid.addNewTreatmentJob(treatmentName,treatmentManagement);
