@@ -27,11 +27,11 @@ public class TC_Archive_Search_Grid extends TestInit {
     public void setup() throws InterruptedException {
         lunchDriver();
         loginPage.goToLoginPage();
+        loginPage.clearAllFeild();
         qCMSHomePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
         userName = qCMSHomePage.getUserName();
         userDept = qCMSHomePage.getUserDept();
         userTreatJob = qCMSHomePage.getUserTreatJob();
-
         mail_CreateExMail = contentAside.goToCreateExMail();
         mail_CreateExMail.enteringTheSubjectOfMail(etSubject);
         mail_CreateExMail.setEtNum(letterNum);
