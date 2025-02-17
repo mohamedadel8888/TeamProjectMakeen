@@ -40,7 +40,8 @@ public class TestInit  {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--start-maximized"); // Ensure full screen
+        options.addArguments("--start-maximized");
+         options.addArguments("--headless");
         WebDriver driver = new EdgeDriver(options);
         return driver;
     }
