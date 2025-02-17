@@ -16,7 +16,7 @@ jobs:
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
-      mavenOptions: '-Xmx3072m'
+      mavenOptions: '-Xmx3072m -Dfile.encoding=UTF-8'
       javaHomeOption: 'Path'
       jdkDirectory: 'C:\Program Files\Java\jdk-23'
       publishJUnitResults: true
