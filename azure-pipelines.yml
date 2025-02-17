@@ -19,7 +19,7 @@ jobs:
   dependsOn: SetupMavenDependencies
   timeoutInMinutes: 0
   steps:
-  - script: mvn clean test
+  - script: mvn test -Dsurefire.suiteXmlFiles=testng.xml
     displayName: "Run TestNG Tests"
 # trigger:
 #   - main
