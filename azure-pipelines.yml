@@ -19,7 +19,7 @@ jobs:
   dependsOn: SetupMavenDependencies
   timeoutInMinutes: 0
   steps:
-  - script: java -cp "target/dependency/*;target/classes" org.testng.TestNG testng.xml
+  - script: mvn clean test
     displayName: "Run TestNG Tests"
 # trigger:
 #   - main
