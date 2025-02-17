@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class TC_LoginPage extends TestInit {
+    qCMS_HomePage qCMSHomePage;
     @BeforeClass
     public void setupClass()  {
         lunchDriver();
@@ -22,8 +23,9 @@ public class TC_LoginPage extends TestInit {
     public void tc_loginWithValidUser(){
         loginPage.clearAllFeild();
         System.out.println("التأكد من وظيفة تسجيل الدخول بحساب جديد بإستخدام رقم تعريفي صحيح و رقم سري صحيح");
-        qCMS_HomePage qCMSHomePage = loginPage.loginUserWithoutRemMe(userID ,userPasswd);
+        qCMSHomePage = loginPage.loginUserWithoutRemMe(userID ,userPasswd);
         Assert.assertTrue(qCMSHomePage.getHomeUrl().contains("MainPage.aspx"));
+        qCMSHomePage.signOut();
     }
 
     @Test
