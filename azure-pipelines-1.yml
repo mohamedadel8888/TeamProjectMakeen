@@ -7,17 +7,24 @@ trigger:
 - main
 pool:
   name: Qline-automation-10.0.0.65
-# schedules:
-# - cron: "0 14 * * *"
-#   displayName: Daily midnight build
-#   branches:
-#     include:
-#       - main
+
 jobs:
 - job: RunTests
-  displayName: "Run Tests"
+  displayName: "تشغيل الاختبارات"  # Arabic translation of "Run Tests"
   timeoutInMinutes: 0
   steps:
+  
+  - script: |
+      # Set the locale for the environment to Arabic
+      # For Windows, use the following PowerShell command to set the environment variable
+      $env:LANG="ar_SA.UTF-8"
+      
+      # For Linux-based systems, you can use export:
+      # export LANG="ar_SA.UTF-8"
+
+      echo "Locale set to Arabic"
+    displayName: "Setting Arabic Locale"
+
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
@@ -30,10 +37,13 @@ jobs:
       effectivePomSkip: false
       sonarQubeRunAnalysis: false
       goals: 'test -Dsurefire.suiteXmlFiles=testng.xml'
-  # - task: PublishBuildArtifacts@1
+    displayName: "تشغيل الاختبارات باستخدام Maven"  # Arabic display name for running Maven tests
+
+
+      
+    # - task: PublishBuildArtifacts@1
   #   condition: failed()
   #   displayName: 'Publish Screenshots as Artifact'
   #   inputs:
   #     PathtoPublish: 'C:\TFS 24agent\vsts-agent-win-x64-4.246.1\_work\1\s\Dashboard-master\Screens\screenshots'
   #     ArtifactName: 'screenshots'
-
