@@ -14,15 +14,8 @@ jobs:
   timeoutInMinutes: 0
   steps:
   
-  - script: |
-      # Set the locale for the environment to Arabic
-      # For Windows, use the following PowerShell command to set the environment variable
+  - script: 
       $env:LANG="ar_SA.UTF-8"
-      
-      # For Linux-based systems, you can use export:
-      # export LANG="ar_SA.UTF-8"
-
-      echo "Locale set to Arabic"
     displayName: "Setting Arabic Locale"
 
   - task: Maven@3
