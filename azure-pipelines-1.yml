@@ -7,7 +7,12 @@ trigger:
 - main
 pool:
   name: Qline-automation-10.0.0.65
-
+# schedules:
+# - cron: "0 14 * * *"
+#   displayName: Daily midnight build
+#   branches:
+#     include:
+#       - main
 jobs:
 - job: RunTests
   displayName: "Run Tests"
