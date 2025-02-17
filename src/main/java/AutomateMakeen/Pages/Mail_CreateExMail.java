@@ -538,6 +538,7 @@ public class Mail_CreateExMail extends BaseComp {
     // Method to click the send button and confirm the action
     public void clickSendConfirm(){
         sendBtnWebElement.click();
+        exWait.until(ExpectedConditions.elementToBeClickable(confirmWebElement));
         confirmWebElement.click();
     }
 
@@ -590,6 +591,16 @@ public class Mail_CreateExMail extends BaseComp {
             driver.findElement(sliderBarInOutGehaBy).click();
             driver.findElement(forAllBy).click();
         }
+    }
+    private By btnViewCtzTreat = By.id("dv_linkTreat_btnViewCtzTreat");
+    public void clickViewTreatBtn(){
+        driver.findElement(btnViewCtzTreat).click();
+    }
+    private By withoutTreatCkbox = By.id("cb_without_ctiz_treat");
+    private By saveTreatBtn = By.id("btn_ctz_save_treat");
+    public void clickFirstTreatCkbox(){
+        driver.findElement(withoutTreatCkbox).click();
+        driver.findElement(saveTreatBtn).click();
     }
 }
 
