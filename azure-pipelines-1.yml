@@ -10,14 +10,9 @@ pool:
 
 jobs:
 - job: RunTests
-  displayName: "تشغيل الاختبارات"  # Arabic translation of "Run Tests"
+  displayName: "Run Tests"
   timeoutInMinutes: 0
   steps:
-  
-  - script: 
-      $env:LANG="ar_SA.UTF-8"
-    displayName: "Setting Arabic Locale"
-
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
@@ -30,7 +25,6 @@ jobs:
       effectivePomSkip: false
       sonarQubeRunAnalysis: false
       goals: 'test -Dsurefire.suiteXmlFiles=testng.xml'
-    displayName: "تشغيل الاختبارات باستخدام Maven"  # Arabic display name for running Maven tests
 
 
       
