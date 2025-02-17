@@ -114,6 +114,17 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.6.1</version>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M9</version>
+          <configuration>
+            <includes>
+              <include>src/test/java/AutomateMakeen/TestPages/TC_LoginPage.java</include>
+            </includes>
+<!--            <testNGSuite>testng.xml</testNGSuite>-->
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>

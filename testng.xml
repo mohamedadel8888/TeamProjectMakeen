@@ -8,18 +8,18 @@
 <!--                    <include name="TC_addTreatmentJob"/>-->
 <!--                </methods>-->
 <!--            </class>-->
-            <class name="AutomateMakeen.TestPages.TC_HR_EmployeeGrid">
-                <methods>
-                    <include name="TC_addEmp"/>
-<!--                    <include name="TC_searchByTreatmentManagement"/>-->
-<!--                    <include name="TC_searchByTreatmentJob"/>-->
-<!--                    <include name="TC_searchByEmpNameAdvanced"/>-->
-<!--                    <include name="TC_searchByEmpId"/>-->
-<!--                    <include name="TC_searchByMobile"/>-->
-<!--                    <include name="TC_ViewEmp"/>-->
-<!--                    <include name="TC_editEmp"/>-->
-<!--                    <include name="TC_deleteEmp"/>-->
-                </methods>
+            <class name="AutomateMakeen.TestPages.TC_LoginPage">
+<!--                <methods>-->
+<!--                    <include name="TC_LoginPage"/>-->
+<!--&lt;!&ndash;                    <include name="TC_searchByTreatmentManagement"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <include name="TC_searchByTreatmentJob"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <include name="TC_searchByEmpNameAdvanced"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <include name="TC_searchByEmpId"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <include name="TC_searchByMobile"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <include name="TC_ViewEmp"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <include name="TC_editEmp"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <include name="TC_deleteEmp"/>&ndash;&gt;-->
+<!--                </methods>-->
             </class>
         </classes>
     </test>
