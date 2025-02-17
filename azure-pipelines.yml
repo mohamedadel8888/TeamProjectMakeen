@@ -2,25 +2,25 @@
 # Build your Java project and run tests with Apache Maven.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
+#*********
+# trigger:
+#   - main
 
-trigger:
-  - main
+# pool:
+#   name: Qline-automation-10.0.0.65
 
-pool:
-  name: Qline-automation-10.0.0.65
-
-jobs:
-- job: SetupMavenDependencies
-  timeoutInMinutes: 0
-  steps:
-  - script: mvn clean install
-    displayName: "Force Maven to Download Dependencies"
-- job: RunTestNGTests
-  dependsOn: SetupMavenDependencies
-  timeoutInMinutes: 0
-  steps:
-  - script: mvn test -Dsurefire.suiteXmlFiles=testng.xml
-    displayName: "Run TestNG Tests"
+# jobs:
+# - job: SetupMavenDependencies
+#   timeoutInMinutes: 0
+#   steps:
+#   - script: mvn clean install
+#     displayName: "Force Maven to Download Dependencies"
+# - job: RunTestNGTests
+#   dependsOn: SetupMavenDependencies
+#   timeoutInMinutes: 0
+#   steps:
+#   - script: mvn test -Dsurefire.suiteXmlFiles=testng.xml
+#     displayName: "Run TestNG Tests" *******
 # trigger:
 #   - main
 
