@@ -15,10 +15,6 @@ jobs:
   steps:
   - script: mvn clean install
     displayName: "Force Maven to Download Dependencies"
-
-  - script: dir target\dependency\
-    displayName: "Check Downloaded Dependencies (Windows)"
-
 - job: RunTestNGTests
   dependsOn: SetupMavenDependencies
   timeoutInMinutes: 0
