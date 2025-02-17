@@ -25,6 +25,7 @@ public class BaseComp {
 
     public BaseComp(WebDriver driver) {
         driver.manage().window().maximize();
+        driver.manage().window().setSize(new Dimension(1920, 1080));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
         exWait = new WebDriverWait(driver, Duration.ofSeconds(10));

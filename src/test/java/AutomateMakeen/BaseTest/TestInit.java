@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.asserts.SoftAssert;
@@ -35,7 +36,12 @@ public class TestInit  {
     private String Test_Data_Path = "src/test/resources/TestData/";
 
     public WebDriver initDriver(){
-        WebDriver driver = new EdgeDriver();
+        EdgeOptions options = new EdgeOptions();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--start-maximized"); // Ensure full screen
+        WebDriver driver = new EdgeDriver(options);
         return driver;
     }
 
