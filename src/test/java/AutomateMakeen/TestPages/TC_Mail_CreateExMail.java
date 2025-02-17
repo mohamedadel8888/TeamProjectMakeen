@@ -21,7 +21,7 @@ public class TC_Mail_CreateExMail extends TestInit {
     static String etMainClass = "تصنيف رئيسي";
     static String etSubClass = "مولد";
     static String etPeriod = "6";
-    static String etRecipient = "مروان خليل موظف اول";
+    static String etRecipient = "مروان خليل وظيفة تعاملات ادارة عامة وظيفة علي السطر الثاني";
     static String letterNum = faker.number().digits(8);
     static String letterDate = "2025/01/10";
     static String referalEtNum = "251576";

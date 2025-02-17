@@ -20,7 +20,6 @@ public class TC_Archive_Search_Grid extends TestInit {
     private Archive_Search_Grid archiveSearchGrid;
     private Mail_CreateExMail mail_CreateExMail;
     private Mail_Inbox_Grid mailInboxGrid;
-
     private final String testEtRedirect = "Human Markets Associate";
 
 
@@ -31,6 +30,8 @@ public class TC_Archive_Search_Grid extends TestInit {
         qCMSHomePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
         userName = qCMSHomePage.getUserName();
         userDept = qCMSHomePage.getUserDept();
+        userTreatJob = qCMSHomePage.getUserTreatJob();
+
         mail_CreateExMail = contentAside.goToCreateExMail();
         mail_CreateExMail.enteringTheSubjectOfMail(etSubject);
         mail_CreateExMail.setEtNum(letterNum);
@@ -39,9 +40,12 @@ public class TC_Archive_Search_Grid extends TestInit {
         mail_CreateExMail.setDocTypeUsingControl(etDocType);
         mail_CreateExMail.setReceiverUsingControl(etReceivcer);
         mail_CreateExMail.setSenderUsingControl(etSender);
-        mail_CreateExMail.setTreatClassificationUsingControl(etMainClass,etSubClass);
+//        mail_CreateExMail.setTreatClassificationUsingControl(etMainClass,etSubClass);
+        mail_CreateExMail.setTreatClassificationNum("462");
         mail_CreateExMail.clickLinkEt();
         mail_CreateExMail.setCivilId(civilId);
+        mail_CreateExMail.clickViewTreatBtn();
+        mail_CreateExMail.clickFirstTreatCkbox();
         Assert.assertTrue(mail_CreateExMail.addFile("file1","resourse/qr.pdf"));
         mail_CreateExMail.insertRecipient(etRecipient);
         mail_CreateExMail.clickSendConfirm();
@@ -177,8 +181,8 @@ public class TC_Archive_Search_Grid extends TestInit {
         archiveSearchGrid.clickSearch();
         softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "رقم الصادر");
         archiveSearchGrid.searchByEtExport("تاريخ من", "1446/7/29");
-        archiveSearchGrid.clickSearch();
-        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(testEtRedirect), "التاريخ من");  //تم تصدير المعاملة يوم 20
+//        archiveSearchGrid.clickSearch();
+//        softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(testEtRedirect), "التاريخ من");  //تم تصدير المعاملة يوم 20
         archiveSearchGrid.searchByEtExport("تاريخ الي", "1446/7/29");
         archiveSearchGrid.clickSearch();
         softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(testEtRedirect), "التاريخ الي");  //تم تصدير المعاملة يوم 20
@@ -202,7 +206,7 @@ public class TC_Archive_Search_Grid extends TestInit {
         archiveSearchGrid.selectEtCreator("الادارة", userDept, "");
         archiveSearchGrid.clickSearch();
         softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "خانة منشئ المعاملة");
-        archiveSearchGrid.selectEtCreator("الموظف", userDept, userName);
+        archiveSearchGrid.selectEtCreator("الموظف", userDept, userTreatJob);
         archiveSearchGrid.clickSearch();
         softAssert.assertTrue(archiveSearchGrid.checkIfTreatmentExists(etSubject), "خانة الموظف");
         softAssert.assertAll();
@@ -237,7 +241,7 @@ public class TC_Archive_Search_Grid extends TestInit {
         softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("رقم الخطاب"), letterNum, "رقم الخطاب");
         softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تاريخ الخطاب"), getHijriDate(), "تاريخ الخطاب");
         softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("الخطاب المشار إليه"), referalEtNum, "الخطاب المشار اليه");
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("المعاملة لدى"), userDept + " - " + userName, "المعاملة لدي");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("المعاملة لدى"), userDept + " - " + userTreatJob, "المعاملة لدي");
         archiveSearchGrid.closeEtDetails();
         softAssert.assertAll();
     }

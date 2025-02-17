@@ -3,23 +3,39 @@
 <suite name="Employee page test Suite">
     <test verbose="2" preserve-order="true" name="Employee Test">
         <classes>
-<!--            <class name="AutomateMakeen.TestPages.TC_TreatmentJob">-->
-<!--                <methods>-->
-<!--                    <include name="TC_addTreatmentJob"/>-->
-<!--                </methods>-->
-<!--            </class>-->
             <class name="AutomateMakeen.TestPages.TC_LoginPage">
-<!--                <methods>-->
-<!--                    <include name="TC_LoginPage"/>-->
-<!--&lt;!&ndash;                    <include name="TC_searchByTreatmentManagement"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="TC_searchByTreatmentJob"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="TC_searchByEmpNameAdvanced"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="TC_searchByEmpId"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="TC_searchByMobile"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="TC_ViewEmp"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="TC_editEmp"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <include name="TC_deleteEmp"/>&ndash;&gt;-->
-<!--                </methods>-->
+            </class>
+            <class name="AutomateMakeen.TestPages.TC_HR_EmployeeGrid">
+                <methods>
+                    <include name="TC_addEmp"/>
+                    <include name="TC_searchByTreatmentManagement"/>
+                    <include name="TC_searchByTreatmentJob"/>
+                    <include name="TC_searchByEmpNameAdvanced"/>
+                    <include name="TC_searchByEmpId"/>
+                    <include name="TC_searchByMobile"/>
+                    <include name="TC_ViewEmp"/>
+                    <include name="TC_editEmp"/>
+                    <include name="TC_deleteEmp"/>
+                </methods>
+            </class>
+            <class name="AutomateMakeen.TestPages.TC_Archive_Search_Grid">
+                <methods>
+                    <include name="TC_showAllBtn"/>
+                    <include name="TC_ChangeDateBtn"/>
+                    <include name="TC_searchByEtIncomeNum"/>
+                    <include name="TC_searchByEtSubject"/>
+                    <include name="TC_searchByEtAttachment"/>
+                    <include name="TC_searchByEtArchive"/>
+                    <include name="TC_searchByEtSender"/>
+                    <include name="TC_searchByEtReceiver"/>
+                    <include name="TC_searchByEtLinkCivil"/>
+                    <include name="TC_searchByExportData"/>
+                    <include name="TC_searchByDocType"/>
+                    <include name="TC_searchByEtCreator"/>
+                    <include name="TC_searchByDecisionNum"/>
+                    <include name="TC_etDetails"/>
+                    <include name="TC_etGeneralization"/>
+                </methods>
             </class>
         </classes>
     </test>

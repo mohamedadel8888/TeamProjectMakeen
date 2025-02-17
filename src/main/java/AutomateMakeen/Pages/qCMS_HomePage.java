@@ -45,4 +45,9 @@ public class qCMS_HomePage extends BaseComp {
         hoverOnAction(driver.findElement(userNameBy));
         return driver.findElement(userDeptBy).getText();
     }
+    private By userJobBy = By.id("user_job");
+    public String getUserTreatJob(){
+        hoverOnAction(driver.findElement(userNameBy));
+        return driver.findElement(userJobBy).getText();
+    }
 }

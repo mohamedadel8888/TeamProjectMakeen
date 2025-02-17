@@ -108,10 +108,11 @@ public class HR_Employee_Grid extends BaseComp {
         }
     }
     private By deptNameColBy = By.xpath("//tr/td[7]/div");
-    List<WebElement> kistOfDeptInTable = driver.findElements(deptNameColBy);
+    List<WebElement> listOfDeptInTable ;
 
     public boolean searchByDeptTreatJop(String deptName){
-        return kistOfDeptInTable.stream().allMatch(s->s.getText().equals(deptName));
+        listOfDeptInTable = driver.findElements(deptNameColBy);
+        return listOfDeptInTable.stream().allMatch(s->s.getText().equals(deptName));
     }
 
     private By tabJobInfoBy = By.id("tb_ctrldiv_Tab_Hrf_1");

@@ -129,7 +129,6 @@ public class TC_HR_EmployeeGrid extends TestInit {
         hrEmployeeEdit.clearEmpName();
         hrEmployeeEdit.empName("مروان","خليل","تعديل","الاسم");
         hrEmployeeEdit.clickSaveBtn();
-        hrEmployeeEdit.clickBackBtn();
         hrEmployee.searchByEmpId(empId);
         hrEmployee.clickSearchBtn();
         Assert.assertTrue(hrEmployee.validateSearchByEmpId(empId));
