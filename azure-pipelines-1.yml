@@ -18,10 +18,14 @@ jobs:
   displayName: "Run Tests"
   timeoutInMinutes: 0
   steps:
+  - script: |
+      echo "Setting environment variables"
+      echo "JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8" >> $env:JAVA_TOOL_OPTIONS
+    displayName: "Set UTF-8 Encoding"
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
-      mavenOptions: '-Xmx3072m -Dwebdriver.edge.headless=true'
+      mavenOptions: '-Xmx3072m'
       javaHomeOption: 'Path'
       jdkDirectory: 'C:\Program Files\Java\jdk-23'
       publishJUnitResults: true
