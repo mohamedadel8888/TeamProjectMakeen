@@ -236,7 +236,7 @@ public class TC_Archive_Search_Grid extends TestInit {
         softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تاريخ الوارد"), getHijriDate(), "تاريخ الوارد");
         softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("رقم الارشيف"), etArchiveNum, "رقم الارشيف");
         softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تاريخ الإنشاء"), getHijriDate(), "تاريخ الانشاء");
-        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تصنيف المعاملة"), etSubClass, "تصنيف المعاملة");
+        softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تصنيف المعاملة"),"تصنيف رئيسي - " +etSubClass, "تصنيف المعاملة");
         softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("مدة الإنجاز"), etPeriod + " يوم", "مدة الانجاز");
         softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("رقم الخطاب"), letterNum, "رقم الخطاب");
         softAssert.assertEquals(archiveSearchGrid.getTreatmentSpecificDetail("تاريخ الخطاب"), getHijriDate(), "تاريخ الخطاب");
