@@ -39,7 +39,7 @@ public class TestInit  {
 
     public WebDriver initDriver(){
         EdgeOptions options = new EdgeOptions();
-//        options.addArguments("--headless");  // Run Edge in headless mode
+        options.addArguments("--headless");  // Run Edge in headless mode
 //        options.addArguments("--disable-gpu"); // Disable GPU acceleration (for Windows)
         options.addArguments("--window-size=1920,1160"); // Set viewport size
         options.addArguments("--no-sandbox");
