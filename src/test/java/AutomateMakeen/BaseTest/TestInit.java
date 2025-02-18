@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -41,10 +42,14 @@ public class TestInit  {
 //        options.addArguments("--headless");  // Run Edge in headless mode
 //        options.addArguments("--disable-gpu"); // Disable GPU acceleration (for Windows)
         options.addArguments("--window-size=1920,1160"); // Set viewport size
-        options.addArguments("--no-sandbox"); // Required for CI/CD environments
+        options.addArguments("--no-sandbox");
+        options.addArguments("--force-device-scale-factor=1"); // Ensure 100% zoom
+// Required for CI/CD environments
 //        options.addArguments("--disable-dev-shm-usage"); // Avoid memory issues
 
         WebDriver driver = new EdgeDriver(options);
+        ((JavascriptExecutor) driver).executeScript("document.body.style.zoom='100%'");
+
 //        WebDriver driver = new EdgeDriver();
 //        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
