@@ -37,11 +37,12 @@ public class TestInit  {
 
     public WebDriver initDriver(){
         EdgeOptions options = new EdgeOptions();
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--start-maximized");
-         options.addArguments("--headless");
+        options.addArguments("--headless");  // Run Edge in headless mode
+        options.addArguments("--disable-gpu"); // Disable GPU acceleration (for Windows)
+        options.addArguments("--window-size=1920,1080"); // Set viewport size
+        options.addArguments("--no-sandbox"); // Required for CI/CD environments
+        options.addArguments("--disable-dev-shm-usage"); // Avoid memory issues
+
         WebDriver driver = new EdgeDriver(options);
         return driver;
     }
