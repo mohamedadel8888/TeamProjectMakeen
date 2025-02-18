@@ -13,10 +13,14 @@ public class HomePage extends BaseComp {
     protected WebDriver driver;
     private WebDriverWait exWait;
 
+
+
     @FindBy(id = "btn_session_time_out")
     WebElement signOutBtn;
     @FindBy(css = "li[onclick='goto_mainpage();'] a")
     WebElement homePageIconWebElement;
+    @FindBy (id = "divRedirectToQElite")
+    WebElement eliteHomePageIcon;
 
 
 
@@ -38,4 +42,13 @@ public class HomePage extends BaseComp {
         signOutBtn.click();
         return new LoginPage(driver);
     }
+    public void goToElite (){
+        exWait.until(ExpectedConditions.urlContains("MainPage.aspx"));
+        eliteHomePageIcon.click();
+    }
+
+    public WebElement getSignOutBtn() {
+        return signOutBtn;
+    }
+
 }

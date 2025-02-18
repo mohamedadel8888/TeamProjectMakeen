@@ -1,6 +1,7 @@
 package AutomateMakeen.BaseTest;
 
 import AutomateMakeen.Pages.*;
+import AutomateMakeen.Pages.Elite.EliteHomePage;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -29,7 +30,7 @@ public class TestInit  {
     protected String userPasswd = "24602460";
     protected ContentAside contentAside;
     public EditAccountPage editAccountPage;
-    public WebDriver driver;
+    public WebDriver driver ;
     public static LoginPage loginPage;
     public static HomePage homePage;
 
@@ -38,6 +39,7 @@ public class TestInit  {
     public static AddDelegatePage addDelegatePage;
     public static PersonalAccountsPage personalAccountsPage;
     public static EditDelegatePage editDelegatePage;
+    public static EliteHomePage eliteHomePage;
 
     //HijriDates
     protected HijrahDate dateHijriMinus = HijrahDate.now().minus(1, ChronoUnit.DAYS);
@@ -54,7 +56,7 @@ public class TestInit  {
     private String Test_Data_Path = "src/test/resources/TestData/";
 
     public WebDriver initDriver(){
-        WebDriver driver = new EdgeDriver();
+        driver = new EdgeDriver();
         return driver;
     }
 
@@ -64,6 +66,7 @@ public class TestInit  {
         loginPage = new LoginPage(driver);
         contentAside = new ContentAside(driver);
         editAccountPage = new EditAccountPage(driver);
+        eliteHomePage = new EliteHomePage(driver);
 //        Listeners listeners = new Listeners(driver);
     }
 

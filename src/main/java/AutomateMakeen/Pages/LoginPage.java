@@ -52,7 +52,7 @@ public class LoginPage extends BaseComp {
     }
 
     public void goToLoginPage(){
-        driver.get("https://em.alqemam.com/qCMS_Test_v13.4.17 ");
+        driver.get("https://g-line-iis.alqemam.com/qcms_test_v13.7.03/ ");
     }
     public HomePage loginUserWithoutRemMe(String id , String password)
     {
