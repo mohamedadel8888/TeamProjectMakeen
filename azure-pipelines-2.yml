@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
-- main
+- Adel
 pool:
   name: Gline-automation-10.0.0.64
 # schedules:
