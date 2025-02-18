@@ -121,6 +121,8 @@
           <configuration>
             <includes>
               <include>src/test/java/AutomateMakeen/TestPages/TC_LoginPage.java</include>
+              <include>src/test/java/AutomateMakeen/TestPages/TC_HR_EmployeeGrid.java</include>
+              <include>src/test/java/AutomateMakeen/TestPages/TC_Archive_Search_Grid.java</include>
             </includes>
 <!--            <testNGSuite>testng.xml</testNGSuite>-->
           </configuration>

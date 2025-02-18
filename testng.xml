@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Employee page test Suite" >
-    <test preserve-order="true" name="Employee Test">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:/Users/MARWAN.KHALIL/IdeaProjects/Employee">
         <classes>
             <class name="AutomateMakeen.TestPages.TC_LoginPage"/>
-        </classes>
-    </test>
-    <test name="Emp">
-        <classes>
             <class name="AutomateMakeen.TestPages.TC_HR_EmployeeGrid">
                 <methods>
                     <include name="TC_addEmp"/>
@@ -21,11 +17,7 @@
                     <include name="TC_deleteEmp"/>
                 </methods>
             </class>
-        </classes>
-    </test>
-<test name="archive">
-    <classes>
-        <class name="AutomateMakeen.TestPages.TC_Archive_Search_Grid">
+            <class name="AutomateMakeen.TestPages.TC_Archive_Search_Grid">
                 <methods>
                     <include name="TC_showAllBtn"/>
                     <include name="TC_ChangeDateBtn"/>

@@ -34,7 +34,7 @@ public class TC_HR_EmployeeGrid extends TestInit {
         lunchDriver();
         loginPage.goToLoginPage();
         loginPage.clearAllFeild();
-        loginPage.loginUserWithoutRemMe("0342169", "24602460");
+        qCMSHomePage = loginPage.loginUserWithoutRemMe(userID, userPasswd);
         treatmentJobGrid = contentAside.goToTreatmentJob();
         treatmentJobGrid.addNewTreatmentJob(treatmentName,treatmentManagement);
         treatmentJobGrid.goToHomePage();

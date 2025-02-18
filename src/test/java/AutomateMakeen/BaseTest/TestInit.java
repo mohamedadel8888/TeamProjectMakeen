@@ -15,6 +15,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.time.Duration;
 import java.time.LocalTime;
 import java.time.chrono.HijrahDate;
 import java.time.temporal.ChronoUnit;
@@ -36,14 +37,17 @@ public class TestInit  {
     private String Test_Data_Path = "src/test/resources/TestData/";
 
     public WebDriver initDriver(){
-        EdgeOptions options = new EdgeOptions();
-        options.addArguments("--headless");  // Run Edge in headless mode
-        options.addArguments("--disable-gpu"); // Disable GPU acceleration (for Windows)
-        options.addArguments("--window-size=1920,1080"); // Set viewport size
-        options.addArguments("--no-sandbox"); // Required for CI/CD environments
-        options.addArguments("--disable-dev-shm-usage"); // Avoid memory issues
+//        EdgeOptions options = new EdgeOptions();
+//        options.addArguments("--headless");  // Run Edge in headless mode
+//        options.addArguments("--disable-gpu"); // Disable GPU acceleration (for Windows)
+//        options.addArguments("--window-size=1920,1080"); // Set viewport size
+//        options.addArguments("--no-sandbox"); // Required for CI/CD environments
+//        options.addArguments("--disable-dev-shm-usage"); // Avoid memory issues
 
-        WebDriver driver = new EdgeDriver(options);
+//        WebDriver driver = new EdgeDriver(options);
+        WebDriver driver = new EdgeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         return driver;
     }
 
