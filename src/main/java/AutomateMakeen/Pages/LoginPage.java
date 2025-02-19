@@ -13,7 +13,7 @@ import java.time.Duration;
 public class LoginPage extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
-    private final String makeenVersion = "14.0.04";
+    private final String makeenVersion = "14.0.05";
 
 
     @FindBy(id = "txtUserName")
