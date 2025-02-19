@@ -1,0 +1,20 @@
+{
+  "SpecificUser": "1020311",
+  "NameOfSpecificUser": "حمدي حمد حامد الحمدون",
+
+  "ExitsName": "10",
+  "NotExitsName": "150",
+  "DeptHasNoUsers": "''",
+  "DeptHasUsers":"1100",
+  "DeptDefaultChoose": "إخترالادارة",
+
+  "ExitsPageNumber": "20",
+  "NotExitsPageNumber": "350",
+
+  "UserIdGreatThan7": "123456789",
+  "ValidValueGreatThan7": "1234567",
+
+  "UserIdLessThan7": "1234"
+
+
+}
