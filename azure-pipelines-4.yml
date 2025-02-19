@@ -7,16 +7,32 @@ trigger:
 - Adel
 
 pool:
-  name: default
+  name: Gline-automation-10.0.0.64
 
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+# schedules:
+# - cron: "0 14 * * *"
+#   displayName: Daily midnight build
+#   branches:
+#     include:
+#       - main
+jobs:
+- job: RunTests
+  displayName: "Run Tests"
+  timeoutInMinutes: 0
+  steps:
+  - script: |
+      echo "Setting environment variables"
+      echo "JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8" >> $env:JAVA_TOOL_OPTIONS
+    displayName: "Set UTF-8 Encoding"
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      mavenOptions: '-Xmx3072m'
+      javaHomeOption: 'Path'
+      jdkDirectory: 'C:\Program Files\Java\jdk-23'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      mavenAuthenticateFeed: false
+      effectivePomSkip: false
+      sonarQubeRunAnalysis: false
+      goals: 'test -Dsurefire.suiteXmlFiles=testng.xml -Dfile.encoding=UTF-8'
