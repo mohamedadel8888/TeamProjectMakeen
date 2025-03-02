@@ -58,7 +58,7 @@ public class CreateInternalMailPage extends BaseComp {
     private By DivDropDownType = By.cssSelector(".dropdown-menu.show"); /*قائمة بريد سري و معاملة عاجله  */
         private By secertMail = By.cssSelector("label[for='chk_secretMail']"); /*بريد سري */
         private By urgentTreat = By.cssSelector("label[for='chk_urgentTreat']"); /*معاملة عاجلة */
-    private By addAttachment = By.id ("chk_secretMail"); /*اضافة المرفقات ============================================ */
+    private By addAttachment = By.id ("chk_secretMail");/*اضافة المرفقات ============================================ */
 
 //    private By popUpDocType = By.id("ContentdocTypesPopUpdocTypeModal"); /*بوب اب نوع المستند */
 //        private By docTypeTextPop =By.id("txt_docTypesPopUpConainerDOCUMENTID"); /*رقم /نوع المستند */

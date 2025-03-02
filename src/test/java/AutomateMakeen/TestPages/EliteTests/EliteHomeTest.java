@@ -1,10 +1,7 @@
 package AutomateMakeen.TestPages.EliteTests;
 
 import AutomateMakeen.BaseTest.TestInit;
-import AutomateMakeen.Pages.Elite.CreateInternalMailPage;
 import AutomateMakeen.Pages.HomePage;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;

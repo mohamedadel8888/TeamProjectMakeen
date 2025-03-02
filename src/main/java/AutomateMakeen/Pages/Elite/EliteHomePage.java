@@ -53,8 +53,8 @@ public class EliteHomePage extends BaseComp {
         List<WebElement> l3 = driver.findElements(By.xpath("//span[text()='الموارد البشرية']/../../../div/ul/li"));
         l1.get(0).click();
         l2.get(2).click();
-        CreateInternalMailPage page = new CreateInternalMailPage(driver) ;
-        return page;
+        CreateInternalMailPage page1 = new CreateInternalMailPage(driver) ;
+        return page1;
     }
     public SentPage goToSent(){ /*الدخول الى الصادر */
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(mainPage)));
@@ -64,7 +64,27 @@ public class EliteHomePage extends BaseComp {
         List<WebElement> l3 = driver.findElements(By.xpath("//span[text()='الموارد البشرية']/../../../div/ul/li"));
         l1.get(0).click();
         l2.get(1).click();
-        SentPage page = new SentPage(driver);
-        return page;
+        SentPage page2 = new SentPage(driver);
+        return page2;
+    }
+    public InboxPage goToInbox(){      /*الدخول الى الوارد */
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(mainPage)));
+        driver.findElement(sideMenu).click();
+        List<WebElement> l1 = driver.findElements(By.cssSelector(".sidemenu__text"));
+        List<WebElement> l2 = driver.findElements(By.xpath("//span[text()='بريد']/../../../div/ul/li"));
+        l1.get(0).click();
+        l2.get(0).click();
+        InboxPage page3 = new InboxPage(driver);
+        return page3;
+    }
+    public MsgsAndGeneralsPage goToMessagesAndGeneralizations(){      /*الدخول الى رسائل وتعميمات */
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(mainPage)));
+        driver.findElement(sideMenu).click();
+        List<WebElement> l1 = driver.findElements(By.cssSelector(".sidemenu__text"));
+        List<WebElement> l2 = driver.findElements(By.xpath("//span[text()='بريد']/../../../div/ul/li"));
+        l1.get(0).click();
+        l2.get(3).click();
+        MsgsAndGeneralsPage page4 = new MsgsAndGeneralsPage(driver);
+        return page4;
     }
 }
