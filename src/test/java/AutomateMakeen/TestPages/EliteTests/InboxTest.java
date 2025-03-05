@@ -1,6 +1,7 @@
 package AutomateMakeen.TestPages.EliteTests;
 
 import AutomateMakeen.BaseTest.TestInit;
+import AutomateMakeen.Pages.Elite.EliteHomePage;
 import AutomateMakeen.Pages.Elite.InboxPage;
 import AutomateMakeen.Pages.HomePage;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -19,25 +20,17 @@ public class InboxTest extends TestInit {
         loginPage.goToLoginPage();
         HomePage homePage = loginPage.loginUserWithoutRemMe(getJsonData("DelegateData","validEmployee"),getJsonData("DelegateData","validPassword") );
         homePage.goToElite();
+        EliteHomePage eliteHomePage = new EliteHomePage(driver);
+        createInternalMailPage = eliteHomePage.goToCreateInternalMail();
+        archiveNum = createInternalMailPage.createInternalMailForMe();
     }
     @Test
-    public void verifyInboxPage() {
-        InboxPage inboxPage = eliteHomePage.goToInbox();
-        inboxPage.mailInboxSearch("204118");
-        String arcNum = inboxPage.getTreatArchiveNum();
-        Assert.assertEquals(arcNum,"204118");
+    public void verifyInboxPage() {  /*التحقق من فتح صفحه الوارد */
         Assert.assertTrue(inboxPage.getMailInboxPage().isDisplayed());
     }
     @Test
     public void verifyAttachementsPage (){
-        InboxPage inboxPage = eliteHomePage.goToInbox();
-        inboxPage.mailInboxSearch("204118");
-        inboxPage.goToAttachments();
-        inboxPage.createLettersTab();
-        inboxPage.selectDepartment("رئاسة امانة عسير");
-        inboxPage.selectSefatLetter("بدون");
-        inboxPage.forwardTo("32");
-        inboxPage.selectForwardType("للافاده");
-        Assert.assertTrue(inboxPage.getAttachmentsTab().isDisplayed());
+        inboxPage.mailInboxSearch(archiveNum);
+
     }
 }

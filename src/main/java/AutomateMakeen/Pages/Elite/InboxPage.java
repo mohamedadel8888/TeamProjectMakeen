@@ -82,8 +82,6 @@ public class InboxPage extends BaseComp {
 
 
 
-
-
     public WebElement getMailInboxPage() {   /*ارجاع صفحه الوارد */
         WebElement mailInboxPage = driver.findElement(inboxPage);
         return mailInboxPage;

@@ -1,7 +1,9 @@
 package AutomateMakeen.BaseTest;
 
 import AutomateMakeen.Pages.*;
+import AutomateMakeen.Pages.Elite.CreateInternalMailPage;
 import AutomateMakeen.Pages.Elite.EliteHomePage;
+import AutomateMakeen.Pages.Elite.InboxPage;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -24,6 +26,7 @@ public class TestInit  {
     protected String userPasswd = "24602460";
     protected ContentAside contentAside;
     public EditAccountPage editAccountPage;
+    public String archiveNum;
     public WebDriver driver ;
     public static LoginPage loginPage;
     public static HomePage homePage;
@@ -34,6 +37,8 @@ public class TestInit  {
     public static PersonalAccountsPage personalAccountsPage;
     public static EditDelegatePage editDelegatePage;
     public static EliteHomePage eliteHomePage;
+    public static CreateInternalMailPage createInternalMailPage;
+    public static InboxPage inboxPage;
 
     //HijriDates
     protected HijrahDate dateHijriMinus = HijrahDate.now().minus(1, ChronoUnit.DAYS);
@@ -49,18 +54,21 @@ public class TestInit  {
 
     private String Test_Data_Path = "src/test/resources/TestData/";
 
+
     public WebDriver initDriver(){
         driver = new EdgeDriver();
         return driver;
     }
 
 
-    public void lunchDriver(){
+    public void lunchDriver() {
         driver = initDriver();
         loginPage = new LoginPage(driver);
         contentAside = new ContentAside(driver);
         editAccountPage = new EditAccountPage(driver);
         eliteHomePage = new EliteHomePage(driver);
+        createInternalMailPage = new CreateInternalMailPage(driver);
+        inboxPage = new InboxPage(driver);
 //        Listeners listeners = new Listeners(driver);
     }
 
@@ -95,6 +103,7 @@ public class TestInit  {
 
         }
     }
+
 
     public void quitDriver(){
         driver.quit();

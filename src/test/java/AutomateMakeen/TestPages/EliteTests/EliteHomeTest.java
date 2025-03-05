@@ -22,6 +22,7 @@ public class EliteHomeTest extends TestInit {
 
     @Test
     public void verifyEliteHome() {
+
         Assert.assertTrue(eliteHomePage.getEliteHomePage().isDisplayed());
     }
 
