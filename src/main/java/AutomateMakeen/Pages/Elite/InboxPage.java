@@ -36,33 +36,195 @@ public class InboxPage extends BaseComp {
     /*======================================================اجــراءات المــعامـلـة =======================================================*/
 
     private By explanation = By.id("btn_explanation"); /*الشروحات */
+    private By explanationTab = By.cssSelector(".outbox_explaination"); /*تاب الشروحات */
     private By attachments = By.id("btn_attachments"); /*المرفقات */
     private By attachmentsTab = By.xpath("//div[@class='body_inbox_content']//div[@id='div_conatiner_attach']"); /*تاب المرفقات*/
+
+    public boolean goToExplanations (){  /*فتح تاب الشروحات والتأكد من فتحها*/
+        driver.findElement(explanation).click();
+        WebElement explanationTab1  = driver.findElement(explanationTab);
+        exWait.until(ExpectedConditions.visibilityOf(explanationTab1));
+        return explanationTab1.isDisplayed();
+    }
+
+
+    private By letterTab = By.cssSelector("#letterContainer"); /*تاب الخطاب و تاب العروض و تاب المذكرة*/
+    private By ddlDepartments = By.id("drp_letter_header_depts"); /* من الادارة */
+    private By editingTab = By.cssSelector("#div_letter_editing_container");
+
+
+
+
+
+
+    public void selectDepartment(String department){ /*اختيار من الادارة */
+        WebElement ddlDepartments1 = driver.findElement(ddlDepartments);
+        ddlDepartments1.click();
+        List<WebElement> l1 = driver.findElements(By.cssSelector("#drp_letter_header_depts_collapsibleDiv"));
+        l1.get(0).click();
+        ddlDepartments1.click();
+    }
+
+    public void forwardTo (String forwardToName) {  /*اختيار موجه الى*/
+        WebElement forwarding = driver.findElement(forwardToBtn);
+        forwarding.click();
+        By forwardingDiv = By.id("ContentLetterReciversPopUpModal");
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(forwardingDiv)));
+        By searchText = By.id("txt_letterReciversPopUpContainerID");
+        WebElement searchTextElement = driver.findElement(searchText);
+        searchTextElement.sendKeys(forwardToName);
+        WebElement SearchBtn = driver.findElement(By.cssSelector(".qBtn.d-flex.justify-content-center.align-content-center.gap-1.px-3"));
+        SearchBtn.click();
+        WebElement checkbox1 = driver.findElement(By.cssSelector("label[for='tblGridLetterReciversPopUp1']"));
+        checkbox1.click();
+    }
+
+
+    public void subject(String subject1) { /*موضوع الخطاب والعرض والمذكرة*/
+        driver.findElement(subject).sendKeys(subject1);
+    }
+
+    public void addModel (String text){   /*اختيار نموذج*/
+        driver.findElement(addModel).click();
+        WebElement textSearch1 = driver.findElement(textSearch);
+        exWait.until(ExpectedConditions.visibilityOf(textSearch1));
+        textSearch1.sendKeys(text);
+        driver.findElement(By.xpath("//a[contains(text(),'"+text+"')]")).click();
+    }
+
+    public void send (){  /*حفظ وارسال */
+        driver.findElement(savebutton).click();
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(div)));
+        WebElement btnOk1 = driver.findElement(btnOk);
+        btnOk1.click();
+    }
+
+    public boolean statusDone (){    /*حاله صفحه الانشاء */
+        boolean docStatus = driver.findElement(editingTab).getAttribute("style").equals("display: none;");
+        return docStatus;
+    }
+
+
+
+    /*========================================================================*/
+                                    /*الخطاب*/
     /*========================================================================*/
     private By letters = By.id("btn_letter_display"); /*الخطاب*/
-        private By ddlDepartments = By.id("drp_letter_header_depts"); /* من الادارة */
+
+
         private By getDdlDepartmentsDiv = By.id("drp_letter_header_depts_collapsibleDiv"); /* ديف الادارة */
         private By sefatLetterDdl = By.cssSelector("div[onclick='externalLetter.clearLetterTypesDDLText(event)']"); /*صفه الخطاب */
         private By getDdlSefatLetterTextSearch = By.id("txt_letterTypesSrch"); /* حقل البحث في صفه الخطاب */
         private By forwardToBtn =By.id("btnOriginalReciever");/*زر اختيار موجه الي */
         private By forwardTypeDdl = By.id("div_drpPurpsContainer");  /* اختيار نوع التوجيه */
+        private By subject = By.id("txt_subject"); /*موضوع الخطاب */
+        private By addModel = By.cssSelector("div[onclick='htmlEditor.clearLetterTemplatesDDLText()']"); /* ddl add model */
+            private By textSearch = By.id("txt_letterTemplatesSrch"); /*البحث*/
+        private By savebutton = By.cssSelector("button[onclick='inboxDetailsObj.saveLetter()']"); /*زر حفظ*/
+        private By div = By.cssSelector("div[id='dynamicModalDialog'] div[class='modal-content']"); /*ديف موافق او الغاء*/
+        private By btnOk = By.cssSelector("#btnOk"); /*زر موافق*/
 
 
 
+    public void lettersTab(){  /*تاب انشاء خطاب*/
+        WebElement letters1 = driver.findElement(letters);
+        letters1.click();
+        WebElement lettersTab1 = driver.findElement(letterTab);
+        exWait.until(ExpectedConditions.visibilityOf(lettersTab1));
+    }
+    public void selectSefatLetter(String sefatLetter){ /*اختيار صفه الخطاب */
+        WebElement sefatLetterDdl1 = driver.findElement(sefatLetterDdl);
+        sefatLetterDdl1.click();
+        WebElement sefatLetterSearch = driver.findElement(getDdlSefatLetterTextSearch);
+        sefatLetterSearch.sendKeys(sefatLetter);
+        WebElement firstElement = driver.findElement(By.xpath("//a[normalize-space()='"+sefatLetter+"']"));
+        firstElement.click();
+    }
 
+    public void selectForwardType (String name){     /*اختيار نوع التوجية*/
+        WebElement forwardTypeDdl1 = driver.findElement(forwardTypeDdl);
+        forwardTypeDdl1.click();
+        WebElement forwardType = driver.findElement(By.xpath("(//a[contains(text(),'"+name+"')])"));
+        forwardType.click();
+    }
 
-
+    /*========================================================================*/
+                                  /*العرض*/
+    /*========================================================================*/
     private By offers = By.id("btn_offerletter_display"); /*العروض*/
-    private By internalMemo = By.id("btn_letter_display"); /*مذكرة داخلية*/
+    private By receiverAlias = By.id("txt_RecieverAlias"); /*مسمى الموجه اليه*/
+
+
+    public void offersTab (){  /*الدخول لتاب العروض */
+        WebElement offers1 = driver.findElement(offers);
+        offers1.click();
+        WebElement offersTab1 = driver.findElement(letterTab);
+        exWait.until(ExpectedConditions.visibilityOf(offersTab1));
+    }
+    public void receiverAlias (String alias){ /*مسمى الموجه اليه*/
+        driver.findElement(receiverAlias).sendKeys(alias);
+    }
+
+    /*========================================================================*/
+                                  /*المذكرة*/
+    /*========================================================================*/
+    private By internalMemo = By.id("div_internalMemoIcon"); /*مذكرة داخلية*/
+    private By chkBoxDesc = By.id("chk_isDecision"); /*تشك بوكس قرار*/
+
+    public void internalMemoTab (){ /*فتح تاب انشاء مذكرة*/
+        WebElement internalMemo1 = driver.findElement(internalMemo);
+        internalMemo1.click();
+        WebElement internalMemoTab1 = driver.findElement(letterTab);
+        exWait.until(ExpectedConditions.visibilityOf(internalMemoTab1));
+    }
+    public void setChkBoxDesc (){  /*تحديد تشك بوكس قرار*/
+        WebElement chkBoxDesc1 = driver.findElement(chkBoxDesc);
+        chkBoxDesc1.click();
+    }
+
     private By preview = By.id("btn_PreviewLetter"); /*المعاينة*/
+
+    /*========================================================================*/
+                                /*ملاحظات التصدير*/
+    /*========================================================================*/
     private By exportNotes = By.id("btn_ExportNotes"); /*ملاحظات التصدير*/
+    private By exportNotesTab = By.xpath("//div[@class='wrapper_head_title d-flex'][contains(text(),'ملاحظات التصدير')]"); /* تاب ملاحظات التصدير*/
+    private By addExportNotes = By.cssSelector(".btn_add_note.d-flex.align-items-center"); /*زر اضف ملاحظة*/
+    private By divAddNotes = By.cssSelector("div[id='addNotesModal'] div[class='modal-content']"); /*نافذة اضف ملاحظة*/
+    private By notesText = By.cssSelector("#txt_exportNote"); /*حقل النص*/
+    private By saveNote = By.cssSelector("#btn_saveExportNote"); /*زر حفظ*/
+
+    public void exportNotes(){
+        WebElement exportNotes1 = driver.findElement(exportNotes);
+        exportNotes1.click();
+        WebElement exportNotesTab1 = driver.findElement(exportNotesTab);
+        exWait.until(ExpectedConditions.visibilityOf(exportNotesTab1));
+    }
+    public void addExportNotes(String text) {
+        WebElement addExportNotes1 = driver.findElement(addExportNotes);
+        addExportNotes1.click();
+        WebElement divAddNotes1 = driver.findElement(divAddNotes);
+        exWait.until(ExpectedConditions.visibilityOf(divAddNotes1));
+        WebElement textField = driver.findElement(notesText);
+        textField.sendKeys(text);
+        WebElement saveNote1 = driver.findElement(saveNote);
+        exWait.until(ExpectedConditions.elementToBeClickable(saveNote1));
+        saveNote1.click();
+    }
+    public String getNotesContent(){
+        WebElement content = driver.findElement(By.xpath("(//p[@class='d-flex gap-2'])[1]"));
+        return content.getText();
+    }
+
+
+
     private By forward = By.id("btn_forward"); /*إحالة*/
     private By forwardToSave = By.id("btn_forwardForSave"); /*إحالة للحفظ */
     private By forwardToSign = By.id("btn_ForwardToSign"); /* إحالة للتوقيع */
     private By backToSource = By.id("btn_backToSource"); /*إعادة للمصدر*/
     private By btnMore = By.id("btn_more_options"); /*زر المزيد */
     private By marking = By.id("btn_Vice"); /*تأشير*/
-        private By markingAndreferToAgent = By.xpath("//a[contains(text(),'تأشير و إحالة للوكيل')]"); /*تأشير و إحاله الى الوكيل */
+        private By markingAndreferToAgent = By.xpath("//a[contains(text(),'تأشير و إحالة للوكيل')]");  /*تأشير و إحاله الى الوكيل */
         private By markingAndreferToCustomEmp = By.xpath("//a[contains(text(),'تأشير إلي موظف محدد')]"); /*تأشير الى موظف محدد*/
     private By sign = By.id("btn_sign"); /*توقيع*/
         private By signWithAuthority = By.xpath("//a[contains(text(),'توقيع بتفويض')]"); /* توقيع بتفويض */
@@ -98,7 +260,7 @@ public class InboxPage extends BaseComp {
         WebElement perview1 = driver.findElement(perview);
         perview1.click();
     }
-    public void sortingBtn (){   /*زر ترتيب*/
+    public void sortingBtn (){   /*زر ترتيب*//*========*/
         WebElement sortBtn = driver.findElement(sorting);
         sortBtn.click();
     }
@@ -108,12 +270,14 @@ public class InboxPage extends BaseComp {
         actions.moveToElement(details).perform();
         WebElement treatArchiveNum = driver.findElement(By.xpath("//table[@class='info-comp-table-list']/tr/th[text()='الأرشيف']/following-sibling::td[1]"));
         String archive = treatArchiveNum.getText();
+        actions.moveToElement(details).click().perform();
         return archive;
     }
     /*========================================================================*/
     public void goToAttachments(){ /*فتح المرفقات */
         WebElement attachments1 = driver.findElement(attachments);
         attachments1.click();
+
     }
 
     public WebElement getAttachmentsTab (){ /*ارجاع تاب المرفقات */
@@ -121,55 +285,12 @@ public class InboxPage extends BaseComp {
         return attachments1;
     }
     /*========================================================================*/
-    public void createLettersTab (){
-        WebElement letters1 = driver.findElement(letters);
-        letters1.click();
-    }
-    public void selectDepartment(String department){ /*اختيار من الادارة */
-        WebElement ddlDepartments1 = driver.findElement(ddlDepartments);
-        ddlDepartments1.click();
-        List<WebElement> l1 = driver.findElements(By.cssSelector("#drp_letter_header_depts_collapsibleDiv"));
-        l1.get(0).click();
-    }
-    public void selectSefatLetter(String sefatLetter){ /*اختيار صفه الخطاب */
-    WebElement sefatLetterDdl1 = driver.findElement(sefatLetterDdl);
-    sefatLetterDdl1.click();
-    WebElement sefatLetterSearch = driver.findElement(getDdlSefatLetterTextSearch);
-    sefatLetterSearch.sendKeys(sefatLetter);
-    WebElement firstElement = driver.findElement(By.xpath("//a[normalize-space()='"+sefatLetter+"']"));
-    firstElement.click();
-    }
-    public void forwardTo (String forwardToName) {  /*اختيار موجه الى*/
-        WebElement forwarding = driver.findElement(forwardToBtn);
-        forwarding.click();
-        By forwardingDiv = By.id("ContentLetterReciversPopUpModal");
-        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(forwardingDiv)));
-        By searchText = By.id("txt_letterReciversPopUpContainerID");
-        WebElement searchTextElement = driver.findElement(searchText);
-        searchTextElement.sendKeys(forwardToName);
-        WebElement SearchBtn = driver.findElement(By.cssSelector(".qBtn.d-flex.justify-content-center.align-content-center.gap-1.px-3"));
-        SearchBtn.click();
-        WebElement checkbox1 = driver.findElement(By.cssSelector("label[for='tblGridLetterReciversPopUp1']"));
-        checkbox1.click();
-    }
-    public void selectForwardType (String name){     /*اختيار نوع التوجية*/
-        WebElement forwardTypeDdl1 = driver.findElement(forwardTypeDdl);
-        forwardTypeDdl1.click();
-        WebElement forwardType = driver.findElement(By.xpath("(//a[contains(text(),'"+name+"')])"));
-        forwardType.click();
-    }
 
 
     /*========================================================================*/
-    public void createOfferTab (){ /*فتح تاب انشاء عرض*/
-        WebElement offers1 = driver.findElement(offers);
-        offers1.click();
-    }
+
     /*========================================================================*/
-    public void createMozakeraTab (){ /*فتح تاب انشاء مذكرة*/
-        WebElement internalMomo1 = driver.findElement(internalMemo);
-        internalMomo1.click();
-    }
+
     /*========================================================================*/
     public void openReview (){ /*فتح معاينة*/
         WebElement preview1 = driver.findElement(preview);
