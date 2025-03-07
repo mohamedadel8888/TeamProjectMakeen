@@ -191,8 +191,10 @@ public class InboxPage extends BaseComp {
     private By exportNotesTab = By.xpath("//div[@class='wrapper_head_title d-flex'][contains(text(),'ملاحظات التصدير')]"); /* تاب ملاحظات التصدير*/
     private By addExportNotes = By.cssSelector(".btn_add_note.d-flex.align-items-center"); /*زر اضف ملاحظة*/
     private By divAddNotes = By.cssSelector("div[id='addNotesModal'] div[class='modal-content']"); /*نافذة اضف ملاحظة*/
-    private By notesText = By.cssSelector("#txt_exportNote"); /*حقل النص*/
-    private By saveNote = By.cssSelector("#btn_saveExportNote"); /*زر حفظ*/
+    private By notesText = By.id("txt_exportNote"); /*حقل النص*/
+    private By saveNote = By.id("btn_saveExportNote"); /*زر حفظ*/
+    private By confirmationDiv = By.id("div_confirmSavePopover"); /*نافذة هل تريد بالتأكيد الحفظ*/
+    private By btnYes = By.id("btn_agreeExportNote"); /*زر موافق*/
 
     public void exportNotes(){
         WebElement exportNotes1 = driver.findElement(exportNotes);
@@ -208,8 +210,11 @@ public class InboxPage extends BaseComp {
         WebElement textField = driver.findElement(notesText);
         textField.sendKeys(text);
         WebElement saveNote1 = driver.findElement(saveNote);
-        exWait.until(ExpectedConditions.elementToBeClickable(saveNote1));
         saveNote1.click();
+        WebElement confirmationDiv1 = driver.findElement(confirmationDiv);
+        exWait.until(ExpectedConditions.visibilityOf(confirmationDiv1));
+        WebElement btnYes1 = driver.findElement(btnYes);
+        btnYes1.click();
     }
     public String getNotesContent(){
         WebElement content = driver.findElement(By.xpath("(//p[@class='d-flex gap-2'])[1]"));
