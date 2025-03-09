@@ -3,11 +3,13 @@ package AutomateMakeen.TestPages.EliteTests;
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.Elite.EliteHomePage;
 import AutomateMakeen.Pages.Elite.InboxPage;
+import AutomateMakeen.Pages.Elite.SentPage;
 import AutomateMakeen.Pages.HomePage;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.FileNotFoundException;
@@ -15,6 +17,7 @@ import java.time.Duration;
 
 public class InboxTest extends TestInit  {
     WebDriverWait ex;
+    private String currentTest;
     String myDepartment;
     String sefatLetter;
     String mySubject;
@@ -45,6 +48,8 @@ public class InboxTest extends TestInit  {
             receiverAlias = getJsonData("CreateInternalMailDataElite", "receiverAlias"); /*مسمى الموجه اليه*/
             exportedNotes = getJsonData("CreateInternalMailDataElite", "exportedNotes");
         }
+
+
         @Test  (priority = 1) /*pre condititons :
                 -ان يكون مسجل الدخول لدية صلاحية الدخول للنظام
                 - لدية صلاحية الشاشة الرئيسية للنخبة
@@ -65,6 +70,7 @@ public class InboxTest extends TestInit  {
         }
         @Test (priority = 4)
         public void checkCreateLetter () {  /*انشاء خطاب */
+            currentTest = "checkCreateLetter";
             inboxPage.lettersTab();
             inboxPage.selectDepartment(myDepartment);
             inboxPage.selectSefatLetter(sefatLetter);
@@ -78,6 +84,7 @@ public class InboxTest extends TestInit  {
         }
         @Test (priority = 5)
         public void checkCreateOffer () { /*انشاء عرض*/
+            currentTest = "checkCreateOffer";
             inboxPage.offersTab();
             inboxPage.selectDepartment(myDepartment);
             inboxPage.forwardTo(forwardToOffer);
@@ -90,6 +97,7 @@ public class InboxTest extends TestInit  {
         }
         @Test (priority = 6)
         public void checkCreateInternalMemo () { /*انشاء مذكرة داخلية*/
+            currentTest = "checkCreateInternalMemo";
             inboxPage.internalMemoTab();
             inboxPage.selectDepartment(myDepartment);
             inboxPage.setChkBoxDesc();
@@ -101,6 +109,16 @@ public class InboxTest extends TestInit  {
             Assert.assertTrue(inboxPage.statusDone());
         }
         @Test (priority = 7)
+        public void signLetter (){
+            inboxPage.lettersTab();
+            inboxPage.goToSign();
+            inboxPage.signConfirm();
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            String archive = sentPage.getTreatArchiveNum();
+            Assert.assertEquals(archive, archiveNum);
+        }
+        @Test (priority = 8)
         public void addExportNotes (){
             inboxPage.exportNotes();
             inboxPage.addExportNotes(exportedNotes);

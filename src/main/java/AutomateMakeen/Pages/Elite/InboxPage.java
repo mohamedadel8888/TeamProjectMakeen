@@ -2,6 +2,7 @@ package AutomateMakeen.Pages.Elite;
 
 import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -207,8 +208,13 @@ public class InboxPage extends BaseComp {
         addExportNotes1.click();
         WebElement divAddNotes1 = driver.findElement(divAddNotes);
         exWait.until(ExpectedConditions.visibilityOf(divAddNotes1));
-        WebElement textField = driver.findElement(notesText);
-        textField.sendKeys(text);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement textarea = wait.until(ExpectedConditions.elementToBeClickable(notesText));
+        textarea.sendKeys(text);
+
+        /*WebElement textField = driver.findElement(notesText);
+        textField.sendKeys(text);*/
         WebElement saveNote1 = driver.findElement(saveNote);
         saveNote1.click();
         WebElement confirmationDiv1 = driver.findElement(confirmationDiv);
@@ -228,10 +234,59 @@ public class InboxPage extends BaseComp {
     private By forwardToSign = By.id("btn_ForwardToSign"); /* إحالة للتوقيع */
     private By backToSource = By.id("btn_backToSource"); /*إعادة للمصدر*/
     private By btnMore = By.id("btn_more_options"); /*زر المزيد */
+
+
+
+    /*========================================================================*/
+                                /* تأشير*/
+    /*========================================================================*/
     private By marking = By.id("btn_Vice"); /*تأشير*/
+    private By viceDiv = By.id("spViceLetterPopUpTitle");
+    private By btnConfirmVice = By.cssSelector("#btnConfirmViceAction");  /*زر تأكيد */
+
+    public void goToVice (){ /*فتح تاب تأشير */
+        WebElement vice1 = driver.findElement(marking);
+        vice1.click();
+        WebElement viceDiv1 = driver.findElement(viceDiv);
+        exWait.until(ExpectedConditions.visibilityOf(viceDiv1));
+    }
+    public void confirmVice (){
+        WebElement btnConfirmVice1 = driver.findElement(btnConfirmVice);
+        btnConfirmVice1.click();
+    }
+
+
+
+
+
+
         private By markingAndreferToAgent = By.xpath("//a[contains(text(),'تأشير و إحالة للوكيل')]");  /*تأشير و إحاله الى الوكيل */
         private By markingAndreferToCustomEmp = By.xpath("//a[contains(text(),'تأشير إلي موظف محدد')]"); /*تأشير الى موظف محدد*/
+
+
+    /*========================================================================*/
+                                  /* التوقيع*/
+    /*========================================================================*/
+
     private By sign = By.id("btn_sign"); /*توقيع*/
+    private By signDiv = By.cssSelector("#spViceLetterPopUpTitle");
+    private By btnConfirm = By.cssSelector("#btnConfirmViceAction");  /*زر تأكيد */
+
+    public void goToSign (){ /*فتح تاب توقيع*/
+        WebElement sign1 = driver.findElement(sign);
+        sign1.click();
+        WebElement signDiv1 = driver.findElement(signDiv);
+        exWait.until(ExpectedConditions.visibilityOf(signDiv1));
+    }
+    public void signConfirm (){
+        WebElement btnConfirm1 = driver.findElement(btnConfirm);
+        btnConfirm1.click();
+    }
+
+
+
+
+
         private By signWithAuthority = By.xpath("//a[contains(text(),'توقيع بتفويض')]"); /* توقيع بتفويض */
     private By assetsRequest = By.id("btn_AssetsRequest"); /*طلب أصول*/
     private By tempSave = By.id("btn_TempSaveForTreatment"); /*حفظ مؤقت*/
@@ -317,10 +372,7 @@ public class InboxPage extends BaseComp {
         forwardToSave1.click();
     }
     /*========================================================================*/
-    public void goToSign (){ /*فتح تاب توقيع*/
-        WebElement sign1 = driver.findElement(sign);
-        sign1.click();
-    }
+
     /*========================================================================*/
     public void goForwardToSign (){ /*فتح تاب احالة للتوقيع*/
         WebElement forwardToSign1 = driver.findElement(forwardToSign);
