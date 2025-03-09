@@ -27,6 +27,8 @@ public class InboxTest extends TestInit  {
     String addModel;
     String receiverAlias;
     String exportedNotes;
+    String empName;
+    String deptName2;
 
     @BeforeClass
         public void setUp () throws FileNotFoundException {
@@ -47,6 +49,9 @@ public class InboxTest extends TestInit  {
             addModel = getJsonData("CreateInternalMailDataElite", "addModel");
             receiverAlias = getJsonData("CreateInternalMailDataElite", "receiverAlias"); /*مسمى الموجه اليه*/
             exportedNotes = getJsonData("CreateInternalMailDataElite", "exportedNotes");
+            empName = getJsonData("CreateInternalMailDataElite", "empName"); /*اسم الموظف*/
+            deptName2 = getJsonData("CreateInternalMailDataElite", "deptName2"); /*اسم الادارة احالة*/
+
         }
 
 
@@ -118,6 +123,18 @@ public class InboxTest extends TestInit  {
             String archive = sentPage.getTreatArchiveNum();
             Assert.assertEquals(archive, archiveNum);
         }
+        @Test (priority = 9)
+        public void forwardLetter () {
+            inboxPage.goToForwardTab();
+            inboxPage.forwardToCustomEmp(deptName2,empName,forwardType);
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            String archive = sentPage.getTreatArchiveNum();
+            Assert.assertEquals(archive, archiveNum);
+        }
+
+
+
         @Test (priority = 8)
         public void addExportNotes (){
             inboxPage.exportNotes();
