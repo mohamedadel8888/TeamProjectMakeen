@@ -22,6 +22,7 @@ public class SentPage extends BaseComp {
     private By searchText = By.id("txt_recNameSrch"); /*شريط البحــث */
     private By searchButton = By.cssSelector(".search_bar__actions"); /*زر البحث */
     private By treatDetails = By.xpath("(//div[@class='info-comp']/span[@class='i-icon'])[1]"); /*تفاصيل المعاملة */
+    private By sentToDetails = By.cssSelector("div[id='i_senderTo_info'] span[class='i-icon']"); /*تفاصيل المرسل اليه*/
 
     private By treatSubject = By.id("p_treatment_subject"); /*موضوع المعاملة */
         private By allDetails = By.xpath("//table[@class='info-comp-table-list']/tr/th[text()='']/following-sibling::td[1]"); /*ارجاع قيمة اي حقل في تفاصيل المعاملة بكتابة اسم الحقل بين ''*/
@@ -67,6 +68,30 @@ public class SentPage extends BaseComp {
         String archive = treatArchiveNum.getText();
         return archive;
     }
+    public String getTreatDirecting (){ /*ارجاع التوجيه */
+        WebElement details = driver.findElement(treatDetails);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(details).perform();
+        WebElement treatDirecting = driver.findElement(By.xpath("//table[@class='info-comp-table-list']/tr/th[text()='التوجية']/following-sibling::td[1]"));
+        String treatDirecting1 = treatDirecting.getText();
+        return treatDirecting1;
+    }
+
+
+
+
+    public String getDepartmentName (){ /*ارجاع ادارة المرسل اليه */
+        WebElement details = driver.findElement(sentToDetails);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(details).perform();
+        WebElement departmentField = driver.findElement(By.xpath("//table/tr/th[text()='الإدارة']/following-sibling::td"));
+        String departmentName = departmentField.getText();
+        return departmentName;
+    }
+
+
+
+
     public String getTreatSource (){ /*ارجاع مصدر المعاملة  */
         WebElement details = driver.findElement(treatDetails);
         Actions actions = new Actions(driver);

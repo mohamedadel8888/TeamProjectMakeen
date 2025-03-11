@@ -2,14 +2,12 @@ package AutomateMakeen.TestPages.EliteTests;
 
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.Elite.EliteHomePage;
-import AutomateMakeen.Pages.Elite.InboxPage;
 import AutomateMakeen.Pages.Elite.SentPage;
 import AutomateMakeen.Pages.HomePage;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.FileNotFoundException;
@@ -17,19 +15,27 @@ import java.time.Duration;
 
 public class InboxTest extends TestInit  {
     WebDriverWait ex;
-    private String currentTest;
     String myDepartment;
     String sefatLetter;
     String mySubject;
     String forwardToOffer;
     String forwardToLetter;
     String forwardType;
+    String forwardName;
     String addModel;
     String receiverAlias;
     String exportedNotes;
+    String employeeName;
+    String employeeDepartment;
 
     @BeforeClass
-        public void setUp () throws FileNotFoundException {
+        public void setUp () throws FileNotFoundException {  /*pre condititons :
+                                                                                                -ان يكون مسجل الدخول لدية صلاحية الدخول للنظام
+                                                                                                - لدية صلاحية الشاشة الرئيسية للنخبة
+                                                                                                - صلاحية بريد النخية
+                                                                                                - صلاحية التأشير
+                                                                                                - صلاحية التوقيع
+            */
             lunchDriver();
             loginPage.goToLoginPage();
             HomePage homePage = loginPage.loginUserWithoutRemMe(getJsonData("DelegateData", "validEmployee"), getJsonData("DelegateData", "validPassword"));
@@ -44,17 +50,14 @@ public class InboxTest extends TestInit  {
             forwardToOffer = getJsonData("CreateInternalMailDataElite", "forwardNumOffer");
             forwardToLetter = getJsonData("CreateInternalMailDataElite", "forwardNumLetter");
             forwardType = getJsonData("CreateInternalMailDataElite", "forwardType");
+            forwardName = getJsonData("CreateInternalMailDataElite", "forwardName"); /*اسم ادارة الموجه اليه*/
             addModel = getJsonData("CreateInternalMailDataElite", "addModel");
             receiverAlias = getJsonData("CreateInternalMailDataElite", "receiverAlias"); /*مسمى الموجه اليه*/
             exportedNotes = getJsonData("CreateInternalMailDataElite", "exportedNotes");
+            employeeName = getJsonData("CreateInternalMailDataElite", "employeeName"); /*اسم الموظف*/
+            employeeDepartment = getJsonData("CreateInternalMailDataElite", "employeeDepartment"); /*اسم ادارة الموظف*/
         }
-
-
-        @Test  (priority = 1) /*pre condititons :
-                -ان يكون مسجل الدخول لدية صلاحية الدخول للنظام
-                - لدية صلاحية الشاشة الرئيسية للنخبة
-                - صلاحية بريد النخية
-            */
+        @Test  (priority = 1)
         public void verifyInboxPage () {  /*التحقق من فتح صفحه الوارد */
             Assert.assertTrue(inboxPage.getMailInboxPage().isDisplayed());
         }
@@ -70,7 +73,6 @@ public class InboxTest extends TestInit  {
         }
         @Test (priority = 4)
         public void checkCreateLetter () {  /*انشاء خطاب */
-            currentTest = "checkCreateLetter";
             inboxPage.lettersTab();
             inboxPage.selectDepartment(myDepartment);
             inboxPage.selectSefatLetter(sefatLetter);
@@ -84,7 +86,6 @@ public class InboxTest extends TestInit  {
         }
         @Test (priority = 5)
         public void checkCreateOffer () { /*انشاء عرض*/
-            currentTest = "checkCreateOffer";
             inboxPage.offersTab();
             inboxPage.selectDepartment(myDepartment);
             inboxPage.forwardTo(forwardToOffer);
@@ -97,7 +98,6 @@ public class InboxTest extends TestInit  {
         }
         @Test (priority = 6)
         public void checkCreateInternalMemo () { /*انشاء مذكرة داخلية*/
-            currentTest = "checkCreateInternalMemo";
             inboxPage.internalMemoTab();
             inboxPage.selectDepartment(myDepartment);
             inboxPage.setChkBoxDesc();
@@ -109,7 +109,7 @@ public class InboxTest extends TestInit  {
             Assert.assertTrue(inboxPage.statusDone());
         }
         @Test (priority = 7)
-        public void signLetter (){
+        public void signLetter (){ /* لابد من وجود خطاب محفوظ*/
             inboxPage.lettersTab();
             inboxPage.goToSign();
             inboxPage.signConfirm();
@@ -119,12 +119,38 @@ public class InboxTest extends TestInit  {
             Assert.assertEquals(archive, archiveNum);
         }
         @Test (priority = 8)
+        public void viceLetter (){   /* لابد من وجود خطاب محفوظ*/
+            inboxPage.lettersTab();
+            inboxPage.goToVice();
+            inboxPage.confirmVice();
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            String archive = sentPage.getTreatArchiveNum();
+            Assert.assertEquals(archive,archiveNum);
+        }
+        @Test (priority = 9)
+        public void forwardToCustomEmployer (){
+            inboxPage.goToForwardTab();
+            inboxPage.forwardToCustomEmp(employeeDepartment,employeeName,forwardType);
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            String department = sentPage.getDepartmentName();
+            Assert.assertEquals(department, employeeDepartment);
+        }
+        @Test (priority = 10)
+        public void forwardToSave (){
+            inboxPage.goToForwardToSave();
+            inboxPage.sendTransToSave(exportedNotes);
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            String directing = sentPage.getTreatDirecting();
+            Assert.assertEquals(directing, "للحفظ");
+        }
+        @Test (priority = 11)
         public void addExportNotes (){
             inboxPage.exportNotes();
             inboxPage.addExportNotes(exportedNotes);
             Assert.assertEquals(inboxPage.getNotesContent(),exportedNotes);
         }
-
-
     }
 
