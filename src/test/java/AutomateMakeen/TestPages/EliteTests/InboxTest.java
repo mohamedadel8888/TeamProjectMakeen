@@ -146,7 +146,12 @@ public class InboxTest extends TestInit  {
             String directing = sentPage.getTreatDirecting();
             Assert.assertEquals(directing, "للحفظ");
         }
-        @Test (priority = 11)
+        @Test(priority = 11)
+        public void checkAddGeoInfo (){
+            inboxPage.addGeoInfo();
+            Assert.assertTrue(inboxPage.getGeoInfo().isDisplayed());
+        }
+        @Test (priority = 12)
         public void addExportNotes (){
             inboxPage.exportNotes();
             inboxPage.addExportNotes(exportedNotes);
