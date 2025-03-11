@@ -1,0 +1,10 @@
+{
+  "nationNumberInvalid": "",
+  "nationNumberValid": "",
+  "nationNumberInMasar":"5005007000",
+  "nationNumberNotInMasar":"5005007001",
+  "notValidNationNumber" : "0235874985",
+  "notInMasarValidation": "رقم الهوية غير موجود بمنصة مسار",
+  "notValidNumberValidation": "عفوا, لا يمكن ان يبدأ رقم الهوية بصفر"
+
+}

@@ -39,6 +39,7 @@ public class TestInit  {
     public static EliteHomePage eliteHomePage;
     public static CreateInternalMailPage createInternalMailPage;
     public static InboxPage inboxPage;
+    public static EmployeesOperations employeesOperations;
 
     //HijriDates
     protected HijrahDate dateHijriMinus = HijrahDate.now().minus(1, ChronoUnit.DAYS);
