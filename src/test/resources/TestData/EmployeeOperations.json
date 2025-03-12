@@ -4,7 +4,26 @@
   "nationNumberInMasar":"5005007000",
   "nationNumberNotInMasar":"5005007001",
   "notValidNationNumber" : "0235874985",
+  "biggerThan10Numbers": "123456789123",
   "notInMasarValidation": "رقم الهوية غير موجود بمنصة مسار",
-  "notValidNumberValidation": "عفوا, لا يمكن ان يبدأ رقم الهوية بصفر"
+  "notValidNumberValidation": "عفوا, لا يمكن ان يبدأ رقم الهوية بصفر",
 
+  "firstName": "ahmed",
+  "secondName": "mohamed",
+  "thirdName": "mahmoud",
+  "fourthName": "mostafa",
+
+  "firstNameNotValid": "12",
+  "secondNameNotValid": "12",
+  "thirdNameNotValid": "12",
+  "fourthNameNotValid": "12",
+
+  "day": "1",
+  "month": "1",
+  "year": "1446",
+
+  "dayNotValid": "32",
+  "monthNotValid": "13",
+  "IBAN": "0380000000608010167521",
+  "IBANNotValid": "0380000000608010167521999999990088"
 }
