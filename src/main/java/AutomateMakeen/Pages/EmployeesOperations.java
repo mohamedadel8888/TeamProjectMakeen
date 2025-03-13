@@ -162,7 +162,14 @@ public class EmployeesOperations extends BaseComp {
         return driver.findElement(ibanText).getAttribute("value");
     }
 
-
+    /****************************************************************************************/
+                                       /* الجنسية */
+    /****************************************************************************************/
+    private By ddlNationality = By.id("drp_AddEmpNation_ddlSelectButton");
+    public void selectNationality(String nationality){
+        Select nationalityAll = new Select(driver.findElement(ddlNationality));
+        nationalityAll.selectByVisibleText(nationality);
+    }
 
 
 

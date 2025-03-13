@@ -156,6 +156,12 @@ public class TC_EmployeeOperations extends TestInit {
     @Test (priority = 11)
     public void verifyIBAN_NotValid(){ /*التحقق من ادخال رقم البطاقة البنكية اكبر من  30*/
         employeesOperations.enterAppointEmployee();
-        employeesOperations.addIBAN(IBANNotValid);        Assert.assertNotEquals(employeesOperations.getIBAN(),IBANNotValid);
+        employeesOperations.addIBAN(IBANNotValid);
+        Assert.assertNotEquals(employeesOperations.getIBAN(),IBANNotValid);
+    }
+    @Test (priority = 12)
+    public void verifySelectNationality ()  {
+        employeesOperations.enterAppointEmployee();
+        employeesOperations.selectNationality("مصري");
     }
 }
