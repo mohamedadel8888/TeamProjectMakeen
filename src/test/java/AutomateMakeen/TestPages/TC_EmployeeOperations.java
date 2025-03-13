@@ -40,6 +40,18 @@ public class TC_EmployeeOperations extends TestInit {
     String IBAN;
     String IBANNotValid;
 
+    String nationality;
+    String noNationality;
+
+    String employeeType;
+    String majorJob;
+    String noMinorJob;
+    String mandateJob;
+    String degree;
+    String organizationNumber;
+    String inValidOrganizationNumber;
+
+
     /** preconditions :
      السماحية للدخول الي النظام .
      الصلاحية للدخول الى الموارد البشرية .
@@ -75,6 +87,16 @@ public class TC_EmployeeOperations extends TestInit {
         year = (getJsonData("EmployeeOperations","year"));
         IBAN = (getJsonData("EmployeeOperations","IBAN"));
         IBANNotValid = (getJsonData("EmployeeOperations","IBANNotValid"));
+        nationality = (getJsonData("EmployeeOperations","nationality"));
+        noNationality = (getJsonData("EmployeeOperations","noNationality"));
+        employeeType = (getJsonData("EmployeeOperations","employeeType"));
+        majorJob = (getJsonData("EmployeeOperations","majorJob"));
+        noMinorJob = (getJsonData("EmployeeOperations","noMajorJob"));
+        mandateJob = (getJsonData("EmployeeOperations","mandateJob"));
+        degree = (getJsonData("EmployeeOperations","degree"));
+        organizationNumber = (getJsonData("EmployeeOperations","organizationNumber"));
+        inValidOrganizationNumber = (getJsonData("EmployeeOperations","inValidOrganizationNumber"));
+
     }
 
     @Test (priority = 1)
@@ -162,6 +184,51 @@ public class TC_EmployeeOperations extends TestInit {
     @Test (priority = 12)
     public void verifySelectNationality ()  {
         employeesOperations.enterAppointEmployee();
-        employeesOperations.selectNationality("مصري");
+        employeesOperations.selectNationality(nationality);
+        Assert.assertEquals(employeesOperations.getNationality(),noNationality);
     }
+    @Test (priority = 13)
+    public void verifyEmployeeType ()  {
+        employeesOperations.enterAppointEmployee();
+        employeesOperations.selectEmployeeType(employeeType);
+        Assert.assertEquals(employeesOperations.getEmployeeType(),employeeType);
+    }
+    @Test (priority =14)
+    public void verifyMajorJob (){
+        employeesOperations.enterAppointEmployee();
+        employeesOperations.selectMajorJob(majorJob);
+        Assert.assertEquals(employeesOperations.getMajorJob(),majorJob);
+    }
+    @Test (priority = 15)
+    public void verifyMandateJob (){
+        employeesOperations.enterAppointEmployee();
+        employeesOperations.selectMandateJob(mandateJob);
+        Assert.assertEquals(employeesOperations.getMandateJob(),mandateJob);
+    }
+    @Test (priority = 16)
+    public void verifyDegree ()  {
+        employeesOperations.enterAppointEmployee();
+        employeesOperations.selectDegree(degree);
+        Assert.assertEquals(employeesOperations.getDegree(),degree);
+    }
+    @Test (priority = 17)
+    public void verifyOrganizationNumber(){
+        employeesOperations.enterAppointEmployee();
+        employeesOperations.addOrganizationNumber(organizationNumber);
+        Assert.assertEquals(employeesOperations.getOrganizationNumber(),organizationNumber);
+    }
+    @Test (priority = 18)
+    public void verifyInValidOrganizationNumber(){
+        employeesOperations.enterAppointEmployee();
+        employeesOperations.addOrganizationNumber(inValidOrganizationNumber);
+        Assert.assertEquals(employeesOperations.getOrganizationNumber(),organizationNumber);
+    }
+    @Test (priority = 19)
+    public void verifyWorkDateValid (){ /*التحقق من ادخال تاريخ التعيين في الجهه صحيح*/
+        employeesOperations.enterAppointEmployee();
+        employeesOperations.workDateSelect(day,month,year);
+        Assert.assertEquals(employeesOperations.getWorkDateText(),year+"/0"+month+"/0"+day);
+    }
+
+
 }

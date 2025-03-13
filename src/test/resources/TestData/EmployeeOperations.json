@@ -25,5 +25,16 @@
   "dayNotValid": "32",
   "monthNotValid": "13",
   "IBAN": "0380000000608010167521",
-  "IBANNotValid": "0380000000608010167521999999990088"
+  "IBANNotValid": "0380000000608010167521999999990088",
+
+  "nationality": "سعودي",
+  "noNationality": "اختر الجنسية",
+
+  "employeeType": "موظفين أمانة",
+  "majorJob":"        -8-9144",
+  "noMajorJob": "إختر الوظيفة الاساسية",
+  "mandateJob": "اختر الوظيفة المكلف بها",
+  "degree": "6",
+  "organizationNumber": "3334444",
+  "inValidOrganizationNumber":"333444499966"
 }
