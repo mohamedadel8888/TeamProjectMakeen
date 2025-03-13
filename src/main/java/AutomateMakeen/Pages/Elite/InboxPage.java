@@ -2,7 +2,6 @@ package AutomateMakeen.Pages.Elite;
 
 import AutomateMakeen.Base.BaseComp;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -13,6 +12,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 
+import static org.openqa.selenium.By.cssSelector;
 import static org.openqa.selenium.By.xpath;
 
 public class InboxPage extends BaseComp {
@@ -35,14 +35,14 @@ public class InboxPage extends BaseComp {
     private By classification = By.id("div_ddlClassification"); /*التصنيف*/
     private By orientation = By.id("div_ddlOrient"); /*التوجية*/
         private By orientationSearch = By.id("txt_purpsSearch"); /*بحث التوجيه*/
-        private By orientationSelect = By.xpath("//a[contains(text(),'--')]"); /*اول عنصر في البحث */
+        private By orientationSelect = xpath("//a[contains(text(),'--')]"); /*اول عنصر في البحث */
     private By date = By.id("dropdown__date"); /*التاريخ */
     /*======================================================اجــراءات المــعامـلـة =======================================================*/
 
     private By explanation = By.id("btn_explanation"); /*الشروحات */
     private By explanationTab = By.cssSelector(".outbox_explaination"); /*تاب الشروحات */
     private By attachments = By.id("btn_attachments"); /*المرفقات */
-    private By attachmentsTab = By.xpath("//div[@class='body_inbox_content']//div[@id='div_conatiner_attach']"); /*تاب المرفقات*/
+    private By attachmentsTab = xpath("//div[@class='body_inbox_content']//div[@id='div_conatiner_attach']"); /*تاب المرفقات*/
 
     public boolean goToExplanations (){  /*فتح تاب الشروحات والتأكد من فتحها*/
         driver.findElement(explanation).click();
@@ -93,7 +93,7 @@ public class InboxPage extends BaseComp {
         WebElement textSearch1 = driver.findElement(textSearch);
         exWait.until(ExpectedConditions.visibilityOf(textSearch1));
         textSearch1.sendKeys(text);
-        driver.findElement(By.xpath("//a[contains(text(),'"+text+"')]")).click();
+        driver.findElement(xpath("//a[contains(text(),'"+text+"')]")).click();
     }
 
     public void send (){  /*حفظ وارسال */
@@ -141,14 +141,14 @@ public class InboxPage extends BaseComp {
         sefatLetterDdl1.click();
         WebElement sefatLetterSearch = driver.findElement(getDdlSefatLetterTextSearch);
         sefatLetterSearch.sendKeys(sefatLetter);
-        WebElement firstElement = driver.findElement(By.xpath("//a[normalize-space()='"+sefatLetter+"']"));
+        WebElement firstElement = driver.findElement(xpath("//a[normalize-space()='"+sefatLetter+"']"));
         firstElement.click();
     }
 
     public void selectForwardType (String name){     /*اختيار نوع التوجية*/
         WebElement forwardTypeDdl1 = driver.findElement(forwardTypeDdl);
         forwardTypeDdl1.click();
-        WebElement forwardType = driver.findElement(By.xpath("(//a[contains(text(),'"+name+"')])"));
+        WebElement forwardType = driver.findElement(xpath("(//a[contains(text(),'"+name+"')])"));
         forwardType.click();
     }
 
@@ -191,35 +191,29 @@ public class InboxPage extends BaseComp {
     /*========================================================================*/
                                 /*ملاحظات التصدير*/
     /*========================================================================*/
-    private By exportNotes = By.id("btn_ExportNotes"); /*ملاحظات التصدير*/
-    private By exportNotesTab = By.xpath("//div[@class='wrapper_head_title d-flex'][contains(text(),'ملاحظات التصدير')]"); /* تاب ملاحظات التصدير*/
-    private By addExportNotes = By.cssSelector(".btn_add_note.d-flex.align-items-center"); /*زر اضف ملاحظة*/
+    private By exportNotesField = By.id("btn_ExportNotes"); /*ملاحظات التصدير*/
+    private By exportNotesTab = xpath("//div[@class='wrapper_head_title d-flex'][contains(text(),'ملاحظات التصدير')]"); /* تاب ملاحظات التصدير*/
+    private By addExportNotesBtn = By.cssSelector(".btn_add_note.d-flex.align-items-center"); /*زر اضف ملاحظة*/
     private By divAddNotes = By.cssSelector("div[id='addNotesModal'] div[class='modal-content']"); /*نافذة اضف ملاحظة*/
-    private By notesText = By.id("txt_exportNote"); /*حقل النص*/
+    private By notesText = By.cssSelector("#txt_exportNote"); /*حقل النص*/
     private By saveNote = By.id("btn_saveExportNote"); /*زر حفظ*/
     private By confirmationDiv = By.id("div_confirmSavePopover"); /*نافذة هل تريد بالتأكيد الحفظ*/
     private By btnYes = By.id("btn_agreeExportNote"); /*زر موافق*/
 
     public void exportNotes(){
-        WebElement exportNotes1 = driver.findElement(exportNotes);
+        WebElement exportNotes1 = driver.findElement(exportNotesField);
         exportNotes1.click();
         WebElement exportNotesTab1 = driver.findElement(exportNotesTab);
         exWait.until(ExpectedConditions.visibilityOf(exportNotesTab1));
     }
-    public void addExportNotes(String text) {
-        WebElement addExportNotes1 = driver.findElement(addExportNotes);
+    public void addExportNotes ( String name ) {
+        WebElement addExportNotes1 = driver.findElement(addExportNotesBtn);
         addExportNotes1.click();
-        WebElement divAddNotes1 = driver.findElement(divAddNotes);
-        exWait.until(ExpectedConditions.visibilityOf(divAddNotes1));
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(notesText));
-        WebElement textArea = driver.findElement(notesText);
-        textArea.sendKeys(text);
-
-        /*WebElement textField = driver.findElement(notesText);
-        textField.sendKeys(text);*/
+        WebElement textField = driver.findElement(notesText);
+        exWait.until(ExpectedConditions.visibilityOf(textField));
+        textField.sendKeys(name);
         WebElement saveNote1 = driver.findElement(saveNote);
+        exWait.until(ExpectedConditions.elementToBeClickable(saveNote1));
         saveNote1.click();
         WebElement confirmationDiv1 = driver.findElement(confirmationDiv);
         exWait.until(ExpectedConditions.visibilityOf(confirmationDiv1));
@@ -227,13 +221,12 @@ public class InboxPage extends BaseComp {
         btnYes1.click();
     }
     public String getNotesContent(){
-        WebElement content = driver.findElement(By.xpath("(//p[@class='d-flex gap-2'])[1]"));
+        WebElement content = driver.findElement(cssSelector("p[class='d-flex gap-2'] span:nth-child(2)"));
         return content.getText();
     }
 
-
     /*========================================================================*/
-                                  /*احاله */
+                                /* احاله*/
     /*========================================================================*/
 
     private By forward = By.id("btn_forward"); /*إحالة*/
@@ -247,7 +240,8 @@ public class InboxPage extends BaseComp {
 
     private final By favourite = By.cssSelector("#rd_fav"); /*المفضلة */
     private final By favouriteSearch = By.cssSelector("#txt_name_srch"); /* بحث في المفضلة */
-    private final By selectOriginalFav = By.cssSelector("input[id='rd_original_saFigbSGQbc%3d']"); /*أصــل */
+
+    /*private final By selectOriginalFav = By.cssSelector("input[id='rd_original_saFigbSGQbc%3d']"); /*أصــل
     private final By selectCopyFav = By.cssSelector("label[for='ch_copy_saFigbSGQbc%3d']"); /*صــــورة */
 
     private final By customEmp = By.cssSelector("#rd_select_emp"); /*موظف محدد */
@@ -259,24 +253,21 @@ public class InboxPage extends BaseComp {
     private final By ddlDirectingSearch = By.id("emp_purp_ddl_txtSearch"); /*بحث التوجيه */
 
     private final By saveForward = By.id("btn_SaveSelectedData"); /*حفظ */
-
-
     private final By sendButton = By.id("btnAssignmentSendClick"); /*إرسـال  */
-
-    private final By divConfirmForward = By.id("div_confirmForward");
-    private final By btnYesForward = By.id("btn_confirmForward"); /*موافق */
-
+    private final By confirmDiv = By.id("div_confirmForward"); /*تاب المواقفة*/
+    private final By btnYesForward = By.id("btn_confirmForward"); /*زر موافق */
 
 
 
     public void goToForwardTab (){ /*فتح تاب احالـــة */
         WebElement forward1 = driver.findElement(forward);
         forward1.click();
-        WebElement forwardDiv = driver.findElement(forwardToDiv);
-        exWait.until(ExpectedConditions.visibilityOf(forwardDiv));
+        WebElement forwardToDiv1 = driver.findElement(forwardToDiv);
+        exWait.until(ExpectedConditions.visibilityOf(forwardToDiv1));
     }
-    public void forwardToAllBaladia (String name , String forwardType){ /* احالة الى عموم البلدية  ,0  اصل , 1 صورة */  /*this function is not dynamic*/
 
+
+    public void forwardToAllBaladia (String name , String forwardType){ /* احالة الى عموم البلدية  ,0  اصل , 1 صورة */  /*this function is not dynamic*/
         WebElement allBalad = driver.findElement(allBaladia);
         allBalad.click();
         WebElement search = driver.findElement(baladiaSearch);
@@ -290,34 +281,32 @@ public class InboxPage extends BaseComp {
         }
         WebElement send = driver.findElement(sendButton);
         send.click();
-        WebElement divConfirmed = driver.findElement(divConfirmForward);
-        exWait.until(ExpectedConditions.visibilityOf(divConfirmed));
+        WebElement divAgree = driver.findElement(confirmDiv);
+        exWait.until(ExpectedConditions.visibilityOf(divAgree));
         WebElement btnYes = driver.findElement(btnYesForward);
         btnYes.click();
     }
 
-    public void forwardToFavourite (String name , String forwardType){ /* احالة الى المفضلة  ,0  اصل , 1 صورة */ /*this function is not dynamic*/
-
+    /*public void forwardToFavourite (String name , String forwardType){ /* احالة الى المفضلة  ,0  اصل , 1 صورة */ /*this function is not dynamic
         WebElement favRadio = driver.findElement(favourite);
         favRadio.click();
         WebElement search = driver.findElement(favouriteSearch);
         search.sendKeys(name);
-        if (Objects.equals(forwardType, "0")){ /*اصــل */
+        if (Objects.equals(forwardType, "0")){ /*اصــل
             WebElement original = driver.findElement(selectOriginalFav);
             original.click();
         }
-        else if (Objects.equals(forwardType, "1")){ /*صــورة */
+        else if (Objects.equals(forwardType, "1")){ /*صــورة
             WebElement copy = driver.findElement(selectCopyFav);
             copy.click();
         }
         WebElement send = driver.findElement(sendButton);
         send.click();
-        WebElement divConfirmed = driver.findElement(divConfirmForward);
-        exWait.until(ExpectedConditions.visibilityOf(divConfirmed));
+        WebElement divAgree = driver.findElement(confirmDiv);
+        exWait.until(ExpectedConditions.visibilityOf(divAgree));
         WebElement btnYes = driver.findElement(btnYesForward);
         btnYes.click();
-
-    }
+    }*/
     public void forwardToCustomEmp (String Dept , String Name , String Directing ){ /* احالة الى موظف محدد  ,0  اصل , 1 صورة */
 
         WebElement customEmpRadio = driver.findElement(customEmp);
@@ -345,17 +334,41 @@ public class InboxPage extends BaseComp {
         Direct1.click();
         WebElement send = driver.findElement(sendButton);
         send.click();
-        WebElement divConfirmed = driver.findElement(divConfirmForward);
-        exWait.until(ExpectedConditions.visibilityOf(divConfirmed));
+        WebElement divAgree = driver.findElement(confirmDiv);
+        exWait.until(ExpectedConditions.visibilityOf(divAgree));
         WebElement btnYes = driver.findElement(btnYesForward);
         btnYes.click();
-
     }
 
 
 
 
+    /*========================================================================*/
+                                /* احالة للحفظ*/
+    /*========================================================================*/
+
     private By forwardToSave = By.id("btn_forwardForSave"); /*إحالة للحفظ */
+    private By forwardToSaveDiv = By.xpath("(//div[@class='modal-content p-4'])[1]"); /*نافذه احالة للحفظ*/
+    private By comment = By.id("txt_comment"); /*الشرح */
+    private By btnSave = By.cssSelector("button[onclick='inboxDetailsObj.forwardToSave();']");
+
+    public void goToForwardToSave (){ /*فتح تاب احالة للحفظ*/
+        WebElement forwardToSave1 = driver.findElement(forwardToSave);
+        forwardToSave1.click();
+        WebElement forwardToSaveDiv1 = driver.findElement(forwardToSaveDiv);
+        exWait.until(ExpectedConditions.visibilityOf(forwardToSaveDiv1));
+    }
+    public void sendTransToSave (String comment1){
+        WebElement commentField = driver.findElement(comment);
+        commentField.sendKeys(comment1);
+        WebElement btnSave1 = driver.findElement(btnSave);
+        btnSave1.click();
+    }
+
+
+
+
+
     private By forwardToSign = By.id("btn_ForwardToSign"); /* إحالة للتوقيع */
     private By backToSource = By.id("btn_backToSource"); /*إعادة للمصدر*/
     private By btnMore = By.id("btn_more_options"); /*زر المزيد */
@@ -381,12 +394,29 @@ public class InboxPage extends BaseComp {
     }
 
 
+    /*========================================================================*/
+                             /* المعلومة مكانية*/
+    /*========================================================================*/
+    private By addGeoInfo = By.id("btn_GeoInformation"); /*المعلومة الجيومكانية*/
+    private By geoInfoDiv = By.cssSelector(".esri-view-surface.esri-view-surface--touch-none"); /*صفحه معلومة مكانية*/
+
+    public void addGeoInfo (){ /* اضافه معلومة مكانية*/
+        WebElement addGeoInfo1 = driver.findElement(addGeoInfo);
+        addGeoInfo1.click();
+    }
+    public WebElement getGeoInfo (){
+        WebElement geoDiv = driver.findElement(geoInfoDiv);
+        exWait.until(ExpectedConditions.visibilityOf(geoDiv));
+        return geoDiv;
+    }
 
 
 
 
-        private By markingAndreferToAgent = By.xpath("//a[contains(text(),'تأشير و إحالة للوكيل')]");  /*تأشير و إحاله الى الوكيل */
-        private By markingAndreferToCustomEmp = By.xpath("//a[contains(text(),'تأشير إلي موظف محدد')]"); /*تأشير الى موظف محدد*/
+
+
+        private By markingAndreferToAgent = xpath("//a[contains(text(),'تأشير و إحالة للوكيل')]");  /*تأشير و إحاله الى الوكيل */
+        private By markingAndreferToCustomEmp = xpath("//a[contains(text(),'تأشير إلي موظف محدد')]"); /*تأشير الى موظف محدد*/
 
 
     /*========================================================================*/
@@ -412,20 +442,20 @@ public class InboxPage extends BaseComp {
 
 
 
-        private By signWithAuthority = By.xpath("//a[contains(text(),'توقيع بتفويض')]"); /* توقيع بتفويض */
+        private By signWithAuthority = xpath("//a[contains(text(),'توقيع بتفويض')]"); /* توقيع بتفويض */
     private By assetsRequest = By.id("btn_AssetsRequest"); /*طلب أصول*/
     private By tempSave = By.id("btn_TempSaveForTreatment"); /*حفظ مؤقت*/
-    private By addGeoInfo = By.id("btn_GeoInformation"); /*المعلومة الجيومكانية*/
+
     /*=========================================================================================================================*/
 
-    private By showAll = By.xpath("//span[contains(text(),'عرض الجميع')]"); /*عرض الجميع */
+    private By showAll = xpath("//span[contains(text(),'عرض الجميع')]"); /*عرض الجميع */
 
     private By explanationDdlBtn = By.id("btnAttachActions");
-        private By perview = By.xpath("//a[@class='dropdown-item'][contains(text(),'معاينة')]"); /*معاينة */
-        private By generalExplanations = By.xpath("//a[contains(text(),'الشروحات الكلية')]"); /*الشروحات الكلية */
+        private By perview = xpath("//a[@class='dropdown-item'][contains(text(),'معاينة')]"); /*معاينة */
+        private By generalExplanations = xpath("//a[contains(text(),'الشروحات الكلية')]"); /*الشروحات الكلية */
     private By sortExplanations = By.id("divExpSortCounterSpan"); /*الترتـيب*/
 
-    private By treatDetails = By.xpath("(//div[@class='info-comp']/span[@class='i-icon'])[1]"); /*تفاصيل المعاملة */
+    private By treatDetails = xpath("(//div[@class='info-comp']/span[@class='i-icon'])[1]"); /*تفاصيل المعاملة */
 
 
 
@@ -453,7 +483,7 @@ public class InboxPage extends BaseComp {
         WebElement details = driver.findElement(treatDetails);
         Actions actions = new Actions(driver);
         actions.moveToElement(details).perform();
-        WebElement treatArchiveNum = driver.findElement(By.xpath("//table[@class='info-comp-table-list']/tr/th[text()='الأرشيف']/following-sibling::td[1]"));
+        WebElement treatArchiveNum = driver.findElement(xpath("//table[@class='info-comp-table-list']/tr/th[text()='الأرشيف']/following-sibling::td[1]"));
         String archive = treatArchiveNum.getText();
         actions.moveToElement(details).click().perform();
         return archive;
@@ -482,20 +512,11 @@ public class InboxPage extends BaseComp {
         preview1.click();
     }
     /*========================================================================*/
-    public void goToExportNotes (){ /*فتح تاب ملاحظات التصدير*/
-        WebElement exportNotes1 = driver.findElement(exportNotes);
-        exportNotes1.click();
-    }
-    /*========================================================================*/
-
-
-
 
     /*========================================================================*/
-    public void goToForwardToSave (){ /*فتح تاب احالة للحفظ*/
-        WebElement forwardToSave1 = driver.findElement(forwardToSave);
-        forwardToSave1.click();
-    }
+
+    /*========================================================================*/
+
     /*========================================================================*/
 
     /*========================================================================*/
@@ -524,10 +545,7 @@ public class InboxPage extends BaseComp {
         tempSave1.click();
     }
     /*========================================================================*/
-    public void addGeoInfo (){ /* اضافه معلومة مكانية*/
-        WebElement addGeoInfo1 = driver.findElement(addGeoInfo);
-        addGeoInfo1.click();
-    }
+
 
 }
 

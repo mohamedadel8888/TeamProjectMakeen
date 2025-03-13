@@ -1,5 +1,6 @@
 package AutomateMakeen.Pages;
 import AutomateMakeen.Base.BaseComp;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,10 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
-import AutomateMakeen.Pages.UsersControl;
-import AutomateMakeen.Pages.EditAccountPage;
-import java.util.concurrent.TimeUnit;
-import org.openqa.selenium.JavascriptExecutor;
 
 
 public class ContentAside extends BaseComp {
@@ -32,6 +29,9 @@ public class ContentAside extends BaseComp {
 
     @FindBy(id = "cph_main_btn_AddElement")
     private WebElement addNewDeptWebElement;
+
+    @FindBy(id = "prog_prs")
+    private WebElement humanResources;   /*الموارد البشرية*/
 
     @FindBy(id = "prog_cp")
     private WebElement controlPanel;  /*لوحه التحكم */
@@ -133,4 +133,26 @@ public class ContentAside extends BaseComp {
             return new ImportedMails(driver);
         }
     }
+
+    @FindBy(id ="s_m_5")   /*عمليات على الموظفين*/
+    WebElement employeeOperations;
+    @FindBy(id = "DivMainEmp")
+    WebElement divEmpOperations;
+    public EmployeesOperations goToEmployeeOperations(){
+        exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
+        try{
+            exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
+            humanResources.click();
+            employeeOperations.click();
+            exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
+            return new EmployeesOperations(driver);
+        }catch(NoSuchElementException e){
+            exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
+            humanResources.click();
+            employeeOperations.click();
+            exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
+            return new EmployeesOperations(driver);
+        }
+    }
+
 }
