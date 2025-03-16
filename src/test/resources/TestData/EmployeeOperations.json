@@ -36,5 +36,10 @@
   "mandateJob": "اختر الوظيفة المكلف بها",
   "degree": "6",
   "organizationNumber": "3334444",
-  "inValidOrganizationNumber":"333444499966"
+  "inValidOrganizationNumber":"333444499966",
+
+  "workDateValidationTex":"عفوا تاريخ التعيين يجب ألا يتعدي تاريخ اليوم",
+  "levelDateValidationTex":"التاريخ يجب أن يكون بعد تاريخ الميلاد وقبل تاريخ اليوم",
+
+  "sucessSavingEmpMsg": "تم حفظ بيانات المقدم على التعيين بنجاح , وانشاء معاملة بمرفق القرار  برقم أرشيف"
 }

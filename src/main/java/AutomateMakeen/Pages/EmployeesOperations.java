@@ -123,6 +123,8 @@ public class EmployeesOperations extends BaseComp {
     private By dateText = By.id("txt_AddEmpBoDate");
 
     public void dateSelectionFromIcon(String day, String month , String year){
+        WebElement dateText1 = driver.findElement(dateText);
+        dateText1.clear();
         WebElement calenderIcon = driver.findElement(calendarIcon);
         calenderIcon.click();
         WebElement month1 = driver.findElement(By.id("drp_Month"));
@@ -273,6 +275,8 @@ public class EmployeesOperations extends BaseComp {
                                     /* تاريخ التعيين في الجهه */
     /****************************************************************************************/
     private By workDate = By.id("txt_AddWorkDate");
+    private By validationIcon_AddWork = By.id("spnA_AddWorkDate");
+    private By validationDiv_AddWork = By.cssSelector("p[class='span_error'] span");
 
     public void workDateSelect (String day, String month, String year){
         WebElement workDateText1 = driver.findElement(workDate);
@@ -281,14 +285,30 @@ public class EmployeesOperations extends BaseComp {
         Actions actions = new Actions(driver);
         actions.moveByOffset(50, 50).click().perform();
     }
+    public void workDateSelect (String date){
+        WebElement workDateText1 = driver.findElement(workDate);
+        workDateText1.clear();
+        workDateText1.sendKeys(date);
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(50, 50).click().perform();
+    }
     public String getWorkDateText(){
         WebElement workDateText1 = driver.findElement(workDate);
         return workDateText1.getAttribute("value");
+    }
+    public String getWorkdateValidationText(){
+        WebElement validationIcon1 = driver.findElement(validationIcon_AddWork);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(validationIcon1).perform();
+        WebElement validationText1 = driver.findElement(validationDiv_AddWork);
+        return validationText1.getText();
     }
     /****************************************************************************************/
                                   /* تاريخ التعيين على مرتبه */
     /****************************************************************************************/
     private By levelDate = By.id("txt_AddLevelDate");
+    private By validationIcon_LevelDate = By.id("spnA_AddLevelDate");
+    private By validationDiv_LevelDate = By.cssSelector("b[id='spnA_AddLevelDate'] span");
     public void levelDateSelect (String day, String month, String year){
         WebElement levelDateText1 = driver.findElement(levelDate);
         levelDateText1.clear();
@@ -296,14 +316,30 @@ public class EmployeesOperations extends BaseComp {
         Actions actions = new Actions(driver);
         actions.moveByOffset(50, 50).click().perform();
     }
+    public void levelDateSelect (String date){
+        WebElement levelDateText1 = driver.findElement(levelDate);
+        levelDateText1.clear();
+        levelDateText1.sendKeys(date);
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(50, 50).click().perform();
+    }
     public String getLevelDateText(){
         WebElement levelDateText1 = driver.findElement(levelDate);
         return levelDateText1.getAttribute("value");
+    }
+    public String getLevelDateValidationText(){
+        WebElement validationIcon1 = driver.findElement(validationIcon_LevelDate);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(validationIcon1).perform();
+        WebElement validationText1 = driver.findElement(validationDiv_LevelDate);
+        return validationText1.getText();
     }
     /****************************************************************************************/
                                /* تاريخ اول تعيين بالدولة */
     /****************************************************************************************/
     private By firstJobDate = By.id("txt_AddFrstjobDate");
+    private By validationIcon_FirstJoblDate = By.id("spnA_AddFrstjobDate");
+    private By validationDiv_FirstJoblDate = By.cssSelector("b[id='spnA_AddFrstjobDate'] span");
     public void firstJobDateSelect (String day, String month, String year){
         WebElement firstJobDateText1 = driver.findElement(firstJobDate);
         firstJobDateText1.clear();
@@ -311,11 +347,74 @@ public class EmployeesOperations extends BaseComp {
         Actions actions = new Actions(driver);
         actions.moveByOffset(50, 50).click().perform();
     }
+    public void firstJobDateSelect (String date){
+        WebElement firstJobDateText1 = driver.findElement(firstJobDate);
+        firstJobDateText1.clear();
+        firstJobDateText1.sendKeys(date);
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(50, 50).click().perform();
+    }
     public String getFirstJobDateText(){
         WebElement firstJobDateText1 = driver.findElement(firstJobDate);
         return firstJobDateText1.getAttribute("value");
     }
+    public String getFirstJobDateValidationText(){
+        WebElement validationIcon1 = driver.findElement(validationIcon_FirstJoblDate);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(validationIcon1).perform();
+        WebElement validationText1 = driver.findElement(validationDiv_FirstJoblDate);
+        return validationText1.getText();
+    }
+
+    /****************************************************************************************/
+                                    /* بيانات القرار */
+    /****************************************************************************************/
+    private By toggle = By.cssSelector(".slider.round");
+    private By txtRecNo = By.id("txtRecNo_transEmpsDecSec");
+
+    public void setToggle(){
+        WebElement toggle1 = driver.findElement(toggle);
+        toggle1.click();
+    }
+    public WebElement getRecNumberTextField (){
+        return driver.findElement(txtRecNo);
+    }
+
+    /****************************************************************************************/
+                                   /* زر حفظ و زر عودة */
+    /****************************************************************************************/
+    private By saveButton = By.id("btn_add_new_emp");
+    private By cancelButton = By.cssSelector("input[onclick=\"Emps.onclick_button('HideDiv', 'Add');\"]");
+
+    public void clickSaveButton(){
+        WebElement saveButton1 = driver.findElement(saveButton);
+        saveButton1.click();
+    }
+    public void clickCancelButton(){
+        WebElement cancelButton1 = driver.findElement(cancelButton);
+        cancelButton1.click();
+    }
 
 
+    /****************************************************************************************/
+                        /* زر حفظ وانشاء معاملة ورسالة الحفظ الاخيرة */
+    /****************************************************************************************/
 
+    private By divConfirmationMsg = By.cssSelector(".popup_genrl.popup_genrl_width");
+    private By temporarySave = By.id("btnP0");
+    private By saveAndCreateTrans = By.id("btnP1");
+    private By savingSucessMsg = By.cssSelector("div[class='popup_content']");
+
+    public void saveTheEmployee(){
+        clickSaveButton();
+        WebElement divConfirmationMsg1 = driver.findElement(divConfirmationMsg);
+        exWait.until(ExpectedConditions.visibilityOf(divConfirmationMsg1));
+        WebElement saveAndCreateTrans1 = driver.findElement(saveAndCreateTrans);
+        saveAndCreateTrans1.click();
+    }
+    public String getSucessMsg () {
+        WebElement savingSucessMsg1 = driver.findElement(savingSucessMsg);
+        exWait.until(ExpectedConditions.visibilityOf(savingSucessMsg1));
+        return savingSucessMsg1.getText();
+    }
 }
