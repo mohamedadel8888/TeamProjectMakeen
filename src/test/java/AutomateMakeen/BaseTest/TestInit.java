@@ -4,6 +4,8 @@ import AutomateMakeen.Pages.*;
 import AutomateMakeen.Pages.Elite.CreateInternalMailPage;
 import AutomateMakeen.Pages.Elite.EliteHomePage;
 import AutomateMakeen.Pages.Elite.InboxPage;
+import AutomateMakeen.Pages.EmployeesOperations.AppointEmployee;
+import AutomateMakeen.Pages.EmployeesOperations.ReassignEmployee;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -39,7 +41,8 @@ public class TestInit  {
     public static EliteHomePage eliteHomePage;
     public static CreateInternalMailPage createInternalMailPage;
     public static InboxPage inboxPage;
-    public static EmployeesOperations employeesOperations;
+    public static AppointEmployee appointEmployee;
+    public static ReassignEmployee reassignEmployee;
 
     //HijriDates
     protected HijrahDate dateHijriMinus = HijrahDate.now().minus(1, ChronoUnit.DAYS);

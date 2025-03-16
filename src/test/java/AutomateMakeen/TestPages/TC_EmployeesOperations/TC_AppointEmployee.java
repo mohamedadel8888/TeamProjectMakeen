@@ -1,4 +1,4 @@
-package AutomateMakeen.TestPages;
+package AutomateMakeen.TestPages.TC_EmployeesOperations;
 
 import AutomateMakeen.BaseTest.TestInit;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,10 +10,9 @@ import org.testng.annotations.Test;
 import java.io.FileNotFoundException;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.chrono.HijrahDate;
 import java.time.format.DateTimeFormatter;
 
-public class TC_EmployeeOperations extends TestInit {
+public class TC_AppointEmployee extends TestInit {
     WebDriverWait exWait;
     String nationNumberInMasar ;
     String nationNumberNotInMasar;
@@ -47,6 +46,7 @@ public class TC_EmployeeOperations extends TestInit {
     String employeeType;
     String majorJob;
     String noMinorJob;
+    String noMandateJob;
     String mandateJob;
     String degree;
     String organizationNumber;
@@ -71,7 +71,7 @@ public class TC_EmployeeOperations extends TestInit {
         lunchDriver();
         loginPage.goToLoginPage();
         loginPage.loginUserWithoutRemMe(userID, userPasswd);
-        employeesOperations = contentAside.goToEmployeeOperations();
+        appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee();
         exWait = new WebDriverWait(driver, Duration.ofSeconds(8));
         nationNumberInMasar=(getJsonData("EmployeeOperations","nationNumberInMasar"));
         nationNumberNotInMasar=(getJsonData("EmployeeOperations","nationNumberNotInMasar"));
@@ -100,6 +100,7 @@ public class TC_EmployeeOperations extends TestInit {
         majorJob = (getJsonData("EmployeeOperations","majorJob"));
         noMinorJob = (getJsonData("EmployeeOperations","noMajorJob"));
         mandateJob = (getJsonData("EmployeeOperations","mandateJob"));
+        noMandateJob = (getJsonData("EmployeeOperations","noMandateJob"));
         degree = (getJsonData("EmployeeOperations","degree"));
         organizationNumber = (getJsonData("EmployeeOperations","organizationNumber"));
         inValidOrganizationNumber = (getJsonData("EmployeeOperations","inValidOrganizationNumber"));
@@ -111,214 +112,214 @@ public class TC_EmployeeOperations extends TestInit {
 
     @Test (priority = 1)
     public void verifyEmployeeOperations (){   /*التحقق من فتح صفحه عمليات على الموظفين*/
-        Assert.assertTrue(employeesOperations.getEmpOperations().isDisplayed());
+        Assert.assertTrue(appointEmployee.getEmpOperations().isDisplayed());
     }
     @Test (priority = 2)
     public void verifyAddEmployeeTab (){   /*التحقق من الدخول الى شاشة تعيين موظف*/
-        employeesOperations.enterAppointEmployee();
-        Assert.assertTrue(employeesOperations.getDivNewEmployee().isDisplayed());
+        appointEmployee.enterAppointEmployee();
+        Assert.assertTrue(appointEmployee.getDivNewEmployee().isDisplayed());
     }
     @Test (priority = 3)
     public void verifyNotValidNationNumber (){ /*التحقق من فالديشن رقم الهوية يبدأ بصفر*/
-       // employeesOperations.enterAppointEmployee();
-        employeesOperations.addNationNumber(notValidNationNumber);
-        exWait.until(ExpectedConditions.elementToBeClickable(employeesOperations.masarBtn()));
-        employeesOperations.masarBtn().click();
-        Assert.assertEquals(notValidNumberValidation,employeesOperations.getValidationMessage());
+       // appointEmployee.enterAppointEmployee();
+        appointEmployee.addNationNumber(notValidNationNumber);
+        exWait.until(ExpectedConditions.elementToBeClickable(appointEmployee.masarBtn()));
+        appointEmployee.masarBtn().click();
+        Assert.assertEquals(notValidNumberValidation, appointEmployee.getValidationMessage());
     }
     @Test (priority = 4)
     public void verifyNationNumberBiggerThan10Num (){ /*التحقق من ادخال رقم الهوية  اكثر من 10 ارقام*/
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.addNationNumber(biggerThan10Numbers);
-        Assert.assertNotEquals(biggerThan10Numbers,employeesOperations.getNationalNumber().getText());
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.addNationNumber(biggerThan10Numbers);
+        Assert.assertNotEquals(biggerThan10Numbers, appointEmployee.getNationalNumber().getText());
     }
     @Test (priority = 5)
     public void verifyNationNumberNotInMasar (){  /*التحقق من فالديشن رقم الهوية غير موجود في مسار*/
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.addNationNumber(nationNumberNotInMasar);
-        exWait.until(ExpectedConditions.elementToBeClickable(employeesOperations.masarBtn()));
-        employeesOperations.masarBtn().click();
-        Assert.assertEquals(notInMasarValidation,employeesOperations.getValidationMessage());
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.addNationNumber(nationNumberNotInMasar);
+        exWait.until(ExpectedConditions.elementToBeClickable(appointEmployee.masarBtn()));
+        appointEmployee.masarBtn().click();
+        Assert.assertEquals(notInMasarValidation, appointEmployee.getValidationMessage());
     }
     @Test (priority = 6)
     public void verifyFullNameNotValid (){ /*التحقق من ادخال الاسم غير صحيح*/
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.addFirstName(firstNameNotValid);
-        Assert.assertEquals(employeesOperations.getFirstName(),"");
-        employeesOperations.addSecondName(secondNameNotValid);
-        Assert.assertEquals(employeesOperations.getSecondName(),"");
-        employeesOperations.addThirdName(thirdNameNotValid);
-        Assert.assertEquals(employeesOperations.getThirdName(),"");
-        employeesOperations.addFourthName(fourthNameNotValid);
-        Assert.assertEquals(employeesOperations.getFourthName(),"");
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.addFirstName(firstNameNotValid);
+        Assert.assertEquals(appointEmployee.getFirstName(),"");
+        appointEmployee.addSecondName(secondNameNotValid);
+        Assert.assertEquals(appointEmployee.getSecondName(),"");
+        appointEmployee.addThirdName(thirdNameNotValid);
+        Assert.assertEquals(appointEmployee.getThirdName(),"");
+        appointEmployee.addFourthName(fourthNameNotValid);
+        Assert.assertEquals(appointEmployee.getFourthName(),"");
     }
     @Test (priority = 7)
     public void verifyFullNameValid (){ /*التحقق من ادخال الاسم صحيح*/
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.addFirstName(firstName);
-        Assert.assertEquals(employeesOperations.getFirstName(),firstName);
-        employeesOperations.addSecondName(secondName);
-        Assert.assertEquals(employeesOperations.getSecondName(),secondName);
-        employeesOperations.addThirdName(thirdName);
-        Assert.assertEquals(employeesOperations.getThirdName(),thirdName);
-        employeesOperations.addFourthName(fourthName);
-        Assert.assertEquals(employeesOperations.getFourthName(),fourthName);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.addFirstName(firstName);
+        Assert.assertEquals(appointEmployee.getFirstName(),firstName);
+        appointEmployee.addSecondName(secondName);
+        Assert.assertEquals(appointEmployee.getSecondName(),secondName);
+        appointEmployee.addThirdName(thirdName);
+        Assert.assertEquals(appointEmployee.getThirdName(),thirdName);
+        appointEmployee.addFourthName(fourthName);
+        Assert.assertEquals(appointEmployee.getFourthName(),fourthName);
     }
     @Test (priority = 8)
     public void verifyDateOfBirthNotValid (){ /*التحقق من ادخال التاريخ غير صحيح*/
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.dateSelect(dayNotValid,monthNotValid,year);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.dateSelect(dayNotValid,monthNotValid,year);
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");  // Adjust format as needed
         String expectedDate = today.format(formatter);
-        Assert.assertEquals(employeesOperations.getDateText(),expectedDate);
+        Assert.assertEquals(appointEmployee.getDateText(),expectedDate);
     }
     @Test (priority = 9)
     public void verifyDateOfBirthValid (){ /*التحقق من ادخال التاريخ صحيح*/
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.dateSelectionFromIcon(day,month,year);
-        Assert.assertEquals(employeesOperations.getDateText(),year+"/0"+month+"/0"+day);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.dateSelectionFromIcon(day,month,year);
+        Assert.assertEquals(appointEmployee.getDateText(),year+"/0"+month+"/0"+day);
     }
     @Test (priority = 10)
     public void verifyIBAN_NotValid(){ /*التحقق من ادخال رقم البطاقة البنكية اكبر من  30*/
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.addIBAN(IBANNotValid);
-        Assert.assertNotEquals(employeesOperations.getIBAN(),IBANNotValid);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.addIBAN(IBANNotValid);
+        Assert.assertNotEquals(appointEmployee.getIBAN(),IBANNotValid);
     }
     @Test (priority = 11)
     public void verifyIBAN_Valid (){ /*التحقق من ادخال رقم البطاقة البنكية صحيح*/
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.addIBAN(IBAN);
-        Assert.assertEquals(employeesOperations.getIBAN(),IBAN);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.addIBAN(IBAN);
+        Assert.assertEquals(appointEmployee.getIBAN(),IBAN);
     }
 
     @Test (priority = 12)
     public void verifySelectNationality ()  {
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.selectNationality(nationality);
-        Assert.assertEquals(employeesOperations.getNationality(),noNationality);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.selectNationality(nationality);
+        Assert.assertEquals(appointEmployee.getNationality(),noNationality);
     }
     @Test (priority = 13)
     public void verifyEmployeeType ()  {
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.selectEmployeeType(employeeType);
-        Assert.assertEquals(employeesOperations.getEmployeeType(),employeeType);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.selectEmployeeType(employeeType);
+        Assert.assertEquals(appointEmployee.getEmployeeType(),employeeType);
     }
     @Test (priority =14)
     public void verifyMajorJob (){
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.selectMajorJob(majorJob);
-        Assert.assertEquals(employeesOperations.getMajorJob(),majorJob);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.selectMajorJob(majorJob);
+        Assert.assertEquals(appointEmployee.getMajorJob(),majorJob);
     }
     @Test (priority = 15)
     public void verifyMandateJob (){
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.selectMandateJob(mandateJob);
-        Assert.assertEquals(employeesOperations.getMandateJob(),mandateJob);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.selectMandateJob(mandateJob);
+        Assert.assertEquals(appointEmployee.getMandateJob(),mandateJob);
     }
     @Test (priority = 16)
     public void verifyDegree ()  {
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.selectDegree(degree);
-        Assert.assertEquals(employeesOperations.getDegree(),degree);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.selectDegree(degree);
+        Assert.assertEquals(appointEmployee.getDegree(),degree);
     }
     @Test (priority = 17)
     public void verifyOrganizationNumber(){
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.addOrganizationNumber(organizationNumber);
-        Assert.assertEquals(employeesOperations.getOrganizationNumber(),organizationNumber);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.addOrganizationNumber(organizationNumber);
+        Assert.assertEquals(appointEmployee.getOrganizationNumber(),organizationNumber);
     }
     @Test (priority = 18)
     public void verifyInValidOrganizationNumber(){
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.addOrganizationNumber(inValidOrganizationNumber);
-        Assert.assertEquals(employeesOperations.getOrganizationNumber(),organizationNumber);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.addOrganizationNumber(inValidOrganizationNumber);
+        Assert.assertEquals(appointEmployee.getOrganizationNumber(),organizationNumber);
     }
     @Test (priority = 19)
     public void verifyWorkDateNotValid (){ /*التحقق من ادخال تاريخ التعيين في الجهه غير صحيح*/
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.workDateSelect(dayNotValid,monthNotValid,year);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.workDateSelect(dayNotValid,monthNotValid,year);
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");  // Adjust format as needed
         String expectedDate = today.format(formatter);
-        Assert.assertEquals(employeesOperations.getWorkDateText(),expectedDate);
+        Assert.assertEquals(appointEmployee.getWorkDateText(),expectedDate);
     }
     @Test (priority = 20)
     public void verifyWorkDateValidation(){  /* التحقق من ظهور الفالديشن */
-        //employeesOperations.enterAppointEmployee();
+        //appointEmployee.enterAppointEmployee();
         LocalDate today = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String actualDay = today.format(formatter);
-        employeesOperations.workDateSelect(actualDay);
-        Assert.assertEquals(employeesOperations.getWorkdateValidationText(),workDateValidationTex);
+        appointEmployee.workDateSelect(actualDay);
+        Assert.assertEquals(appointEmployee.getWorkdateValidationText(),workDateValidationTex);
     }
     @Test (priority = 21)
     public void verifyWorkDateValid (){ /*التحقق من ادخال تاريخ التعيين في الجهه صحيح*/
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.workDateSelect(day,month,year);
-        Assert.assertEquals(employeesOperations.getWorkDateText(),year+"/0"+month+"/0"+day);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.workDateSelect(day,month,year);
+        Assert.assertEquals(appointEmployee.getWorkDateText(),year+"/0"+month+"/0"+day);
     }
 
     @Test (priority = 22)
     public void verifyLevelDateSelectNotValid (){ /*التحقق من ادخال تاريخ التعيين على مرتبة غير صحيح*/
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.levelDateSelect(dayNotValid,monthNotValid,year);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.levelDateSelect(dayNotValid,monthNotValid,year);
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");  // Adjust format as needed
         String expectedDate = today.format(formatter);
-        Assert.assertEquals(employeesOperations.getLevelDateText(),expectedDate);
+        Assert.assertEquals(appointEmployee.getLevelDateText(),expectedDate);
     }
     @Test (priority = 23)
     public void verifyLevelDateValidation(){  /* التحقق من ظهور الفالديشن */
-        //employeesOperations.enterAppointEmployee();
+        //appointEmployee.enterAppointEmployee();
         LocalDate today = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String actualDay = today.format(formatter);
-        employeesOperations.levelDateSelect(actualDay);
-        Assert.assertEquals(employeesOperations.getLevelDateValidationText(),levelDateValidationTex);
+        appointEmployee.levelDateSelect(actualDay);
+        Assert.assertEquals(appointEmployee.getLevelDateValidationText(),levelDateValidationTex);
     }
     @Test (priority = 24)
     public void verifyLevelDateSelectValid (){ /*التحقق من ادخال تاريخ التعيين على مرتبة*/
-        //employeesOperations.enterAppointEmployee();
-        employeesOperations.levelDateSelect(day,month,year);
-        Assert.assertEquals(employeesOperations.getLevelDateText(),year+"/0"+month+"/0"+day);
+        //appointEmployee.enterAppointEmployee();
+        appointEmployee.levelDateSelect(day,month,year);
+        Assert.assertEquals(appointEmployee.getLevelDateText(),year+"/0"+month+"/0"+day);
     }
 
     @Test (priority = 25)
     public void verifyFirstJobDateSelectNotValid (){ /*التحقق من ادخال تاريخ اول تعيين في الدولة غير صحيح*/
-        employeesOperations.enterAppointEmployee();
-        employeesOperations.firstJobDateSelect(dayNotValid,monthNotValid,year);
+        appointEmployee.enterAppointEmployee();
+        appointEmployee.firstJobDateSelect(dayNotValid,monthNotValid,year);
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");  // Adjust format as needed
         String expectedDate = today.format(formatter);
-        Assert.assertEquals(employeesOperations.getFirstJobDateText(),expectedDate);
+        Assert.assertEquals(appointEmployee.getFirstJobDateText(),expectedDate);
     }
     @Test (priority = 26)
     public void verifyFirstJobDateValidation(){  /* التحقق من ظهور الفالديشن */
-        employeesOperations.enterAppointEmployee();
+        appointEmployee.enterAppointEmployee();
         LocalDate today = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String actualDay = today.format(formatter);
-        employeesOperations.firstJobDateSelect(actualDay);
-        Assert.assertEquals(employeesOperations.getFirstJobDateValidationText(),workDateValidationTex);
+        appointEmployee.firstJobDateSelect(actualDay);
+        Assert.assertEquals(appointEmployee.getFirstJobDateValidationText(),workDateValidationTex);
     }
     @Test (priority = 27)
     public void verifyFirstJobDateSelectValid (){ /*التحقق من ادخال تاريخ اول تعيين في الدولة*/
-        employeesOperations.enterAppointEmployee();
-        employeesOperations.firstJobDateSelect(day,month,year);
-        Assert.assertEquals(employeesOperations.getFirstJobDateText(),year+"/0"+month+"/0"+day);
+        appointEmployee.enterAppointEmployee();
+        appointEmployee.firstJobDateSelect(day,month,year);
+        Assert.assertEquals(appointEmployee.getFirstJobDateText(),year+"/0"+month+"/0"+day);
     }
     @Test (priority = 28)
     public void verifyDecisionDataToggle(){
-        employeesOperations.enterAppointEmployee();
-        employeesOperations.setToggle();
-        Assert.assertTrue(employeesOperations.getRecNumberTextField().isDisplayed());
+        appointEmployee.enterAppointEmployee();
+        appointEmployee.setToggle();
+        Assert.assertTrue(appointEmployee.getRecNumberTextField().isDisplayed());
     }
     @Test (priority =29)
     public void verifyAddEmployee(){
-        employeesOperations.enterAppointEmployee();
-        employeesOperations.saveTheEmployee();
-        Assert.assertEquals(employeesOperations.getSucessMsg(),sucessSavingEmpMsg);
+        appointEmployee.enterAppointEmployee();
+        appointEmployee.saveTheEmployee();
+        Assert.assertEquals(appointEmployee.getSucessMsg(),sucessSavingEmpMsg);
 
     }
 

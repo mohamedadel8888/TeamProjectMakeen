@@ -20,7 +20,7 @@
 
   "day": "1",
   "month": "1",
-  "year": "1446",
+  "year": "2020",
 
   "dayNotValid": "32",
   "monthNotValid": "13",
@@ -31,9 +31,10 @@
   "noNationality": "اختر الجنسية",
 
   "employeeType": "موظفين أمانة",
-  "majorJob":"        -8-9144",
+  "majorJob":"-8-9144",
   "noMajorJob": "إختر الوظيفة الاساسية",
-  "mandateJob": "اختر الوظيفة المكلف بها",
+  "noMandateJob": "اختر الوظيفة المكلف بها",
+  "mandateJob" : "موظف الاختام ",
   "degree": "6",
   "organizationNumber": "3334444",
   "inValidOrganizationNumber":"333444499966",
@@ -41,5 +42,7 @@
   "workDateValidationTex":"عفوا تاريخ التعيين يجب ألا يتعدي تاريخ اليوم",
   "levelDateValidationTex":"التاريخ يجب أن يكون بعد تاريخ الميلاد وقبل تاريخ اليوم",
 
-  "sucessSavingEmpMsg": "تم حفظ بيانات المقدم على التعيين بنجاح , وانشاء معاملة بمرفق القرار  برقم أرشيف"
+  "sucessSavingEmpMsg": "تم حفظ بيانات المقدم على التعيين بنجاح , وانشاء معاملة بمرفق القرار  برقم أرشيف",
+
+  "empToReassign": "5615615"
 }

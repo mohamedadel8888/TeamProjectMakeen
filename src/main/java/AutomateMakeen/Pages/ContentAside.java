@@ -1,7 +1,8 @@
 package AutomateMakeen.Pages;
 
 import AutomateMakeen.Base.BaseComp;
-import org.openqa.selenium.By;
+import AutomateMakeen.Pages.EmployeesOperations.AppointEmployee;
+import AutomateMakeen.Pages.EmployeesOperations.ReassignEmployee;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -139,20 +140,36 @@ public class ContentAside extends BaseComp {
     WebElement employeeOperations;
     @FindBy(id = "DivMainEmp")
     WebElement divEmpOperations;
-    public EmployeesOperations goToEmployeeOperations(){
+    public AppointEmployee goToEmployeeOperations_AppointEmployee(){
         exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
         try{
             exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
             humanResources.click();
             employeeOperations.click();
             exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
-            return new EmployeesOperations(driver);
+            return new AppointEmployee(driver);
         }catch(NoSuchElementException e){
             exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
             humanResources.click();
             employeeOperations.click();
             exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
-            return new EmployeesOperations(driver);
+            return new AppointEmployee(driver);
+        }
+    }
+    public ReassignEmployee goToEmployeeOperations_ReassignEmployee(){
+        exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
+        try{
+            exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
+            humanResources.click();
+            employeeOperations.click();
+            exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
+            return new ReassignEmployee(driver);
+        }catch(NoSuchElementException e){
+            exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
+            humanResources.click();
+            employeeOperations.click();
+            exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
+            return new ReassignEmployee(driver);
         }
     }
 

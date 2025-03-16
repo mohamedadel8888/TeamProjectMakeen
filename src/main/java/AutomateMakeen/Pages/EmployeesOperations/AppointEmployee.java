@@ -1,6 +1,7 @@
-package AutomateMakeen.Pages;
+package AutomateMakeen.Pages.EmployeesOperations;
 
 import AutomateMakeen.Base.BaseComp;
+import AutomateMakeen.Pages.ContentAside;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -14,11 +15,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Objects;
 
-public class EmployeesOperations extends BaseComp {
+public class AppointEmployee extends BaseComp {
     private WebDriver driver;
     private WebDriverWait exWait;
 
-    public EmployeesOperations (WebDriver driver){
+    public AppointEmployee(WebDriver driver){
         super(driver);
         this.driver = driver;
         exWait = new WebDriverWait(driver , Duration.ofSeconds(10));
