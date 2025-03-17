@@ -375,24 +375,6 @@ public class InboxPage extends BaseComp {
 
 
 
-    /*========================================================================*/
-                                /* تأشير*/
-    /*========================================================================*/
-    private By marking = By.id("btn_Vice"); /*تأشير*/
-    private By viceDiv = By.id("spViceLetterPopUpTitle");
-    private By btnConfirmVice = By.cssSelector("#btnConfirmViceAction");  /*زر تأكيد */
-
-    public void goToVice (){ /*فتح تاب تأشير */
-        WebElement vice1 = driver.findElement(marking);
-        vice1.click();
-        WebElement viceDiv1 = driver.findElement(viceDiv);
-        exWait.until(ExpectedConditions.visibilityOf(viceDiv1));
-    }
-    public void confirmVice (){
-        WebElement btnConfirmVice1 = driver.findElement(btnConfirmVice);
-        btnConfirmVice1.click();
-    }
-
 
     /*========================================================================*/
                              /* المعلومة مكانية*/
@@ -415,8 +397,64 @@ public class InboxPage extends BaseComp {
 
 
 
-        private By markingAndreferToAgent = xpath("//a[contains(text(),'تأشير و إحالة للوكيل')]");  /*تأشير و إحاله الى الوكيل */
-        private By markingAndreferToCustomEmp = xpath("//a[contains(text(),'تأشير إلي موظف محدد')]"); /*تأشير الى موظف محدد*/
+
+    /*========================================================================*/
+                                   /* تأشير*/
+    /*========================================================================*/
+    private By marking = By.id("btn_Vice"); /*تأشير*/
+    private By viceDiv = By.cssSelector("li[id='btn_Vice'] div[class='quick_actions-link_icon']");
+    private By btnConfirmVice = By.cssSelector("#btnConfirmViceAction");  /*زر تأكيد */
+    private By markingAndreferToPrince = By.xpath("//a[contains(text(),'تأشير و إحالة لسعادة أمير منطقة الحدود الشمالية')]"); /*تأشير و إحالة لسعادة أمير منطقة الحدود الشمالية*/
+    private By markingAndreferToAgent = By.xpath("//a[contains(text(),'تأشير و إحالة للوكيل')]");  /*تأشير و إحاله الى الوكيل */
+    private By markingAndreferToCustomEmp = By.xpath("//a[contains(text(),'تأشير إلي موظف محدد')]"); /*تأشير الى موظف محدد*/
+
+
+    public void goToVice (){ /*فتح تاب تأشير */
+        WebElement vice1 = driver.findElement(marking);
+        vice1.click();
+        WebElement viceDiv1 = driver.findElement(viceDiv);
+        exWait.until(ExpectedConditions.visibilityOf(viceDiv1));
+    }
+    public void confirmVice (){
+        WebElement btnConfirmVice1 = driver.findElement(btnConfirmVice);
+        btnConfirmVice1.click();
+    }
+    public void marking_ReferToPrince (){ /*تأشير و إحالة لسعادة أمير منطقة الحدود الشمالية*/
+        WebElement viceDiv1 = driver.findElement(viceDiv);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(viceDiv1).perform();
+        WebElement markingAndreferToPrince1 = driver.findElement(markingAndreferToPrince);
+        markingAndreferToPrince1.click();
+        WebElement confirmDiv = driver.findElement(By.xpath("(//div[@class='modal-content p-4'])[3]"));
+        exWait.until(ExpectedConditions.visibilityOf(confirmDiv));
+
+        confirmVice();
+    }
+    public void marking_ReferToAgent (){ /*تأشير و إحالة للوكيل*/
+        WebElement viceDiv1 = driver.findElement(viceDiv);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(viceDiv1).perform();
+        WebElement markingAndreferToAgent1 = driver.findElement(markingAndreferToAgent);
+        markingAndreferToAgent1.click();
+        WebElement confirmDiv = driver.findElement(By.xpath("(//div[@class='modal-content p-4'])[3]"));
+        exWait.until(ExpectedConditions.visibilityOf(confirmDiv));
+        confirmVice();
+    }
+    public void marking_ReferToCustomEmp (){ /*تأشير الى موظف محدد*/
+        WebElement viceDiv1 = driver.findElement(viceDiv);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(viceDiv1).perform();
+        WebElement markingAndreferToCustomEmp1 = driver.findElement(markingAndreferToCustomEmp);
+        markingAndreferToCustomEmp1.click();
+        WebElement confirmDiv = driver.findElement(By.xpath("(//div[@class='modal-content p-4'])[3]"));
+        exWait.until(ExpectedConditions.visibilityOf(confirmDiv));
+        WebElement selectEmp = driver.findElement(By.id("slcSpeceficEmp_ddlSelectButton"));
+        selectEmp.click();
+        WebElement emp=driver.findElement(By.cssSelector("label[data-type='child']"));
+        emp.click();
+        confirmVice();
+    }
+
 
 
     /*========================================================================*/
@@ -424,7 +462,7 @@ public class InboxPage extends BaseComp {
     /*========================================================================*/
 
     private By sign = By.id("btn_sign"); /*توقيع*/
-    private By signDiv = By.cssSelector("#spViceLetterPopUpTitle");
+    private By signDiv = By.xpath("(//div[@class='quick_actions-link_icon'])[9]");
     private By btnConfirm = By.cssSelector("#btnConfirmViceAction");  /*زر تأكيد */
     private By signByOrderOfPrince = By.cssSelector("li[id='btn_sign'] li:nth-child(1) a:nth-child(1)"); /*توقيع بأمر سعاده الامير*/
     private By signByorderOfRepresentativePrince = By.xpath("(//a)[75]"); /*تزقيع بأمر من نائب الامير */
@@ -484,11 +522,7 @@ public class InboxPage extends BaseComp {
     }
 
 
-
-
-
-        private By signWithAuthority = xpath("//a[contains(text(),'توقيع بتفويض')]"); /* توقيع بتفويض */
-    private By assetsRequest = By.id("btn_AssetsRequest"); /*طلب أصول*/
+          private By assetsRequest = By.id("btn_AssetsRequest"); /*طلب أصول*/
     private By tempSave = By.id("btn_TempSaveForTreatment"); /*حفظ مؤقت*/
 
     /*=========================================================================================================================*/
@@ -530,7 +564,7 @@ public class InboxPage extends BaseComp {
         actions.moveToElement(details).perform();
         WebElement treatArchiveNum = driver.findElement(xpath("//table[@class='info-comp-table-list']/tr/th[text()='الأرشيف']/following-sibling::td[1]"));
         String archive = treatArchiveNum.getText();
-        actions.moveToElement(details).click().perform();
+        actions.moveByOffset(0, 0).perform();
         return archive;
     }
     /*========================================================================*/
