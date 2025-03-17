@@ -30,7 +30,7 @@ public class HomePage extends BaseComp {
     public HomePage(WebDriver driver){
         super(driver);
         this.driver = driver;
-        exWait = new WebDriverWait(driver , Duration.ofSeconds(10));
+        exWait = new WebDriverWait(driver , Duration.ofSeconds(20));
         contentAside = new ContentAside(driver);
 
     }
