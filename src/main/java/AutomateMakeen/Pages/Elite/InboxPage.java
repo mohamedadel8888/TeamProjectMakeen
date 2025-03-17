@@ -426,11 +426,6 @@ public class InboxPage extends BaseComp {
     private By sign = By.id("btn_sign"); /*توقيع*/
     private By signDiv = By.cssSelector("#spViceLetterPopUpTitle");
     private By btnConfirm = By.cssSelector("#btnConfirmViceAction");  /*زر تأكيد */
-    private By signByOrderOfPrince = By.cssSelector("li[id='btn_sign'] li:nth-child(1) a:nth-child(1)"); /*توقيع بأمر سعاده الامير*/
-    private By signByorderOfRepresentativePrince = By.xpath("(//a)[75]"); /*تزقيع بأمر من نائب الامير */
-    private By signWithDelegate = By.xpath("//a[contains(text(),'توقيع بتفويض')]"); /*توقيع بتفويض*/
-    private By delegateAbout = By.id("slcOnBehalf_ddlSelectButton"); /*ddl مفوض عنه*/
-
 
     public void goToSign (){ /*فتح تاب توقيع*/
         WebElement sign1 = driver.findElement(sign);
@@ -439,46 +434,6 @@ public class InboxPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(signDiv1));
     }
     public void signConfirm (){
-        WebElement btnConfirm1 = driver.findElement(btnConfirm);
-        btnConfirm1.click();
-    }
-    public void signByOrderOfPrince (){
-        WebElement signDiv1 = driver.findElement(signDiv);
-        Actions actions = new Actions(driver);
-        actions.moveToElement(signDiv1).perform();
-        WebElement signByOrderOfPrince1 = driver.findElement(signByOrderOfPrince);
-        signByOrderOfPrince1.click();
-        WebElement signDiv = driver.findElement(By.cssSelector("div[id='model_SignVicePopUp'] div[class='modal-content p-4']"));
-        exWait.until(ExpectedConditions.visibilityOf(signDiv));
-        WebElement btnConfirm1 = driver.findElement(btnConfirm);
-        btnConfirm1.click();
-    }
-    public void signByOrderOfRepresentativePrince (){
-        WebElement signDiv1 = driver.findElement(signDiv);
-        Actions actions = new Actions(driver);
-        actions.moveToElement(signDiv1).perform();
-        WebElement signByorderOfRepresentativePrince1 = driver.findElement(signByorderOfRepresentativePrince);
-        signByorderOfRepresentativePrince1.click();
-        WebElement signDiv = driver.findElement(By.cssSelector("div[id='model_SignVicePopUp'] div[class='modal-content p-4']"));
-        exWait.until(ExpectedConditions.visibilityOf(signDiv));
-        WebElement btnConfirm1 = driver.findElement(btnConfirm);
-        btnConfirm1.click();
-    }
-    public void selectDelegateAbout (String name){     /*اختيار المفوض عنه*/
-        WebElement delegateAbout1 = driver.findElement(delegateAbout);
-        delegateAbout1.click();
-        WebElement delegateName = driver.findElement(xpath("//label[contains(text(),'"+name+"')]"));
-        delegateName.click();
-    }
-    public void signWithDelegate (String delegateName){
-        WebElement signDiv1 = driver.findElement(signDiv);
-        Actions actions = new Actions(driver);
-        actions.moveToElement(signDiv1).perform();
-        WebElement signWithDelegate1 = driver.findElement(signWithDelegate);
-        signWithDelegate1.click();
-        WebElement signDiv = driver.findElement(By.xpath("(//div[@class='modal-content p-4'])[3]"));
-        exWait.until(ExpectedConditions.visibilityOf(signDiv));
-        selectDelegateAbout(delegateName);
         WebElement btnConfirm1 = driver.findElement(btnConfirm);
         btnConfirm1.click();
     }

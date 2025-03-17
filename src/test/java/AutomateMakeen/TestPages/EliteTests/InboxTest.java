@@ -71,7 +71,19 @@ public class InboxTest extends TestInit  {
             ex.until(ExpectedConditions.visibilityOf(inboxPage.getAttachmentsTab()));
             Assert.assertTrue(inboxPage.getAttachmentsTab().isDisplayed());
         }
-
+        @Test (priority = 4)
+        public void checkCreateLetter () {  /*انشاء خطاب */
+            inboxPage.lettersTab();
+            inboxPage.selectDepartment(myDepartment);
+            inboxPage.selectSefatLetter(sefatLetter);
+            inboxPage.forwardTo(forwardToLetter);
+            inboxPage.selectForwardType(forwardType);
+            inboxPage.subject(mySubject);
+            inboxPage.addModel(addModel);
+            inboxPage.send();
+            inboxPage.lettersTab();
+            Assert.assertTrue(inboxPage.statusDone());
+        }
         @Test (priority = 5)
         public void checkCreateOffer () { /*انشاء عرض*/
             inboxPage.offersTab();
@@ -96,10 +108,28 @@ public class InboxTest extends TestInit  {
             inboxPage.internalMemoTab();
             Assert.assertTrue(inboxPage.statusDone());
         }
-
-
+        @Test (priority = 7)
+        public void signLetter (){ /* لابد من وجود خطاب محفوظ*/
+            inboxPage.lettersTab();
+            inboxPage.goToSign();
+            inboxPage.signConfirm();
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            String archive = sentPage.getTreatArchiveNum();
+            Assert.assertEquals(archive, archiveNum);
+        }
+        @Test (priority = 8)
+        public void viceLetter (){   /* لابد من وجود خطاب محفوظ*/
+            inboxPage.lettersTab();
+            inboxPage.goToVice();
+            inboxPage.confirmVice();
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            String archive = sentPage.getTreatArchiveNum();
+            Assert.assertEquals(archive,archiveNum);
+        }
         @Test (priority = 9)
-        public void forwardToCustomEmployer (){  /*احاله الى موظف محدد */
+        public void forwardToCustomEmployer (){
             inboxPage.goToForwardTab();
             inboxPage.forwardToCustomEmp(employeeDepartment,employeeName,forwardType);
             SentPage sentPage = eliteHomePage.goToSent();

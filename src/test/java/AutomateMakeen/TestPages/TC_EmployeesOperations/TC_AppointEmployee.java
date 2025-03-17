@@ -201,16 +201,19 @@ public class TC_AppointEmployee extends TestInit {
     }
     @Test (priority = 13)
     public void verifyEmployeeType ()  {
+        //appointEmployee.enterAppointEmployee();
         appointEmployee.selectEmployeeType(employeeType);
         Assert.assertEquals(appointEmployee.getEmployeeType(),employeeType);
     }
     @Test (priority =14)
     public void verifyMajorJob (){
+        //appointEmployee.enterAppointEmployee();
         appointEmployee.selectMajorJob(majorJob);
         Assert.assertEquals(appointEmployee.getMajorJob(),majorJob);
     }
     @Test (priority = 15)
     public void verifyMandateJob (){
+        //appointEmployee.enterAppointEmployee();
         appointEmployee.selectMandateJob(mandateJob);
         Assert.assertEquals(appointEmployee.getMandateJob(),mandateJob);
     }
@@ -317,6 +320,7 @@ public class TC_AppointEmployee extends TestInit {
         appointEmployee.enterAppointEmployee();
         appointEmployee.saveTheEmployee();
         Assert.assertEquals(appointEmployee.getSucessMsg(),sucessSavingEmpMsg);
+
     }
 
 

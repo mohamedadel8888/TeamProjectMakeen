@@ -88,11 +88,6 @@ public class SentPage extends BaseComp {
         String departmentName = departmentField.getText();
         return departmentName;
     }
-    public String getRecieverName (){
-        WebElement recieverNameField = driver.findElement(By.id("h_treat_dest"));
-        String departmentName = recieverNameField.getText();
-        return departmentName;
-    }
 
 
 
