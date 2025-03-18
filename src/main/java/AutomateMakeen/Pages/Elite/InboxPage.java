@@ -1,6 +1,7 @@
 package AutomateMakeen.Pages.Elite;
 
 import AutomateMakeen.Base.BaseComp;
+import AutomateMakeen.Pages.LoginPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -370,7 +371,7 @@ public class InboxPage extends BaseComp {
 
 
     private By forwardToSign = By.id("btn_ForwardToSign"); /* إحالة للتوقيع */
-    private By backToSource = By.id("btn_backToSource"); /*إعادة للمصدر*/
+
     private By btnMore = By.id("btn_more_options"); /*زر المزيد */
 
 
@@ -416,6 +417,8 @@ public class InboxPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(viceDiv1));
     }
     public void confirmVice (){
+        WebElement viceDiv = driver.findElement(By.cssSelector("div[id='model_SignVicePopUp'] div[class='modal-content p-4']"));
+        exWait.until(ExpectedConditions.visibilityOf(viceDiv));
         WebElement btnConfirmVice1 = driver.findElement(btnConfirmVice);
         btnConfirmVice1.click();
     }
@@ -450,7 +453,7 @@ public class InboxPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(confirmDiv));
         WebElement selectEmp = driver.findElement(By.id("slcSpeceficEmp_ddlSelectButton"));
         selectEmp.click();
-        WebElement emp=driver.findElement(By.cssSelector("label[data-type='child']"));
+        WebElement emp=driver.findElement(By.cssSelector("div[id='slcSpeceficEmp_Uu35rj0b1yY%3d_nav'] label[data-type='child']"));
         emp.click();
         confirmVice();
     }
@@ -465,7 +468,7 @@ public class InboxPage extends BaseComp {
     private By signDiv = By.xpath("(//div[@class='quick_actions-link_icon'])[9]");
     private By btnConfirm = By.cssSelector("#btnConfirmViceAction");  /*زر تأكيد */
     private By signByOrderOfPrince = By.cssSelector("li[id='btn_sign'] li:nth-child(1) a:nth-child(1)"); /*توقيع بأمر سعاده الامير*/
-    private By signByorderOfRepresentativePrince = By.xpath("(//a)[75]"); /*تزقيع بأمر من نائب الامير */
+    private By signByorderOfRepresentativePrince = By.xpath("//li[@id='btn_sign']//li[2]//a[1]"); /*توقيع بأمر من نائب الامير */
     private By signWithDelegate = By.xpath("//a[contains(text(),'توقيع بتفويض')]"); /*توقيع بتفويض*/
     private By delegateAbout = By.id("slcOnBehalf_ddlSelectButton"); /*ddl مفوض عنه*/
 
@@ -477,7 +480,10 @@ public class InboxPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(signDiv1));
     }
     public void signConfirm (){
+        WebElement signDiv = driver.findElement(By.cssSelector("div[id='model_SignVicePopUp'] div[class='modal-content p-4']"));
+        exWait.until(ExpectedConditions.visibilityOf(signDiv));
         WebElement btnConfirm1 = driver.findElement(btnConfirm);
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("#model_SignVicePopUp"))));
         btnConfirm1.click();
     }
     public void signByOrderOfPrince (){
@@ -520,9 +526,36 @@ public class InboxPage extends BaseComp {
         WebElement btnConfirm1 = driver.findElement(btnConfirm);
         btnConfirm1.click();
     }
+    public void waitDiv ()  {
+        WebElement afterSignDiv = driver.findElement(By.cssSelector("div[class='modal-dialog modal-dialog-centered modal-md'] div[class='modal-content']"));
+        exWait.until(ExpectedConditions.visibilityOf(afterSignDiv));
+        WebElement btnClose = driver.findElement(By.id("btnCloseClick"));
+        btnClose.click();
+    }
+
+    /*========================================================================*/
+                            /* اعادة للمصدر*/
+    /*========================================================================*/
+    private By returnToSource = By.id("btn_backToSource"); /*إعادة للمصدر*/
+    private By divReturnToSource = By.xpath("(//div[@class='modal-content p-4'])[3]"); /*نافذه اعاده للمصدر*/
+    private By textField = By.id("txtSignViceComment");
+
+    public void returnToSource (String text){ /*فتح تاب اعاده للمصدر*/
+        WebElement backToSource1 = driver.findElement(returnToSource);
+        backToSource1.click();
+        WebElement divReturnToSource1 = driver.findElement(divReturnToSource);
+        exWait.until(ExpectedConditions.visibilityOf(divReturnToSource1));
+        WebElement textField1 = driver.findElement(textField);
+        textField1.sendKeys(text);
+        WebElement btnConfirm = driver.findElement(btnConfirmVice);
+        btnConfirm.click();
+    }
 
 
-          private By assetsRequest = By.id("btn_AssetsRequest"); /*طلب أصول*/
+
+
+    /*========================================================================*/
+    private By assetsRequest = By.id("btn_AssetsRequest"); /*طلب أصول*/
     private By tempSave = By.id("btn_TempSaveForTreatment"); /*حفظ مؤقت*/
 
     /*=========================================================================================================================*/
@@ -604,10 +637,7 @@ public class InboxPage extends BaseComp {
         forwardToSign1.click();
     }
     /*========================================================================*/
-    public void goToBackToSource (){ /*فتح تاب اعاده للمصدر*/
-        WebElement backToSource1 = driver.findElement(backToSource);
-        backToSource1.click();
-    }
+
     /*========================================================================*/
     public void btnMoreClick (){ /*زر المزيد*/
         WebElement btnMore1 = driver.findElement(btnMore);
@@ -624,6 +654,7 @@ public class InboxPage extends BaseComp {
         tempSave1.click();
     }
     /*========================================================================*/
+
 
 
 }

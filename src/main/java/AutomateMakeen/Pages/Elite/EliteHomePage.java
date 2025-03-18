@@ -1,6 +1,7 @@
 package AutomateMakeen.Pages.Elite;
 
 import AutomateMakeen.Base.BaseComp;
+import AutomateMakeen.Pages.LoginPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -46,22 +47,20 @@ public class EliteHomePage extends BaseComp {
     }
 
     public CreateInternalMailPage goToCreateInternalMail(){ /*الدخول الى انشاء بريد داخلي  */
-        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(mainPage)));
+        exWait.until(ExpectedConditions.elementToBeClickable(sideMenu));
         driver.findElement(sideMenu).click();
         List<WebElement> l1 = driver.findElements(By.cssSelector(".sidemenu__text"));
         List<WebElement> l2 = driver.findElements(By.xpath("//span[text()='بريد']/../../../div/ul/li"));
-        List<WebElement> l3 = driver.findElements(By.xpath("//span[text()='الموارد البشرية']/../../../div/ul/li"));
         l1.get(0).click();
         l2.get(2).click();
         CreateInternalMailPage page1 = new CreateInternalMailPage(driver) ;
         return page1;
     }
     public SentPage goToSent(){ /*الدخول الى الصادر */
-        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(mainPage)));
+        exWait.until(ExpectedConditions.elementToBeClickable(sideMenu));
         driver.findElement(sideMenu).click();
         List<WebElement> l1 = driver.findElements(By.cssSelector(".sidemenu__text"));
         List<WebElement> l2 = driver.findElements(By.xpath("//span[text()='بريد']/../../../div/ul/li"));
-        List<WebElement> l3 = driver.findElements(By.xpath("//span[text()='الموارد البشرية']/../../../div/ul/li"));
         l1.get(0).click();
         l2.get(1).click();
         SentPage page2 = new SentPage(driver);
@@ -86,5 +85,13 @@ public class EliteHomePage extends BaseComp {
         l2.get(3).click();
         MsgsAndGeneralsPage page4 = new MsgsAndGeneralsPage(driver);
         return page4;
+    }
+    public LoginPage signOutFromElite (){
+        WebElement signOutBtn = driver.findElement(By.cssSelector("div[id='navbarDropdown'] span[class='arrow-icon']"));
+        signOutBtn.click();
+        exWait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector("#navbar-end-content"))));
+        WebElement exist = driver.findElement(By.id(("li_LogOut")));
+        exist.click();
+        return new LoginPage(driver);
     }
 }

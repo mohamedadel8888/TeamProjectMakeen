@@ -109,7 +109,7 @@ public class SentPage extends BaseComp {
         WebElement details = driver.findElement(treatDetails);
         Actions actions = new Actions(driver);
         actions.moveToElement(details).perform();
-        WebElement directing = driver.findElement(By.xpath("//table[@class='info-comp-table-list']/tr/th[text()='التوجيه']/following-sibling::td[1]"));
+        WebElement directing = driver.findElement(By.xpath("//table[@class='info-comp-table-list']/tr/th[text()='التوجية']/following-sibling::td[1]"));
         String dir = directing.getText();
         return dir;
     }

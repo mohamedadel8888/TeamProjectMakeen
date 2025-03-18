@@ -43,8 +43,14 @@ public class HomePage extends BaseComp {
         return new LoginPage(driver);
     }
     public void goToElite (){
-        exWait.until(ExpectedConditions.urlContains("MainPage.aspx"));
-        eliteHomePageIcon.click();
+        try{
+            eliteHomePageIcon.click();
+        }
+        catch (Exception e){
+            exWait.until(ExpectedConditions.urlContains("MainPage.aspx"));
+            eliteHomePageIcon.click();
+        }
+
     }
 
     public WebElement getSignOutBtn() {

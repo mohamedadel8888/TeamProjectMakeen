@@ -71,33 +71,6 @@ public class InboxTest extends TestInit  {
             ex.until(ExpectedConditions.visibilityOf(inboxPage.getAttachmentsTab()));
             Assert.assertTrue(inboxPage.getAttachmentsTab().isDisplayed());
         }
-
-        @Test (priority = 5)
-        public void checkCreateOffer () { /*انشاء عرض*/
-            inboxPage.offersTab();
-            inboxPage.selectDepartment(myDepartment);
-            inboxPage.forwardTo(forwardToOffer);
-            inboxPage.receiverAlias(receiverAlias);
-            inboxPage.subject(mySubject);
-            inboxPage.addModel(addModel);
-            inboxPage.send();
-            inboxPage.offersTab();
-            Assert.assertTrue(inboxPage.statusDone());
-        }
-        @Test (priority = 6)
-        public void checkCreateInternalMemo () { /*انشاء مذكرة داخلية*/
-            inboxPage.internalMemoTab();
-            inboxPage.selectDepartment(myDepartment);
-            inboxPage.setChkBoxDesc();
-            inboxPage.forwardTo(forwardToOffer);
-            inboxPage.subject(mySubject);
-            inboxPage.addModel(addModel);
-            inboxPage.send();
-            inboxPage.internalMemoTab();
-            Assert.assertTrue(inboxPage.statusDone());
-        }
-
-
         @Test (priority = 9)
         public void forwardToCustomEmployer (){  /*احاله الى موظف محدد */
             inboxPage.goToForwardTab();
@@ -106,15 +79,6 @@ public class InboxTest extends TestInit  {
             sentPage.mailSentSearch(archiveNum);
             String department = sentPage.getDepartmentName();
             Assert.assertEquals(department, employeeDepartment);
-        }
-        @Test (priority = 10)
-        public void forwardToSave (){
-            inboxPage.goToForwardToSave();
-            inboxPage.sendTransToSave(exportedNotes);
-            SentPage sentPage = eliteHomePage.goToSent();
-            sentPage.mailSentSearch(archiveNum);
-            String directing = sentPage.getTreatDirecting();
-            Assert.assertEquals(directing, "للحفظ");
         }
         @Test(priority = 11)
         public void checkAddGeoInfo (){

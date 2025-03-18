@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 import java.io.FileNotFoundException;
 import java.time.Duration;
 
-public class Letter_TC extends TestInit {
+public class Orders_TC extends TestInit {
     WebDriverWait ex;
     String myDepartment;
     String sefatLetter;
@@ -63,62 +63,43 @@ public class Letter_TC extends TestInit {
         forwardToName = getJsonData("CreateInternalMailDataElite", "forwardToName"); /*اسم الموجه اليه*/
         mainManager = getJsonData("CreateInternalMailDataElite", "mainManager");  /*الامين العام*/
         delegateName = getJsonData("CreateInternalMailDataElite", "delegateName"); /*اسم المفوض عنه*/
+
+
     }
     @BeforeMethod
-    public void setUp2 () throws FileNotFoundException {
+    public void setUp2 () {
         createInternalMailPage = eliteHomePage.goToCreateInternalMail();
         archiveNum = createInternalMailPage.createInternalMailForMe();
-        inboxPage.lettersTab();
+        inboxPage.offersTab();
         inboxPage.selectDepartment(myDepartment);
-        inboxPage.selectSefatLetter(sefatLetter);
-        inboxPage.forwardTo(forwardToLetter);
+        inboxPage.forwardTo(forwardToOffer);
+        inboxPage.receiverAlias(receiverAlias);
         inboxPage.subject(mySubject);
         inboxPage.addModel(addModel);
         inboxPage.send();
     }
-    @Test (priority = 1 )
-    public void signLetter () throws InterruptedException { /* توقيع الخطاب*/
-        inboxPage.lettersTab();
+    @Test (priority = 1)
+    public void checkCreateOffer () { /*توقيع عرض*/
+        inboxPage.offersTab();
         inboxPage.goToSign();
         inboxPage.signConfirm();
         SentPage sentPage = eliteHomePage.goToSent();
         sentPage.mailSentSearch(archiveNum);
         String recieverName = sentPage.getRecieverName();
-        Assert.assertEquals(recieverName, forwardToName);
+        Assert.assertEquals(recieverName, delegateName);
     }
-
-    @Test (priority = 2)  /*توقيع بأمر من الامير */
-    public void verifySignLetterWith_PrinceApproval (){
-        inboxPage.lettersTab();
-        inboxPage.signByOrderOfPrince();
-        SentPage sentPage = eliteHomePage.goToSent();
-        sentPage.mailSentSearch(archiveNum);
-        WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
-        Assert.assertTrue(signText.getText().contains("بأمر من الأمير"));
-    }
-
-    @Test (priority = 3)  /*توقيع بأمر من نائب الامير */
-    public void verifySignLetterWith_representPrinceApproval (){
-        inboxPage.lettersTab();
-        inboxPage.signByOrderOfRepresentativePrince();
-        SentPage sentPage = eliteHomePage.goToSent();
-        sentPage.mailSentSearch(archiveNum);
-        WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
-        Assert.assertTrue(signText.getText().contains("بأمر من الأمير"));
-    }
-    @Test (priority = 4)  /*توقيع الخطاب بتفويض */
-    public void verifySignLetterWith_Delegate (){
-        inboxPage.lettersTab();
+    @Test (priority = 2)  /*توقيع العرض بتفويض */
+    public void verifySignOfferWith_Delegate (){
+        inboxPage.offersTab();
         inboxPage.signWithDelegate(delegateName);
         SentPage sentPage = eliteHomePage.goToSent();
         sentPage.mailSentSearch(archiveNum);
         WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
-        Assert.assertTrue(signText.getText().contains("تم توقيع الخطاب"));
+        Assert.assertTrue(signText.getText().contains("تم توقيع العرض"));
     }
-
-    @Test (priority = 5)
-    public void viceLetter (){   /*تأشير الخطاب*/
-        inboxPage.lettersTab();
+    @Test (priority = 3)
+    public void viceOffer (){   /*تأشير العرض*/
+        inboxPage.offersTab();
         inboxPage.goToVice();
         inboxPage.confirmVice();
         SentPage sentPage = eliteHomePage.goToSent();
@@ -126,30 +107,20 @@ public class Letter_TC extends TestInit {
         String recieverName = sentPage.getRecieverName();
         Assert.assertEquals(recieverName,mainManager);
     }
-    @Test (priority = 6)
-    public void verifyViceLetter_ReferToPrince(){   /*تأشير الخطاب واحالتة الى سعادة الامير*/
-        inboxPage.lettersTab();
-        inboxPage.marking_ReferToPrince();
-        SentPage sentPage = eliteHomePage.goToSent();
-        sentPage.mailSentSearch(archiveNum);
-        WebElement viceText = driver.findElement(By.cssSelector("div[class='outbox_explaination'] div:nth-child(1) div:nth-child(2) div:nth-child(2) p:nth-child(1)"));
-        Assert.assertTrue(viceText.getText().contains("تم تأشير المعاملة وإحالتها إلى ( سعادة أمير"));
-    }
-    @Test (priority = 6)
-    public void verifyViceLetter_ReferToAgent(){   /*تأشير الخطاب واحالة الى الوكيل*/
-        inboxPage.lettersTab();
+    @Test (priority = 4)
+    public void verifyViceOffer_ReferToAgent(){   /*تأشير العرض واحالتة الى الوكيل*/
+        inboxPage.offersTab();
         inboxPage.marking_ReferToAgent();
         SentPage sentPage = eliteHomePage.goToSent();
         sentPage.mailSentSearch(archiveNum);
-        WebElement viceText = driver.findElement(By.cssSelector("div[class='outbox_explaination'] div:nth-child(1) div:nth-child(2) div:nth-child(2) p:nth-child(1)"));
-        Assert.assertTrue(sentPage.getDirecting().contains("لتوقيع الخطاب إلى محمد احمد احمد على"));
+        Assert.assertTrue(sentPage.getDirecting().contains("لتوقيع العرض"));
     }
-    @Test (priority = 7)
-    public void verifyViceLetter_ReferToCustomEmp(){   /*تأشير الخطاب واحالتة الى موظف محدد*/
-    inboxPage.lettersTab();
-    inboxPage.marking_ReferToCustomEmp();
-    SentPage sentPage = eliteHomePage.goToSent();
-    sentPage.mailSentSearch(archiveNum);
-    Assert.assertTrue(sentPage.getRecieverName().contains("حسين حسن كمال عبدالقادر"));
+    @Test (priority = 5)
+    public void verifyViceLetter_ReferToCustomEmp(){   /*تأشير العرض واحالتة الى موظف محدد*/
+        inboxPage.offersTab();
+        inboxPage.marking_ReferToCustomEmp();
+        SentPage sentPage = eliteHomePage.goToSent();
+        sentPage.mailSentSearch(archiveNum);
+        Assert.assertTrue(sentPage.getRecieverName().contains("حسين حسن كمال عبدالقادر"));
     }
 }

@@ -41,7 +41,7 @@ public class ContentAside extends BaseComp {
     @FindBy(id = "s_m_62")
     private WebElement userControl;  /*ادارة المستخدمين */
 
-    @FindBy(xpath = "(//i[@class='fa fa-angle-double-down'])[3]")
+    @FindBy(xpath = "(//i[@class='fa fa-angle-double-down'])[1]")
     private WebElement mailArrowWebElement;  /*زر قائمةالبريد في القائمة الجانية*/
 
     @FindBy(id = "s_m_141")
