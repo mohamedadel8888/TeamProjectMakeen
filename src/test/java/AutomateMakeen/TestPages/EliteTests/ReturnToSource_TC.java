@@ -23,6 +23,8 @@ public class ReturnToSource_TC extends TestInit {
     String forwardName;
     String addModel;
     String receiverAlias;
+    String employeeName;
+    String employeeDepartment;
     @BeforeClass
     public void setupClass() throws FileNotFoundException {
         lunchDriver();
@@ -39,20 +41,25 @@ public class ReturnToSource_TC extends TestInit {
         createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
         createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient3"));
         exportedNotes = getJsonData("CreateInternalMailDataElite", "exportedNotes");
+        employeeName = getJsonData("CreateInternalMailDataElite", "employeeName");
+        employeeDepartment = getJsonData("CreateInternalMailDataElite", "employeeDepartment"); /*الادارة*/
         createExternalMailPage.pressOnDeactivateReferralNumber();
         createExternalMailPage.clickSendConfirm();
         createExternalMailPage.validateSuccessfulCreatingMail();
         loginPage = homePage.signOut();
+    }
+    @Test
+    public void verifyReturnOfferFeature() throws FileNotFoundException {
         HomePage homePage2 = loginPage.loginUserWithoutRemMe(getJsonData("DelegateData", "validEmployee"), getJsonData("DelegateData", "validPassword"));
-            myDepartment = getJsonData("CreateInternalMailDataElite", "deptName"); /*من الادارة*/
-            sefatLetter = getJsonData("CreateInternalMailDataElite", "sefatLetter"); /* صفة الخطاب*/
-           // mySubject = getJsonData("CreateInternalMailDataElite", "mailSubject"); /*الموضوع*/
-            forwardToOffer = getJsonData("CreateInternalMailDataElite", "forwardNumOffer");
-            forwardToLetter = getJsonData("CreateInternalMailDataElite", "forwardNumLetter");
-            forwardType = getJsonData("CreateInternalMailDataElite", "forwardType");
-            forwardName = getJsonData("CreateInternalMailDataElite", "forwardName"); /*اسم ادارة الموجه اليه*/
-            addModel = getJsonData("CreateInternalMailDataElite", "addModel");
-            receiverAlias = getJsonData("CreateInternalMailDataElite", "receiverAlias"); /*مسمى الموجه اليه*/
+        myDepartment = getJsonData("CreateInternalMailDataElite", "deptName"); /*من الادارة*/
+        sefatLetter = getJsonData("CreateInternalMailDataElite", "sefatLetter"); /* صفة الخطاب*/
+        // mySubject = getJsonData("CreateInternalMailDataElite", "mailSubject"); /*الموضوع*/
+        forwardToOffer = getJsonData("CreateInternalMailDataElite", "forwardNumOffer");
+        forwardToLetter = getJsonData("CreateInternalMailDataElite", "forwardNumLetter");
+        forwardType = getJsonData("CreateInternalMailDataElite", "forwardType");
+        forwardName = getJsonData("CreateInternalMailDataElite", "forwardName"); /*اسم ادارة الموجه اليه*/
+        addModel = getJsonData("CreateInternalMailDataElite", "addModel");
+        receiverAlias = getJsonData("CreateInternalMailDataElite", "receiverAlias"); /*مسمى الموجه اليه*/
         homePage2.goToElite();
         eliteHomePage.goToInbox();
         inboxPage.mailInboxSearch(subject);
@@ -60,26 +67,19 @@ public class ReturnToSource_TC extends TestInit {
         inboxPage.selectDepartment(myDepartment);
         inboxPage.forwardTo(forwardToOffer);
         inboxPage.receiverAlias(receiverAlias);
-        //inboxPage.subject(mySubject);
         inboxPage.addModel(addModel);
         inboxPage.send();
         inboxPage.offersTab();
-        inboxPage.goToSign();
-        inboxPage.signConfirm();
+        inboxPage.forwardToCustomEmp(employeeDepartment,employeeName,"لإكمال اللازم");
         loginPage = eliteHomePage.signOutFromElite();
         HomePage homePage3 = loginPage.loginUserWithoutRemMe(getJsonData("CreateInternalMailDataElite", "ID"), getJsonData("DelegateData", "validPassword"));
         homePage3.goToElite();
         eliteHomePage.goToInbox();
-
-
-    }
-    @Test
-    public void verifyReturnToSourceFeature(){
         inboxPage.mailInboxSearch(subject);
         inboxPage.returnToSource(exportedNotes);
         SentPage sentPage = eliteHomePage.goToSent();
         sentPage.mailSentSearch(subject);
-        Assert.assertTrue(sentPage.getTreatDirecting().contains("للتحرير"));
-
+        Assert.assertTrue(sentPage.getTreatDirecting().contains("اعادة التحرير"));
     }
+
 }

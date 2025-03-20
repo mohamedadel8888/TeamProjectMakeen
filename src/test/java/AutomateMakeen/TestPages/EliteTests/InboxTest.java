@@ -91,5 +91,13 @@ public class InboxTest extends TestInit  {
             inboxPage.addExportNotes(exportedNotes);
             Assert.assertEquals(inboxPage.getNotesContent(),exportedNotes);
         }
+        @Test (priority =13)
+        public void verifyTempSave (){  /* التحقق من الحفظ المؤقت*/
+            inboxPage.mailInboxSearch(archiveNum);
+            inboxPage.tempSave(exportedNotes);
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            Assert.assertTrue(sentPage.getDirecting().contains("حفظ مؤقت"));
+        }
     }
 

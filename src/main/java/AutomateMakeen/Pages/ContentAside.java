@@ -19,7 +19,7 @@ public class ContentAside extends BaseComp {
     public ContentAside(WebDriver driver){
         super(driver);
         this.driver = driver;
-        exWait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        exWait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
     }
 
@@ -75,6 +75,7 @@ public class ContentAside extends BaseComp {
     }
 
     public CreateExternalMailPage goToCreateExternalMail() {
+        exWait.until(ExpectedConditions.visibilityOf(notificationWebElement));
         exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
         exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
         mailArrowWebElement.click();

@@ -269,6 +269,7 @@ public class InboxPage extends BaseComp {
 
 
     public void forwardToAllBaladia (String name , String forwardType){ /* احالة الى عموم البلدية  ,0  اصل , 1 صورة */  /*this function is not dynamic*/
+        goToForwardTab();
         WebElement allBalad = driver.findElement(allBaladia);
         allBalad.click();
         WebElement search = driver.findElement(baladiaSearch);
@@ -309,7 +310,7 @@ public class InboxPage extends BaseComp {
         btnYes.click();
     }*/
     public void forwardToCustomEmp (String Dept , String Name , String Directing ){ /* احالة الى موظف محدد  ,0  اصل , 1 صورة */
-
+        goToForwardTab();
         WebElement customEmpRadio = driver.findElement(customEmp);
         customEmpRadio.click();
 
@@ -326,7 +327,6 @@ public class InboxPage extends BaseComp {
         searchEmp.sendKeys(Name);
         WebElement Emp1 = driver.findElement(xpath("//ul[@id='emps_ddl_collapsibleDiv']/li/div/label[text()='"+Name+"']"));
         Emp1.click();
-
         WebElement dirct = driver.findElement(ddlDirecting);
         dirct.click();
         WebElement searchDirect = driver.findElement(ddlDirectingSearch);
@@ -537,6 +537,7 @@ public class InboxPage extends BaseComp {
                             /* اعادة للمصدر*/
     /*========================================================================*/
     private By returnToSource = By.id("btn_backToSource"); /*إعادة للمصدر*/
+    private By returnOffer = By.id("btn_ReturnOffer"); /* اعاده العرض*/
     private By divReturnToSource = By.xpath("(//div[@class='modal-content p-4'])[3]"); /*نافذه اعاده للمصدر*/
     private By textField = By.id("txtSignViceComment");
 
@@ -551,12 +552,48 @@ public class InboxPage extends BaseComp {
         btnConfirm.click();
     }
 
+    public void returnOffer (String text){ /*فتح تاب اعاده العرض*/
+        WebElement backToSource1 = driver.findElement(returnOffer);
+        backToSource1.click();
+        WebElement divReturnToSource1 = driver.findElement(divReturnToSource);
+        exWait.until(ExpectedConditions.visibilityOf(divReturnToSource1));
+        WebElement textField1 = driver.findElement(textField);
+        textField1.sendKeys(text);
+        WebElement btnConfirm = driver.findElement(btnConfirmVice);
+        btnConfirm.click();
+    }
+
+    /*========================================================================*/
+                           /* حفظ مؤقت*/
+    /*========================================================================*/
+    private By tempSave = By.id("btn_TempSaveForTreatment"); /*حفظ مؤقت*/
+    private By tempSaveDiv = By.xpath("(//div[@class='modal-content'])[3]"); /*نافذه الحفظ المؤقت*/
+    private By tempExplanation = By.id("txt_TempSaveExplanation"); /*نص الشرح*/
+    private By tempSaveConfirm = By.cssSelector("button[onclick='inboxDetailsObj.tempSaveAction()']"); /*زر الحفظ*/
+    private By popUpConfirm = By.id("div_confirmTempSavePopup"); /*نافذة تأكيد الحفظ*/
+    private By btnSaveOnPopUp = By.id("btn_TempSaveFooterAgree"); /*الحفظ في نافذه تأكيد*/
+
+
+
+    public void tempSave (String text){ /*حفظ مؤقت*/
+        WebElement tempSave1 = driver.findElement(tempSave);
+        tempSave1.click();
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(tempSaveDiv)));
+        WebElement tempExplanation1 = driver.findElement(tempExplanation);
+        tempExplanation1.sendKeys(text);
+        WebElement tempSave2 = driver.findElement(tempSaveConfirm);
+        tempSave2.click();
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(popUpConfirm)));
+        WebElement btnSaveOnPopUp1 = driver.findElement(btnSaveOnPopUp);
+        btnSaveOnPopUp1.click();
+    }
+
 
 
 
     /*========================================================================*/
     private By assetsRequest = By.id("btn_AssetsRequest"); /*طلب أصول*/
-    private By tempSave = By.id("btn_TempSaveForTreatment"); /*حفظ مؤقت*/
+
 
     /*=========================================================================================================================*/
 
@@ -649,10 +686,7 @@ public class InboxPage extends BaseComp {
         assetsRequest1.click();
     }
     /*========================================================================*/
-    public void tempSave (){ /*حفظ مؤقت*/
-        WebElement tempSave1 = driver.findElement(tempSave);
-        tempSave1.click();
-    }
+
     /*========================================================================*/
 
 

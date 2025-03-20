@@ -89,7 +89,7 @@ public class EliteHomePage extends BaseComp {
     public LoginPage signOutFromElite (){
         WebElement signOutBtn = driver.findElement(By.cssSelector("div[id='navbarDropdown'] span[class='arrow-icon']"));
         signOutBtn.click();
-        exWait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector("#navbar-end-content"))));
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("#navbar-end-content"))));
         WebElement exist = driver.findElement(By.id(("li_LogOut")));
         exist.click();
         return new LoginPage(driver);

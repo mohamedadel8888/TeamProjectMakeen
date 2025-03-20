@@ -63,8 +63,6 @@ public class Orders_TC extends TestInit {
         forwardToName = getJsonData("CreateInternalMailDataElite", "forwardToName"); /*اسم الموجه اليه*/
         mainManager = getJsonData("CreateInternalMailDataElite", "mainManager");  /*الامين العام*/
         delegateName = getJsonData("CreateInternalMailDataElite", "delegateName"); /*اسم المفوض عنه*/
-
-
     }
     @BeforeMethod
     public void setUp2 () {
