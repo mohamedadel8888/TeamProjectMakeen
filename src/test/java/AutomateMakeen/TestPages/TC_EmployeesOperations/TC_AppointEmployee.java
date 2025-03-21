@@ -1,6 +1,7 @@
 package AutomateMakeen.TestPages.TC_EmployeesOperations;
 
 import AutomateMakeen.BaseTest.TestInit;
+import com.github.javafaker.Faker;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -73,8 +74,10 @@ public class TC_AppointEmployee extends TestInit {
         loginPage.loginUserWithoutRemMe(userID, userPasswd);
         appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee();
         exWait = new WebDriverWait(driver, Duration.ofSeconds(8));
-        nationNumberInMasar=(getJsonData("EmployeeOperations","nationNumberInMasar"));
-        nationNumberNotInMasar=(getJsonData("EmployeeOperations","nationNumberNotInMasar"));
+        Faker faker = new Faker();
+
+        nationNumberInMasar=faker.number().digits(10);
+        nationNumberNotInMasar=faker.number().digits(10);
         notInMasarValidation=(getJsonData("EmployeeOperations","notInMasarValidation"));
         notValidNationNumber=(getJsonData("EmployeeOperations","notValidNationNumber"));
         notValidNumberValidation = (getJsonData("EmployeeOperations","notValidNumberValidation"));

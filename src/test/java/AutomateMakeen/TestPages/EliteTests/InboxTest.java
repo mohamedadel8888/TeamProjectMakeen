@@ -66,7 +66,7 @@ public class InboxTest extends TestInit  {
             Assert.assertTrue(inboxPage.goToExplanations());
         }
         @Test  (priority = 3)/*قتح المرفقات */
-        public void verifyAttachmentPage () {
+        public void verifyAttachmentPage () {  /***************************************************/
             inboxPage.goToAttachments();
             ex.until(ExpectedConditions.visibilityOf(inboxPage.getAttachmentsTab()));
             inboxPage.addAttach("src\\test\\resources\\UplodedImage.png","file name");

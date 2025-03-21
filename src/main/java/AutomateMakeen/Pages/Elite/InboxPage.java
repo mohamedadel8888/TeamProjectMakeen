@@ -618,7 +618,7 @@ public class InboxPage extends BaseComp {
     /*========================================================================*/
     private By attachments = By.id("btn_attachments"); /*المرفقات */
     private By attachmentsTab = xpath("//div[@class='body_inbox_content']//div[@id='div_conatiner_attach']"); /*تاب المرفقات*/
-    private By dropDownMenuBtn = By.id("dropdownMenuButton1");
+    private By dropDownMenuBtn = By.xpath("//div[@id='btnAttachActions']//button[@id='dropdownMenuButton1']");
     private By btnAddAttach = By.id("btnAddAttach"); /*اضافه مرفق*/
     private By divAddAttach = By.xpath("(//div[@class='modal-content'])[14]");
     private By attachFileType = By.id("attachDiv_ddl_FileType");
