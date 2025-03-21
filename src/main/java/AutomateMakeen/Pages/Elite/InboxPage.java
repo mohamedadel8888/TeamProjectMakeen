@@ -590,9 +590,33 @@ public class InboxPage extends BaseComp {
 
 
 
-
     /*========================================================================*/
-    private By assetsRequest = By.id("btn_AssetsRequest"); /*طلب أصول*/
+                                    /*طلب أصول*/
+    /*========================================================================*/
+    private By assetsRequest = By.id("btn_AssetsRequest"); /* زر طلب أصول*/
+    private By divAssestsRequest = By.xpath("(//div[@class='modal-content p-4'])[2]"); /*نافذه طلب اصول*/
+    private By chkBoxSaveAssests = By.cssSelector("label[for='chbx_keepAssets']"); /*تشك بوكس الاحتفاظ بالاصول */
+    private By btnOkAssests = By.xpath("(//button[@class='qBtn m-0'][contains(text(),'موافق')])[2]");
+    private By btnClose = By.id("btnCloseClick"); /*زر اغلاق النافذه*/
+
+    public void assetsRequest (){ /*عمل طلب اصول*/
+        WebElement assetsRequest1 = driver.findElement(assetsRequest);
+        assetsRequest1.click();
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(divAssestsRequest)));
+        WebElement chkBoxSaveAssests1 = driver.findElement(chkBoxSaveAssests);
+        chkBoxSaveAssests1.click();
+        WebElement btnOk1 = driver.findElement(btnOkAssests);
+        btnOk1.click();
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("(//div[@class='modal-content'])[9]"))));
+        WebElement btnClose1 = driver.findElement(btnClose);
+        btnClose1.click();
+        exWait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("(//div[@class='modal-content'])[9]"))));
+
+    }
+
+
+
+
 
 
     /*=========================================================================================================================*/

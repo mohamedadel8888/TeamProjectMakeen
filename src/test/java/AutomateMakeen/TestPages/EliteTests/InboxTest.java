@@ -81,11 +81,11 @@ public class InboxTest extends TestInit  {
             Assert.assertEquals(department, employeeDepartment);
         }
         @Test(priority = 11)
-        public void checkAddGeoInfo (){
+        public void checkAddGeoInfo (){  /*التحقق من فتح الخريطة*/
             inboxPage.addGeoInfo();
             Assert.assertTrue(inboxPage.getGeoInfo().isDisplayed());
         }
-        @Test (priority = 12)
+        @Test (priority = 12)  /*  ملاحظات للتصدير */
         public void addExportNotes (){
             inboxPage.exportNotes();
             inboxPage.addExportNotes(exportedNotes);

@@ -7,6 +7,7 @@ import AutomateMakeen.Pages.Elite.SentPage;
 import AutomateMakeen.Pages.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.FileNotFoundException;
@@ -30,6 +31,9 @@ public class ReturnToSource_TC extends TestInit {
         lunchDriver();
         loginPage.goToLoginPage();
         HomePage homePage = loginPage.loginUserWithoutRemMe(getJsonData("CreateInternalMailDataElite", "ID"), getJsonData("DelegateData", "validPassword"));
+    }
+    @BeforeMethod
+    public void setupMethod() throws FileNotFoundException {
         CreateExternalMailPage createExternalMailPage = contentAside.goToCreateExternalMail();
         createExternalMailPage.clearAllField();
         createExternalMailPage.pressOnNumberOfStorage();
@@ -48,8 +52,8 @@ public class ReturnToSource_TC extends TestInit {
         createExternalMailPage.validateSuccessfulCreatingMail();
         loginPage = homePage.signOut();
     }
-    @Test
-    public void verifyReturnOfferFeature() throws FileNotFoundException {
+    @Test (priority = 1)
+    public void verifyReturnToSourceFeature() throws FileNotFoundException {  /*التحقق من اعاده للمصدر*/
         HomePage homePage2 = loginPage.loginUserWithoutRemMe(getJsonData("DelegateData", "validEmployee"), getJsonData("DelegateData", "validPassword"));
         myDepartment = getJsonData("CreateInternalMailDataElite", "deptName"); /*من الادارة*/
         sefatLetter = getJsonData("CreateInternalMailDataElite", "sefatLetter"); /* صفة الخطاب*/
@@ -81,5 +85,6 @@ public class ReturnToSource_TC extends TestInit {
         sentPage.mailSentSearch(subject);
         Assert.assertTrue(sentPage.getTreatDirecting().contains("اعادة التحرير"));
     }
+
 
 }
