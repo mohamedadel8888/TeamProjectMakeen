@@ -69,7 +69,8 @@ public class InboxTest extends TestInit  {
         public void verifyAttachmentPage () {
             inboxPage.goToAttachments();
             ex.until(ExpectedConditions.visibilityOf(inboxPage.getAttachmentsTab()));
-            Assert.assertTrue(inboxPage.getAttachmentsTab().isDisplayed());
+            inboxPage.addAttach("src\\test\\resources\\UplodedImage.png","file name");
+            Assert.assertTrue(inboxPage.attachAdded());
         }
         @Test (priority = 9)
         public void forwardToCustomEmployer (){  /*احاله الى موظف محدد */

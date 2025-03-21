@@ -7,8 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
@@ -42,8 +44,6 @@ public class InboxPage extends BaseComp {
 
     private By explanation = By.id("btn_explanation"); /*الشروحات */
     private By explanationTab = By.cssSelector(".outbox_explaination"); /*تاب الشروحات */
-    private By attachments = By.id("btn_attachments"); /*المرفقات */
-    private By attachmentsTab = xpath("//div[@class='body_inbox_content']//div[@id='div_conatiner_attach']"); /*تاب المرفقات*/
 
     public boolean goToExplanations (){  /*فتح تاب الشروحات والتأكد من فتحها*/
         driver.findElement(explanation).click();
@@ -613,6 +613,52 @@ public class InboxPage extends BaseComp {
         exWait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("(//div[@class='modal-content'])[9]"))));
 
     }
+    /*========================================================================*/
+                                  /*المرفقات*/
+    /*========================================================================*/
+    private By attachments = By.id("btn_attachments"); /*المرفقات */
+    private By attachmentsTab = xpath("//div[@class='body_inbox_content']//div[@id='div_conatiner_attach']"); /*تاب المرفقات*/
+    private By dropDownMenuBtn = By.id("dropdownMenuButton1");
+    private By btnAddAttach = By.id("btnAddAttach"); /*اضافه مرفق*/
+    private By divAddAttach = By.xpath("(//div[@class='modal-content'])[14]");
+    private By attachFileType = By.id("attachDiv_ddl_FileType");
+    private By attachFileName = By.id("attachDiv_txt_FileName");
+    private By attachFile = By.xpath("(//label[@for='attachDiv_btn_ChooseFile'])[1]");
+    private By btnAdd = By.xpath("//button[contains(text(),'إضافة')]");
+    private By attachmentDiv = By.cssSelector("div[class='cRound']"); /*نافذه المرفق*/
+
+    public void goToAttachments(){ /*فتح المرفقات */
+        WebElement attachments1 = driver.findElement(attachments);
+        attachments1.click();
+    }
+    public WebElement getAttachmentsTab (){ /*ارجاع تاب المرفقات */
+        WebElement attachments1 = driver.findElement(attachmentsTab);
+        return attachments1;
+    }
+    public void addAttach(String filePath, String fileName){ /*اضافه مرفق */
+        WebElement dropDown1 = driver.findElement(dropDownMenuBtn);
+        dropDown1.click();
+        WebElement btnAddAttach1 = driver.findElement(btnAddAttach);
+        btnAddAttach1.click();
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(divAddAttach)));
+        WebElement attachFileType1 = driver.findElement(attachFileType);
+        Select select = new Select (attachFileType1);
+        select.selectByVisibleText("ملفات صورية");
+        WebElement attachFileName1 = driver.findElement(attachFileName);
+        attachFileName1.sendKeys(fileName);
+        File file = new File(filePath);
+        String absolutePath = file.getAbsolutePath();
+        WebElement attachFile1 = driver.findElement(attachFile);
+        attachFile1.sendKeys(absolutePath);
+        WebElement btnAdd1 = driver.findElement(btnAdd);
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("attachDiv_notify_0"))));
+        btnAdd1.click();
+    }
+    public boolean attachAdded (){
+        WebElement attachmentDiv1 = driver.findElement(attachmentDiv);
+        return attachmentDiv1.isDisplayed();
+    }
+
 
 
 
@@ -662,16 +708,7 @@ public class InboxPage extends BaseComp {
         return archive;
     }
     /*========================================================================*/
-    public void goToAttachments(){ /*فتح المرفقات */
-        WebElement attachments1 = driver.findElement(attachments);
-        attachments1.click();
 
-    }
-
-    public WebElement getAttachmentsTab (){ /*ارجاع تاب المرفقات */
-        WebElement attachments1 = driver.findElement(attachmentsTab);
-        return attachments1;
-    }
     /*========================================================================*/
 
 
