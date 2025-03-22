@@ -58,6 +58,41 @@ public class ReassignEmployee extends BaseComp {
     }
 
     /****************************************************************************************/
+                                   /*رقم الهوية*/
+    /****************************************************************************************/
+
+    private By nationNumberText = By.id("txt_AddNation");    /*رقم الهوية*/
+    public void addNationNumber(String id) {
+        WebElement nationNumber = driver.findElement(nationNumberText);
+        nationNumber.clear();
+        nationNumber.sendKeys(id);
+    }
+    public WebElement getNationalNumber() {
+        return driver.findElement(nationNumberText);
+    }
+
+
+    private By masarButton = By.id("masarButtonT3een"); /*زر استدعاء البيانات من منصه مسار*/
+    public WebElement masarBtn(){
+        WebElement masarButton1 = driver.findElement(masarButton);
+        return masarButton1;
+    }
+    private By validationAddNation = By.id("spnA_AddNation");
+    private By notInMasarValidation = By.cssSelector("p[class='span_error'] span"); /*  رسالة "رقم الهوية غير موجود بمنصة مسار"  */
+
+    public String getValidationMessage( ){
+        WebElement validationDot = driver.findElement(validationAddNation);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(validationDot).perform();
+        WebElement validationMessage = driver.findElement(notInMasarValidation);
+        return validationMessage.getText();
+    }
+
+
+
+
+
+    /****************************************************************************************/
     /*الاسم*/
     /****************************************************************************************/
     private By firstName = By.id("txt_AddEmpFrstName");

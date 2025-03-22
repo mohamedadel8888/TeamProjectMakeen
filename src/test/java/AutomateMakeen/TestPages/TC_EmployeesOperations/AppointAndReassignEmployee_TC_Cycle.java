@@ -184,6 +184,7 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
     public void verifyReassignmentEmployee (){
         reassignEmployee.searchForEmployee(empToReassign);
         reassignEmployee.enterReassignEmployee();
+        String nationNumber = reassignEmployee.getNationalNumber().getText();
         reassignEmployee.addIBAN(IBAN);
         reassignEmployee.selectEmployeeType(employeeType);
         reassignEmployee.selectAppointType(appointType);
@@ -192,6 +193,7 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         reassignEmployee.selectDegree(degree);
         reassignEmployee.setRecNumberTextField(archiveNum);
         reassignEmployee.saveTheEmployee();
+        Assert.assertEquals(reassignEmployee.validateSuccessfulSavingEmployee(nationNumber), nationNumber);
     }
 
 }
