@@ -44,6 +44,9 @@ public class OutboxMails extends BaseComp {
 
     @FindBy(id = "dv_inbox_trIncNum")
     WebElement importNumberWebElement;
+    @FindBy (id = "div_inbox_trRec")
+    WebElement importArchiveNumber;
+
     public List<String> getMailData(){
         exWait.until(ExpectedConditions.visibilityOf(subjectWebElement));
         List<String> mailData = new ArrayList<>();
@@ -52,6 +55,7 @@ public class OutboxMails extends BaseComp {
         mailData.add(senderWebElement.getText());
         mailData.add(docTypeWebElement.getText());
         mailData.add(importNumberWebElement.getText());
+        mailData.add(importArchiveNumber.getText());
         return mailData;
     }
 

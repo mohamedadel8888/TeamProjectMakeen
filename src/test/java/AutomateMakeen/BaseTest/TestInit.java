@@ -25,6 +25,7 @@ import java.time.temporal.ChronoUnit;
 
 public class TestInit  {
     protected String userID = "0342169";
+    protected String userID2 = "1002669";
     protected String userPasswd = "24602460";
     protected ContentAside contentAside;
     public EditAccountPage editAccountPage;
