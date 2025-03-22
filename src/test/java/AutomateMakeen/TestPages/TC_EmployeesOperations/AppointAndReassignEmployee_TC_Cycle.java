@@ -182,11 +182,11 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
     }
     @Test (priority = 2)
     public void verifyReassignmentEmployee (){
+        reassignEmployee = contentAside.goToEmployeeOperations_ReassignEmployee();
         reassignEmployee.searchForEmployee(empToReassign);
         reassignEmployee.enterReassignEmployee();
         String nationNumber = reassignEmployee.getNationalNumber().getText();
         reassignEmployee.addIBAN(IBAN);
-
         reassignEmployee.selectEmployeeType(employeeType);
         reassignEmployee.selectAppointType(appointType);
         reassignEmployee.selectMajorJob(majorJob);
