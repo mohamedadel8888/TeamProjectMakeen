@@ -5,6 +5,7 @@ import AutomateMakeen.Pages.CreateExternalMailPage;
 import AutomateMakeen.Pages.Elite.InboxPage;
 import AutomateMakeen.Pages.OutboxMails;
 import com.github.javafaker.Faker;
+import org.apache.poi.ss.formula.functions.DMax;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -89,9 +90,10 @@ public class TC_AppointEmployee extends TestInit {
         appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee();
         exWait = new WebDriverWait(driver, Duration.ofSeconds(8));
         Faker faker = new Faker();
-        nationNumberInMasar=faker.number().digits(10);
+        nationNumberInMasar=faker.number().digits(11);
         IBAN=faker.finance().iban();
-        nationNumberNotInMasar=faker.number().digits(10);
+        subject = faker.lorem().sentence(2);
+        nationNumberNotInMasar= faker.number().digits(11);
         notInMasarValidation=(getJsonData("EmployeeOperations","notInMasarValidation"));
         notValidNationNumber=(getJsonData("EmployeeOperations","notValidNationNumber"));
         notValidNumberValidation = (getJsonData("EmployeeOperations","notValidNumberValidation"));
@@ -119,7 +121,7 @@ public class TC_AppointEmployee extends TestInit {
         mandateJob = (getJsonData("EmployeeOperations","mandateJob"));
         noMandateJob = (getJsonData("EmployeeOperations","noMandateJob"));
         degree = (getJsonData("EmployeeOperations","degree"));
-        organizationNumber = (getJsonData("EmployeeOperations","organizationNumber"));
+        organizationNumber = faker.number().digits(7);
         inValidOrganizationNumber = (getJsonData("EmployeeOperations","inValidOrganizationNumber"));
         workDateValidationTex = (getJsonData("EmployeeOperations","workDateValidationTex"));
         levelDateValidationTex = (getJsonData("EmployeeOperations","levelDateValidationTex"));
@@ -351,8 +353,7 @@ public class TC_AppointEmployee extends TestInit {
         CreateExternalMailPage createExternalMailPage = contentAside.goToCreateExternalMail();
         createExternalMailPage.clearAllField();
         createExternalMailPage.pressOnNumberOfStorage();
-        createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
-        subject = getJsonData("ValidExternalMailData","subject");
+        createExternalMailPage.enteringTheSubjectOfMail(subject);
         createExternalMailPage.setDocTypeUsingControl(getJsonData("ValidExternalMailData","docTypeNum"));
         createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
         createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
@@ -366,7 +367,7 @@ public class TC_AppointEmployee extends TestInit {
         createExternalMailPage.validateSuccessfulCreatingMail();
         OutboxMails outboxMails = contentAside.goToExportedMail();
         outboxMails.getRecentlyAddedMail(subject);
-        archiveNum = outboxMails.getMailData().get(5);
+        archiveNum = outboxMails.getMailData().get(4);
         loginPage = homePage.signOut();
         homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
         appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee();
