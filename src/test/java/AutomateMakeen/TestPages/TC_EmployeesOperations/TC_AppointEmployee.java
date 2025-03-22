@@ -73,6 +73,7 @@ public class TC_AppointEmployee extends TestInit {
         loginPage.goToLoginPage();
         loginPage.loginUserWithoutRemMe(userID, userPasswd);
         appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee();
+        appointEmployee.enterAppointEmployee();
         exWait = new WebDriverWait(driver, Duration.ofSeconds(8));
         Faker faker = new Faker();
 
@@ -125,7 +126,7 @@ public class TC_AppointEmployee extends TestInit {
     @Test (priority = 3)
     public void verifyNotValidNationNumber (){ /*التحقق من فالديشن رقم الهوية يبدأ بصفر*/
        // appointEmployee.enterAppointEmployee();
-        appointEmployee.addNationNumber(notValidNationNumber);
+        appointEmployee.addNationNumber(notValidNumberValidation);
         exWait.until(ExpectedConditions.elementToBeClickable(appointEmployee.masarBtn()));
         appointEmployee.masarBtn().click();
         Assert.assertEquals(notValidNumberValidation, appointEmployee.getValidationMessage());
@@ -321,6 +322,7 @@ public class TC_AppointEmployee extends TestInit {
         appointEmployee.saveTheEmployee();
         Assert.assertEquals(appointEmployee.getSucessMsg(),sucessSavingEmpMsg);
     }
+
 
 
 }
