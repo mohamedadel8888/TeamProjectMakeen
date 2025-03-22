@@ -186,6 +186,7 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         reassignEmployee.enterReassignEmployee();
         String nationNumber = reassignEmployee.getNationalNumber().getText();
         reassignEmployee.addIBAN(IBAN);
+
         reassignEmployee.selectEmployeeType(employeeType);
         reassignEmployee.selectAppointType(appointType);
         reassignEmployee.selectMajorJob(majorJob);
