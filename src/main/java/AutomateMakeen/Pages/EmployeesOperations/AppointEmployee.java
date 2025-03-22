@@ -418,8 +418,6 @@ public class AppointEmployee extends BaseComp {
         save1.click();
     }
     public String validateSuccessfulSavingEmployee ( String nationNumber) {
-        WebElement divConfirmationMsg1 = driver.findElement(divConfirmationMsg);
-        exWait.until(ExpectedConditions.invisibilityOf(divConfirmationMsg1));
         clickCancelButton();
         WebElement returnOk = driver.findElement(saveAppoint);
         returnOk.click();

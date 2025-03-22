@@ -86,9 +86,10 @@ public class AppointEmployee_TC_Cycle extends TestInit {
 
 
         Faker faker = new Faker();
-        nationNumberInMasar=faker.number().digits(10);
+        nationNumberInMasar="5"+faker.number().digits(9);
         IBAN="0380000000608010" + faker.number().digits(6);
         nationNumberNotInMasar=faker.number().digits(10);
+        subject = faker.lorem().sentence(2);
         notInMasarValidation=(getJsonData("EmployeeOperations","notInMasarValidation"));
         notValidNationNumber=(getJsonData("EmployeeOperations","notValidNationNumber"));
         notValidNumberValidation = (getJsonData("EmployeeOperations","notValidNumberValidation"));
@@ -115,7 +116,7 @@ public class AppointEmployee_TC_Cycle extends TestInit {
         mandateJob = (getJsonData("EmployeeOperations","mandateJob"));
         noMandateJob = (getJsonData("EmployeeOperations","noMandateJob"));
         degree = (getJsonData("EmployeeOperations","degree"));
-        organizationNumber = (getJsonData("EmployeeOperations","organizationNumber"));
+        organizationNumber = faker.number().digits(7);
         inValidOrganizationNumber = (getJsonData("EmployeeOperations","inValidOrganizationNumber"));
         workDateValidationTex = (getJsonData("EmployeeOperations","workDateValidationTex"));
         levelDateValidationTex = (getJsonData("EmployeeOperations","levelDateValidationTex"));
@@ -136,8 +137,7 @@ public class AppointEmployee_TC_Cycle extends TestInit {
         CreateExternalMailPage createExternalMailPage = contentAside.goToCreateExternalMail();
         createExternalMailPage.clearAllField();
         createExternalMailPage.pressOnNumberOfStorage();
-        createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
-        subject = getJsonData("ValidExternalMailData","subject");
+        createExternalMailPage.enteringTheSubjectOfMail(subject);
         createExternalMailPage.setDocTypeUsingControl(getJsonData("ValidExternalMailData","docTypeNum"));
         createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
         createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
