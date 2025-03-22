@@ -168,7 +168,24 @@ public class ContentAside extends BaseComp {
         }
     }
     public ReassignEmployee goToEmployeeOperations_ReassignEmployee(){
-        exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
+
+        try{
+            exWait.until(ExpectedConditions.visibilityOf(notificationWebElement));
+            exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
+            humanResources.click();
+            employeeOperations.click();
+            exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
+            return new ReassignEmployee(driver);
+        }catch(NoSuchElementException e){
+            exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
+            humanResources.click();
+            employeeOperations.click();
+            exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
+            return new ReassignEmployee(driver);
+        }
+    }
+    public ReassignEmployee goToEmployeeOperations_ReassignEmployee_FromInside(){
+
         try{
             exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
             humanResources.click();

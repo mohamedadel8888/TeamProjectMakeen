@@ -226,7 +226,7 @@ public class ReassignEmployee extends BaseComp {
                                      /* نوع التعيين */
     /****************************************************************************************/
 
-    private By ddlAppointType = By.id("#drp_gov_emp_hire_type");
+    private By ddlAppointType = By.cssSelector("#drp_gov_emp_hire_type");
 
     public void selectAppointType (String type){
         WebElement ddlAppointType1 =driver.findElement(ddlAppointType);

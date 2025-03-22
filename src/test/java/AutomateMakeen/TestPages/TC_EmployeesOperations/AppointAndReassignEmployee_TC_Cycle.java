@@ -71,6 +71,8 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
     String employeeDepartment;
     String empToReassign;
     String appointType;
+
+    Faker faker = new Faker();
     /** preconditions :
      السماحية للدخول الي النظام .
      الصلاحية للدخول الى الموارد البشرية .
@@ -87,7 +89,7 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         homePage = loginPage.loginUserWithoutRemMe(userID2,userPasswd);
 
 
-        Faker faker = new Faker();
+
         nationNumberInMasar="5"+faker.number().digits(9);
         IBAN="0380000000608010" + faker.number().digits(6);
         nationNumberNotInMasar=faker.number().digits(10);
@@ -181,17 +183,20 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         Assert.assertEquals(appointEmployee.validateSuccessfulSavingEmployee(nationNumberInMasar),nationNumberInMasar);
     }
     @Test (priority = 2)
-    public void verifyReassignmentEmployee (){
-        reassignEmployee = contentAside.goToEmployeeOperations_ReassignEmployee();
+    public void verifyReassignmentEmployee (){  /*يجب تحديث رقم الموظف قبل تشغيل حاله الاختبار التي تختبر اعاده تعيين موظف*/
+        reassignEmployee =contentAside.goToEmployeeOperations_ReassignEmployee_FromInside();
         reassignEmployee.searchForEmployee(empToReassign);
         reassignEmployee.enterReassignEmployee();
         String nationNumber = reassignEmployee.getNationalNumber().getText();
+        IBAN="0380000000608010" + faker.number().digits(6);
         reassignEmployee.addIBAN(IBAN);
+        reassignEmployee.selectNationality(nationality);
         reassignEmployee.selectEmployeeType(employeeType);
         reassignEmployee.selectAppointType(appointType);
         reassignEmployee.selectMajorJob(majorJob);
         reassignEmployee.selectMandateJob(mandateJob);
         reassignEmployee.selectDegree(degree);
+        appointEmployee.workDateSelect(day,month,"2025");
         reassignEmployee.setRecNumberTextField(archiveNum);
         reassignEmployee.saveTheEmployee();
         Assert.assertEquals(reassignEmployee.validateSuccessfulSavingEmployee(nationNumber), nationNumber);
