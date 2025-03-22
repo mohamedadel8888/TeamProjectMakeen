@@ -39,6 +39,7 @@ public class ReassignEmployee extends BaseComp {
     @FindBy (css = "div[id='mainPersonalSrchDivBtns'] input[value='بحث']")
         WebElement searchButton;
 
+
     public void searchForEmployee (String empNum){
         radioBtnNotWorking.click();
         organizationNumberText.clear();
@@ -186,6 +187,22 @@ public class ReassignEmployee extends BaseComp {
         Select ddlEmployeeType1 = new Select(driver.findElement(ddlEmployeeType));
         return ddlEmployeeType1.getFirstSelectedOption().getText();
     }
+    /****************************************************************************************/
+                                     /* نوع التعيين */
+    /****************************************************************************************/
+
+    private By ddlAppointType = By.id("#drp_gov_emp_hire_type");
+
+    public void selectAppointType (String type){
+        WebElement ddlAppointType1 =driver.findElement(ddlAppointType);
+        ddlAppointType1.click();
+        WebElement appointType = driver.findElement(By.xpath("//label[contains(text(),'"+type+"')]"));
+        appointType.click();
+    }
+
+
+
+
 
     /****************************************************************************************/
                                   /* الوظيفة الاساسية */
@@ -348,6 +365,12 @@ public class ReassignEmployee extends BaseComp {
         return validationText1.getText();
     }
 
+
+
+
+
+
+
     /****************************************************************************************/
     /* بيانات القرار */
     /****************************************************************************************/
@@ -360,6 +383,11 @@ public class ReassignEmployee extends BaseComp {
     }
     public WebElement getRecNumberTextField (){
         return driver.findElement(txtRecNo);
+    }
+    public void setRecNumberTextField (String number){
+        WebElement txtRecNo1 = driver.findElement(txtRecNo);
+        txtRecNo1.clear();
+        txtRecNo1.sendKeys(number);
     }
 
     /****************************************************************************************/
@@ -383,21 +411,33 @@ public class ReassignEmployee extends BaseComp {
     /****************************************************************************************/
 
     private By divConfirmationMsg = By.cssSelector(".popup_genrl.popup_genrl_width");
-    private By temporarySave = By.id("btnP0");
-    private By saveAndCreateTrans = By.id("btnP1");
+    private By saveAppoint = By.id("btnP0");
     private By savingSucessMsg = By.cssSelector("div[class='popup_content']");
-
+    private By returnBtn = By.cssSelector("input[onclick=\"Emps.onclick_button('HideDiv', 'Add');\"]"); /*زر عودة*/
     public void saveTheEmployee(){
         clickSaveButton();
         WebElement divConfirmationMsg1 = driver.findElement(divConfirmationMsg);
         exWait.until(ExpectedConditions.visibilityOf(divConfirmationMsg1));
-        WebElement saveAndCreateTrans1 = driver.findElement(saveAndCreateTrans);
-        saveAndCreateTrans1.click();
+        WebElement save1 = driver.findElement(saveAppoint);
+        save1.click();
     }
-    public String getSucessMsg () {
-        WebElement savingSucessMsg1 = driver.findElement(savingSucessMsg);
-        exWait.until(ExpectedConditions.visibilityOf(savingSucessMsg1));
-        return savingSucessMsg1.getText();
+    /****************************************************************************************/
+    /*التأكد من تعيين موظف*/
+    /****************************************************************************************/
+    public String validateSuccessfulSavingEmployee ( String nationNumber) {
+        clickCancelButton();
+        WebElement returnOk = driver.findElement(saveAppoint);
+        returnOk.click();
+        exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
+        WebElement activeEmployees = driver.findElement(By.cssSelector("#RadActive"));
+        activeEmployees.click();
+        WebElement nationNumberSearchText = driver.findElement(By.id("txt_MainNation"));
+        exWait.until(ExpectedConditions.elementToBeClickable(nationNumberSearchText));
+        nationNumberSearchText.sendKeys(nationNumber);
+        WebElement searchBtn = driver.findElement(By.xpath("(//input[@value='بحث'])[1]"));
+        searchBtn.click();
+        WebElement returnEmployeeNation = driver.findElement(By.xpath("(//div[normalize-space()='"+nationNumber+"'])[1]"));
+        return returnEmployeeNation.getText();
     }
 
 

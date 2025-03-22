@@ -417,6 +417,9 @@ public class AppointEmployee extends BaseComp {
         WebElement save1 = driver.findElement(saveAppoint);
         save1.click();
     }
+    /****************************************************************************************/
+                                     /*التأكد من تعيين موظف*/
+    /****************************************************************************************/
     public String validateSuccessfulSavingEmployee ( String nationNumber) {
         clickCancelButton();
         WebElement returnOk = driver.findElement(saveAppoint);
@@ -431,9 +434,7 @@ public class AppointEmployee extends BaseComp {
     }
 
 
-    /****************************************************************************************/
-                                   /*التأكد من تعيين موظف*/
-    /****************************************************************************************/
+
 
 
 

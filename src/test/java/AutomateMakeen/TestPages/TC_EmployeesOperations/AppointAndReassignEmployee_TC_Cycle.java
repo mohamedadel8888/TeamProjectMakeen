@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import java.io.FileNotFoundException;
 import java.time.Duration;
 
-public class AppointEmployee_TC_Cycle extends TestInit {
+public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
     WebDriverWait exWait;
 
     String nationNumberInMasar ;
@@ -69,6 +69,8 @@ public class AppointEmployee_TC_Cycle extends TestInit {
     String receiverAlias;
     String employeeName;
     String employeeDepartment;
+    String empToReassign;
+    String appointType;
     /** preconditions :
      السماحية للدخول الي النظام .
      الصلاحية للدخول الى الموارد البشرية .
@@ -130,9 +132,11 @@ public class AppointEmployee_TC_Cycle extends TestInit {
         forwardName = getJsonData("CreateInternalMailDataElite", "forwardName"); /*اسم ادارة الموجه اليه*/
         addModel = getJsonData("CreateInternalMailDataElite", "addModel");
         receiverAlias = getJsonData("CreateInternalMailDataElite", "receiverAlias"); /*مسمى الموجه اليه*/
+        empToReassign = getJsonData("EmployeeOperations", "empToReassign"); /*رقم موظف ليس على رأس العمل*/
+        appointType = getJsonData("EmployeeOperations","appointType");
 
     }
-    @Test
+    @Test (priority = 1)
     public void verifyAppointEmployee()throws FileNotFoundException{   /**/
         CreateExternalMailPage createExternalMailPage = contentAside.goToCreateExternalMail();
         createExternalMailPage.clearAllField();
@@ -175,6 +179,19 @@ public class AppointEmployee_TC_Cycle extends TestInit {
         appointEmployee.setRecNumberTextField(archiveNum);
         appointEmployee.saveTheEmployee();
         Assert.assertEquals(appointEmployee.validateSuccessfulSavingEmployee(nationNumberInMasar),nationNumberInMasar);
+    }
+    @Test (priority = 2)
+    public void verifyReassignmentEmployee (){
+        reassignEmployee.searchForEmployee(empToReassign);
+        reassignEmployee.enterReassignEmployee();
+        reassignEmployee.addIBAN(IBAN);
+        reassignEmployee.selectEmployeeType(employeeType);
+        reassignEmployee.selectAppointType(appointType);
+        reassignEmployee.selectMajorJob(majorJob);
+        reassignEmployee.selectMandateJob(mandateJob);
+        reassignEmployee.selectDegree(degree);
+        reassignEmployee.setRecNumberTextField(archiveNum);
+        reassignEmployee.saveTheEmployee();
     }
 
 }

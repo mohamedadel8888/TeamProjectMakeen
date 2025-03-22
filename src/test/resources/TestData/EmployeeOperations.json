@@ -44,5 +44,6 @@
 
   "sucessSavingEmpMsg": "تم حفظ بيانات المقدم على التعيين بنجاح , وانشاء معاملة بمرفق القرار  برقم أرشيف",
 
-  "empToReassign": "5615615"
+  "empToReassign": "5615615",
+  "appointType": "معين"
 }
