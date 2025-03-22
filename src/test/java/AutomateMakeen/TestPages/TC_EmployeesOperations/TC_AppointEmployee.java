@@ -365,7 +365,8 @@ public class TC_AppointEmployee extends TestInit {
         createExternalMailPage.clickSendConfirm();
         createExternalMailPage.validateSuccessfulCreatingMail();
         OutboxMails outboxMails = contentAside.goToExportedMail();
-        archiveNum = outboxMails.getMailData().get(4);
+        outboxMails.getRecentlyAddedMail(subject);
+        archiveNum = outboxMails.getMailData().get(5);
         loginPage = homePage.signOut();
         homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
         appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee();
