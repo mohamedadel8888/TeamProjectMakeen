@@ -407,20 +407,37 @@ public class AppointEmployee extends BaseComp {
     /****************************************************************************************/
 
     private By divConfirmationMsg = By.cssSelector(".popup_genrl.popup_genrl_width");
-    private By temporarySave = By.id("btnP0");
-    private By saveAndCreateTrans = By.id("btnP1");
+    private By saveAppoint = By.id("btnP0");
     private By savingSucessMsg = By.cssSelector("div[class='popup_content']");
-
+    private By returnBtn = By.cssSelector("input[onclick=\"Emps.onclick_button('HideDiv', 'Add');\"]"); /*زر عودة*/
     public void saveTheEmployee(){
         clickSaveButton();
         WebElement divConfirmationMsg1 = driver.findElement(divConfirmationMsg);
         exWait.until(ExpectedConditions.visibilityOf(divConfirmationMsg1));
-        WebElement saveAndCreateTrans1 = driver.findElement(saveAndCreateTrans);
-        saveAndCreateTrans1.click();
+        WebElement save1 = driver.findElement(saveAppoint);
+        save1.click();
     }
-    public String getSucessMsg () {
-        WebElement savingSucessMsg1 = driver.findElement(savingSucessMsg);
-        exWait.until(ExpectedConditions.visibilityOf(savingSucessMsg1));
-        return savingSucessMsg1.getText();
+    public String validateSuccessfulSavingEmployee ( String nationNumber) {
+        WebElement divConfirmationMsg1 = driver.findElement(divConfirmationMsg);
+        exWait.until(ExpectedConditions.invisibilityOf(divConfirmationMsg1));
+        clickCancelButton();
+        WebElement returnOk = driver.findElement(saveAppoint);
+        returnOk.click();
+        exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
+        WebElement nationNumberSearchText = driver.findElement(By.id("txt_MainNation"));
+        nationNumberSearchText.sendKeys(nationNumber);
+        WebElement searchBtn = driver.findElement(By.xpath("(//input[@value='بحث'])[1]"));
+        searchBtn.click();
+        WebElement returnEmployeeNation = driver.findElement(By.xpath("(//div[normalize-space()='"+nationNumber+"'])[1]"));
+        return returnEmployeeNation.getText();
     }
+
+
+    /****************************************************************************************/
+                                   /*التأكد من تعيين موظف*/
+    /****************************************************************************************/
+
+
+
+
 }
