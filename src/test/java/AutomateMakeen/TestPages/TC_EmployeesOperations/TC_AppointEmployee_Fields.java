@@ -1,9 +1,6 @@
 package AutomateMakeen.TestPages.TC_EmployeesOperations;
 
 import AutomateMakeen.BaseTest.TestInit;
-import AutomateMakeen.Pages.CreateExternalMailPage;
-import AutomateMakeen.Pages.Elite.InboxPage;
-import AutomateMakeen.Pages.OutboxMails;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,7 +13,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class TC_AppointEmployee extends TestInit {
+public class TC_AppointEmployee_Fields extends TestInit {
     WebDriverWait exWait;
     String nationNumberInMasar ;
     String nationNumberNotInMasar;
@@ -64,7 +61,6 @@ public class TC_AppointEmployee extends TestInit {
     String exportedNotes;
     String myDepartment;
     String sefatLetter;
-    String mySubject;
     String forwardToOffer;
     String forwardToLetter;
     String forwardType;
@@ -90,7 +86,7 @@ public class TC_AppointEmployee extends TestInit {
         exWait = new WebDriverWait(driver, Duration.ofSeconds(8));
         Faker faker = new Faker();
         nationNumberInMasar=faker.number().digits(10);
-        IBAN=faker.finance().iban();
+        IBAN="0380000000608010" + faker.number().digits(6);
         nationNumberNotInMasar=faker.number().digits(10);
         notInMasarValidation=(getJsonData("EmployeeOperations","notInMasarValidation"));
         notValidNationNumber=(getJsonData("EmployeeOperations","notValidNationNumber"));
@@ -109,7 +105,6 @@ public class TC_AppointEmployee extends TestInit {
         dayNotValid = (getJsonData("EmployeeOperations","dayNotValid"));
         monthNotValid = (getJsonData("EmployeeOperations","monthNotValid"));
         year = (getJsonData("EmployeeOperations","year"));
-     //   IBAN = (getJsonData("EmployeeOperations","IBAN"));
         IBANNotValid = (getJsonData("EmployeeOperations","IBANNotValid"));
         nationality = (getJsonData("EmployeeOperations","nationality"));
         noNationality = (getJsonData("EmployeeOperations","noNationality"));
@@ -338,58 +333,8 @@ public class TC_AppointEmployee extends TestInit {
         appointEmployee.setToggle();
         Assert.assertTrue(appointEmployee.getRecNumberTextField().isDisplayed());
     }
-    @Test (priority =29)
-    public void verifyAddEmployee(){
-        appointEmployee.enterAppointEmployee();
-        appointEmployee.saveTheEmployee();
-        Assert.assertEquals(appointEmployee.getSucessMsg(),sucessSavingEmpMsg);
-    }
-    @Test
-    public void verifyAppointEmployee()throws FileNotFoundException{   /**/
-        loginPage = homePage.signOut();
-        homePage = loginPage.loginUserWithoutRemMe(userID2,userPasswd);
-        CreateExternalMailPage createExternalMailPage = contentAside.goToCreateExternalMail();
-        createExternalMailPage.clearAllField();
-        createExternalMailPage.pressOnNumberOfStorage();
-        createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
-        subject = getJsonData("ValidExternalMailData","subject");
-        createExternalMailPage.setDocTypeUsingControl(getJsonData("ValidExternalMailData","docTypeNum"));
-        createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
-        createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
-        createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
-        createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient3"));
-        exportedNotes = getJsonData("CreateInternalMailDataElite", "exportedNotes");
-        employeeName = getJsonData("CreateInternalMailDataElite", "employeeName");
-        employeeDepartment = getJsonData("CreateInternalMailDataElite", "employeeDepartment"); /*الادارة*/
-        createExternalMailPage.pressOnDeactivateReferralNumber();
-        createExternalMailPage.clickSendConfirm();
-        createExternalMailPage.validateSuccessfulCreatingMail();
-        OutboxMails outboxMails = contentAside.goToExportedMail();
-        outboxMails.getRecentlyAddedMail(subject);
-        archiveNum = outboxMails.getMailData().get(5);
-        loginPage = homePage.signOut();
-        homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
-        appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee();
-        appointEmployee.enterAppointEmployee();
-        appointEmployee.addNationNumber(nationNumberInMasar);
-        appointEmployee.addFirstName(firstName);
-        appointEmployee.addSecondName(secondName);
-        appointEmployee.addThirdName(thirdName);
-        appointEmployee.addFourthName(fourthName);
-        appointEmployee.dateSelectionFromIcon(day,month,year);
-        appointEmployee.addIBAN(IBAN);
-        appointEmployee.selectNationality(nationality);
-        appointEmployee.selectEmployeeType(employeeType);
-        appointEmployee.selectMajorJob(majorJob);
-        appointEmployee.selectMandateJob(mandateJob);
-        appointEmployee.selectDegree(degree);
-        appointEmployee.addOrganizationNumber(organizationNumber);
-        appointEmployee.workDateSelect(day,month,year);
-        appointEmployee.levelDateSelect(day,month,year);
-        appointEmployee.firstJobDateSelect(day,month,year);
-        appointEmployee.setRecNumberTextField(archiveNum);
-        appointEmployee.saveTheEmployee();
-    }
+
+
 
 
 }
