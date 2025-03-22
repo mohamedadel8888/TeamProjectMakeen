@@ -380,6 +380,11 @@ public class AppointEmployee extends BaseComp {
     public WebElement getRecNumberTextField (){
         return driver.findElement(txtRecNo);
     }
+    public void setRecNumberTextField (String number){
+        WebElement txtRecNo1 = driver.findElement(txtRecNo);
+        txtRecNo1.clear();
+        txtRecNo1.sendKeys(number);
+    }
 
     /****************************************************************************************/
                                    /* زر حفظ و زر عودة */

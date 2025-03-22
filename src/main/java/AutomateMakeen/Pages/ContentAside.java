@@ -75,12 +75,22 @@ public class ContentAside extends BaseComp {
     }
 
     public CreateExternalMailPage goToCreateExternalMail() {
-        exWait.until(ExpectedConditions.visibilityOf(notificationWebElement));
-        exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
-        exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
-        mailArrowWebElement.click();
-        createExternalMailWebELement.click();
-        return new CreateExternalMailPage(driver);}
+        try {
+            exWait.until(ExpectedConditions.visibilityOf(notificationWebElement));
+            exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
+            exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
+            mailArrowWebElement.click();
+            createExternalMailWebELement.click();
+            return new CreateExternalMailPage(driver);
+        }
+        catch (Exception e) {
+            mailArrowWebElement.click();
+            createExternalMailWebELement.click();
+            return new CreateExternalMailPage(driver);
+        }
+    }
+
+
 
     public EditAccountPage goToCreateExternalEditAccount() {
         exWait.until(ExpectedConditions.elementToBeClickable(controlPanel));
@@ -103,7 +113,7 @@ public class ContentAside extends BaseComp {
 
 
     public OutboxMails goToExportedMail(){
-        exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
+        //exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
         try{
             exWait.until(ExpectedConditions.elementToBeClickable(mailArrowWebElement));
             mailArrowWebElement.click();
@@ -142,7 +152,7 @@ public class ContentAside extends BaseComp {
     @FindBy(id = "DivMainEmp")
     WebElement divEmpOperations;
     public AppointEmployee goToEmployeeOperations_AppointEmployee(){
-        exWait.until(ExpectedConditions.invisibilityOf(notificationWebElement));
+        exWait.until(ExpectedConditions.visibilityOf(notificationWebElement));
         try{
             exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
             humanResources.click();

@@ -1,6 +1,9 @@
 package AutomateMakeen.TestPages.TC_EmployeesOperations;
 
 import AutomateMakeen.BaseTest.TestInit;
+import AutomateMakeen.Pages.CreateExternalMailPage;
+import AutomateMakeen.Pages.Elite.InboxPage;
+import AutomateMakeen.Pages.OutboxMails;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -57,8 +60,19 @@ public class TC_AppointEmployee extends TestInit {
     String workDateValidationTex;
 
     String sucessSavingEmpMsg;
-
-
+    String subject;
+    String exportedNotes;
+    String myDepartment;
+    String sefatLetter;
+    String mySubject;
+    String forwardToOffer;
+    String forwardToLetter;
+    String forwardType;
+    String forwardName;
+    String addModel;
+    String receiverAlias;
+    String employeeName;
+    String employeeDepartment;
     /** preconditions :
      السماحية للدخول الي النظام .
      الصلاحية للدخول الى الموارد البشرية .
@@ -71,13 +85,12 @@ public class TC_AppointEmployee extends TestInit {
     public void setupClass() throws FileNotFoundException {
         lunchDriver();
         loginPage.goToLoginPage();
-        loginPage.loginUserWithoutRemMe(userID, userPasswd);
+        homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
         appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee();
-        appointEmployee.enterAppointEmployee();
         exWait = new WebDriverWait(driver, Duration.ofSeconds(8));
         Faker faker = new Faker();
-
         nationNumberInMasar=faker.number().digits(10);
+        IBAN=faker.finance().iban();
         nationNumberNotInMasar=faker.number().digits(10);
         notInMasarValidation=(getJsonData("EmployeeOperations","notInMasarValidation"));
         notValidNationNumber=(getJsonData("EmployeeOperations","notValidNationNumber"));
@@ -96,7 +109,7 @@ public class TC_AppointEmployee extends TestInit {
         dayNotValid = (getJsonData("EmployeeOperations","dayNotValid"));
         monthNotValid = (getJsonData("EmployeeOperations","monthNotValid"));
         year = (getJsonData("EmployeeOperations","year"));
-        IBAN = (getJsonData("EmployeeOperations","IBAN"));
+     //   IBAN = (getJsonData("EmployeeOperations","IBAN"));
         IBANNotValid = (getJsonData("EmployeeOperations","IBANNotValid"));
         nationality = (getJsonData("EmployeeOperations","nationality"));
         noNationality = (getJsonData("EmployeeOperations","noNationality"));
@@ -111,6 +124,15 @@ public class TC_AppointEmployee extends TestInit {
         workDateValidationTex = (getJsonData("EmployeeOperations","workDateValidationTex"));
         levelDateValidationTex = (getJsonData("EmployeeOperations","levelDateValidationTex"));
         sucessSavingEmpMsg = (getJsonData("EmployeeOperations","sucessSavingEmpMsg"));
+        myDepartment = getJsonData("CreateInternalMailDataElite", "deptName"); /*من الادارة*/
+        sefatLetter = getJsonData("CreateInternalMailDataElite", "sefatLetter"); /* صفة الخطاب*/
+        // mySubject = getJsonData("CreateInternalMailDataElite", "mailSubject"); /*الموضوع*/
+        forwardToOffer = getJsonData("CreateInternalMailDataElite", "forwardNumOffer");
+        forwardToLetter = getJsonData("CreateInternalMailDataElite", "forwardNumLetter");
+        forwardType = getJsonData("CreateInternalMailDataElite", "forwardType");
+        forwardName = getJsonData("CreateInternalMailDataElite", "forwardName"); /*اسم ادارة الموجه اليه*/
+        addModel = getJsonData("CreateInternalMailDataElite", "addModel");
+        receiverAlias = getJsonData("CreateInternalMailDataElite", "receiverAlias"); /*مسمى الموجه اليه*/
 
     }
 
@@ -125,8 +147,8 @@ public class TC_AppointEmployee extends TestInit {
     }
     @Test (priority = 3)
     public void verifyNotValidNationNumber (){ /*التحقق من فالديشن رقم الهوية يبدأ بصفر*/
-       // appointEmployee.enterAppointEmployee();
-        appointEmployee.addNationNumber(notValidNumberValidation);
+        appointEmployee.enterAppointEmployee();
+        appointEmployee.addNationNumber(notValidNationNumber);
         exWait.until(ExpectedConditions.elementToBeClickable(appointEmployee.masarBtn()));
         appointEmployee.masarBtn().click();
         Assert.assertEquals(notValidNumberValidation, appointEmployee.getValidationMessage());
@@ -322,7 +344,51 @@ public class TC_AppointEmployee extends TestInit {
         appointEmployee.saveTheEmployee();
         Assert.assertEquals(appointEmployee.getSucessMsg(),sucessSavingEmpMsg);
     }
-
+    @Test
+    public void verifyAppointEmployee()throws FileNotFoundException{   /**/
+        loginPage = homePage.signOut();
+        homePage = loginPage.loginUserWithoutRemMe(userID2,userPasswd);
+        CreateExternalMailPage createExternalMailPage = contentAside.goToCreateExternalMail();
+        createExternalMailPage.clearAllField();
+        createExternalMailPage.pressOnNumberOfStorage();
+        createExternalMailPage.enteringTheSubjectOfMail(getJsonData("ValidExternalMailData","subject"));
+        subject = getJsonData("ValidExternalMailData","subject");
+        createExternalMailPage.setDocTypeUsingControl(getJsonData("ValidExternalMailData","docTypeNum"));
+        createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
+        createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
+        createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
+        createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient3"));
+        exportedNotes = getJsonData("CreateInternalMailDataElite", "exportedNotes");
+        employeeName = getJsonData("CreateInternalMailDataElite", "employeeName");
+        employeeDepartment = getJsonData("CreateInternalMailDataElite", "employeeDepartment"); /*الادارة*/
+        createExternalMailPage.pressOnDeactivateReferralNumber();
+        createExternalMailPage.clickSendConfirm();
+        createExternalMailPage.validateSuccessfulCreatingMail();
+        OutboxMails outboxMails = contentAside.goToExportedMail();
+        archiveNum = outboxMails.getMailData().get(4);
+        loginPage = homePage.signOut();
+        homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
+        appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee();
+        appointEmployee.enterAppointEmployee();
+        appointEmployee.addNationNumber(nationNumberInMasar);
+        appointEmployee.addFirstName(firstName);
+        appointEmployee.addSecondName(secondName);
+        appointEmployee.addThirdName(thirdName);
+        appointEmployee.addFourthName(fourthName);
+        appointEmployee.dateSelectionFromIcon(day,month,year);
+        appointEmployee.addIBAN(IBAN);
+        appointEmployee.selectNationality(nationality);
+        appointEmployee.selectEmployeeType(employeeType);
+        appointEmployee.selectMajorJob(majorJob);
+        appointEmployee.selectMandateJob(mandateJob);
+        appointEmployee.selectDegree(degree);
+        appointEmployee.addOrganizationNumber(organizationNumber);
+        appointEmployee.workDateSelect(day,month,year);
+        appointEmployee.levelDateSelect(day,month,year);
+        appointEmployee.firstJobDateSelect(day,month,year);
+        appointEmployee.setRecNumberTextField(archiveNum);
+        appointEmployee.saveTheEmployee();
+    }
 
 
 }
