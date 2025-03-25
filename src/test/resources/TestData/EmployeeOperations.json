@@ -34,7 +34,7 @@
   "majorJob":"-8-9144",
   "noMajorJob": "إختر الوظيفة الاساسية",
   "noMandateJob": "اختر الوظيفة المكلف بها",
-  "mandateJob" : "وظيفة إضافية",
+  "mandateJob" : "وظيفة اضافية5 ",
   "degree": "6",
   "organizationNumber": "3334444",
   "inValidOrganizationNumber":"333444499966",
@@ -45,5 +45,6 @@
   "sucessSavingEmpMsg": "تم حفظ بيانات المقدم على التعيين بنجاح , وانشاء معاملة بمرفق القرار  برقم أرشيف",
 
   "empToReassign": "3000500",
-  "appointType": "معين"
+  "appointType": "معين",
+  "redirecting": " لإكمال اللازم"
 }

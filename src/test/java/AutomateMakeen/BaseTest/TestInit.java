@@ -44,6 +44,7 @@ public class TestInit  {
     public static InboxPage inboxPage;
     public static AppointEmployee appointEmployee;
     public static ReassignEmployee reassignEmployee;
+    public static ElectronicTransactionsJobsPage electronicTransactionsJobsPage;
 
     //HijriDates
     protected HijrahDate dateHijriMinus = HijrahDate.now().minus(1, ChronoUnit.DAYS);

@@ -2,10 +2,7 @@ package AutomateMakeen.Pages.EmployeesOperations;
 
 import AutomateMakeen.Base.BaseComp;
 import AutomateMakeen.Pages.ContentAside;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -230,16 +227,19 @@ public class AppointEmployee extends BaseComp {
     /****************************************************************************************/
     private By ddlMandateJob = By.id("drp_AddMandateJob_ddlSelectButtonTarget");
     private By mandateJobDiv = By.id("drp_AddMandateJob_collapsibleDiv");
+    private By mandateJobSearchText = By.id("drp_AddMandateJob_txtSearch");
     public void selectMandateJob(String mandateJob){
         WebElement majorJobAll = driver.findElement(ddlMandateJob);
         majorJobAll.click();
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(mandateJobDiv)));
+        WebElement searchText = driver.findElement(mandateJobSearchText);
+        searchText.sendKeys(mandateJob);
         WebElement mandateJob1;
         if (Objects.equals(mandateJob, "اختر الوظيفة المكلف بها"))
         {
             mandateJob1 = driver.findElement(By.xpath("//li[contains(text(),'اختر الوظيفة المكلف بها')]"));
         }else {
-            mandateJob1 = driver.findElement(By.xpath("//label[contains(text(),'"+ mandateJob +"')]"));
+            mandateJob1 = driver.findElement(By.xpath("(//label[@data-type='child'][contains(text(),'"+mandateJob+"')])[1]"));
         }
         mandateJob1.click();
     }

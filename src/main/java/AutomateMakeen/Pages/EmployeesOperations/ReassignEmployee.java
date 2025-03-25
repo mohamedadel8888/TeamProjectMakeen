@@ -267,16 +267,19 @@ public class ReassignEmployee extends BaseComp {
     /****************************************************************************************/
     private By ddlMandateJob = By.id("drp_AddMandateJob_ddlSelectButtonTarget");
     private By mandateJobDiv = By.id("drp_AddMandateJob_collapsibleDiv");
+    private By mandateJobSearchText = By.id("drp_AddMandateJob_txtSearch");
     public void selectMandateJob(String mandateJob){
         WebElement majorJobAll = driver.findElement(ddlMandateJob);
         majorJobAll.click();
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(mandateJobDiv)));
+        WebElement searchText = driver.findElement(mandateJobSearchText);
+        searchText.sendKeys(mandateJob);
         WebElement mandateJob1;
         if (Objects.equals(mandateJob, "اختر الوظيفة المكلف بها"))
         {
             mandateJob1 = driver.findElement(By.xpath("//li[contains(text(),'اختر الوظيفة المكلف بها')]"));
         }else {
-            mandateJob1 = driver.findElement(By.xpath("//label[contains(text(),'"+ mandateJob +"')]"));
+            mandateJob1 = driver.findElement(By.xpath("(//label[@data-type='child'][contains(text(),'"+mandateJob+"')])[1]"));
         }
         mandateJob1.click();
     }
@@ -459,11 +462,12 @@ public class ReassignEmployee extends BaseComp {
     /****************************************************************************************/
     /*التأكد من تعيين موظف*/
     /****************************************************************************************/
-    public String validateSuccessfulSavingEmployee ( String nationNumber) {
+    public String validateSuccessfulSavingEmployee ( String nationNumber) throws InterruptedException {
         clickCancelButton();
         WebElement returnOk = driver.findElement(saveAppoint);
         returnOk.click();
         exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
+        Thread.sleep(2000);
         WebElement activeEmployees = driver.findElement(By.cssSelector("#RadActive"));
         activeEmployees.click();
         WebElement nationNumberSearchText = driver.findElement(By.id("txt_MainNation"));

@@ -30,10 +30,10 @@ public class ReturnToSource_TC extends TestInit {
     public void setupClass() throws FileNotFoundException {
         lunchDriver();
         loginPage.goToLoginPage();
-        HomePage homePage = loginPage.loginUserWithoutRemMe(getJsonData("CreateInternalMailDataElite", "ID"), getJsonData("DelegateData", "validPassword"));
-    }
+          }
     @BeforeMethod
     public void setupMethod() throws FileNotFoundException {
+        HomePage homePage = loginPage.loginUserWithoutRemMe(getJsonData("CreateInternalMailDataElite", "ID"), getJsonData("DelegateData", "validPassword"));
         CreateExternalMailPage createExternalMailPage = contentAside.goToCreateExternalMail();
         createExternalMailPage.clearAllField();
         createExternalMailPage.pressOnNumberOfStorage();

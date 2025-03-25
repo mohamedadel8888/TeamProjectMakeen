@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 import java.io.FileNotFoundException;
 import java.time.Duration;
 
-public class Orders_TC extends TestInit {
+public class Offers_TC extends TestInit {
     WebDriverWait ex;
     String myDepartment;
     String sefatLetter;
@@ -32,6 +32,7 @@ public class Orders_TC extends TestInit {
     String forwardToName;
     String mainManager;
     String delegateName;
+    String redirecting;
 
     @BeforeClass
     public void setUp () throws FileNotFoundException {
@@ -63,6 +64,7 @@ public class Orders_TC extends TestInit {
         forwardToName = getJsonData("CreateInternalMailDataElite", "forwardToName"); /*اسم الموجه اليه*/
         mainManager = getJsonData("CreateInternalMailDataElite", "mainManager");  /*الامين العام*/
         delegateName = getJsonData("CreateInternalMailDataElite", "delegateName"); /*اسم المفوض عنه*/
+        redirecting = getJsonData("EmployeeOperations", "redirecting");
     }
     @BeforeMethod
     public void setUp2 () {
@@ -121,4 +123,17 @@ public class Orders_TC extends TestInit {
         sentPage.mailSentSearch(archiveNum);
         Assert.assertTrue(sentPage.getRecieverName().contains("حسين حسن كمال عبدالقادر"));
     }
+    @Test (priority = 6)
+    public void verifyRedirectingOffers (){
+        inboxPage.offersTab();
+        inboxPage.goToSign();
+        inboxPage.signConfirm();
+        inboxPage.mailInboxSearch(archiveNum);
+        inboxPage.redirectOffer(redirecting);
+        SentPage sentPage = eliteHomePage.goToSent();
+        sentPage.mailSentSearch(archiveNum);
+        WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
+        Assert.assertTrue(signText.getText().contains("تم توجيه العرض"));
+    }
+
 }

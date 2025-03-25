@@ -152,7 +152,23 @@ public class ContentAside extends BaseComp {
     @FindBy(id = "DivMainEmp")
     WebElement divEmpOperations;
     public AppointEmployee goToEmployeeOperations_AppointEmployee(){
-        exWait.until(ExpectedConditions.visibilityOf(notificationWebElement));
+
+        try{
+            exWait.until(ExpectedConditions.visibilityOf(notificationWebElement));
+            exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
+            humanResources.click();
+            employeeOperations.click();
+            exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
+            return new AppointEmployee(driver);
+        }catch(NoSuchElementException e){
+            exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
+            humanResources.click();
+            employeeOperations.click();
+            exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
+            return new AppointEmployee(driver);
+        }
+    }
+    public AppointEmployee goToEmployeeOperations_AppointEmployee_FromInside(){
         try{
             exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
             humanResources.click();
@@ -199,6 +215,30 @@ public class ContentAside extends BaseComp {
             exWait.until(ExpectedConditions.visibilityOf(divEmpOperations));
             return new ReassignEmployee(driver);
         }
+    }
+
+    @FindBy (id = "s_m_66")  /*صفحه وظائف التعاملات الالكترونية*/
+    WebElement electronicTransactionsJobs;
+    @FindBy (id ="tbl_jobs")  /*جدول الوظائف*/
+    WebElement tableJobs;
+    public ElectronicTransactionsJobsPage goToElectronicTransactionsJobsPage(){  /*فتح صفحه و ظائف التعاملات الالكترونية*/
+        HomePage homePage = new HomePage(driver);
+        homePage.goToHomePage();
+        try{
+            exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
+            humanResources.click();
+            electronicTransactionsJobs.click();
+            exWait.until(ExpectedConditions.visibilityOf(tableJobs));
+            return new ElectronicTransactionsJobsPage(driver);
+        }
+        catch(NoSuchElementException e){
+            exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
+            humanResources.click();
+            electronicTransactionsJobs.click();
+            exWait.until(ExpectedConditions.visibilityOf(tableJobs));
+            return new ElectronicTransactionsJobsPage(driver);
+        }
+
     }
 
 }

@@ -86,7 +86,7 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         lunchDriver();
         loginPage.goToLoginPage();
         exWait = new WebDriverWait(driver, Duration.ofSeconds(8));
-        homePage = loginPage.loginUserWithoutRemMe(userID2,userPasswd);
+        homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
 
 
 
@@ -117,7 +117,7 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         employeeType = (getJsonData("EmployeeOperations","employeeType"));
         majorJob = (getJsonData("EmployeeOperations","majorJob"));
         noMinorJob = (getJsonData("EmployeeOperations","noMajorJob"));
-        mandateJob = (getJsonData("EmployeeOperations","mandateJob"));
+        mandateJob = faker.job().title();
         noMandateJob = (getJsonData("EmployeeOperations","noMandateJob"));
         degree = (getJsonData("EmployeeOperations","degree"));
         organizationNumber = faker.number().digits(7);
@@ -158,9 +158,9 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         OutboxMails outboxMails = contentAside.goToExportedMail();
         outboxMails.getRecentlyAddedMail(subject);
         archiveNum = outboxMails.getMailData().get(4);
-        loginPage = homePage.signOut();
-        homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
-        appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee();
+        electronicTransactionsJobsPage = contentAside.goToElectronicTransactionsJobsPage();
+        String mandateJob1 = electronicTransactionsJobsPage.addNewJob(employeeDepartment, mandateJob);
+        appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee_FromInside();
         appointEmployee.enterAppointEmployee();
         appointEmployee.addNationNumber(nationNumberInMasar);
         appointEmployee.addFirstName(firstName);
@@ -172,7 +172,7 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         appointEmployee.selectNationality(nationality);
         appointEmployee.selectEmployeeType(employeeType);
         appointEmployee.selectMajorJob(majorJob);
-        appointEmployee.selectMandateJob(mandateJob);
+        appointEmployee.selectMandateJob(mandateJob1);
         appointEmployee.selectDegree(degree);
         appointEmployee.addOrganizationNumber(organizationNumber);
         appointEmployee.workDateSelect(day,month,year);
@@ -183,7 +183,7 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         Assert.assertEquals(appointEmployee.validateSuccessfulSavingEmployee(nationNumberInMasar),nationNumberInMasar);
     }
     @Test (priority = 2)
-    public void verifyReassignmentEmployee (){  /*يجب تحديث رقم الموظف قبل تشغيل حاله الاختبار التي تختبر اعاده تعيين موظف*/
+    public void verifyReassignmentEmployee () throws InterruptedException {  /*يجب تحديث رقم الموظف قبل تشغيل حاله الاختبار التي تختبر اعاده تعيين موظف*/
         reassignEmployee =contentAside.goToEmployeeOperations_ReassignEmployee_FromInside();
         reassignEmployee.searchForEmployee(empToReassign);
         reassignEmployee.enterReassignEmployee();
@@ -194,10 +194,11 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         reassignEmployee.selectEmployeeType(employeeType);
         reassignEmployee.selectAppointType(appointType);
         reassignEmployee.selectMajorJob(majorJob);
+        mandateJob = faker.job().title();
         reassignEmployee.selectMandateJob(mandateJob);
         reassignEmployee.selectDegree(degree);
         appointEmployee.workDateSelect(day,month,"2025");
-        reassignEmployee.setRecNumberTextField(archiveNum);
+        reassignEmployee.setRecNumberTextField("271866");
         reassignEmployee.saveTheEmployee();
         Assert.assertEquals(reassignEmployee.validateSuccessfulSavingEmployee(nationNumber), nationNumber);
     }

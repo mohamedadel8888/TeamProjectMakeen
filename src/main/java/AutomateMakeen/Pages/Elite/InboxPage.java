@@ -158,6 +158,11 @@ public class InboxPage extends BaseComp {
     /*========================================================================*/
     private By offers = By.id("btn_offerletter_display"); /*العروض*/
     private By receiverAlias = By.id("txt_RecieverAlias"); /*مسمى الموجه اليه*/
+    private By redirectOfferBtn = By.id("btn_RedirectOffer"); /*توجيه العرض*/
+    private By divRedirectoffer = By.xpath("(//div[@class='modal-content p-4'])[4]"); /*نافذه توجيه العرض*/
+    private By directingOffer = By.cssSelector("#slcRedirectPurps"); /*التوجيه*/
+    private By confirmationBtn = By.id("btnConfirmRedirectAction"); /*زر تأكيد*/
+    private By textComment = By.id("txtPurposeComment"); /*نص التوجيه*/
 
 
     public void offersTab (){  /*الدخول لتاب العروض */
@@ -169,6 +174,21 @@ public class InboxPage extends BaseComp {
     public void receiverAlias (String alias){ /*مسمى الموجه اليه*/
         driver.findElement(receiverAlias).sendKeys(alias);
     }
+    public void redirectOffer (String text){
+        WebElement redirectOffer1 = driver.findElement(redirectOfferBtn);
+        redirectOffer1.click();
+        WebElement divRedirectOffer1 = driver.findElement(divRedirectoffer);
+        exWait.until(ExpectedConditions.visibilityOf(divRedirectOffer1));
+        WebElement directingOffer1 = driver.findElement(directingOffer);
+        Select select = new Select(directingOffer1);
+        select.selectByVisibleText(text);
+        WebElement textComment1 = driver.findElement(textComment);
+        textComment1.clear();
+        textComment1.sendKeys("Mohamed Adel");
+        WebElement confirmationBtn1 = driver.findElement(confirmationBtn);
+        confirmationBtn1.click();
+    }
+
 
     /*========================================================================*/
                                   /*المذكرة*/
@@ -742,10 +762,7 @@ public class InboxPage extends BaseComp {
         btnMore1.click();
     }
     /*========================================================================*/
-    public void goToAssetsRequest (){ /*طلب اصول*/
-        WebElement assetsRequest1 = driver.findElement(assetsRequest);
-        assetsRequest1.click();
-    }
+
     /*========================================================================*/
 
     /*========================================================================*/
