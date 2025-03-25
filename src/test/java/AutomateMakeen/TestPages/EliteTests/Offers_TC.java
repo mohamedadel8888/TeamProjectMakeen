@@ -124,7 +124,7 @@ public class Offers_TC extends TestInit {
         Assert.assertTrue(sentPage.getRecieverName().contains("حسين حسن كمال عبدالقادر"));
     }
     @Test (priority = 6)
-    public void verifyRedirectingOffers (){
+    public void verifyRedirectingOffers (){ /*التحقق من توجيه العرض */
         inboxPage.offersTab();
         inboxPage.goToSign();
         inboxPage.signConfirm();
@@ -135,5 +135,18 @@ public class Offers_TC extends TestInit {
         WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
         Assert.assertTrue(signText.getText().contains("تم توجيه العرض"));
     }
+    @Test (priority = 6)
+    public void verifyReturningOffers (){  /*التحقق من اعاده العرض */
+        inboxPage.offersTab();
+        inboxPage.goToSign();
+        inboxPage.signConfirm();
+        inboxPage.mailInboxSearch(archiveNum);
+        inboxPage.returnOffer(exportedNotes);
+        SentPage sentPage = eliteHomePage.goToSent();
+        sentPage.mailSentSearch(archiveNum);
+        WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
+        Assert.assertTrue(signText.getText().contains("تم اعادة العرض  للأسباب الأتيه"));
+    }
+
 
 }

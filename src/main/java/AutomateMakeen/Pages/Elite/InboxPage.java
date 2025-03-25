@@ -163,6 +163,10 @@ public class InboxPage extends BaseComp {
     private By directingOffer = By.cssSelector("#slcRedirectPurps"); /*التوجيه*/
     private By confirmationBtn = By.id("btnConfirmRedirectAction"); /*زر تأكيد*/
     private By textComment = By.id("txtPurposeComment"); /*نص التوجيه*/
+    private By returnOffer = By.id("btn_ReturnOffer"); /*اعادة العرض*/
+    private By divReturnOffer = By.xpath("(//div[@class='modal-content p-4'])[3]"); /*نافذه اعادة العرض*/
+    private By textViceComment = By.id("txtSignViceComment"); /*نص اعادة العرض*/
+    private By confirmReturnBtn = By.id("btnConfirmViceAction"); /*زر تأكيد إعادة العرض*/
 
 
     public void offersTab (){  /*الدخول لتاب العروض */
@@ -187,6 +191,17 @@ public class InboxPage extends BaseComp {
         textComment1.sendKeys("Mohamed Adel");
         WebElement confirmationBtn1 = driver.findElement(confirmationBtn);
         confirmationBtn1.click();
+    }
+    public void returnOffer (String text){
+        WebElement returnOffer1 = driver.findElement(returnOffer);
+        returnOffer1.click();
+        WebElement divReturnOffer1 = driver.findElement(divReturnOffer);
+        exWait.until(ExpectedConditions.visibilityOf(divReturnOffer1));
+        WebElement textViceComment1 = driver.findElement(textViceComment);
+        textViceComment1.clear();
+        textViceComment1.sendKeys(text);
+        WebElement confirmReturnBtn1 = driver.findElement(confirmReturnBtn);
+        confirmReturnBtn1.click();
     }
 
 
@@ -491,6 +506,7 @@ public class InboxPage extends BaseComp {
     private By signByorderOfRepresentativePrince = By.xpath("//li[@id='btn_sign']//li[2]//a[1]"); /*توقيع بأمر من نائب الامير */
     private By signWithDelegate = By.xpath("//a[contains(text(),'توقيع بتفويض')]"); /*توقيع بتفويض*/
     private By delegateAbout = By.id("slcOnBehalf_ddlSelectButton"); /*ddl مفوض عنه*/
+    private By chkBoxWithViceLetter = By.cssSelector("label[for='chkWithViceLetter']");/*تشك بوكس مع تأشير الخطاب*/
 
 
     public void goToSign (){ /*فتح تاب توقيع*/
@@ -504,6 +520,16 @@ public class InboxPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(signDiv));
         WebElement btnConfirm1 = driver.findElement(btnConfirm);
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("#model_SignVicePopUp"))));
+        btnConfirm1.click();
+    }
+    public void signOffsrAndletterTogether (){
+        WebElement sign1 = driver.findElement(sign);
+        sign1.click();
+        WebElement signDiv1 = driver.findElement(signDiv);
+        exWait.until(ExpectedConditions.visibilityOf(signDiv1));
+        WebElement chkBoxWithViceLetter1 = driver.findElement(chkBoxWithViceLetter);
+        chkBoxWithViceLetter1.click();
+        WebElement btnConfirm1 = driver.findElement(btnConfirm);
         btnConfirm1.click();
     }
     public void signByOrderOfPrince (){
@@ -546,7 +572,7 @@ public class InboxPage extends BaseComp {
         WebElement btnConfirm1 = driver.findElement(btnConfirm);
         btnConfirm1.click();
     }
-    public void waitDiv ()  {
+    public void waitDiv ()  { /*نافذة تم توقيع */
         WebElement afterSignDiv = driver.findElement(By.cssSelector("div[class='modal-dialog modal-dialog-centered modal-md'] div[class='modal-content']"));
         exWait.until(ExpectedConditions.visibilityOf(afterSignDiv));
         WebElement btnClose = driver.findElement(By.id("btnCloseClick"));
@@ -557,7 +583,6 @@ public class InboxPage extends BaseComp {
                             /* اعادة للمصدر*/
     /*========================================================================*/
     private By returnToSource = By.id("btn_backToSource"); /*إعادة للمصدر*/
-    private By returnOffer = By.id("btn_ReturnOffer"); /* اعاده العرض*/
     private By divReturnToSource = By.xpath("(//div[@class='modal-content p-4'])[3]"); /*نافذه اعاده للمصدر*/
     private By textField = By.id("txtSignViceComment");
 
@@ -572,16 +597,7 @@ public class InboxPage extends BaseComp {
         btnConfirm.click();
     }
 
-    public void returnOffer (String text){ /*فتح تاب اعاده العرض*/
-        WebElement backToSource1 = driver.findElement(returnOffer);
-        backToSource1.click();
-        WebElement divReturnToSource1 = driver.findElement(divReturnToSource);
-        exWait.until(ExpectedConditions.visibilityOf(divReturnToSource1));
-        WebElement textField1 = driver.findElement(textField);
-        textField1.sendKeys(text);
-        WebElement btnConfirm = driver.findElement(btnConfirmVice);
-        btnConfirm.click();
-    }
+
 
     /*========================================================================*/
                            /* حفظ مؤقت*/

@@ -4,6 +4,8 @@ import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.Elite.EliteHomePage;
 import AutomateMakeen.Pages.Elite.SentPage;
 import AutomateMakeen.Pages.HomePage;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -99,6 +101,30 @@ public class InboxTest extends TestInit  {
             SentPage sentPage = eliteHomePage.goToSent();
             sentPage.mailSentSearch(archiveNum);
             Assert.assertTrue(sentPage.getDirecting().contains("حفظ مؤقت"));
+        }
+        @Test (priority = 14)
+    public void signOfferWithLetter(){ /*تأشير الخطاب وتوقيع العرض معا */
+            inboxPage.mailInboxSearch(archiveNum);
+            inboxPage.lettersTab();
+            inboxPage.selectDepartment(myDepartment);
+            inboxPage.selectSefatLetter(sefatLetter);
+            inboxPage.forwardTo(forwardToLetter);
+            inboxPage.subject(mySubject);
+            inboxPage.addModel(addModel);
+            inboxPage.send();
+            inboxPage.offersTab();
+            inboxPage.selectDepartment(myDepartment);
+            inboxPage.forwardTo(forwardToOffer);
+            inboxPage.receiverAlias(receiverAlias);
+            inboxPage.subject(mySubject);
+            inboxPage.addModel(addModel);
+            inboxPage.send();
+            inboxPage.signOffsrAndletterTogether();
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
+            Assert.assertTrue(signText.getText().contains("تم توقيع العرض وتأشير الخطاب"));
+
         }
     }
 
