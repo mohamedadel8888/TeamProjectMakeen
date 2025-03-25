@@ -98,6 +98,15 @@ public class Offers_TC extends TestInit {
         Assert.assertTrue(signText.getText().contains("تم توقيع العرض"));
     }
     @Test (priority = 3)
+    public void signAndDelegateOfferAboutHim (){   /*التحقق من توقيع وتوجيه العرض عن الموجه اليه */
+        inboxPage.offersTab();                     /*pre condition ===>  الموظف المستخدم يجب ان يكون (الموظف المسؤل عن توقيع وتوجيه العرض عنه) في وظيفه مستقبل العرض*/
+        inboxPage.signAndRedirectOfferAboutHim(exportedNotes);
+        SentPage sentPage = eliteHomePage.goToSent();
+        sentPage.mailSentSearch(archiveNum);
+        WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
+        Assert.assertTrue(signText.getText().contains("تم توقيع وتوجيه العرض عن الموجه اليه العرض"));
+    }
+    @Test (priority = 4)
     public void viceOffer (){   /*تأشير العرض*/
         inboxPage.offersTab();
         inboxPage.goToVice();
@@ -107,7 +116,7 @@ public class Offers_TC extends TestInit {
         String recieverName = sentPage.getRecieverName();
         Assert.assertEquals(recieverName,mainManager);
     }
-    @Test (priority = 4)
+    @Test (priority = 5)
     public void verifyViceOffer_ReferToAgent(){   /*تأشير العرض واحالتة الى الوكيل*/
         inboxPage.offersTab();
         inboxPage.marking_ReferToAgent();
@@ -115,7 +124,7 @@ public class Offers_TC extends TestInit {
         sentPage.mailSentSearch(archiveNum);
         Assert.assertTrue(sentPage.getDirecting().contains("لتوقيع العرض"));
     }
-    @Test (priority = 5)
+    @Test (priority = 6)
     public void verifyViceLetter_ReferToCustomEmp(){   /*تأشير العرض واحالتة الى موظف محدد*/
         inboxPage.offersTab();
         inboxPage.marking_ReferToCustomEmp();
@@ -123,7 +132,7 @@ public class Offers_TC extends TestInit {
         sentPage.mailSentSearch(archiveNum);
         Assert.assertTrue(sentPage.getRecieverName().contains("حسين حسن كمال عبدالقادر"));
     }
-    @Test (priority = 6)
+    @Test (priority = 7)
     public void verifyRedirectingOffers (){ /*التحقق من توجيه العرض */
         inboxPage.offersTab();
         inboxPage.goToSign();
@@ -135,7 +144,7 @@ public class Offers_TC extends TestInit {
         WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
         Assert.assertTrue(signText.getText().contains("تم توجيه العرض"));
     }
-    @Test (priority = 6)
+    @Test (priority = 8)
     public void verifyReturningOffers (){  /*التحقق من اعاده العرض */
         inboxPage.offersTab();
         inboxPage.goToSign();

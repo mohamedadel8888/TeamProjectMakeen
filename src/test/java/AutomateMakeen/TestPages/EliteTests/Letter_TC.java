@@ -152,4 +152,20 @@ public class Letter_TC extends TestInit {
     sentPage.mailSentSearch(archiveNum);
     Assert.assertTrue(sentPage.getRecieverName().contains("حسين حسن كمال عبدالقادر"));
     }
+    @Test (priority = 8)
+    public void verifySendAsTelegram(){ /*التحقق من ارسال كبرقيه*/
+        inboxPage.lettersTab();
+        inboxPage.sendAsTelegram();
+        SentPage sentPage = eliteHomePage.goToSent();
+        sentPage.mailSentSearch(archiveNum);
+        Assert.assertTrue(sentPage.getDirecting().contains("تم إرسال المعاملة كبرقية عادية"));
+    }
+    @Test (priority = 9)
+    public void verifyViceAndSendAsTelegram(){
+        inboxPage.lettersTab();
+        inboxPage.viceAndSendAsTelegram();
+        SentPage sentPage = eliteHomePage.goToSent();
+        sentPage.mailSentSearch(archiveNum);
+        Assert.assertTrue(sentPage.getDirecting().contains("تم  تأشير المعاملة و إرسال المعاملة كبرقية عادية"));
+    }
 }

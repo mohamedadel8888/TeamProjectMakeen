@@ -1,7 +1,6 @@
 package AutomateMakeen.Pages.Elite;
 
 import AutomateMakeen.Base.BaseComp;
-import AutomateMakeen.Pages.LoginPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -169,6 +168,7 @@ public class InboxPage extends BaseComp {
     private By confirmReturnBtn = By.id("btnConfirmViceAction"); /*زر تأكيد إعادة العرض*/
 
 
+
     public void offersTab (){  /*الدخول لتاب العروض */
         WebElement offers1 = driver.findElement(offers);
         offers1.click();
@@ -178,7 +178,7 @@ public class InboxPage extends BaseComp {
     public void receiverAlias (String alias){ /*مسمى الموجه اليه*/
         driver.findElement(receiverAlias).sendKeys(alias);
     }
-    public void redirectOffer (String text){
+    public void redirectOffer (String text){ /*توجيه العرض*/
         WebElement redirectOffer1 = driver.findElement(redirectOfferBtn);
         redirectOffer1.click();
         WebElement divRedirectOffer1 = driver.findElement(divRedirectoffer);
@@ -192,7 +192,7 @@ public class InboxPage extends BaseComp {
         WebElement confirmationBtn1 = driver.findElement(confirmationBtn);
         confirmationBtn1.click();
     }
-    public void returnOffer (String text){
+    public void returnOffer (String text){  /*اعادة العرض */
         WebElement returnOffer1 = driver.findElement(returnOffer);
         returnOffer1.click();
         WebElement divReturnOffer1 = driver.findElement(divReturnOffer);
@@ -203,6 +203,7 @@ public class InboxPage extends BaseComp {
         WebElement confirmReturnBtn1 = driver.findElement(confirmReturnBtn);
         confirmReturnBtn1.click();
     }
+
 
 
     /*========================================================================*/
@@ -508,6 +509,9 @@ public class InboxPage extends BaseComp {
     private By signWithDelegate = By.xpath("//a[contains(text(),'توقيع بتفويض')]"); /*توقيع بتفويض*/
     private By delegateAbout = By.id("slcOnBehalf_ddlSelectButton"); /*ddl مفوض عنه*/
     private By chkBoxWithViceLetter = By.cssSelector("label[for='chkWithViceLetter']");/*تشك بوكس مع تأشير الخطاب*/
+    private By signOfferAndDirctingAboutHim = By.xpath("//a[contains(text(),'توقيع و توجيه العرض عنه')]");  /*توقيع وتوجيه العرض عنه*/
+    private By signOfferAndDirctingAboutHimDiv =By.xpath("(//div[@class='modal-content p-4'])[4]");  /*نافذة توقيع وتوجيه العرض عنه*/
+
 
 
     public void goToSign (){ /*فتح تاب توقيع*/
@@ -516,14 +520,14 @@ public class InboxPage extends BaseComp {
         WebElement signDiv1 = driver.findElement(signDiv);
         exWait.until(ExpectedConditions.visibilityOf(signDiv1));
     }
-    public void signConfirm (){
+    public void signConfirm (){   /*توقيع*/
         WebElement signDiv = driver.findElement(By.cssSelector("div[id='model_SignVicePopUp'] div[class='modal-content p-4']"));
         exWait.until(ExpectedConditions.visibilityOf(signDiv));
         WebElement btnConfirm1 = driver.findElement(btnConfirm);
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("#model_SignVicePopUp"))));
         btnConfirm1.click();
     }
-    public void signOffsrAndletterTogether (){
+    public void signOffsrAndletterTogether (){ /*توقيع العرض وتأشير الخطاب معا*/
         WebElement sign1 = driver.findElement(sign);
         sign1.click();
         WebElement signDiv1 = driver.findElement(signOfferAndLetterDiv);
@@ -533,7 +537,7 @@ public class InboxPage extends BaseComp {
         WebElement btnConfirm1 = driver.findElement(btnConfirm);
         btnConfirm1.click();
     }
-    public void signByOrderOfPrince (){
+    public void signByOrderOfPrince (){ /*توقيع بأمر من الامير*/
         WebElement signDiv1 = driver.findElement(signDiv);
         Actions actions = new Actions(driver);
         actions.moveToElement(signDiv1).perform();
@@ -544,7 +548,7 @@ public class InboxPage extends BaseComp {
         WebElement btnConfirm1 = driver.findElement(btnConfirm);
         btnConfirm1.click();
     }
-    public void signByOrderOfRepresentativePrince (){
+    public void signByOrderOfRepresentativePrince (){ /*توقيع بأمر من نائب الامير */
         WebElement signDiv1 = driver.findElement(signDiv);
         Actions actions = new Actions(driver);
         actions.moveToElement(signDiv1).perform();
@@ -561,7 +565,7 @@ public class InboxPage extends BaseComp {
         WebElement delegateName = driver.findElement(xpath("//label[contains(text(),'"+name+"')]"));
         delegateName.click();
     }
-    public void signWithDelegate (String delegateName){
+    public void signWithDelegate (String delegateName){  /*توقيع بتفويض*/
         WebElement signDiv1 = driver.findElement(signDiv);
         Actions actions = new Actions(driver);
         actions.moveToElement(signDiv1).perform();
@@ -573,6 +577,21 @@ public class InboxPage extends BaseComp {
         WebElement btnConfirm1 = driver.findElement(btnConfirm);
         btnConfirm1.click();
     }
+    public void signAndRedirectOfferAboutHim(String text){ /*توقيع وتوجيه العرض عنه*/
+        WebElement signDiv1 = driver.findElement(signDiv);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(signDiv1).perform();
+        WebElement signOfferAndDirctingAboutHim1 = driver.findElement(signOfferAndDirctingAboutHim);
+        signOfferAndDirctingAboutHim1.click();
+        WebElement signDiv = driver.findElement(signOfferAndDirctingAboutHimDiv);
+        exWait.until(ExpectedConditions.visibilityOf(signDiv));
+        WebElement dirctingText = driver.findElement(By.id("txtPurposeComment"));
+        dirctingText.sendKeys(text);
+        WebElement btnConfirm = driver.findElement(By.id("btnConfirmRedirectAction"));
+        btnConfirm.click();
+    }
+
+
     public void waitDiv ()  { /*نافذة تم توقيع */
         WebElement afterSignDiv = driver.findElement(By.cssSelector("div[class='modal-dialog modal-dialog-centered modal-md'] div[class='modal-content']"));
         exWait.until(ExpectedConditions.visibilityOf(afterSignDiv));
@@ -691,15 +710,43 @@ public class InboxPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("attachDiv_notify_0"))));
         btnAdd1.click();
     }
+
     public boolean attachAdded (){
         WebElement attachmentDiv1 = driver.findElement(attachmentDiv);
         return attachmentDiv1.isDisplayed();
     }
 
+    /*========================================================================*/
+                            /*ارسال كبرقية*/
+    /*========================================================================*/
+    private By asTelegramBtn = By.id("btn_telegram"); /*زر ارسال كبرقية*/
+    private By asTelegramDiv = By.xpath("(//div[@class='modal-content p-4'])[5]"); /*نافذة ارسال كبرقية*/
+    private By radSignPrince = By.id("RdPrincePurp"); /*اختيار بتوجيه سمو الامير */
+    private By confirmTelegramBtn = By.id("btnConfirmTelegramAction"); /*زر تأكيد*/
+    private By viceAndSendTelegram = By.id("(menu_telegram_actions"); /*  تأشير وارسال كبرقية  */
+
+    public void sendAsTelegram (){   /*ارسال كبرقية*/
+        WebElement asTelegramBtn1 = driver.findElement(asTelegramBtn);
+        asTelegramBtn1.click();
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(asTelegramDiv)));
+        WebElement radSignPrince1 = driver.findElement(radSignPrince);
+        radSignPrince1.click();
+        WebElement confirmTelegramBtn1 = driver.findElement(confirmTelegramBtn);
+        confirmTelegramBtn1.click();
+    }
+    public void viceAndSendAsTelegram(){ /*تأشير وارسال كبرقية */
+        Actions a = new Actions(driver);
+        WebElement asTelegramBtn1 = driver.findElement(asTelegramBtn);
+        a.moveToElement(asTelegramBtn1).perform();
+        WebElement viceAndSendTelegram1 = driver.findElement(viceAndSendTelegram);
+        viceAndSendTelegram1.click();
+        WebElement radSignPrince1 = driver.findElement(radSignPrince);
+        radSignPrince1.click();
+        WebElement confirmTelegramBtn1 = driver.findElement(confirmTelegramBtn);
+        confirmTelegramBtn1.click();
 
 
-
-
+    }
 
 
     /*=========================================================================================================================*/
