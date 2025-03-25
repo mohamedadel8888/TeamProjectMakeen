@@ -501,6 +501,7 @@ public class InboxPage extends BaseComp {
 
     private By sign = By.id("btn_sign"); /*توقيع*/
     private By signDiv = By.xpath("(//div[@class='quick_actions-link_icon'])[9]");
+    private By signOfferAndLetterDiv = By.xpath("(//div[@class='modal-content p-4'])[3]\n"); /*نافذة توقيع العرض وتأشير الخطاب معا*/
     private By btnConfirm = By.cssSelector("#btnConfirmViceAction");  /*زر تأكيد */
     private By signByOrderOfPrince = By.cssSelector("li[id='btn_sign'] li:nth-child(1) a:nth-child(1)"); /*توقيع بأمر سعاده الامير*/
     private By signByorderOfRepresentativePrince = By.xpath("//li[@id='btn_sign']//li[2]//a[1]"); /*توقيع بأمر من نائب الامير */
@@ -525,7 +526,7 @@ public class InboxPage extends BaseComp {
     public void signOffsrAndletterTogether (){
         WebElement sign1 = driver.findElement(sign);
         sign1.click();
-        WebElement signDiv1 = driver.findElement(signDiv);
+        WebElement signDiv1 = driver.findElement(signOfferAndLetterDiv);
         exWait.until(ExpectedConditions.visibilityOf(signDiv1));
         WebElement chkBoxWithViceLetter1 = driver.findElement(chkBoxWithViceLetter);
         chkBoxWithViceLetter1.click();
