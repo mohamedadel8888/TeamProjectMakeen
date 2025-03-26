@@ -161,7 +161,7 @@ public class Letter_TC extends TestInit {
         Assert.assertTrue(sentPage.getDirecting().contains("تم إرسال المعاملة كبرقية عادية"));
     }
     @Test (priority = 9)
-    public void verifyViceAndSendAsTelegram(){
+    public void verifyViceAndSendAsTelegram(){ /*التحقق من تأشير وارسال كبرقيه*/
         inboxPage.lettersTab();
         inboxPage.viceAndSendAsTelegram();
         SentPage sentPage = eliteHomePage.goToSent();

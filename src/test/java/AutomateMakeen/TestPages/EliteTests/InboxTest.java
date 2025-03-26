@@ -74,7 +74,7 @@ public class InboxTest extends TestInit  {
             inboxPage.addAttach("src\\test\\resources\\UplodedImage.png","file name");
             Assert.assertTrue(inboxPage.attachAdded());
         }
-        @Test (priority = 9)
+        @Test (priority = 4)
         public void forwardToCustomEmployer (){  /*احاله الى موظف محدد */
             inboxPage.goToForwardTab();
             inboxPage.forwardToCustomEmp(employeeDepartment,employeeName,forwardType);
@@ -83,18 +83,18 @@ public class InboxTest extends TestInit  {
             String department = sentPage.getDepartmentName();
             Assert.assertEquals(department, employeeDepartment);
         }
-        @Test(priority = 11)
+        @Test(priority = 5)
         public void checkAddGeoInfo (){  /*التحقق من فتح الخريطة*/
             inboxPage.addGeoInfo();
             Assert.assertTrue(inboxPage.getGeoInfo().isDisplayed());
         }
-        @Test (priority = 12)  /*  ملاحظات للتصدير */
+        @Test (priority = 6)  /*  ملاحظات للتصدير */
         public void addExportNotes (){
             inboxPage.exportNotes();
             inboxPage.addExportNotes(exportedNotes);
             Assert.assertEquals(inboxPage.getNotesContent(),exportedNotes);
         }
-        @Test (priority =13)
+        @Test (priority =7)
         public void verifyTempSave (){  /* التحقق من الحفظ المؤقت*/
             inboxPage.mailInboxSearch(archiveNum);
             inboxPage.tempSave(exportedNotes);
@@ -102,8 +102,8 @@ public class InboxTest extends TestInit  {
             sentPage.mailSentSearch(archiveNum);
             Assert.assertTrue(sentPage.getDirecting().contains("حفظ مؤقت"));
         }
-        @Test (priority = 14)
-    public void signOfferWithLetter(){ /*تأشير الخطاب وتوقيع العرض معا */
+        @Test (priority = 8)
+        public void signOfferWithLetter(){ /* توقيع العرض وتأشير الخطاب معا */
             inboxPage.mailInboxSearch(archiveNum);
             inboxPage.lettersTab();
             inboxPage.selectDepartment(myDepartment);
@@ -119,12 +119,185 @@ public class InboxTest extends TestInit  {
             inboxPage.subject(mySubject);
             inboxPage.addModel(addModel);
             inboxPage.send();
-            inboxPage.signOffsrAndletterTogether();
+            inboxPage.signOfferAndViceLetterTogether();
             SentPage sentPage = eliteHomePage.goToSent();
             sentPage.mailSentSearch(archiveNum);
             WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
             Assert.assertTrue(signText.getText().contains("تم توقيع العرض وتأشير الخطاب"));
-
         }
+        @Test (priority = 9)
+        public void signMozakeraWithLetter (){ /*توقيع المذكرة و تأشير الخطاب معا */
+            inboxPage.mailInboxSearch(archiveNum);
+            inboxPage.lettersTab();
+            inboxPage.selectDepartment(myDepartment);
+            inboxPage.selectSefatLetter(sefatLetter);
+            inboxPage.forwardTo(forwardToLetter);
+            inboxPage.subject(mySubject);
+            inboxPage.addModel(addModel);
+            inboxPage.send();
+            inboxPage.internalMemoTab();
+            inboxPage.selectDepartment(myDepartment);
+            inboxPage.setChkBoxDesc();
+            inboxPage.forwardTo(forwardToOffer);
+            inboxPage.subject(mySubject);
+            inboxPage.addModel(addModel);
+            inboxPage.send();
+            inboxPage.internalMemoTab();
+            inboxPage.signOfferAndViceLetterTogether();
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
+            Assert.assertTrue(signText.getText().contains("تم تأشير الخطاب و توقيع المذكرة الداخلية"));
+        }
+        @Test (priority = 10)
+        public void signLetterAndSignMomoTogether (){  /*التحقق من توقيع الخطاب والمذكرة معا  */
+            inboxPage.mailInboxSearch(archiveNum);
+            inboxPage.internalMemoTab();
+            inboxPage.selectDepartment(myDepartment);
+            inboxPage.setChkBoxDesc();
+            inboxPage.forwardTo(forwardToOffer);
+            inboxPage.subject(mySubject);
+            inboxPage.addModel(addModel);
+            inboxPage.send();
+            inboxPage.lettersTab();
+            inboxPage.selectDepartment(myDepartment);
+            inboxPage.selectSefatLetter(sefatLetter);
+            inboxPage.forwardTo(forwardToLetter);
+            inboxPage.subject(mySubject);
+            inboxPage.addModel(addModel);
+            inboxPage.send();
+            inboxPage.lettersTab();
+            inboxPage.signLetterAndSignMomoTogether();
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
+            Assert.assertTrue(signText.getText().contains("تم توقيع الخطاب و توقيع المذكرة الداخلية"));
+        }
+        @Test (priority = 11)
+        public void viceMomoAndViceLetterTogether (){  /*التحقق من تأشير الخطاب والمذكرة معا*/
+            inboxPage.mailInboxSearch(archiveNum);
+            inboxPage.internalMemoTab();
+            inboxPage.selectDepartment(myDepartment);
+            inboxPage.setChkBoxDesc();
+            inboxPage.forwardTo(forwardToOffer);
+            inboxPage.subject(mySubject);
+            inboxPage.addModel(addModel);
+            inboxPage.send();
+            inboxPage.lettersTab();
+            inboxPage.selectDepartment(myDepartment);
+            inboxPage.selectSefatLetter(sefatLetter);
+            inboxPage.forwardTo(forwardToLetter);
+            inboxPage.subject(mySubject);
+            inboxPage.addModel(addModel);
+            inboxPage.send();
+            inboxPage.lettersTab();
+            inboxPage.viceLetterAndMomoTogether();
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
+            Assert.assertTrue(signText.getText().contains("تم تأشير الخطاب و تأشير المذكرة الداخلية"));
+        }
+        @Test (priority = 12)
+        public void viceOfferAndViceMomoTogether(){ /*التحقق من تأشير العرض وتأشير المذكرة معا */
+            inboxPage.mailInboxSearch(archiveNum);
+            inboxPage.internalMemoTab();
+            inboxPage.selectDepartment(myDepartment);
+            inboxPage.setChkBoxDesc();
+            inboxPage.forwardTo(forwardToOffer);
+            inboxPage.subject(mySubject);
+            inboxPage.addModel(addModel);
+            inboxPage.send();
+            inboxPage.offersTab();
+            inboxPage.selectDepartment(myDepartment);
+            inboxPage.forwardTo(forwardToOffer);
+            inboxPage.receiverAlias(receiverAlias);
+            inboxPage.subject(mySubject);
+            inboxPage.addModel(addModel);
+            inboxPage.send();
+            inboxPage.viceOfferAndMomoTogether();
+            SentPage sentPage = eliteHomePage.goToSent();
+            sentPage.mailSentSearch(archiveNum);
+            WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
+            Assert.assertTrue(signText.getText().contains("تم تأشير العرض وتأشير المذكرة"));
+        }
+    @Test (priority = 13)
+    public void viceOfferAndViceLetterTogether(){ /*التحقق من تأشير العرض وتأشير الخطاب معا */
+        inboxPage.mailInboxSearch(archiveNum);
+        inboxPage.lettersTab();
+        inboxPage.selectDepartment(myDepartment);
+        inboxPage.selectSefatLetter(sefatLetter);
+        inboxPage.forwardTo(forwardToLetter);
+        inboxPage.subject(mySubject);
+        inboxPage.addModel(addModel);
+        inboxPage.send();
+        inboxPage.offersTab();
+        inboxPage.selectDepartment(myDepartment);
+        inboxPage.forwardTo(forwardToOffer);
+        inboxPage.receiverAlias(receiverAlias);
+        inboxPage.subject(mySubject);
+        inboxPage.addModel(addModel);
+        inboxPage.send();
+        inboxPage.offersTab();
+        inboxPage.viceOfferAndLetterTogether();
+        SentPage sentPage = eliteHomePage.goToSent();
+        sentPage.mailSentSearch(archiveNum);
+        WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
+        Assert.assertTrue(signText.getText().contains("تم تأشير العرض وتأشير الخطاب"));
     }
+    @Test (priority = 14)
+    public void verifyRedirectOfferWithSignLetter(){  /*التحقق من توجيه العرض مع توقيع الخطاب*/
+        inboxPage.mailInboxSearch(archiveNum);
+        inboxPage.lettersTab();
+        inboxPage.selectDepartment(myDepartment);
+        inboxPage.selectSefatLetter(sefatLetter);
+        inboxPage.forwardTo(forwardToLetter);
+        inboxPage.subject(mySubject);
+        inboxPage.addModel(addModel);
+        inboxPage.send();
+        inboxPage.offersTab();
+        inboxPage.selectDepartment(myDepartment);
+        inboxPage.forwardTo(forwardToOffer);
+        inboxPage.receiverAlias(receiverAlias);
+        inboxPage.subject(mySubject);
+        inboxPage.addModel(addModel);
+        inboxPage.send();
+        inboxPage.signOfferAndViceLetterTogether();
+        inboxPage.mailInboxSearch(archiveNum);
+        inboxPage.offersTab();
+        inboxPage.redirectOfferWithSignLetter(exportedNotes);
+        SentPage sentPage = eliteHomePage.goToSent();
+        sentPage.mailSentSearch(archiveNum);
+        WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
+        Assert.assertTrue(signText.getText().contains("تم توجيه العرض و توقيع الخطاب"));
+    }
+    @Test (priority = 15)
+    public void verifyRedirectOfferWithSignMomo(){  /*التحقق من توجيه العرض مع توقيع المذكرة*/
+        inboxPage.mailInboxSearch(archiveNum);
+        inboxPage.internalMemoTab();
+        inboxPage.selectDepartment(myDepartment);
+        inboxPage.setChkBoxDesc();
+        inboxPage.forwardTo(forwardToOffer);
+        inboxPage.subject(mySubject);
+        inboxPage.addModel(addModel);
+        inboxPage.send();
+        inboxPage.offersTab();
+        inboxPage.selectDepartment(myDepartment);
+        inboxPage.forwardTo(forwardToOffer);
+        inboxPage.receiverAlias(receiverAlias);
+        inboxPage.subject(mySubject);
+        inboxPage.addModel(addModel);
+        inboxPage.send();
+        inboxPage.signOfferAndViceMomoTogether();
+        inboxPage.mailInboxSearch(archiveNum);
+        inboxPage.offersTab();
+        inboxPage.redirectOfferWithSignMomo(exportedNotes);
+        SentPage sentPage = eliteHomePage.goToSent();
+        sentPage.mailSentSearch(archiveNum);
+        WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
+        Assert.assertTrue(signText.getText().contains("تم توجيه العرض و توقيع المذكرة"));
+    }
+
+
+
+}
 

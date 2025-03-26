@@ -333,8 +333,4 @@ public class TC_AppointEmployee_Fields extends TestInit {
         appointEmployee.setToggle();
         Assert.assertTrue(appointEmployee.getRecNumberTextField().isDisplayed());
     }
-
-
-
-
 }

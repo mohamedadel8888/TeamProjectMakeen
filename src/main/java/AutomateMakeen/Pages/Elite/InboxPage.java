@@ -162,6 +162,8 @@ public class InboxPage extends BaseComp {
     private By directingOffer = By.cssSelector("#slcRedirectPurps"); /*التوجيه*/
     private By confirmationBtn = By.id("btnConfirmRedirectAction"); /*زر تأكيد*/
     private By textComment = By.id("txtPurposeComment"); /*نص التوجيه*/
+    private By chkBoxRedirectWithSignLetter = By.cssSelector("label[for='chkRedirectWithSignLetter']");/*تشك بوكس مع توقيع الخطاب*/
+    private By chkBoxRedirectWithSignMomo = By.cssSelector("label[for='chkRedirectWithSignMemo']"); /*تشك بوكس مع توقيع المذكرة*/
     private By returnOffer = By.id("btn_ReturnOffer"); /*اعادة العرض*/
     private By divReturnOffer = By.xpath("(//div[@class='modal-content p-4'])[3]"); /*نافذه اعادة العرض*/
     private By textViceComment = By.id("txtSignViceComment"); /*نص اعادة العرض*/
@@ -192,6 +194,42 @@ public class InboxPage extends BaseComp {
         WebElement confirmationBtn1 = driver.findElement(confirmationBtn);
         confirmationBtn1.click();
     }
+    public void redirectOfferWithSignMomo (String text){ /*توجيه العرض مع توقيع المذكرة*/
+        WebElement redirectOffer1 = driver.findElement(redirectOfferBtn);
+        redirectOffer1.click();
+        WebElement divRedirectOffer1 = driver.findElement(divRedirectoffer);
+        exWait.until(ExpectedConditions.visibilityOf(divRedirectOffer1));
+        WebElement chkBoxSignMomo = driver.findElement(chkBoxRedirectWithSignMomo);
+        chkBoxSignMomo.click();
+        WebElement directingOffer1 = driver.findElement(directingOffer);
+        Select select = new Select(directingOffer1);
+        select.selectByVisibleText(text);
+        WebElement textComment1 = driver.findElement(textComment);
+        textComment1.clear();
+        textComment1.sendKeys("Mohamed Adel");
+        WebElement confirmationBtn1 = driver.findElement(confirmationBtn);
+        confirmationBtn1.click();
+    }
+    public void redirectOfferWithSignLetter (String text){ /*توجيه العرض مع توقيع الخطاب*/
+        WebElement redirectOffer1 = driver.findElement(redirectOfferBtn);
+        redirectOffer1.click();
+        WebElement divRedirectOffer1 = driver.findElement(divRedirectoffer);
+        exWait.until(ExpectedConditions.visibilityOf(divRedirectOffer1));
+        WebElement chkBoxSignLetter = driver.findElement(chkBoxRedirectWithSignLetter);
+        chkBoxSignLetter.click();
+        WebElement directingOffer1 = driver.findElement(directingOffer);
+        Select select = new Select(directingOffer1);
+        select.selectByVisibleText(text);
+        WebElement textComment1 = driver.findElement(textComment);
+        textComment1.clear();
+        textComment1.sendKeys("Mohamed Adel");
+        WebElement confirmationBtn1 = driver.findElement(confirmationBtn);
+        confirmationBtn1.click();
+    }
+
+
+
+
     public void returnOffer (String text){  /*اعادة العرض */
         WebElement returnOffer1 = driver.findElement(returnOffer);
         returnOffer1.click();
@@ -494,6 +532,39 @@ public class InboxPage extends BaseComp {
         confirmVice();
     }
 
+    public void viceLetterAndMomoTogether (){  /*تأشير الخطاب والمذكرة معا*/
+        WebElement vice1 = driver.findElement(marking);
+        vice1.click();
+        WebElement signDiv1 = driver.findElement(signOfferAndLetterDiv);
+        exWait.until(ExpectedConditions.visibilityOf(signDiv1));
+        WebElement chkBoxWithSignMomo1 = driver.findElement(chkBoxWithSignMomo);
+        chkBoxWithSignMomo1.click();
+        WebElement btnConfirm1 = driver.findElement(btnConfirm);
+        btnConfirm1.click();
+    }
+    public void viceOfferAndMomoTogether (){  /*تأشير العرض والمذكرة معا*/
+        WebElement vice1 = driver.findElement(marking);
+        vice1.click();
+        WebElement signDiv1 = driver.findElement(signOfferAndLetterDiv);
+        exWait.until(ExpectedConditions.visibilityOf(signDiv1));
+        WebElement chkBoxWithSignMomo1 = driver.findElement(chkBoxWithViceMomo);
+        chkBoxWithSignMomo1.click();
+        WebElement btnConfirm1 = driver.findElement(btnConfirm);
+        btnConfirm1.click();
+    }
+    public void viceOfferAndLetterTogether (){  /*تأشير العرض والخطاب معا*/
+        WebElement vice1 = driver.findElement(marking);
+        vice1.click();
+        WebElement signDiv1 = driver.findElement(signOfferAndLetterDiv);
+        exWait.until(ExpectedConditions.visibilityOf(signDiv1));
+        WebElement chkBoxWithSignMomo1 = driver.findElement(chkBoxWithViceLetter);
+        chkBoxWithSignMomo1.click();
+        WebElement btnConfirm1 = driver.findElement(btnConfirm);
+        btnConfirm1.click();
+    }
+
+
+
 
 
     /*========================================================================*/
@@ -502,13 +573,15 @@ public class InboxPage extends BaseComp {
 
     private By sign = By.id("btn_sign"); /*توقيع*/
     private By signDiv = By.xpath("(//div[@class='quick_actions-link_icon'])[9]");
-    private By signOfferAndLetterDiv = By.xpath("(//div[@class='modal-content p-4'])[3]\n"); /*نافذة توقيع العرض وتأشير الخطاب معا*/
+    private By signOfferAndLetterDiv = By.xpath("(//div[@class='modal-content p-4'])[3]"); /*نافذة توقيع العرض وتأشير الخطاب معا*/
     private By btnConfirm = By.cssSelector("#btnConfirmViceAction");  /*زر تأكيد */
     private By signByOrderOfPrince = By.cssSelector("li[id='btn_sign'] li:nth-child(1) a:nth-child(1)"); /*توقيع بأمر سعاده الامير*/
     private By signByorderOfRepresentativePrince = By.xpath("//li[@id='btn_sign']//li[2]//a[1]"); /*توقيع بأمر من نائب الامير */
     private By signWithDelegate = By.xpath("//a[contains(text(),'توقيع بتفويض')]"); /*توقيع بتفويض*/
     private By delegateAbout = By.id("slcOnBehalf_ddlSelectButton"); /*ddl مفوض عنه*/
     private By chkBoxWithViceLetter = By.cssSelector("label[for='chkWithViceLetter']");/*تشك بوكس مع تأشير الخطاب*/
+    private By chkBoxWithSignMomo = By.cssSelector("label[for='chkWithSignMemo']"); /*تشك بوكس مع توقيع المذكرة*/
+    private By chkBoxWithViceMomo = By.cssSelector("label[for='chkWithViceMemo']"); /*تشك بوكس مع تأشير المذكرة*/
     private By signOfferAndDirctingAboutHim = By.xpath("//a[contains(text(),'توقيع و توجيه العرض عنه')]");  /*توقيع وتوجيه العرض عنه*/
     private By signOfferAndDirctingAboutHimDiv =By.xpath("(//div[@class='modal-content p-4'])[4]");  /*نافذة توقيع وتوجيه العرض عنه*/
 
@@ -527,7 +600,18 @@ public class InboxPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("#model_SignVicePopUp"))));
         btnConfirm1.click();
     }
-    public void signOffsrAndletterTogether (){ /*توقيع العرض وتأشير الخطاب معا*/
+
+    public void signLetterAndSignMomoTogether (){ /*توقيع الخطاب وتوقيع المذكرة معا*/
+        WebElement sign1 = driver.findElement(sign);
+        sign1.click();
+        WebElement signDiv1 = driver.findElement(signOfferAndLetterDiv);
+        exWait.until(ExpectedConditions.visibilityOf(signDiv1));
+        WebElement chkBoxWithSignMomo1 = driver.findElement(chkBoxWithSignMomo);
+        chkBoxWithSignMomo1.click();
+        WebElement btnConfirm1 = driver.findElement(btnConfirm);
+        btnConfirm1.click();
+    }
+    public void signOfferAndViceLetterTogether (){ /*توقيع العرض وتأشير الخطاب معا*/
         WebElement sign1 = driver.findElement(sign);
         sign1.click();
         WebElement signDiv1 = driver.findElement(signOfferAndLetterDiv);
@@ -537,6 +621,19 @@ public class InboxPage extends BaseComp {
         WebElement btnConfirm1 = driver.findElement(btnConfirm);
         btnConfirm1.click();
     }
+    public void signOfferAndViceMomoTogether (){ /*توقيع العرض وتأشير المذكرة معا*/
+        WebElement sign1 = driver.findElement(sign);
+        sign1.click();
+        WebElement signDiv1 = driver.findElement(signOfferAndLetterDiv);
+        exWait.until(ExpectedConditions.visibilityOf(signDiv1));
+        WebElement chkBoxWithViceLetter1 = driver.findElement(chkBoxWithSignMomo);
+        chkBoxWithViceLetter1.click();
+        WebElement btnConfirm1 = driver.findElement(btnConfirm);
+        btnConfirm1.click();
+    }
+
+
+
     public void signByOrderOfPrince (){ /*توقيع بأمر من الامير*/
         WebElement signDiv1 = driver.findElement(signDiv);
         Actions actions = new Actions(driver);
