@@ -3,6 +3,7 @@ package AutomateMakeen.Pages;
 import AutomateMakeen.Base.BaseComp;
 import AutomateMakeen.Pages.EmployeesOperations.AppointEmployee;
 import AutomateMakeen.Pages.EmployeesOperations.ReassignEmployee;
+import AutomateMakeen.Pages.JobsOperations.AddJob;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -240,5 +241,32 @@ public class ContentAside extends BaseComp {
         }
 
     }
+    @FindBy (id = "s_m_3") /*صفحه عمليات الوظائف*/
+    WebElement jobOperations;
+    @FindBy (id = "prs_transactionJobs_GridDiv")
+    WebElement tableMandateJobs;
+    public AddJob goToJobOperations(){  /*فتح صفحه عمليات الوظائف */
+        HomePage homePage = new HomePage(driver);
+        homePage.goToHomePage();
+        try{
+            exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
+            humanResources.click();
+            jobOperations.click();
+            exWait.until(ExpectedConditions.visibilityOf(tableMandateJobs));
+            return new AddJob(driver);
+        }
+        catch(NoSuchElementException e){
+            exWait.until(ExpectedConditions.elementToBeClickable(humanResources));
+            humanResources.click();
+            jobOperations.click();
+            exWait.until(ExpectedConditions.visibilityOf(tableMandateJobs));
+            return new AddJob(driver);
+        }
+
+    }
+
+
+
+
 
 }

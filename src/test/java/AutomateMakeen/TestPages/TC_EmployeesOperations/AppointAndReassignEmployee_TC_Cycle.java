@@ -88,8 +88,6 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         exWait = new WebDriverWait(driver, Duration.ofSeconds(8));
         homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
 
-
-
         nationNumberInMasar="5"+faker.number().digits(9);
         IBAN="0380000000608010" + faker.number().digits(6);
         nationNumberNotInMasar=faker.number().digits(10);
@@ -140,6 +138,7 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
     }
     @Test (priority = 1)
     public void verifyAppointEmployee()throws FileNotFoundException{   /**/
+        //-------------------------اضافه معامله والحصول على رقمها-------------------------
         CreateExternalMailPage createExternalMailPage = contentAside.goToCreateExternalMail();
         createExternalMailPage.clearAllField();
         createExternalMailPage.pressOnNumberOfStorage();
@@ -148,7 +147,7 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         createExternalMailPage.setReceiverUsingControl(getJsonData("ValidExternalMailData", "receiverName"));
         createExternalMailPage.setSenderUsingControl(getJsonData("ValidExternalMailData","senderName"));
         createExternalMailPage.setTreatClassificationUsingControl(getJsonData("ValidExternalMailData","mainClass"),getJsonData("ValidExternalMailData","treatClassification"));
-        createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient3"));
+        createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient2"));
         exportedNotes = getJsonData("CreateInternalMailDataElite", "exportedNotes");
         employeeName = getJsonData("CreateInternalMailDataElite", "employeeName");
         employeeDepartment = getJsonData("CreateInternalMailDataElite", "employeeDepartment"); /*الادارة*/
@@ -158,8 +157,10 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         OutboxMails outboxMails = contentAside.goToExportedMail();
         outboxMails.getRecentlyAddedMail(subject);
         archiveNum = outboxMails.getMailData().get(4);
+         //------------------------اضافه وظيفه تعاملات الكترونية------------------------
         electronicTransactionsJobsPage = contentAside.goToElectronicTransactionsJobsPage();
         String mandateJob1 = electronicTransactionsJobsPage.addNewJob(employeeDepartment, mandateJob);
+        //---------------------------------تعيين موظف----------------------------------
         appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee_FromInside();
         appointEmployee.enterAppointEmployee();
         appointEmployee.addNationNumber(nationNumberInMasar);
@@ -182,6 +183,9 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         appointEmployee.saveTheEmployee();
         Assert.assertEquals(appointEmployee.validateSuccessfulSavingEmployee(nationNumberInMasar),nationNumberInMasar);
     }
+
+
+
     @Test (priority = 2)
     public void verifyReassignmentEmployee () throws InterruptedException {  /*يجب تحديث رقم الموظف قبل تشغيل حاله الاختبار التي تختبر اعاده تعيين موظف*/
         reassignEmployee =contentAside.goToEmployeeOperations_ReassignEmployee_FromInside();

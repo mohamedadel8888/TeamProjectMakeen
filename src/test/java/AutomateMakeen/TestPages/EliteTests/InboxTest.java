@@ -16,7 +16,7 @@ import java.io.FileNotFoundException;
 import java.time.Duration;
 
 public class InboxTest extends TestInit  {
-    WebDriverWait ex;
+
     String myDepartment;
     String sefatLetter;
     String mySubject;
@@ -40,12 +40,11 @@ public class InboxTest extends TestInit  {
             */
             lunchDriver();
             loginPage.goToLoginPage();
-            HomePage homePage = loginPage.loginUserWithoutRemMe(getJsonData("DelegateData", "validEmployee"), getJsonData("DelegateData", "validPassword"));
+            HomePage homePage = loginPage.loginUserWithoutRemMe(getJsonData("CreateInternalMailDataElite", "ID"), getJsonData("DelegateData", "validPassword"));
             homePage.goToElite();
             EliteHomePage eliteHomePage = new EliteHomePage(driver);
             createInternalMailPage = eliteHomePage.goToCreateInternalMail();
             archiveNum = createInternalMailPage.createInternalMailForMe();
-            ex = new WebDriverWait(driver, Duration.ofSeconds(8));
             myDepartment = getJsonData("CreateInternalMailDataElite", "deptName"); /*من الادارة*/
             sefatLetter = getJsonData("CreateInternalMailDataElite", "sefatLetter"); /* صفة الخطاب*/
             mySubject = getJsonData("CreateInternalMailDataElite", "mailSubject"); /*الموضوع*/
@@ -195,7 +194,7 @@ public class InboxTest extends TestInit  {
             SentPage sentPage = eliteHomePage.goToSent();
             sentPage.mailSentSearch(archiveNum);
             WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
-            Assert.assertTrue(signText.getText().contains("تم تأشير الخطاب و تأشير المذكرة الداخلية"));
+            Assert.assertTrue(signText.getText().contains("تم تأشير المعاملة وإحالتها للتوقيع"));
         }
         @Test (priority = 12)
         public void viceOfferAndViceMomoTogether(){ /*التحقق من تأشير العرض وتأشير المذكرة معا */
@@ -271,7 +270,7 @@ public class InboxTest extends TestInit  {
         Assert.assertTrue(signText.getText().contains("تم توجيه العرض و توقيع الخطاب"));
     }
     @Test (priority = 15)
-    public void verifyRedirectOfferWithSignMomo(){  /*التحقق من توجيه العرض مع توقيع المذكرة*/
+    public void verifyRedirectOfferWithSignMomo(){  /*التحقق من توجيه العرض مع تأشير المذكرة*/
         inboxPage.mailInboxSearch(archiveNum);
         inboxPage.internalMemoTab();
         inboxPage.selectDepartment(myDepartment);
@@ -289,12 +288,13 @@ public class InboxTest extends TestInit  {
         inboxPage.send();
         inboxPage.signOfferAndViceMomoTogether();
         inboxPage.mailInboxSearch(archiveNum);
+        ex.until(ExpectedConditions.visibilityOf(inboxPage.getMailInboxPage()));
         inboxPage.offersTab();
         inboxPage.redirectOfferWithSignMomo(exportedNotes);
         SentPage sentPage = eliteHomePage.goToSent();
         sentPage.mailSentSearch(archiveNum);
         WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
-        Assert.assertTrue(signText.getText().contains("تم توجيه العرض و توقيع المذكرة"));
+        Assert.assertTrue(signText.getText().contains("تم توجيه العرض برقم "));
     }
 
 

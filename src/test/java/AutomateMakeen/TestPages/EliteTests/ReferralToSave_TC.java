@@ -2,18 +2,23 @@ package AutomateMakeen.TestPages.EliteTests;
 
 import AutomateMakeen.BaseTest.TestInit;
 import AutomateMakeen.Pages.CreateExternalMailPage;
+import AutomateMakeen.Pages.Elite.EliteHomePage;
 import AutomateMakeen.Pages.Elite.SentPage;
 import AutomateMakeen.Pages.HomePage;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.FileNotFoundException;
+import java.time.Duration;
 
 public class ReferralToSave_TC extends TestInit {
 
     String subject;
     String exportedNotes;
+    WebDriverWait exWait;
 
 
     @BeforeClass
@@ -23,6 +28,7 @@ public class ReferralToSave_TC extends TestInit {
         صلاحيه الدخول للنظام*
         * انشاء معامله وتحديد رقم خزنة لها
         * */
+        exWait = new WebDriverWait(driver, Duration.ofSeconds(8));
         lunchDriver();
         loginPage.goToLoginPage();
         HomePage homePage = loginPage.loginUserWithoutRemMe(getJsonData("CreateInternalMailDataElite", "ID"), getJsonData("DelegateData", "validPassword"));
@@ -59,6 +65,7 @@ public class ReferralToSave_TC extends TestInit {
         inboxPage.mailInboxSearch(subject);
         String archiveNum = inboxPage.getTreatArchiveNum();
         inboxPage.assetsRequest();
+        exWait.until(ExpectedConditions.elementToBeClickable(eliteHomePage.getEliteHomePage()));
         SentPage sentPage = eliteHomePage.goToSent();
         sentPage.mailSentSearch(archiveNum);
         String directing = sentPage.getTreatDirecting();

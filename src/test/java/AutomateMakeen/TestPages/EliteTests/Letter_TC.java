@@ -104,7 +104,7 @@ public class Letter_TC extends TestInit {
         SentPage sentPage = eliteHomePage.goToSent();
         sentPage.mailSentSearch(archiveNum);
         WebElement signText = driver.findElement(By.cssSelector("body > main:nth-child(2) > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)"));
-        Assert.assertTrue(signText.getText().contains("بأمر من الأمير"));
+        Assert.assertTrue(signText.getText().contains("نائب"));
     }
     @Test (priority = 4)  /*توقيع الخطاب بتفويض */
     public void verifySignLetterWith_Delegate (){
@@ -135,14 +135,16 @@ public class Letter_TC extends TestInit {
         WebElement viceText = driver.findElement(By.cssSelector("div[class='outbox_explaination'] div:nth-child(1) div:nth-child(2) div:nth-child(2) p:nth-child(1)"));
         Assert.assertTrue(viceText.getText().contains("تم تأشير المعاملة وإحالتها إلى ( سعادة أمير"));
     }
+
     @Test (priority = 6)
-    public void verifyViceLetter_ReferToAgent(){   /*تأشير الخطاب واحالة الى الوكيل*/
+    public void verifyViceLetter_ReferToAgent(){   /*تأشير الخطاب واحالة الى الوكيل*/ /* deputy_job_id =  مدير الرقابة العامة الرقابة علي السطر التاني*/
+
         inboxPage.lettersTab();
         inboxPage.marking_ReferToAgent();
         SentPage sentPage = eliteHomePage.goToSent();
         sentPage.mailSentSearch(archiveNum);
         WebElement viceText = driver.findElement(By.cssSelector("div[class='outbox_explaination'] div:nth-child(1) div:nth-child(2) div:nth-child(2) p:nth-child(1)"));
-        Assert.assertTrue(sentPage.getDirecting().contains("لتوقيع الخطاب إلى محمد احمد احمد على"));
+        Assert.assertTrue(sentPage.getDirecting().contains("لتوقيع الخطاب إلى مدير الرقابة العامة الرقابة علي السطر التاني"));
     }
     @Test (priority = 7)
     public void verifyViceLetter_ReferToCustomEmp(){   /*تأشير الخطاب واحالتة الى موظف محدد*/

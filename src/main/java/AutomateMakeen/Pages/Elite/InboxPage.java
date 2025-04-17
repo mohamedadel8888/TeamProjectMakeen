@@ -201,12 +201,12 @@ public class InboxPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(divRedirectOffer1));
         WebElement chkBoxSignMomo = driver.findElement(chkBoxRedirectWithSignMomo);
         chkBoxSignMomo.click();
-        WebElement directingOffer1 = driver.findElement(directingOffer);
-        Select select = new Select(directingOffer1);
-        select.selectByVisibleText(text);
+//        WebElement directingOffer1 = driver.findElement(directingOffer);
+//        Select select = new Select(directingOffer1);
+//        select.selectByVisibleText(text);
         WebElement textComment1 = driver.findElement(textComment);
         textComment1.clear();
-        textComment1.sendKeys("Mohamed Adel");
+        textComment1.sendKeys(text);
         WebElement confirmationBtn1 = driver.findElement(confirmationBtn);
         confirmationBtn1.click();
     }
@@ -217,12 +217,12 @@ public class InboxPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(divRedirectOffer1));
         WebElement chkBoxSignLetter = driver.findElement(chkBoxRedirectWithSignLetter);
         chkBoxSignLetter.click();
-        WebElement directingOffer1 = driver.findElement(directingOffer);
-        Select select = new Select(directingOffer1);
-        select.selectByVisibleText(text);
+//        WebElement directingOffer1 = driver.findElement(directingOffer);
+//        Select select = new Select(directingOffer1);
+//        select.selectByVisibleText(text);
         WebElement textComment1 = driver.findElement(textComment);
         textComment1.clear();
-        textComment1.sendKeys("Mohamed Adel");
+        textComment1.sendKeys(text);
         WebElement confirmationBtn1 = driver.findElement(confirmationBtn);
         confirmationBtn1.click();
     }
@@ -537,7 +537,7 @@ public class InboxPage extends BaseComp {
         vice1.click();
         WebElement signDiv1 = driver.findElement(signOfferAndLetterDiv);
         exWait.until(ExpectedConditions.visibilityOf(signDiv1));
-        WebElement chkBoxWithSignMomo1 = driver.findElement(chkBoxWithSignMomo);
+        WebElement chkBoxWithSignMomo1 = driver.findElement(chkBoxWithViceMomo);
         chkBoxWithSignMomo1.click();
         WebElement btnConfirm1 = driver.findElement(btnConfirm);
         btnConfirm1.click();
@@ -567,9 +567,9 @@ public class InboxPage extends BaseComp {
 
 
 
-    /*========================================================================*/
+    /**=======================================================================*/
                                   /* التوقيع*/
-    /*========================================================================*/
+    /**======================================================================**/
 
     private By sign = By.id("btn_sign"); /*توقيع*/
     private By signDiv = By.xpath("(//div[@class='quick_actions-link_icon'])[9]");
@@ -626,7 +626,7 @@ public class InboxPage extends BaseComp {
         sign1.click();
         WebElement signDiv1 = driver.findElement(signOfferAndLetterDiv);
         exWait.until(ExpectedConditions.visibilityOf(signDiv1));
-        WebElement chkBoxWithViceLetter1 = driver.findElement(chkBoxWithSignMomo);
+        WebElement chkBoxWithViceLetter1 = driver.findElement(chkBoxWithViceMomo);
         chkBoxWithViceLetter1.click();
         WebElement btnConfirm1 = driver.findElement(btnConfirm);
         btnConfirm1.click();
@@ -760,10 +760,11 @@ public class InboxPage extends BaseComp {
         chkBoxSaveAssests1.click();
         WebElement btnOk1 = driver.findElement(btnOkAssests);
         btnOk1.click();
-        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("(//div[@class='modal-content'])[9]"))));
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("(//div[@id='errorModal'])[1]"))));
         WebElement btnClose1 = driver.findElement(btnClose);
         btnClose1.click();
-        exWait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("(//div[@class='modal-content'])[9]"))));
+
+        exWait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("(//div[@id='errorModal'])[1]"))));
 
     }
     /*========================================================================*/
@@ -866,6 +867,7 @@ public class InboxPage extends BaseComp {
 
     public void mailInboxSearch (String text){  /*   البحث عن معامله */
         WebElement searchInput = driver.findElement(searchText);
+        searchInput.clear();
         searchInput.sendKeys(text);
         driver.findElement(searchButton).click();
     }

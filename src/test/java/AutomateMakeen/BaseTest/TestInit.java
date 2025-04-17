@@ -6,12 +6,14 @@ import AutomateMakeen.Pages.Elite.EliteHomePage;
 import AutomateMakeen.Pages.Elite.InboxPage;
 import AutomateMakeen.Pages.EmployeesOperations.AppointEmployee;
 import AutomateMakeen.Pages.EmployeesOperations.ReassignEmployee;
+import AutomateMakeen.Pages.JobsOperations.AddJob;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.asserts.SoftAssert;
@@ -19,6 +21,7 @@ import org.testng.asserts.SoftAssert;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalTime;
 import java.time.chrono.HijrahDate;
 import java.time.temporal.ChronoUnit;
@@ -45,6 +48,7 @@ public class TestInit  {
     public static AppointEmployee appointEmployee;
     public static ReassignEmployee reassignEmployee;
     public static ElectronicTransactionsJobsPage electronicTransactionsJobsPage;
+    public static AddJob addJob;
 
     //HijriDates
     protected HijrahDate dateHijriMinus = HijrahDate.now().minus(1, ChronoUnit.DAYS);
@@ -59,6 +63,7 @@ public class TestInit  {
     protected SoftAssert softAssert = new SoftAssert();
 
     private String Test_Data_Path = "src/test/resources/TestData/";
+    protected WebDriverWait ex = new WebDriverWait(driver, Duration.ofSeconds(8));
 
 
     public WebDriver initDriver(){

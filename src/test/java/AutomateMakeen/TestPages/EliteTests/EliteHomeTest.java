@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
 import java.time.Duration;
 
 public class EliteHomeTest extends TestInit {
-    WebDriverWait ex = new WebDriverWait(driver, Duration.ofSeconds(5));
+
     @BeforeClass
     public void setUp() throws FileNotFoundException {
         lunchDriver();
@@ -22,7 +22,6 @@ public class EliteHomeTest extends TestInit {
 
     @Test
     public void verifyEliteHome() {
-
         Assert.assertTrue(eliteHomePage.getEliteHomePage().isDisplayed());
     }
 
