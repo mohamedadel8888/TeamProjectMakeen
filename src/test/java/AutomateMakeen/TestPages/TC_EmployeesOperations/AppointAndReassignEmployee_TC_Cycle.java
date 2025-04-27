@@ -71,6 +71,11 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
     String employeeDepartment;
     String empToReassign;
     String appointType;
+    String decDirection;
+    String jobNumber;
+    String decNumber;
+    String jobName;
+
 
     Faker faker = new Faker();
     /** preconditions :
@@ -86,7 +91,7 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         lunchDriver();
         loginPage.goToLoginPage();
         exWait = new WebDriverWait(driver, Duration.ofSeconds(8));
-        homePage = loginPage.loginUserWithoutRemMe(userID,userPasswd);
+        homePage = loginPage.loginUserWithoutRemMe(userID2,userPasswd);
 
         nationNumberInMasar="5"+faker.number().digits(9);
         IBAN="0380000000608010" + faker.number().digits(6);
@@ -134,10 +139,13 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         receiverAlias = getJsonData("CreateInternalMailDataElite", "receiverAlias"); /*مسمى الموجه اليه*/
         empToReassign = getJsonData("EmployeeOperations", "empToReassign"); /*رقم موظف ليس على رأس العمل*/
         appointType = getJsonData("EmployeeOperations","appointType");
+        decDirection = getJsonData("EmployeeOperations","decDirection"); /*جهه القرار*/
+        jobNumber = faker.number().digits(4);
+        decNumber = faker.number().digits(3);
 
     }
     @Test (priority = 1)
-    public void verifyAppointEmployee()throws FileNotFoundException{   /**/
+    public void verifyAppointEmployee()throws FileNotFoundException{   /*التحقق من تعيين موظف عن طريق انشاء معامله في الوارد*/
         //-------------------------اضافه معامله والحصول على رقمها-------------------------
         CreateExternalMailPage createExternalMailPage = contentAside.goToCreateExternalMail();
         createExternalMailPage.clearAllField();
@@ -150,17 +158,35 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         createExternalMailPage.insertRecipient(getJsonData("ValidExternalMailData","recipient2"));
         exportedNotes = getJsonData("CreateInternalMailDataElite", "exportedNotes");
         employeeName = getJsonData("CreateInternalMailDataElite", "employeeName");
-        employeeDepartment = getJsonData("CreateInternalMailDataElite", "employeeDepartment"); /*الادارة*/
+        employeeDepartment = getJsonData("CreateInternalMailDataElite", "employeeDepartment");
         createExternalMailPage.pressOnDeactivateReferralNumber();
         createExternalMailPage.clickSendConfirm();
         createExternalMailPage.validateSuccessfulCreatingMail();
         OutboxMails outboxMails = contentAside.goToExportedMail();
         outboxMails.getRecentlyAddedMail(subject);
-        archiveNum = outboxMails.getMailData().get(4);
+        archiveNum = outboxMails.getMailData().get(5);
          //------------------------اضافه وظيفه تعاملات الكترونية------------------------
         electronicTransactionsJobsPage = contentAside.goToElectronicTransactionsJobsPage();
         String mandateJob1 = electronicTransactionsJobsPage.addNewJob(employeeDepartment, mandateJob);
-        //---------------------------------تعيين موظف----------------------------------
+        //------------------------ اضافه وظيفه اساسية ------------------------
+        addJob = contentAside.goToJobOperations();
+        addJob.goToAddJob();
+        addJob.selectClassCode("00102");
+        jobName = addJob.selectJobName("001022001");
+        addJob.selectJobGradient("21520404");
+        addJob.selectJobType(employeeType);
+        addJob.selectJobDegree(degree);
+        addJob.addJobNumber(jobNumber);
+        addJob.insertDepartment("ادارة المهندسين");
+        addJob.insertJobStatus("غير مستثناة");
+        addJob.startDateSelect("1","2","2025");
+        addJob.setRecNumberTextField(archiveNum);
+        addJob.decNumber(decNumber);
+        addJob.decDateSelect("2023/2/2");
+        addJob.decSelectDirection(decDirection);
+        addJob.saveJob();
+        addJob.confirmJob();
+        //---------------------------------تعيين موظف----------------------------------*/
         appointEmployee = contentAside.goToEmployeeOperations_AppointEmployee_FromInside();
         appointEmployee.enterAppointEmployee();
         appointEmployee.addNationNumber(nationNumberInMasar);
@@ -172,7 +198,7 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         appointEmployee.addIBAN(IBAN);
         appointEmployee.selectNationality(nationality);
         appointEmployee.selectEmployeeType(employeeType);
-        appointEmployee.selectMajorJob(majorJob);
+        appointEmployee.selectMajorJob("-"+degree+"-"+jobNumber);
         appointEmployee.selectMandateJob(mandateJob1);
         appointEmployee.selectDegree(degree);
         appointEmployee.addOrganizationNumber(organizationNumber);
@@ -180,6 +206,9 @@ public class AppointAndReassignEmployee_TC_Cycle extends TestInit {
         appointEmployee.levelDateSelect(day,month,year);
         appointEmployee.firstJobDateSelect(day,month,year);
         appointEmployee.setRecNumberTextField(archiveNum);
+        appointEmployee.decNumber(faker.number().digits(3));
+        appointEmployee.decDateSelect(year+"/"+month+"/2"+day);
+        appointEmployee.decSelectDirection(decDirection);
         appointEmployee.saveTheEmployee();
         Assert.assertEquals(appointEmployee.validateSuccessfulSavingEmployee(nationNumberInMasar),nationNumberInMasar);
     }

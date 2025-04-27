@@ -61,11 +61,10 @@ public class ReferralToSave_TC extends TestInit {
         Assert.assertEquals(directing, "للحفظ");
     }
     @Test (priority = 2)
-    public void verifyAssestsRequest (){
+    public void verifyAssestsRequest (){   /*التحقق من طلب اصول */
         inboxPage.mailInboxSearch(subject);
         String archiveNum = inboxPage.getTreatArchiveNum();
         inboxPage.assetsRequest();
-        exWait.until(ExpectedConditions.elementToBeClickable(eliteHomePage.getEliteHomePage()));
         SentPage sentPage = eliteHomePage.goToSent();
         sentPage.mailSentSearch(archiveNum);
         String directing = sentPage.getTreatDirecting();

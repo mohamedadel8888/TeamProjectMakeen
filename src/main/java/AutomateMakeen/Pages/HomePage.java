@@ -21,6 +21,8 @@ public class HomePage extends BaseComp {
     WebElement homePageIconWebElement;
     @FindBy (id = "divRedirectToQElite")
     WebElement eliteHomePageIcon;
+    @FindBy(css = "#QElite")
+    WebElement QElite;
 
 
 
@@ -50,7 +52,7 @@ public class HomePage extends BaseComp {
             exWait.until(ExpectedConditions.urlContains("MainPage.aspx"));
             eliteHomePageIcon.click();
         }
-
+        QElite.click();
     }
 
     public WebElement getSignOutBtn() {

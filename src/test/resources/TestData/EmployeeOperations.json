@@ -30,12 +30,12 @@
   "nationality": "سعودي",
   "noNationality": "اختر الجنسية",
 
-  "employeeType": "موظفين أمانة",
+  "employeeType": "مهندس",
   "majorJob":"-8-9144",
   "noMajorJob": "إختر الوظيفة الاساسية",
   "noMandateJob": "اختر الوظيفة المكلف بها",
   "mandateJob" : "وظيفة اضافية5 ",
-  "degree": "6",
+  "degree": "2",
   "organizationNumber": "3334444",
   "inValidOrganizationNumber":"333444499966",
 
@@ -46,5 +46,9 @@
 
   "empToReassign": "3000500",
   "appointType": "معين",
-  "redirecting": " لإكمال اللازم"
+  "redirecting": " لإكمال اللازم",
+
+  "decDirection": "جهة قرار جديده"
+
+
 }

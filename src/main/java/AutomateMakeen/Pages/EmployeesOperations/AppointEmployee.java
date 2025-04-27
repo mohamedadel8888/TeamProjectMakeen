@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Objects;
 
 public class AppointEmployee extends BaseComp {
@@ -205,10 +206,13 @@ public class AppointEmployee extends BaseComp {
     /****************************************************************************************/
     private By ddlMajorJob = By.id("drp_AddBaseJob_ddlSelectButtonTarget");
     private By majorJobDiv = By.id("drp_AddBaseJob_collapsibleDiv");
+    private By searchMajorJob = By.id("drp_AddBaseJob_txtSearch"); /*حقل البحث*/
     public void selectMajorJob(String majorJob){
         WebElement majorJobAll = driver.findElement(ddlMajorJob);
         majorJobAll.click();
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(majorJobDiv)));
+        WebElement searchMajorJob1 = driver.findElement(searchMajorJob);
+        searchMajorJob1.sendKeys(majorJob);
         WebElement majorJob1;
         if (Objects.equals(majorJob, "إختر الوظيفة الاساسية"))
         {
@@ -371,7 +375,13 @@ public class AppointEmployee extends BaseComp {
                                     /* بيانات القرار */
     /****************************************************************************************/
     private By toggle = By.cssSelector(".slider.round");
-    private By txtRecNo = By.id("txtRecNo_transEmpsDecSec");
+    private By txtRecNo = By.id("txtRecNo_transEmpsDecSec"); /*رقم ارشيف /رقم وارد*/
+    private By txtDecNo = By.id("txtDecNo_transEmpsDecSec"); /*رقم القرار*/
+    private By textDecDate = By.id("txtDecDate_transEmpsDecSec"); /*تاريخ القرار */
+    private By ddlDecSelect = By.id("drpDecSrc_transEmpsDecSec"); /*جهه القرار*/
+    private By ddlSearchText = By.id("drpDecSrc_transEmpsDecSec_txtSearch"); /*حقل البحث*/
+    private By ddlListDiv = By.id("drpDecSrc_transEmpsDecSec_collapsibleDiv");
+
 
     public void setToggle(){
         WebElement toggle1 = driver.findElement(toggle);
@@ -384,6 +394,33 @@ public class AppointEmployee extends BaseComp {
         WebElement txtRecNo1 = driver.findElement(txtRecNo);
         txtRecNo1.clear();
         txtRecNo1.sendKeys(number);
+    }
+    public void decNumber(String text) { /*رقم القرار */
+        WebElement decText = driver.findElement(txtDecNo);
+        decText.clear();
+        decText.sendKeys(text);
+    }
+    public void decDateSelect (String date){ /*تاريخ القرار */
+        WebElement decDateText1 = driver.findElement(textDecDate);
+        decDateText1.clear();
+        decDateText1.sendKeys(date);
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(50, 50).click().perform();
+    }
+    public void decSelectDirection (String text){
+        WebElement ddlButton = driver.findElement(ddlDecSelect);
+        ddlButton.click();
+        WebElement ddlDiv = driver.findElement(ddlListDiv);
+        exWait.until(ExpectedConditions.visibilityOf(ddlDiv));
+        WebElement ddlSearch = driver.findElement(ddlSearchText);
+        ddlSearch.sendKeys(text);
+        List<WebElement> options = driver.findElements(By.xpath("//ul[@id='drpDecSrc_transEmpsDecSec_collapsibleDiv'] /li"));
+        for (WebElement option : options) {
+            if (option.getText().equals(text)){
+                option.click();
+                break;
+            }
+        }
     }
 
     /****************************************************************************************/

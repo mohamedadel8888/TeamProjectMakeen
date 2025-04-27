@@ -125,7 +125,7 @@ public class Offers_TC extends TestInit {
         Assert.assertTrue(sentPage.getDirecting().contains("لتوقيع العرض"));
     }
     @Test (priority = 6)
-    public void verifyViceLetter_ReferToCustomEmp(){   /*تأشير العرض واحالتة الى موظف محدد*/
+    public void verifyViceLetter_ReferToCustomEmp(){   /*تأشير العرض واحالتة الى موظف محدد*//*/*اختيار الموظف "حسين حسن عبد القادر"*/
         inboxPage.offersTab();
         inboxPage.marking_ReferToCustomEmp();
         SentPage sentPage = eliteHomePage.goToSent();

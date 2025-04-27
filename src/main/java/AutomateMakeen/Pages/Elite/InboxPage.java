@@ -527,7 +527,7 @@ public class InboxPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(confirmDiv));
         WebElement selectEmp = driver.findElement(By.id("slcSpeceficEmp_ddlSelectButton"));
         selectEmp.click();
-        WebElement emp=driver.findElement(By.cssSelector("div[id='slcSpeceficEmp_Uu35rj0b1yY%3d_nav'] label[data-type='child']"));
+        WebElement emp =driver.findElement(By.cssSelector("div[id='slcSpeceficEmp_Uu35rj0b1yY%3d_nav'] label[data-type='child']"));  /*اختيار الموظف "حسين حسن عبد القادر"*/
         emp.click();
         confirmVice();
     }
@@ -763,9 +763,7 @@ public class InboxPage extends BaseComp {
         exWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("(//div[@id='errorModal'])[1]"))));
         WebElement btnClose1 = driver.findElement(btnClose);
         btnClose1.click();
-
-        exWait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("(//div[@id='errorModal'])[1]"))));
-
+        exWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("(//a[@class='quick_actions-link'])[19]"))));
     }
     /*========================================================================*/
                                   /*المرفقات*/

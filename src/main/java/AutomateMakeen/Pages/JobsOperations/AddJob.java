@@ -59,7 +59,7 @@ public class AddJob extends BaseComp {
     private By searchIconJobName = By.id("spn_JobNameAdd"); /*ايقونة بحث المسمى الوظيفي*/
     private By JobNameDiv = By.id("dv_pickPopupCntrl"); /*نافذه المسمى الوظيفي*/
     private By searchTextJobName = By.xpath("(//input[@type='text'])[1]"); /* حقل نصي البحث في نافذة المسمى الوظيفي*/
-    public void selectJobName (String text){
+    public String selectJobName (String text){
         WebElement searchIcon = driver.findElement(searchIconJobName);
         searchIcon.click();
         WebElement JobDiv = driver.findElement(JobNameDiv);
@@ -68,8 +68,11 @@ public class AddJob extends BaseComp {
         searchText.sendKeys(text);
         WebElement searchBtn1 = driver.findElement(searchBtn);
         searchBtn1.click();
+        WebElement jobName = driver.findElement(By.xpath("//tbody/tr[1]/td[3]/div[1]"));
+        String jobName1 = jobName.getText();
         WebElement checkBox = driver.findElement(chkBoxSelect);
         checkBox.click();
+        return jobName1;
     }
     /***********************************************************************************/
                                /*    التدرج المهني   */
@@ -154,5 +157,95 @@ public class AddJob extends BaseComp {
         Actions actions = new Actions(driver);
         actions.moveByOffset(50, 50).click().perform();
     }
+    /****************************************************************************************/
+                                    /* بيانات القرار */
+    /****************************************************************************************/
+    private By toggle = By.cssSelector(".slider.round");
+    private By txtRecNo = By.id("txtRecNo_dv_JobsDecSecAdd");
+    private By txtDecNo = By.id("txtDecNo_dv_JobsDecSecAdd"); /*رقم القرار*/
+    private By textDecDate = By.id("txtDecDate_dv_JobsDecSecAdd"); /*تاريخ القرار */
+    private By ddlDecSelect = By.id("drpDecSrc_dv_JobsDecSecAdd"); /*جهه القرار*/
+    private By ddlSearchText = By.id("drpDecSrc_dv_JobsDecSecAdd_txtSearch"); /*حقل البحث*/
+    private By ddlListDiv = By.id("drpDecSrc_dv_JobsDecSecAdd_collapsibleDiv");
+
+    public void setToggle(){
+        WebElement toggle1 = driver.findElement(toggle);
+        toggle1.click();
+    }
+    public WebElement getRecNumberTextField (){
+        return driver.findElement(txtRecNo);
+    }
+    public void setRecNumberTextField (String number){  /*رقم الارشيف /رقم الوارد*/
+        WebElement txtRecNo1 = driver.findElement(txtRecNo);
+        txtRecNo1.clear();
+        txtRecNo1.sendKeys(number);
+    }
+    public void decNumber(String text) { /*رقم القرار */
+        WebElement decText = driver.findElement(txtDecNo);
+        decText.clear();
+        decText.sendKeys(text);
+    }
+    public void decDateSelect (String date){ /*تاريخ القرار */
+        WebElement decDateText1 = driver.findElement(textDecDate);
+        decDateText1.clear();
+        decDateText1.sendKeys(date);
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(50, 50).click().perform();
+    }
+    public void decSelectDirection (String text){  /*جهة القرار*/
+        WebElement ddlButton = driver.findElement(ddlDecSelect);
+        ddlButton.click();
+        WebElement ddlDiv = driver.findElement(ddlListDiv);
+        exWait.until(ExpectedConditions.visibilityOf(ddlDiv));
+        WebElement ddlSearch = driver.findElement(ddlSearchText);
+        ddlSearch.sendKeys(text);
+        WebElement selection = driver.findElement(By.xpath("//label[normalize-space()='"+text+"']"));
+        selection.click();
+    }
+    /****************************************************************************************/
+                                          /* الحفظ والعودة */
+    /****************************************************************************************/
+    private By btnSave = By.id("btn_SaveJob"); /*زر حفظ*/
+    private By btnBack = By.id("btn_backToMain"); /*زر عودة*/
+    public void saveJob (){   /* حفظ */
+        WebElement save1 = driver.findElement(btnSave);
+        save1.click();
+    }
+    public void returnToMain(){  /*عودة */
+        WebElement btnBack1 = driver.findElement(btnBack);
+        btnBack1.click();
+    }
+
+    /****************************************************************************************/
+                                 /*  التاكد من اضافه الوظيفة */
+    /****************************************************************************************/
+    private By divConfirm = By.xpath("//div[@class='popup_genrl popup_genrl_width']");
+    private By btnOk = By.id("btnP0");
+    private By srchJobNumText = By.id("txt_mainJobNum");
+    private By srchJobClassCode = By.id("txt_SrchJobClassCode");
+    private By searchBtnJob = By.cssSelector("input[value='بحث']");
+
+    public void confirmJob (){
+        WebElement divConfirm1 = driver.findElement(divConfirm);
+        exWait.until(ExpectedConditions.visibilityOf(divConfirm1));
+        WebElement btnOk1 = driver.findElement(btnOk);
+        btnOk1.click();
+        exWait.until(ExpectedConditions.invisibilityOf(divConfirm1));
+    }
+    public void searchJob (String jobNum, String classCode){
+        WebElement searchJobNum = driver.findElement(srchJobNumText);
+        searchJobNum.sendKeys(jobNum);
+        WebElement searchClasCode = driver.findElement(srchJobClassCode);
+        searchClasCode.sendKeys(classCode);
+        WebElement searchBtnJob1 = driver.findElement(searchBtnJob);
+        searchBtnJob1.click();
+    }
+    public String getJobName (){
+        WebElement jobName = driver.findElement(By.xpath("//tbody/tr[1]/td[3]/div[1]"));
+        return jobName.getText();
+    }
+
+
+
 
 }
