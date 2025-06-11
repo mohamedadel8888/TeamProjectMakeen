@@ -25,7 +25,7 @@ public class InboxPage extends BaseComp {
     public InboxPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
-        exWait = new WebDriverWait(driver , Duration.ofSeconds(10));
+        exWait = new WebDriverWait(driver , Duration.ofSeconds(12));
     }
     /*========================================================الــبــحــث =====================================================*/
     private By inboxPage = By.cssSelector(".row.g-3.inbox-details-container");  /* شريط الصفحة الواردة */
@@ -306,7 +306,7 @@ public class InboxPage extends BaseComp {
 
     private By forward = By.id("btn_forward"); /*إحالة*/
 
-    private final By forwardToDiv = By.cssSelector(".modal-content.modal-assignment.h-100"); /*تاب الاحالة  */
+    private final By forwardToDiv = By.cssSelector(".modal-content.modal-assignment"); /*تاب الاحالة  */
 
     private final By allBaladia = By.cssSelector("#rd_general"); /*عموم البلدية */
     private final By baladiaSearch = By.cssSelector("#txt_name_srch"); /*بحث في عموم البلدية */
@@ -775,7 +775,7 @@ public class InboxPage extends BaseComp {
     private By divAddAttach = By.xpath("(//div[@class='modal-content'])[14]");
     private By attachFileType = By.id("attachDiv_ddl_FileType");
     private By attachFileName = By.id("attachDiv_txt_FileName");
-    private By attachFile = By.xpath("(//label[@for='attachDiv_btn_ChooseFile'])[1]");
+    private By attachFile = By.xpath("//*[@id=\"attModal\"]/div/div/div[2]/div/div/div[1]/div[3]/label[2]");
     private By btnAdd = By.xpath("//button[contains(text(),'إضافة')]");
     private By attachmentDiv = By.cssSelector("div[class='cRound']"); /*نافذه المرفق*/
 
@@ -819,7 +819,7 @@ public class InboxPage extends BaseComp {
     private By asTelegramDiv = By.xpath("(//div[@class='modal-content p-4'])[5]"); /*نافذة ارسال كبرقية*/
     private By radSignPrince = By.id("RdPrincePurp"); /*اختيار بتوجيه سمو الامير */
     private By confirmTelegramBtn = By.id("btnConfirmTelegramAction"); /*زر تأكيد*/
-    private By viceAndSendTelegram = By.id("(menu_telegram_actions"); /*  تأشير وارسال كبرقية  */
+    private By viceAndSendTelegram = By.id("menu_telegram_actions"); /*  تأشير وارسال كبرقية  */
 
     public void sendAsTelegram (){   /*ارسال كبرقية*/
         WebElement asTelegramBtn1 = driver.findElement(asTelegramBtn);
@@ -828,7 +828,9 @@ public class InboxPage extends BaseComp {
         WebElement radSignPrince1 = driver.findElement(radSignPrince);
         radSignPrince1.click();
         WebElement confirmTelegramBtn1 = driver.findElement(confirmTelegramBtn);
+        WebElement fadeDiv = driver.findElement(By.cssSelector(".modal-backdrop.fade.show"));
         confirmTelegramBtn1.click();
+        exWait.until(ExpectedConditions.invisibilityOf(fadeDiv));
     }
     public void viceAndSendAsTelegram(){ /*تأشير وارسال كبرقية */
         Actions a = new Actions(driver);
@@ -839,9 +841,9 @@ public class InboxPage extends BaseComp {
         WebElement radSignPrince1 = driver.findElement(radSignPrince);
         radSignPrince1.click();
         WebElement confirmTelegramBtn1 = driver.findElement(confirmTelegramBtn);
+        WebElement fadeDiv = driver.findElement(By.cssSelector(".modal-backdrop.fade.show"));
         confirmTelegramBtn1.click();
-
-
+        exWait.until(ExpectedConditions.invisibilityOf(fadeDiv));
     }
 
 
@@ -864,6 +866,7 @@ public class InboxPage extends BaseComp {
     }
 
     public void mailInboxSearch (String text){  /*   البحث عن معامله */
+        exWait.until(ExpectedConditions.visibilityOf(getMailInboxPage()));
         WebElement searchInput = driver.findElement(searchText);
         searchInput.clear();
         searchInput.sendKeys(text);
@@ -889,6 +892,14 @@ public class InboxPage extends BaseComp {
         return archive;
     }
     /*========================================================================*/
+    public void classifyNew (){ /*اختيار تصنيف المعاملات الجديده*/
+        WebElement classify1 = driver.findElement(classification);
+        classify1.click();
+        WebElement classifyDiv = driver.findElement(By.id("div_classifictionTypes"));
+        WebElement classifyNew = driver.findElement(By.id("classification_GDiNoio7hcs%3d"));
+        classifyNew.click();
+        exWait.until(ExpectedConditions.invisibilityOf(classifyDiv));
+    }
 
     /*========================================================================*/
 

@@ -130,8 +130,19 @@ public class AddJob extends BaseComp {
         ddlChooseDept1.click();
         WebElement deptSearchWebElement1 = driver.findElement(deptSearchWebElement);
         deptSearchWebElement1.sendKeys(department);
-        WebElement recipient = deptListWebElement.stream().filter(s -> s.getText().equals(department)).findFirst().orElse(null);
-        recipient.click();
+
+        for (WebElement item : deptListWebElement) {
+            String text = item.getText();
+            if (text.equalsIgnoreCase(department)) {
+                item.click();
+                break;
+            }
+        }
+
+
+
+//        WebElement recipient = deptListWebElement.stream().filter(s -> s.getText().equals(department)).findFirst().orElse(null);
+//        recipient.click();
     }
     /***********************************************************************************/
                                   /*   حاله الوظيفة   */

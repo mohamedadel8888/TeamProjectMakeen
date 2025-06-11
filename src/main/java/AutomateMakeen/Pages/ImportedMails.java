@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -43,6 +44,29 @@ public class ImportedMails extends BaseComp {
 
     @FindBy(id = "dv_inbox_trIncNum")
     WebElement importNumberWebElement;
+
+    @FindBy(css = "#cph_main_rd_inbox_all")  /*الجميع */
+    WebElement radioBtnAll;
+    @FindBy (css = "#tab_container_search_uldiv_Tab_Hrf_4") /*تاب الارشيف في البحث*/
+    WebElement archiveSearchTab;
+
+    @FindBy (id = "txt_srch_rec_no") /*البحث برقم الارشيف*/
+    WebElement searchTextArch;
+
+    @FindBy (id = "btn_search") /*زر بحث*/
+    WebElement btnSearch;
+
+
+
+    public void searchInInbox_Arch (String num){
+        exWait.until(ExpectedConditions.visibilityOf(subjectImpWebElement));
+        radioBtnAll.click();
+        archiveSearchTab.click();
+        searchTextArch.sendKeys(num);
+        btnSearch.click();
+    }
+
+
     public List<String> getMailData(){
         //exWait.until(ExpectedConditions.visibilityOf(subjectImpWebElement));
         List<String> mailData = new ArrayList<>();

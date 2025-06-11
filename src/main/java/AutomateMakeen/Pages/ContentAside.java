@@ -33,6 +33,11 @@ public class ContentAside extends BaseComp {
     @FindBy(id = "cph_main_btn_AddElement")
     private WebElement addNewDeptWebElement;
 
+    @FindBy(id="prog_et")  /*البريد*/
+    private  WebElement mail;
+
+
+
     @FindBy(id = "prog_prs")
     private WebElement humanResources;   /*الموارد البشرية*/
 

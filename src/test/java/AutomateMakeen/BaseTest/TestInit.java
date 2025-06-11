@@ -49,6 +49,7 @@ public class TestInit  {
     public static ReassignEmployee reassignEmployee;
     public static ElectronicTransactionsJobsPage electronicTransactionsJobsPage;
     public static AddJob addJob;
+    public static InboxPageQCMS inboxPageQCMS;
 
     //HijriDates
     protected HijrahDate dateHijriMinus = HijrahDate.now().minus(1, ChronoUnit.DAYS);

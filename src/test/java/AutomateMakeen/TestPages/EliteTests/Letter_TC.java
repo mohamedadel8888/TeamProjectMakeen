@@ -68,8 +68,9 @@ public class Letter_TC extends TestInit {
     public void setUp2 () throws FileNotFoundException {
         createInternalMailPage = eliteHomePage.goToCreateInternalMail();
         archiveNum = createInternalMailPage.createInternalMailForMe();
+        inboxPage.mailInboxSearch(archiveNum);
         inboxPage.lettersTab();
-        inboxPage.selectDepartment(myDepartment);
+       // inboxPage.selectDepartment(myDepartment);
         inboxPage.selectSefatLetter(sefatLetter);
         inboxPage.forwardTo(forwardToLetter);
         inboxPage.subject(mySubject);

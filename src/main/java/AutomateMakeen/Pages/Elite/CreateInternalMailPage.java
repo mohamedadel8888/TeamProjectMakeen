@@ -71,6 +71,7 @@ public class CreateInternalMailPage extends BaseComp {
     private final By TitleAlertMsg = By.id("spanTitleAlertMsg"); /*رسالة انشاء المعاملة*/
     @FindBy(xpath ="//p[@id='spanTitleAlertMsg']")@CacheLookup private WebElement popUpMessage; /*عنصر رقم الارشيف*/
     private final By btnClosePopUp = By.id("btnCloseDynamicClick"); /*اغلاق النافذة */
+    private By sentSuccessDiv = By.id("dynamicModalLabel"); /*ديف تم ارسال معامله برقم ارشيف ...*/
 
 //    private By popUpDocType = By.id("ContentdocTypesPopUpdocTypeModal"); /*بوب اب نوع المستند */
 //        private By docTypeTextPop =By.id("txt_docTypesPopUpConainerDOCUMENTID"); /*رقم /نوع المستند */
@@ -96,17 +97,21 @@ public class CreateInternalMailPage extends BaseComp {
         return createInternalMail;
     }
 
-    public String createInternalMailForMe() {
+    public String createInternalMailForMe() { /*انشاء معامله واحالتها الى حسابي */
         exWait.until(ExpectedConditions.visibilityOf(getCreateInternalMailPage()));
         InboxPage inboxPage;
+        EliteHomePage eliteHomePage;
         txtSubject("Test Mail");
         explain ("test explain");
         docTypeSelect("12190");
         transClassification("542");
         selfRedirectToggle();
         SendMail();
+        eliteHomePage = new EliteHomePage(driver);
+        eliteHomePage.goToInbox();
         inboxPage = new InboxPage(driver);
         exWait.until(ExpectedConditions.visibilityOf(inboxPage.getMailInboxPage()));
+        inboxPage.mailInboxSearch("Test Mail");
         return inboxPage.getTreatArchiveNum();
     }
 
@@ -277,6 +282,7 @@ public class CreateInternalMailPage extends BaseComp {
         sendBtn.click();
         WebElement btnOk1 = driver.findElement(btnOk);
         btnOk1.click();
+        closePopUp();
     }
 
     public boolean isMailSentSuccessfully() {  /*تم انشاء المعاملة */
@@ -295,6 +301,7 @@ public class CreateInternalMailPage extends BaseComp {
         return numbersOnly.toString();
     }
     public void closePopUp(){  /*اغلاق النافذة التي تظهر عند إرسال المعاملة*/
+        exWait.until(ExpectedConditions.visibilityOf(driver.findElement(sentSuccessDiv)));
         WebElement closeBtn = driver.findElement(btnClosePopUp);
         closeBtn.click();
     }

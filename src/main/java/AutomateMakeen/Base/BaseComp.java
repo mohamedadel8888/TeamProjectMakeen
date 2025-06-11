@@ -27,6 +27,10 @@ public class BaseComp {
         exWait = new WebDriverWait(driver,Duration.ofSeconds(10));
         this.driver = driver;
     }
+
+    public BaseComp() {
+    }
+
     public void cutPastAction(WebElement copyFrom, WebElement copyTo, String txt ){
         actions = new Actions(driver);
         copyFrom.sendKeys(txt);
