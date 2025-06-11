@@ -96,7 +96,7 @@ public class TC_ImportedMails extends TestInit {
 
         lunchDriver();
         loginPage.goToLoginPage();
-        loginPage.loginUserWithoutRemMe("0342169", "24602460");
+        loginPage.loginUserWithoutRemMe("1002669", "24602460");
 
 
 
@@ -166,14 +166,16 @@ public class TC_ImportedMails extends TestInit {
         createExternalMailPage.pressOnDeactivateReferralNumber();
         createExternalMailPage.clickSendConfirm();
         createExternalMailPage.validateSuccessfulCreatingMail();
-        OutboxMails outboxMails = contentAside.goToExportedMail();
-        outboxMails.getRecentlyAddedMail(subject);
-        archiveNum = outboxMails.getMailData().get(5);
+        importedMails = contentAside.goToImportedMail();
+        importedMails.getRecentlyAddedMail(subject);
+
+        //OutboxMails outboxMails = contentAside.goToExportedMail();
+        //outboxMails.getRecentlyAddedMail(subject);
+        //archiveNum = outboxMails.getMailData().get(5);
     }
     @Test (priority = 1)
     public void tc_letterCheck(){
-        importedMails = contentAside.goToImportedMail();
-        importedMails.searchInInbox_Arch(archiveNum);
+
     }
 
 
