@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -56,8 +57,14 @@ public class ImportedMails extends BaseComp {
     @FindBy (id = "btn_search") /*زر بحث*/
     WebElement btnSearch;
 
+/**======================================================================================**/
     @FindBy (id = "tab_inbox_uldiv_Tab_Hrf_6") /*تاب خطاب التغطيه*/
     WebElement lettersTab;
+
+    public void goToLetterTab (){
+        exWait.until(ExpectedConditions.elementToBeClickable(lettersTab));
+        lettersTab.click();
+    }
 
 /**======================================================================================**/
     @FindBy (id = "drp_covrLet_letTypes_ddlSelectButtonTarget") /*قائمة صفه الخطاب */
@@ -72,38 +79,55 @@ public class ImportedMails extends BaseComp {
     WebElement letterSubject;
 
     public void enterSubject (String text){
+        letterSubject.clear();
         letterSubject.sendKeys(text);
     }
-    @FindBy(id = "ddl_letterSecretLevels")  /*درجه السرية*/
-    Select securityDegree ;
+    @FindBy(id = "ddl_letterSecretLevels")  /*حقل درجه السرية */
+     WebElement securityDegree ;
 
     public void selectSecretDegree (String text){
-        securityDegree.selectByVisibleText(text);
+        Select select = new Select(securityDegree);
+        select.selectByVisibleText(text);
     }
 
-    
-
 /**======================================================================================**/
-    @FindBy (xpath = "//span[@onclick=\"pickPopUp.initialize('covLetRecivers','txt_covrLet_rcvrId');\"]")   /* ايقونه البحث الموجه اليه*/
-    WebElement searchIcon;
-    @FindBy(id = "dv_pickPopupCntrl")  /*قائمة الموجه اليه*/
-    WebElement pickUpDiv;
-    @FindBy (id = "txt_pickPopUp_srchParam") /*حقل البحث عن اسم الموجه اليه*/
-    WebElement searchTextInPopUp;
-    @FindBy (id = "btn_pickPopUp_srch") /*زر البحث في نافذه الموجه اليه*/
-    WebElement btnSearchPopUp;
-    @FindBy (xpath = "(//input[@type='checkbox'])[1]")  /*تحديد الموجه اليه*/
-    WebElement selectElement;
+//    @FindBy (xpath = "//span[@onclick=\"pickPopUp.initialize('covLetRecivers','txt_covrLet_rcvrId');\"]")   /* ايقونه البحث الموجه اليه*/
+//    WebElement searchIcon;
+//    @FindBy(id = "dv_pickPopupCntrl")  /*قائمة الموجه اليه*/
+//    WebElement pickUpDiv;
+//    @FindBy (id = "txt_pickPopUp_srchParam") /*حقل البحث عن اسم الموجه اليه*/
+//    WebElement searchTextInPopUp;
+//    @FindBy (id = "btn_pickPopUp_srch") /*زر البحث في نافذه الموجه اليه*/
+//    WebElement btnSearchPopUp;
+//    @FindBy (xpath = "(//input[@type='checkbox'])[1]")  /*تحديد الموجه اليه*/
+//    WebElement selectElement;
+
+    @FindBy (id = "txt_covrLet_rcvrId") /*حقل نصي الموجه اليه*/
+    WebElement redirectToTextBox;
+    public void selectDirectTo (String num){ /*ادخال رقم الموجه اليه*/
+        redirectToTextBox.sendKeys(num);
+    }
+
 /**======================================================================================**/
     @FindBy (id = "dv_covrLet_body") /*فتح كنترول النص */
     WebElement mainTextControl;
-    @FindBy (xpath = "//div[@class='tox-editor-header']") /*محرر النص*/
-    WebElement textEditor;
-    @FindBy (xpath = "//body//p")  /*حقل النص في الخطاب*/
-    WebElement letterBody;
+//    @FindBy (xpath = "//div[@class='tox-editor-header']") /*محرر النص*/
+//    WebElement textEditor;
+//    @FindBy (xpath = "//body//p")  /*حقل النص في الخطاب*/
+//    WebElement letterBody;
 
-    @FindBy (css = "p[onclick='editorPopUp.save();']") /*عوده مع الاحتفاظ بالتعديلات */
+    @FindBy (xpath = "//p[@onclick='editorPopUp.save();']") /*عوده مع الاحتفاظ بالتعديلات */
     WebElement saveWithModified;
+
+    public void enterBodyLetter (String text){
+        mainTextControl.click();
+        driver.switchTo().frame("ifr_editorPopUp_content");
+        driver.switchTo().frame("letter_body_ifr");
+        WebElement letterBody = driver.findElement(By.xpath("//body//p"));
+        letterBody.sendKeys(text);
+        driver.switchTo().parentFrame();
+        saveWithModified.click();
+    }
 /**======================================================================================**/
     @FindBy (css = "input[value='توقيع الخطاب']") /*توقيع الخطاب*/
     WebElement signLetter;
@@ -116,12 +140,12 @@ public class ImportedMails extends BaseComp {
     @FindBy (id = "btnOk") /*موافق*/
     WebElement btnOk;
 
-
-
-
-
-
-
+    public void signLetter (){
+        signLetter.click();
+        exWait.until(ExpectedConditions.visibilityOf(divSignLetter));
+        confirm.click();
+        btnOk.click();
+    }
 
     public List<String> getMailData(){
         //exWait.until(ExpectedConditions.visibilityOf(subjectImpWebElement));
